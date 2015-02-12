@@ -1,0 +1,26 @@
+name: 
+	What
+
+background-color:
+	screen-background
+
+show-tabs:
+	false
+
+layout:
+	-> results
+
+views:
+	results
+		type:
+			table
+		key:
+			app.quoteForm.whatSearchResults
+		row-layout:
+			SearchResultWhatRow
+		row-height:
+			6
+		w: 
+			fill
+		h: 
+			fill

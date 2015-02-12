@@ -1,0 +1,24 @@
+name: 
+	When
+
+background-color:
+	screen-background
+
+show-tabs:
+	false
+
+layout:
+	-> options
+	
+views:
+	options
+		type:
+			table
+		key:
+			app.quoteForm.whenOptions
+		row-layout:
+			PickWhenRow
+		w: 
+			fill
+		h: 
+			fill

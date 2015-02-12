@@ -1,0 +1,64 @@
+#! /usr/bin/env python
+
+import sys
+from subprocess import call
+import os
+
+root_src_dir = "src/com/sponberg"
+src_dir = "src-delomboked"
+fluid_framework_ios_dir = os.environ['FLUID_FRAMEWORK_IOS']
+fluid_app_ios_dir = os.environ['FLUID_FRAMEWORK_APP_IOS']
+output =  fluid_app_ios_dir + "/FluidApp/src"
+
+has_run_delomb = 0
+
+def run_lombok():
+	global has_run_delomb
+	if not has_run_delomb:
+		has_run_delomb = 1
+		call(["java", "-jar", "../FluidFramework/lib/lombok.jar", "delombok", "--classpath", classpath, "src", "-d", "src-delomboked",  "--nocopy"])
+
+def find_all_source_files():
+	list = []
+	for path, subdirs, files in os.walk(root_src_dir):
+		for name in files:
+			list.append(os.path.join(path, name))
+	return list
+
+def stripCreatedByLine(fileName):
+	f = open(fileName,"r")
+	lines = f.readlines()
+	f.close()
+
+	f = open(fileName,"w")
+	for idx, line in enumerate(lines):
+		if idx != 4 and idx != 5:
+			f.write(line)
+	f.close()	
+	
+classpath = sys.argv[2]	
+	
+source_files = sys.argv[3:]
+
+if sys.argv[1] != "auto":
+	source_files = find_all_source_files()
+	
+for f in source_files:
+	if (f.endswith(".java")):
+		run_lombok()
+		i = f.find("/test/")
+		if i != -1:
+			continue
+		i = f.find("src/")
+		if i == -1:
+			continue
+		i += 3
+		src = ''.join([src_dir, f[i:]])
+		cmd = ''.join([fluid_framework_ios_dir + "/Externals/j2objc/j2objc --prefixes resources/objc/prefixes.properties -classpath ../FluidFramework/bin -use-arc -sourcepath src-delomboked -d ", output, " ", src, " 2>&1 | tee -a make.log"])
+		os.system(cmd)
+		fileName = ''.join([output, f[i:]])
+		i = fileName.find(".java")
+		fileName = fileName[:i]
+		stripCreatedByLine(fileName + ".m")
+		stripCreatedByLine(fileName + ".h")
+		

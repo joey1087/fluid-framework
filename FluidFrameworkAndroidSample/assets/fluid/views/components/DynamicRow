@@ -1,0 +1,89 @@
+id:
+	DynamicRow
+	
+name: 
+	Dynamic Row
+
+properties:
+
+layout:
+	-> A
+	|
+	<- B
+	|
+	-> C
+	|
+	<- D
+
+views:
+	A
+		visible-condition:
+			showLine1
+		type:
+			label
+		text:
+			{0}
+		key:
+			lines.0
+		text-color:
+			normal
+		align:
+			left
+		w: 
+			fill
+		h: 
+			2.5
+
+	B
+		visible-condition:
+			showLine2
+		type:
+			label
+		text:
+			{0}
+		key:
+			lines.1
+		text-color:
+			normal
+		align:
+			left
+		w: 
+			fill
+		h: 
+			2.5
+			
+	C
+		visible-condition:
+			showLine3
+		type:
+			label
+		text:
+			{0}
+		key:
+			lines.2
+		text-color:
+			normal
+		align:
+			left
+		w: 
+			fill
+		h: 
+			2.5
+			
+	D
+		visible-condition:
+			showLine4
+		type:
+			label
+		text:
+			{0}
+		key:
+			lines.3
+		text-color:
+			normal
+		align:
+			left
+		w: 
+			fill
+		h: 
+			2.5

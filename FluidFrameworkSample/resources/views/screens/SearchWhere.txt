@@ -1,0 +1,42 @@
+name: 
+	Where
+
+background-color:
+	screen-background
+
+show-tabs:
+	false
+
+layout:
+	-> search
+	|
+	<- results
+
+views:
+	search
+		type:
+			searchbar
+		placeholder:
+			2000 - Sydney
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			7
+	
+	results
+		type:
+			table
+		key:
+			app.quoteForm.whereSearchResults
+		row-layout:
+			SearchResultWhereRow
+		row-height:
+			6
+		w: 
+			fill
+		h: 
+			fill

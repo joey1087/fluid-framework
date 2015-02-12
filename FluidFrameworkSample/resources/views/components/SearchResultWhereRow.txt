@@ -1,0 +1,47 @@
+name: 
+	N/A
+
+properties:
+	tablerow
+		height:
+			6
+		selected-condition:
+			title == app.quoteForm.where
+
+layout:
+	-> margin   suburb   margin2
+
+views:
+	margin
+		type:
+			space
+		w:
+			1
+		h:
+			1 of view suburb
+	
+	margin2
+		type:
+			space
+		w:
+			1 of view margin
+		h:
+			1 of view suburb
+	
+	suburb
+		type:
+			label
+		text:
+			{0} - {1}
+		key:
+			code, title
+		align:
+			left
+		vertical-align:
+			middle
+		max-font-size:
+			3
+		w: 
+			fill
+		h: 
+			6

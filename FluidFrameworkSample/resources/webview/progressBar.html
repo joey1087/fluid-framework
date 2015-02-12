@@ -1,0 +1,98 @@
+<script src="TweenMax.min.js"></script>
+	
+<style>
+
+.red{
+  background-color:red; 
+}
+
+.grey{
+  background-color:#ddd;
+}
+
+#progress_container {
+	border-radius:25px;
+}
+
+#progress {
+	border-radius:25px;
+}
+
+</style>
+	
+<div id="progress_container" class="grey"><div id="progress" class="red"></div></div>
+	
+<script>
+
+	var progress = 0;
+	
+	var total = 100;
+	
+	function setTotal(t) {
+		total = t;
+	}
+	
+	function animate() {
+		var progressBar = $("#progress");
+		
+		var width = $('body').width();
+		width = width * progress / total;
+		
+		TweenLite.to(progressBar, 0.5, {width:width});
+	}
+	
+	function updateProgress(amount) {
+		progress += amount;
+		animate();
+	}
+	
+	function setProgress(total) {
+		progress = total;
+		animate();
+	}
+	
+	function updateProgress() {
+		getData("app.measureManager.measureProgress",
+			function(data) {
+				
+				try {
+				
+					var json = jQuery.parseJSON(data);
+
+					var progress = json["app.measureManager.measureProgress"];
+					setProgress(parseInt(progress));
+				} catch(err) {
+
+					console.log("there was an error: ");
+					console.log(err);
+
+				}				
+			},
+			function(data) {
+				$("#graph_container").html( "<p>Oops. We were unable to make your graph.</p>" );
+				$("#graph_container").css('background-color', '#ccc');
+			}
+		);
+	}
+	
+</script>
+
+<script>
+	function initializeLayout(width, height) {
+	
+		$("#progress_container").css('width', width + 'px');
+		$("#progress_container").css('height', height + 'px');
+	
+		$("#progress").css('width', '0px');
+		$("#progress").css('height', height + 'px');
+		
+		animate();
+	}
+	
+	$(function() {
+		addDataChangeListener("app.measureManager.measureProgress",
+			function(key, subkeys) {
+				updateProgress();
+			});
+	});
+</script>

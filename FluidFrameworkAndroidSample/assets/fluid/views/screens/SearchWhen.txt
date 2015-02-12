@@ -1,0 +1,42 @@
+id:
+	SearchWhat
+	
+name: 
+	What
+
+background-color:
+	screen-background
+
+layout:
+	search
+	|(right)
+	results
+
+views:
+	search
+		type:
+			searchbar
+		placeholder:
+			Plumbers
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			7
+	
+	results
+		type:
+			table
+		key:
+			app.quoteForm.whatSearchResults
+		row-layout:
+			SearchResultWhatRow
+		row-height:
+			6
+		w: 
+			fill
+		h: 
+			fill

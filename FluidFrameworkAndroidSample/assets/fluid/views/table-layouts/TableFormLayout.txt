@@ -1,0 +1,421 @@
+sections:
+	signup
+		rows:
+			where
+			when
+			description
+	contact
+		rows:
+			name
+			email
+			phone
+	another
+		rows:
+			submit
+			
+background-color:
+	screen-background
+		
+section-headers:
+	signup		
+		properties:
+			tablerow
+				height:
+					5
+		background-color:
+			separator-background
+		layout:
+			->     space
+			|
+			<- margin   label
+		views:
+			space
+				type:
+					space
+				w:
+					fill
+				h:
+					2			
+			margin
+				type:
+					space
+				w:
+					1
+				h:
+					3			
+			label
+				type:
+					label
+				align:
+					left
+				text:
+					QUOTE
+				text-color:
+					separator-text
+				w:
+					fill
+				h:
+					3			
+	contact		
+		properties:
+			tablerow
+				height:
+					5
+		background-color:
+			separator-background
+		layout:
+			->     space
+			|
+			<- margin   label
+		views:
+			space
+				type:
+					space
+				w:
+					fill
+				h:
+					2			
+			margin
+				type:
+					space
+				w:
+					1
+				h:
+					3			
+			label
+				type:
+					label
+				align:
+					left
+				text:
+					CONTACT DETAILS
+				text-color:
+					separator-text
+				w:
+					fill
+				h:
+					3		
+	another		
+		properties:
+			tablerow
+				height:
+					5
+		background-color:
+			separator-background
+		layout:
+			->     space
+			|
+			<- margin   label
+		views:
+			space
+				type:
+					space
+				w:
+					fill
+				h:
+					2			
+			margin
+				type:
+					space
+				w:
+					1
+				h:
+					3			
+			label
+				type:
+					label
+				align:
+					left
+				text:
+					SUBMIT
+				text-color:
+					separator-text
+				w:
+					fill
+				h:
+					3			
+rows:
+
+	where
+		properties:
+			tablerow
+				height:
+					7
+		layout:
+			-> s   where   more   s2
+		views:
+			s
+				type:
+					space
+				w:
+					1
+				h:
+					1 of view where
+			s2
+				type:
+					space
+				w:
+					1 of view s
+				h:
+					1 of view s
+			more
+				type:
+					label
+				text:
+					>
+				max-font-size:
+					3					
+				align:
+					right
+				vertical-align:
+					middle					
+				w:
+					3
+				h:
+					1 of view where
+			where
+				type:
+					label
+				text:
+					{0} - {1}
+				key:
+					app.quoteForm.where.code, app.quoteForm.where.title
+				unknown-text:
+					Where:
+				max-font-size:
+					3					
+				align:
+					left
+				vertical-align:
+					middle					
+				w:
+					fill
+				h:
+					7
+	when
+		properties:
+			tablerow
+				height:
+					7
+		layout:
+			-> s   when   more   s2
+		views:
+			s
+				type:
+					space
+				w:
+					1
+				h:
+					1 of view when
+			s2
+				type:
+					space
+				w:
+					1 of view s
+				h:
+					1 of view s
+			more
+				type:
+					label
+				text:
+					>
+				max-font-size:
+					3					
+				align:
+					right
+				vertical-align:
+					middle					
+				w:
+					3
+				h:
+					1 of view when
+			when
+				type:
+					label
+				key:
+					app.quoteForm.when
+				unknown-text:
+					When:
+				max-font-size:
+					3					
+				align:
+					left
+				vertical-align:
+					middle					
+				w:
+					fill
+				h:
+					7
+					
+	description
+		properties:
+			tablerow
+				height:
+					14
+		layout:
+			-> space   input
+		views:
+			space
+				type:
+					space
+				w:
+					.5
+				h:
+					1 of view input
+			input
+				type:
+					textfield
+				multi-line:
+					true
+				keyboard:
+					default
+				dismissKeyboardWithTap:
+					true
+				label:
+					Describe what you need:
+				key:
+					app.quoteForm.description
+				align:
+					left
+				w:
+					fill
+				h:
+					14	
+
+	name
+		properties:
+			tablerow
+				height:
+					7
+		layout:
+			-> input
+		views:
+			input
+				type:
+					textfield
+				keyboard:
+					default
+				auto-correct:
+					false
+				border-style:
+					none
+				label:
+					Name:
+				key:
+					app.quoteForm.user.name
+				align:
+					left
+				w:
+					fill
+				h:
+					7	
+	email
+		properties:
+			tablerow
+				height:
+					7
+		layout:
+			-> input
+		views:
+			input
+				type:
+					textfield
+				keyboard:
+					email
+				border-style:
+					none
+				label:
+					Email:
+				key:
+					app.quoteForm.user.email
+				align:
+					left
+				w:
+					fill
+				h:
+					7
+
+	phone
+		properties:
+			tablerow
+				height:
+					7
+		layout:
+			-> input
+		views:
+			input
+				type:
+					textfield
+				keyboard:
+					number
+				border-style:
+					none
+				label:
+					Phone:
+				key:
+					app.quoteForm.user.phone
+				align:
+					left
+				w:
+					fill
+				h:
+					7					
+	submit
+		properties:
+			tablerow
+				height:
+					13
+		layout:
+			-> s    submit   s2
+			|
+			<- s4   label    s3
+			
+		views:
+			s
+				type:
+					space
+				w:
+					.1 of parent
+				h:
+					1 of view submit
+			s2
+				type:
+					space
+				w:
+					1 of view s
+				h:
+					1 of view submit
+			s3
+				type:
+					space
+				w:
+					1 of view s
+				h:
+					1 of view label
+			s4
+				type:
+					space
+				w:
+					1 of view s
+				h:
+					1 of view label
+			submit
+				type:
+					button
+				text: 
+					Submit
+				align:
+					center
+				w: 
+					fill
+				h: 
+					8
+			label
+				type:
+					label
+				text: 
+					By pressing 'Submit', you agree to the terms and conditions of com.sponberg.fluidsample
+				w: 
+					fill
+				h: 
+					5

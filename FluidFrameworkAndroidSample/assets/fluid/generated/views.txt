@@ -1,0 +1,32 @@
+screens:
+	Animate.txt
+	Details.txt
+	DynamicTable.txt
+	Embed.txt
+	Graph.txt
+	Home.txt
+	Home@ios.txt
+	Info.txt
+	List.txt
+	Measure.txt
+	PickWhen.txt
+	RecursionA.txt
+	RecursionB.txt
+	SearchWhat.txt
+	SearchWhat@android.txt
+	SearchWhere.txt
+	SearchWhere@android.txt
+	SeparateActivity.txt
+	TableForm.txt
+
+components:
+	DynamicRow.txt
+	EmbeddedComponent.txt
+	ListRow.txt
+	PickWhenRow.txt
+	PickWhenRow@android.txt
+	SearchResultWhatRow.txt
+	SearchResultWhereRow.txt
+
+table-layouts:
+	TLSignupForm.txt

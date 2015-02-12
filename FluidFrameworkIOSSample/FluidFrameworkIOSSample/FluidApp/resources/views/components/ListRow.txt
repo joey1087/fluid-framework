@@ -1,0 +1,105 @@
+name: 
+	ListRow
+
+properties:
+	tablerow
+		height:
+			11
+
+layout:
+	-> A   S   B
+	|          (left)
+	<-         C
+	|          (left)
+	->         D    E
+
+views:
+	A
+		type:
+			image
+		image:
+			sailboat
+		x: 
+			0
+		y: 
+			0
+		w: 
+			9
+		h:
+			9
+		background-color:
+			black		
+	
+	S
+		type:
+			space
+		w:
+			1
+		h:
+			1
+	
+	B
+		type:
+			label
+		text:
+			{0,date}
+		key:
+			timeInMillis
+		text-color:
+			normal
+		align:
+			left
+		w: 
+			fill
+		h: 
+			2.5
+		
+	C
+		type:
+			label
+		text:
+			{0}
+		key:
+			summary
+		text-color:
+			normal
+		max-font-size:
+			3
+		align:
+			left
+		w: 
+			1 of view B
+		h: 
+			4.5
+		
+	D
+		type:
+			label
+		text: 
+			Min {0, number, integer}C
+		key:
+			temperatureMinC
+		text-color:
+			note
+		w: 
+			.5 of view B
+		h: 
+			3
+		align:
+			right
+
+	E
+		type:
+			label
+		text: 
+			Max {0,number,integer}C
+		key:
+			temperatureMaxC
+		text-color:
+			note
+		w: 
+			.5 of view B
+		h: 
+			3
+		align:
+			right

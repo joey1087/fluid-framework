@@ -1,0 +1,57 @@
+name: 
+	List
+
+background-color:
+	screen-background
+
+layout:
+	->     A
+	|
+	<- D   C   B
+
+views:
+	A
+		type:
+			label
+		text: 
+			Table label
+		max-font-size:
+			7
+		vertical-align:
+			middle
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			7
+	
+	B
+		type:
+			space
+		w:
+			1
+		h:
+			1
+	
+	C
+		type:
+			table
+		key:
+			app.weatherManager.dataPoints
+		row-layout:
+			ListRow
+		w: 
+			fill
+		h: 
+			fill
+
+	D
+		type:
+			space
+		w:
+			1
+		h:
+			1

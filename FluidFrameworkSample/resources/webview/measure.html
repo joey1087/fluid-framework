@@ -1,0 +1,99 @@
+<div id="graph_container"></div>
+
+<script src="flotr2.min.js"></script>
+
+<script>
+
+	function plotToArray(plot3) {
+		var d3 = [];
+		for (var i = 0; i < plot3.length; i++) {
+			var point = plot3[i];
+			if (point == null)
+				d3.push(null);
+			else
+				d3.push([point.x, point.y]);
+		}
+		return d3;
+	}
+
+	function populatePlot3() {
+	
+		getData("app.measureManager.graphData, app.viewManager.color(measure-red).html, app.viewManager.color(measure-blue).html",
+			function(data) {
+				
+				try {
+				
+					console.log("populuatePlot3 " + data);
+				
+					var json = jQuery.parseJSON(data);
+
+					console.log(json);
+					
+					var graphDataJson = json["app.measureManager.graphData"];
+					
+					var graphData = jQuery.parseJSON(graphDataJson); // graphData is in json format
+				
+					var d1 = plotToArray(graphData.plotMean);
+					var d2 = plotToArray(graphData.plotActual);
+					
+					var meanColor = json["app.viewManager.color(measure-red).html"];
+					var actualColor = json["app.viewManager.color(measure-blue).html"];
+				
+					Flotr.draw(document.getElementById("graph_container"), [ d1, d2 ], {
+					    xaxis: {
+					      noTicks: 0,
+					      max: graphData.xMax
+					    }, 
+					    grid: {
+					      minorVerticalLines: true,
+					      color: '#545454',
+					      outline: '',
+					      horizontalLines: true
+					    },
+					    colors: [ meanColor, actualColor ],
+					    yaxis: {
+						    noTicks: 6,
+						    min: 2,
+						    max: 12
+						}
+					  });
+						
+					} catch(err) {
+
+						console.log("there was an error: ");
+						console.log(err);
+
+					}
+				
+			},
+			function(data) {
+				$("#graph_container").html( "<p>Oops. We were unable to make your graph.</p>" );
+				$("#graph_container").css('background-color', '#ccc');
+			}
+		);
+	}
+	
+</script>	
+
+<script>
+
+	function initializeLayout(width, height) {
+	
+		var margin = 12;
+		$("#graph_container").css({
+			width : (width - margin * 2) + "px",
+			height : (height - margin * 2) + "px",
+			margin: margin + "px auto"
+		});
+		
+		populatePlot3();			
+	}
+	
+	$(function() {		
+   		addDataChangeListener("app.measureManager.graph",
+			function(key, subkeys) {
+				populatePlot3();
+			});    		
+	});
+	
+</script>	

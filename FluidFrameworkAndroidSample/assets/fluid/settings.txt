@@ -1,0 +1,48 @@
+tabs:
+	Home
+		screen: 
+			Home
+	Info
+		 screen:
+			Info
+	List 
+		screen:
+			List
+	Embed
+		screen:
+			Embed
+
+show-tabs:
+	true
+	
+defaults:
+	font
+		size:
+			6
+		minimum-size:
+			2
+
+logging:
+	settings
+		date-time-format:
+			yyyy-MM-dd hh:mm:ss
+		level:
+			debug
+		includeClassName:
+			true
+		fullPackageName:
+			false
+		includeMethodName:
+			true
+		includeLineNumber:
+			true
+			
+base-package:
+	com.sponberg.app
+			
+datastore:
+	settings
+		enabled:
+			true
+		default-database:
+			app

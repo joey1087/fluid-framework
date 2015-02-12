@@ -1,0 +1,48 @@
+name:
+	Animate
+
+background-color:
+	screen-background
+
+layout:
+	-> S
+	|
+	<- A
+	|
+	-> S2
+
+#TODO: when there is no space above a webview the webview starts off at the wrong spot, orientation change
+
+views:
+
+	S
+		type:
+			space
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			3
+
+	A
+		type:
+			webview
+		html:
+			animate
+		w: 
+			fill
+		h: 
+			fill
+			
+	S2
+		type:
+			space
+		w:
+			fill
+		h:
+			3
+			
+						

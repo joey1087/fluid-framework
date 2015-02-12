@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="dist_jar" name="Create Jar with classes from Java project, proguard, and distribute">
+
+    <property name="fluid-framework-android-dist">../../fluid-framework-dist/FluidFrameworkAndroidDist</property>
+    
+    <taskdef resource="proguard/ant/task.properties"
+         classpath="lib/proguard.jar" />
+    
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="build"/>
+        <mkdir dir="dist"/>
+        </target>
+    
+	<target name="create_jar" depends="init">
+	    
+	    <jar destfile="build/FluidFramework.jar">
+	        <!-- "bin" is the class output folder -->
+	        <fileset dir="bin"/> 
+	    </jar>
+	    
+	    <!-- <proguard configuration="proguard.pro"/> -->
+	    <copy file="build/FluidFramework.jar" tofile="dist/FluidFramework.jar"/>
+	    
+	</target>
+
+	<target name="dist_jar" depends="create_jar">
+
+	     <copy file="dist/FluidFramework.jar" tofile="${FLUID_FRAMEWORK_ANDROID}/lib/FluidFramework.jar"/>
+	     <copy file="dist/FluidFramework.jar" tofile="${fluid-framework-android-dist}/lib/FluidFramework.jar"/>
+
+	</target>
+	
+</project>

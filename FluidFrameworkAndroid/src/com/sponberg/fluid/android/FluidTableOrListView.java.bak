@@ -1,0 +1,19 @@
+package com.sponberg.fluid.android;
+
+public interface FluidTableOrListView {
+
+	public abstract void setBounds(CustomLayout.Bounds bounds);
+
+	public abstract void reloadData();
+
+	public abstract String getDataModelListenerId();
+
+	public abstract void setDataModelListenerId(String getDataModelListenerId);
+
+	public abstract String getViewPath();
+
+	public abstract void cleanup();
+
+	public abstract void hideViewWithId(long id);
+	
+}

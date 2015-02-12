@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="dist_jar" name="Create Jar with classes from Java project, proguard, and distribute">
+
+    <property name="fluid-framework-android-dist">../../fluid-framework-dist/FluidFrameworkAndroidDist</property>
+    
+    <path id="classpath">
+        <fileset dir="lib" includes="**/FluidFramework.jar"/>
+        <path location="${user.home}/adk/platforms/android-19/android.jar"/>
+        <path location="../../google-play-services_lib_copy/libs/google-play-services.jar"/>
+        <path location="../../appcompat_v7-dist/libs/android-support-v4.jar"/>
+        <path location="../../appcompat_v7-dist/libs/android-support-v7-appcompat.jar"/>
+        <path location="bin/classes"/>
+    </path>
+    
+    <taskdef resource="proguard/ant/task.properties"
+         classpath="../FluidFramework/lib/proguard.jar" />
+    
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+    
+    <target name="init" depends="clean">
+        <tstamp/>
+        <mkdir dir="build"/>
+        <mkdir dir="dist"/>
+  	</target>
+    
+    <target name="compile" depends="init">
+        <mkdir dir="build/classes"/>
+        <javac includeantruntime="false" srcdir="src" destdir="build/classes" classpathref="classpath"/>
+    </target>
+    
+	<target name="create_jar" depends="compile">
+	    
+        <jar destfile="build/FluidMAndroid.jar" basedir="build/classes"/>
+    
+	    <!-- 
+	    <proguard configuration="proguard.pro"/>
+		-->
+		
+		<copy file="build/FluidMAndroid.jar" tofile="dist/FluidMAndroid.jar"/>
+		
+	</target>
+
+	<target name="dist_jar" depends="create_jar">
+	    
+	     <copy file="dist/FluidMAndroid.jar" tofile="${fluid-framework-android-dist}/lib/FluidMAndroid.jar"/>
+	     	    
+	</target>
+	
+</project>

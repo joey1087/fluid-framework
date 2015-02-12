@@ -1,0 +1,49 @@
+name:
+	Embed
+
+background-color:
+	screen-background
+
+layout:
+	->   A
+	|
+	<-   S
+	| (right)
+	->   B
+
+views:
+	A
+		type:
+			label
+		text:
+			Embeded view below
+		vertical-align:
+			middle
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			9
+		background-color: 
+			189, 223, 238
+
+	B
+		type:
+			subview
+		subview:
+			EmbeddedComponent
+		w: 
+			fill
+		h: 
+			fill
+
+	S
+		type:
+			space
+		w:
+			1
+		h:
+			1			

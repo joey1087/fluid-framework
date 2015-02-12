@@ -1,0 +1,25 @@
+name: 
+	Signup
+
+background-color:
+	screen-background
+
+layout:
+
+	-> signup-form
+
+views:
+
+	signup-form
+		type:
+			table
+		background-color:
+			separator-background
+		table-layout:
+			TLSignupForm
+		section-header-height:
+			3
+		w: 
+			fill
+		h: 
+			fill

@@ -1,0 +1,153 @@
+package com.sponberg.fluid.android;
+
+import java.util.HashMap;
+
+import android.content.Context;
+import android.widget.ScrollView;
+
+import com.sponberg.fluid.GlobalState;
+import com.sponberg.fluid.layout.Layout;
+import com.sponberg.fluid.layout.TableLayout.TableSection;
+import com.sponberg.fluid.layout.TableRow;
+import com.sponberg.fluid.layout.ViewBehaviorTable;
+
+public class ListViewFluidTable extends ScrollView {
+
+	private final com.sponberg.fluid.layout.View view;
+
+	private CustomLayout.Bounds bounds;
+	
+	private FluidListAdapter adapter;
+	
+	private FluidTableView fluidTableView;
+	
+	public ListViewFluidTable(Context context,
+			com.sponberg.fluid.layout.View view, CustomLayout.Bounds bounds, FluidListAdapter adapter) {
+		super(context);
+		this.view = view;
+		this.adapter = adapter;
+		this.bounds = bounds;
+		
+		fluidTableView = new FluidTableView(context, bounds);
+		addView(fluidTableView);		
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		fluidTableView.measure(widthMeasureSpec, heightMeasureSpec);
+		this.setMeasuredDimension(bounds.width, bounds.height);
+	}
+
+	public CustomLayout.Bounds getBounds() {
+		return bounds;
+	}
+
+	public void setBounds(CustomLayout.Bounds bounds) {
+		this.bounds = bounds;
+		this.setLeft(bounds.x);
+		this.setTop(bounds.y);
+		this.setRight(bounds.x + bounds.width);
+		this.setBottom(bounds.y + bounds.height);
+	}
+	
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		super.onLayout(changed, l, t, r, b);
+		int count = getChildCount();
+		for (int index = 0; index < count; index++) {
+			android.view.View view = this.getChildAt(index);
+			view.layout(0, 0, r - l, fluidTableView.getMeasuredViewHeight());
+		}
+	}
+
+	class FluidTableView extends android.view.ViewGroup {
+
+		private HashMap<Long, android.view.View> viewsById = new HashMap<>();
+
+		CustomLayout.Bounds bounds;
+		
+		public FluidTableView(Context context, CustomLayout.Bounds bounds) {
+			super(context);
+			this.bounds = bounds;
+			//setBackgroundColor(Color.BLUE);
+			createOrUpdateViews(bounds);
+		}
+
+		void createOrUpdateViews(CustomLayout.Bounds bounds) {
+			
+			int l = bounds.x;
+			int t = bounds.y;
+			//int t = bounds.y;
+			//i/nt b = bounds.y;
+			
+			int top = t;
+			
+			for (int index = 0; index < adapter.getCount(); index++) {
+				Long id = adapter.getItemId(index);
+				CustomLayout view = (CustomLayout) viewsById.get(id);
+				if (view == null) {
+					adapter.bounds = bounds;
+					view = (CustomLayout) adapter.getView(index, null, this);
+					//view.setBackgroundColor(Color.CYAN);
+					viewsById.put(id, view);
+					/*view.setLeft(l);
+					view.setRight(r);
+					view.setTop(top);
+					view.setBottom(top + view.bounds.height);*/
+					addView(view);
+					view.createOrUpdateViews(new CustomLayout.Bounds(l, t, bounds.width, view.bounds.height));
+					//view.requestLayout();
+					top += view.bounds.height;
+				}
+			}
+		}
+		
+		@Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			//onMeasureHelper();
+		}
+		
+		protected int getMeasuredViewHeight() {
+			int height = 0;
+
+			ViewBehaviorTable viewBehavior = (ViewBehaviorTable) view
+					.getViewBehavior();
+			int index = 0;
+			for (TableSection section : viewBehavior.getSections()) {
+				Layout sectionHeaderLayout = GlobalState.fluidApp.getLayout(section.getSectionHeaderLayout());
+				height += adapter.getHeightForSectionHeaderLayout(sectionHeaderLayout, viewBehavior.getSectionHeaderHeight());
+				for (TableRow row : viewBehavior.getRows(index)) {
+					Layout layout = GlobalState.fluidApp.getLayout(row.getLayout());
+					height += adapter.getHeightForRowLayout(layout);
+				}
+				index++;
+			}
+
+			return height;
+		}
+		
+		private void onMeasureHelper() {
+			int height = getMeasuredViewHeight();
+
+			this.setMeasuredDimension(bounds.width, height);
+		}
+
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			
+			onMeasureHelper();
+			
+			int top = 0;
+			
+			for (int index = 0; index < adapter.getCount(); index++) {
+				Long id = adapter.getItemId(index);
+				CustomLayout view = (CustomLayout) viewsById.get(id);
+				//view.createOrUpdateViews(new Bounds(l, top, r, top + view.bounds.height));
+				view.layout(0, top, r - l, top + view.bounds.height);
+				top += view.bounds.height;
+			}
+			
+		}
+		
+	}
+}

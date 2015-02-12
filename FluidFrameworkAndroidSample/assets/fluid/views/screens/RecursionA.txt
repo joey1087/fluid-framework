@@ -1,0 +1,35 @@
+name: 
+	RecursionA
+
+background-color:
+	screen-background
+
+layout:
+	->    A
+	|  (center)
+	<-    C
+
+views:
+	A
+		type:
+			label
+		text:
+			Recursion A
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h:
+			11
+
+	C
+		type:
+			button
+		text: 
+			Go to Recursion B
+		w: 
+			.5 of view A
+		h: 
+			7

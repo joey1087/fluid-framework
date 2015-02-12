@@ -1,0 +1,53 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+FluidFramework.jar
+FluidFrameworkSample.jar
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# XCode #
+######################
+xcuserdata
+*.xcworkspace
+
+# build products #
+######################
+build/
+build/*.[oa]
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.sconsign.dblite
+appcompat_v7/.settings/org.eclipse.jdt.core.prefs
+
+# External Dependencies #
+#########################
+FluidFrameworkIOS/FluidFrameworkIOS/Externals/j2objc

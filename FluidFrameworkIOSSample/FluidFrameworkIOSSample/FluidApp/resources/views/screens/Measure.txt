@@ -1,0 +1,331 @@
+name:
+	Measure
+
+background-color:
+	screen-background
+
+layout:
+	-> S    mean                           actual   S2
+	|
+	<- S4   meanValue                 actualValue   S3
+	|
+	-> S5
+	|
+	<- S7   ten-mmean          unit           max   S6
+	|
+	-> S8   ten-mmeanValue   unitValue   maxValue   S9
+	|
+	<- S10
+	|
+	->                        graph
+	|
+	<- startS2                start            startS1
+	|
+	-> S12
+
+layout-landscape:
+	-> S    mean             actual   S2
+	|
+	<- S4   meanValue   actualValue   S3
+	|
+	->              graph
+	|
+	<- startS2      start        startS1
+
+views:
+	S
+		type:
+			space
+		x: 
+			0
+		y: 
+			0
+		w: 
+			6
+		h: 
+			1 of view mean
+
+	mean
+		type:
+			label
+		text:
+			MEAN
+		align:
+			left
+		w: 
+			equal
+		h: 
+			3
+
+	actual
+		type:
+			label
+		text:
+			ACTUAL
+		align:
+			right
+		w: 
+			equal
+		h: 
+			1 of view mean
+			
+	S2
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view mean
+
+	meanValue
+		type:
+			label
+		text: 
+			{0, number, 0.0}
+		key:
+			app.measureManager.mean
+		unknown-text:
+			?
+		text-color:
+			measure-red
+		align:
+			left
+		w: 
+			1 of view mean
+		h: 
+			7
+
+	actualValue
+		type:
+			label
+		text: 
+			{0, number, 0.0}
+		key:
+			app.measureManager.actual
+		unknown-text:
+			?
+		text-color:
+			measure-blue
+		align:
+			right
+		w: 
+			1 of view actual
+		h: 
+			1 of view meanValue
+
+	S3
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view meanValue
+
+	S4
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view meanValue
+
+	S5
+		type:
+			space
+		w: 
+			fill
+		h: 
+			1
+			
+	S6
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view ten-mmean
+			
+	ten-mmean
+		type:
+			label
+		text:
+			10 M MEAN
+		align:
+			left
+		w: 
+			equal
+		h: 
+			2.7
+	
+	unit
+		type:
+			label
+		text:
+			UNIT
+		align:
+			center
+		w: 
+			equal
+		h: 
+			1 of view ten-mmean
+	
+	max
+		type:
+			label
+		text:
+			MAX
+		align:
+			right
+		w: 
+			equal
+		h: 
+			1 of view ten-mmean
+
+	S7
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view ten-mmean
+			
+	S8
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view ten-mmeanValue			
+			
+	ten-mmeanValue
+		type:
+			label
+		text:
+			8.3
+		align:
+			left
+		w: 
+			1 of view ten-mmean
+		h: 
+			4
+
+	unitValue
+		type:
+			label
+		text:
+			m/s
+		align:
+			center
+		w: 
+			1 of view unit
+		h: 
+			1 of view ten-mmeanValue
+
+	maxValue
+		type:
+			label
+		text:
+			9.1
+		align:
+			right
+		w: 
+			1 of view max
+		h: 
+			1 of view ten-mmeanValue
+
+	S9
+		type:
+			space
+		w: 
+			1 of view S
+		h: 
+			1 of view ten-mmeanValue			
+			
+	graph
+		type:
+			webview
+		html:
+			measureAndProgress
+		w: 
+			fill
+		h: 
+			fill
+
+	S10
+		type:
+			space
+		w: 
+			fill
+		h: 
+			3			
+
+	S11
+		type:
+			space
+		w: 
+			fill
+		h: 
+			3			
+
+	progressS1
+		type:
+			space
+		w: 
+			.1 of parent
+		h: 
+			1 of view progressBar
+						
+	progressBar
+		type:
+			webview
+		html:
+			progressBar
+		w: 
+			fill
+		h: 
+			1.7
+
+	progressS2
+		type:
+			space
+		w: 
+			1 of view progressS1
+		h: 
+			1 of view progressBar
+						
+	start
+		type:
+			button
+		text:
+			Start
+		align:
+			center
+		w: 
+			15
+		h: 
+			5
+
+	startS1
+		type:
+			space
+		w: 
+			equal
+		h: 
+			1 of view start			
+
+	startS2
+		type:
+			space
+		w: 
+			equal
+		h: 
+			1 of view start		
+
+	S12
+		type:
+			space
+		w: 
+			fill
+		h: 
+			3			
+						

@@ -1,0 +1,275 @@
+package com.sponberg.fluid.android;
+
+import java.util.HashMap;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import com.sponberg.fluid.android.CustomLayout.Bounds;
+import com.sponberg.fluid.layout.FluidView;
+
+public class FluidTable extends ScrollView implements FluidView, FluidViewAndroid, FluidTableOrListView {
+
+	private CustomLayout.Bounds bounds;
+	
+	private FluidListAdapter adapter;
+	
+	private FluidTableView fluidTableView;
+	
+	private String dataModelListenerId;
+	
+	private final String viewPath;
+	
+	public FluidTable(Context context,
+			com.sponberg.fluid.layout.ViewPosition view, CustomLayout.Bounds bounds, String viewPath, boolean showDividers) {
+		
+		super(context);
+		this.adapter = new FluidListAdapter(view);
+		this.bounds = bounds;
+		this.viewPath = viewPath;
+		
+		fluidTableView = new FluidTableView(context, bounds, showDividers);
+		addView(fluidTableView);
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		
+		fluidTableView.measure(widthMeasureSpec, heightMeasureSpec);
+		
+		this.setMeasuredDimension(bounds.width, bounds.height);
+	}
+
+	public CustomLayout.Bounds getBounds() {
+		return bounds;
+	}
+
+	@Override
+	public void setBounds(CustomLayout.Bounds bounds) {
+		this.bounds = bounds;
+		adapter.bounds.setTo(bounds);
+		this.fluidTableView.bounds.setTo(bounds);
+		this.setLeft(bounds.x);
+		this.setTop(bounds.y);
+		this.setRight(bounds.x + bounds.width);
+		this.setBottom(bounds.y + bounds.height);
+	}
+	
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		
+		fluidTableView.layout(0, 0, r, fluidTableView.getMeasuredHeight());
+	}
+
+	class FluidTableView extends ViewGroup implements FluidTableOrListView {
+
+		public String getDataModelListenerId() {
+			return dataModelListenerId;
+		}
+		
+		public String getViewPath() {
+			return viewPath;
+		}
+		
+		private HashMap<Long, android.view.View> viewsById = new HashMap<>();
+
+		CustomLayout.Bounds bounds;
+		
+		boolean showDividers;
+	
+		static final int dividerHeight = 1;
+		
+		public FluidTableView(Context context, CustomLayout.Bounds bounds, boolean showDividers) {
+			
+			super(context);
+			this.bounds = bounds;
+			this.showDividers = showDividers;
+			
+			createViews(bounds);
+		}
+
+		class DividerView extends android.view.View {
+
+			ImageView view;
+			
+			public DividerView(Context context) {
+				
+				super(context);
+				
+				ImageView divider = new ImageView(context);
+				LinearLayout.LayoutParams lp = 
+					    new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				lp.setMargins(0, 0, 0, 0);
+				divider.setLayoutParams(lp);
+				divider.setBackgroundColor(Color.GRAY);
+				
+				view = divider;
+				
+				addView(view);
+				
+				this.setBackgroundColor(Color.TRANSPARENT);
+			}
+
+			@Override
+			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+				this.setMeasuredDimension(bounds.width, dividerHeight);
+			}
+
+			@Override
+			protected void onLayout(boolean changed, int l, int t,
+					int r, int b) {
+
+				this.view.layout(0, t, bounds.width, t + dividerHeight);
+			}
+			
+		}
+		
+		private android.view.View makeDivider() {
+			
+			return new DividerView(getContext());
+		}
+
+		void createViews(CustomLayout.Bounds bounds) {
+			
+			int l = bounds.x;
+			int t = bounds.y;
+			
+			adapter.bounds = bounds;
+			
+			for (int index = 0; index < adapter.getCount(); index++) {
+				Long id = adapter.getItemId(index);
+				android.view.View view = adapter.getView(index, null, this);
+				viewsById.put(id, view);
+				addView(view);
+				if (view instanceof CustomLayout) {
+					CustomLayout view2 = (CustomLayout) view;
+					view2.createOrUpdateViews(new CustomLayout.Bounds(l, t, bounds.width, view2.bounds.height));
+				}
+				
+				if (showDividers && index != adapter.getCount() - 1) {
+					android.view.View divider = makeDivider();
+					//dividers.add(divider);
+					addView(divider);
+				}
+				
+				/*
+				if (view == null) {
+					adapter.bounds = bounds;
+					view = (CustomLayout) adapter.getView(index, null, this);
+					viewsById.put(id, view);
+					addView(view);
+					view.createOrUpdateViews(new CustomLayout.Bounds(l, t, bounds.width, view.bounds.height));
+					top += view.bounds.height;
+				}*/
+			}
+		}
+		
+		@Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			//onMeasureHelper();
+			
+			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+			
+			int top = 0;
+			int count = getChildCount();
+			for (int index = 0; index < count; index++) {
+				android.view.View view = this.getChildAt(index);
+				view.measure(widthMeasureSpec, heightMeasureSpec);
+				top += view.getMeasuredHeight();
+			}
+			
+			this.setMeasuredDimension(bounds.width, top);
+		}
+
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			
+			int top = t;
+			
+			int count = getChildCount();
+			for (int index = 0; index < count; index++) {
+				android.view.View view = this.getChildAt(index);
+				int height = view.getMeasuredHeight();
+				view.layout(l, top, r - l, top + height);
+				top += height;
+			}
+			
+			/*
+			for (int index = 0; index < adapter.getCount(); index++) {
+				Long id = adapter.getItemId(index);
+				android.view.View view = viewsById.get(id);
+				
+				if (view == null) {
+					System.out.println("hstdbc view is null for " + index + " " + id);
+					continue;
+				}
+				
+				int height = view.getMeasuredHeight();
+				view.layout(l, top, r - l, top + height);
+				top += height;
+			}		*/	
+		}
+		
+		public void reloadData() {
+			/*
+			this.removeAllViews();
+			viewsById.clear();
+			createViews(bounds);
+			*/
+		}
+
+		@Override
+		public void setBounds(Bounds bounds) {
+			this.bounds.setTo(bounds);
+		}
+
+		@Override
+		public void setDataModelListenerId(String getDataModelListenerId) {
+			throw new RuntimeException("Not implemented");
+		}
+
+		@Override
+		public void cleanup() {
+			throw new RuntimeException("Not implemented");
+		}
+
+		@Override
+		public void hideViewWithId(long id) {
+			throw new RuntimeException("Not implemented");
+		}
+		
+	}
+	
+	@Override
+	public void reloadData() {
+		fluidTableView.reloadData();
+	}
+	
+	public void hideViewWithId(long id) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public String getDataModelListenerId() {
+		return dataModelListenerId;
+	}
+
+	@Override
+	public void setDataModelListenerId(String getDataModelListenerId) {
+		this.dataModelListenerId = getDataModelListenerId;
+	}
+
+	@Override
+	public String getViewPath() {
+		return viewPath;
+	}
+
+	@Override
+	public void cleanup() {
+	}
+	
+}

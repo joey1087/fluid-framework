@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_jar" name="Create Jar with classes from Java projects">
+
+	<property name="project.name" value="FluidFrameworkSample" />
+
+	<target name="create_jar">
+		<jar destfile="${FLUID_FRAMEWORK_APP_ANDROID}/libs/${project.name}.jar">
+			<!-- "bin" is the class output folder -->
+			<fileset dir="bin" />
+		</jar>
+	</target>
+</project>

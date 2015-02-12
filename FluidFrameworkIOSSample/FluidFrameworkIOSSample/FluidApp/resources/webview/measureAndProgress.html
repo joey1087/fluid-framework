@@ -1,0 +1,203 @@
+<style type="text/css">
+
+.red {
+  background-color:red; 
+}
+
+.grey {
+  background-color:#ddd;
+}
+
+#progress_container {
+	border-radius:25px;
+}
+
+#progress {
+	border-radius:25px;
+}
+
+</style>
+
+<div id="graph_container" onclick="sendCommand('action/startMeasurement')"></div>
+<div id="progress_container" class="grey"><div id="progress" class="red"></div></div>
+
+<script src="fluid://load/flotr2.min.js"></script>
+<script src="fluid://load/TweenMax.min.js"></script>
+	
+<script>
+
+	function plotToArray(plot3) {
+		var d3 = [];
+		for (var i = 0; i < plot3.length; i++) {
+			var point = plot3[i];
+			if (point == null)
+				d3.push(null);
+			else
+				d3.push([point.x, point.y]);
+		}
+		return d3;
+	}
+
+	function populatePlot3() {
+	
+		getData("app.measureManager.graphData, app.viewManager.color('measure-red').html, app.viewManager.color('measure-blue').html",
+			function(data) {
+				
+				try {
+				
+					var json = jQuery.parseJSON(data);
+
+					console.log(json);
+					
+					var graphDataJson = json["app.measureManager.graphData"];
+					
+					var graphData = jQuery.parseJSON(graphDataJson); // graphData is in json format
+				
+					var d1 = plotToArray(graphData.plotMean);
+					var d2 = plotToArray(graphData.plotActual);
+					
+					var meanColor = json["app.viewManager.color(\"measure-red\").html"];
+					//var actualColor = json["app.viewManager.color(\"measure-blue\").html"];
+					var actualColor = "#3366FF";
+				
+					Flotr.draw(document.getElementById("graph_container"), [ d1, d2 ], {
+					    xaxis: {
+					      noTicks: 0,
+					      max: graphData.xMax
+					    }, 
+					    grid: {
+					      minorVerticalLines: true,
+					      color: '#545454',
+					      outline: '',
+					      horizontalLines: true
+					    },
+					    colors: [ meanColor, actualColor ],
+					    yaxis: {
+						    noTicks: 6,
+						    min: 2,
+						    max: 12
+						}
+					  });
+						
+					} catch(err) {
+
+						console.log("there was an error: ");
+						console.log(err);
+
+					}
+				
+			},
+			function(data) {
+				$("#graph_container").html( "<p>Oops. We were unable to make your graph.</p>" );
+				$("#graph_container").css('background-color', '#ccc');
+			}
+		);
+	}
+	
+</script>	
+
+<script>
+
+	var progress = 0;
+	
+	var total = 100;
+	
+	function setTotal(t) {
+		total = t;
+	}
+	
+	function animate(dur) {
+		var progressBar = $("#progress");
+		
+		var width = $('#progress_container').width();
+		width = width * progress / total;
+		
+		TweenLite.to(progressBar, dur, {width:width});
+	}
+	
+	function updateProgress(amount) {
+		progress += amount;
+		animate(0.5);
+	}
+	
+	function setProgress(total) {
+		progress = total;
+		animate(0.5);
+	}
+	
+	function updateProgress() {
+		getData("app.measureManager.measureProgress",
+			function(data) {
+				
+				try {
+				
+					var json = jQuery.parseJSON(data);
+
+					var progress = json["app.measureManager.measureProgress"];
+					setProgress(parseInt(progress));
+				} catch(err) {
+
+					console.log("there was an error: ");
+					console.log(err);
+
+				}				
+			},
+			function(data) {
+				$("#graph_container").html( "<p>Oops. We were unable to make your graph.</p>" );
+				$("#graph_container").css('background-color', '#ccc');
+			}
+		);
+	}
+	
+</script>
+
+<script>
+
+	var heightOfProgress = 10;
+		
+	function initializeLayout(width, height) {
+
+		$("#progress_container").css('width', '90%');
+		$("#progress_container").css('height', heightOfProgress + 'px');
+		$("#progress_container").css('margin', 'auto');
+		$("#progress_container").css('margin-bottom', '0px');
+		$("#progress_container").css('padding-bottom', '0px');
+	
+		$("#progress").css('width', '0px');
+		$("#progress").css('height', heightOfProgress + 'px');
+
+		initializeLayoutHelper(width, height);			
+		
+		animate(0);
+	}
+	
+	function initializeLayoutHelper(width, height) {
+		
+		var margin = 12;
+		$("#graph_container").css({
+			width : (width - margin * 2) + "px",
+			height : (height - margin * 2 - heightOfProgress) + "px",
+			margin: margin + "px auto"
+		});
+		
+		populatePlot3();
+	}
+	
+	function fluidViewWasUpdated(width, height) {
+		initializeLayoutHelper(width, height);
+
+		animate(0);
+	}
+	
+	$(function() {		
+   		addDataChangeListener("app.measureManager.measureProgress",
+			function(key, subkeys) {
+				updateProgress();
+			});
+   		addDataChangeListener("app.measureManager.graph",
+			function(key, subkeys) {
+				populatePlot3();
+			});
+	});
+	
+</script>	

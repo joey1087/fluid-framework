@@ -1,0 +1,150 @@
+name:
+	Details
+
+background-color:
+	screen-background
+
+layout:
+	->   A
+	|
+	<- X   Y
+	|
+	-> S   T
+	|
+	<- B   E
+	|
+	-> N   G
+	|
+	<- I   H
+
+views:
+	A
+		type:
+			label
+		text:
+			Z view
+		x: 
+			0
+		y: 
+			1
+		w: 
+			.7 of parent
+		h: 
+			fill
+		background-color: 
+			205, 133, 63
+			
+	X
+		type:
+			label
+		text:
+			X label
+		w: 
+			.5 of view A
+		h: 
+			5
+		background-color: 
+			205, 205, 100
+			
+	Y
+		type:
+			label
+		text:
+			Y label
+		w: 
+			.5 of view A
+		h: 
+			5
+		background-color: 
+			100, 205, 205
+			
+	T
+		type:
+			label
+		text:
+			{0,time,medium}
+		key:
+			dt.time
+		align:
+			left
+		w: 
+			1 of view A minus 1 of view S
+		h: 
+			5
+
+	S
+		type:
+			space
+		w:
+			5
+		h:
+			1 of view T
+
+	B
+		type:
+			button
+		text: 
+			D
+		w: 
+			equal
+		h: 
+			7
+
+	E
+		type:
+			button
+		text: 
+			Measure
+		w: 
+			equal
+		h: 
+			1 of view B
+			
+	S2
+		type:
+			space
+		w: 
+			1 of view B
+		h: 
+			1 of view B
+
+	N
+		type:
+			button
+		text: 
+			New
+		w: 
+			1 of view B
+		h: 
+			1 of view B
+						
+	G
+		type:
+			button
+		text: 
+			Animate
+		w: 
+			1 of view E
+		h: 
+			1 of view B
+						
+	I
+		type:
+			button
+		text: 
+			DynamicTbl
+		w: 
+			1 of view B
+		h: 
+			1 of view B
+			
+	H
+		type:
+			button
+		text: 
+			TableForm
+		w: 
+			1 of view E
+		h: 
+			1 of view B
+												

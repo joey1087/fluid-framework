@@ -1,0 +1,196 @@
+name: 
+	New
+
+background-color:
+	screen-background
+
+layout:
+	->          A
+	|
+	<- SA
+	|
+	-> S1   InputName   S2
+	|
+	<- SA2
+	|
+	-> S4   InputEmail   S3
+	|
+	<- SA3
+	|
+	-> S5   InputNumber   S6
+	|
+	<-    Submit   Close
+	|
+	-> S
+
+views:
+	A
+		type:
+			label
+		text: 
+			This is a separate activity, {0}
+		unknown-text:
+			This is a separate activity
+		key:
+			formName
+		vertical-align:
+			middle
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			fill
+		background-color:
+			120, 120, 0
+
+	SA
+		type:
+			space
+		w:
+			fill
+		h:
+			1
+
+	SA2
+		type:
+			space
+		w:
+			fill
+		h:
+			1
+
+	SA3
+		type:
+			space
+		w:
+			fill
+		h:
+			1
+
+	S1
+		type:
+			space
+		w:
+			2
+		h:
+			1 of view InputName
+
+	S2
+		type:
+			space
+		w:
+			2
+		h:
+			1 of view InputName
+
+	S3
+		type:
+			space
+		w:
+			1 of view S1
+		h:
+			1 of view InputName
+
+	S4
+		type:
+			space
+		w:
+			1 of view S1
+		h:
+			1 of view InputName
+
+	S5
+		type:
+			space
+		w:
+			1 of view S1
+		h:
+			1 of view InputName
+
+	S6
+		type:
+			space
+		w:
+			1 of view S1
+		h:
+			1 of view InputName
+
+	InputName
+		type:
+			textfield
+		keyboard:
+			default # default, email, url, number, phone
+		dismissKeyboardWithTap:
+			true
+		label:
+			Name:
+		align:
+			left
+		w:
+			fill
+		h:
+			7			
+
+	InputEmail
+		type:
+			textfield
+		keyboard:
+			email
+		dismissKeyboardWithTap:
+			false
+		label:
+			Email:
+		align:
+			left
+		w:
+			fill
+		h:
+			7			
+
+	InputNumber
+		type:
+			textfield
+		keyboard:
+			phone
+		dismissKeyboardWithTap:
+			true
+		label:
+			Number:
+		align:
+			left
+		w:
+			fill
+		h:
+			7			
+
+	Close
+		type:
+			button
+		text: 
+			Close
+		w: 
+			.5 of view A
+		h: 
+			7
+
+	Submit
+		type:
+			button
+		text: 
+			Submit
+		w: 
+			.5 of view A
+		h: 
+			7
+
+	S
+		type:
+			space
+		w: 
+			fill
+		h: 
+			2
+			

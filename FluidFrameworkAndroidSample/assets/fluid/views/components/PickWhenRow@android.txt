@@ -1,0 +1,62 @@
+name: 
+	N/A
+
+properties:
+	tablerow
+		height:
+			6
+
+layout:
+	-> margin   option   radio   margin2
+
+views:
+	margin
+		type:
+			space
+		w:
+			1
+		h:
+			1 of view option
+	
+	margin2
+		type:
+			space
+		w:
+			.1
+		h:
+			1 of view margin
+	
+	option
+		type:
+			label
+		text:
+			{0}
+		key:
+			.
+		align:
+			left
+		vertical-align:
+			middle
+		max-font-size:
+			3
+		w: 
+			fill
+		h: 
+			6
+
+	radio	
+		type:
+			image
+		image:
+			system:radiobutton_on_background
+				condition:
+					. == app.quoteForm.when
+			system:radiobutton_off_background
+		fill:
+			false
+		w: 
+			6
+		h:
+			1 of view option
+		image-max-height:
+			2.5

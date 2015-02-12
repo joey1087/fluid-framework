@@ -1,0 +1,134 @@
+name: 
+	Home
+
+background-color:
+	screen-background
+
+layout:
+	-> A       B
+	|
+	<- D  C  Rec
+	* 
+	-> X   Y
+	|
+	<-     Z
+	* 
+	-> H
+
+views:
+	A
+		type:
+			label
+		text:
+			A
+		x: 
+			0
+		y: 
+			0
+		w: 
+			7
+		h:
+			7
+		background-color: 
+			0, 0, 255
+		text-color: 
+			255, 255, 255
+	
+	B
+		type:
+			label
+		text:
+			B view
+		w: 
+			fill
+		h: 
+			fill
+		
+	C
+		type:
+			button
+		text: 
+			C
+		w: 
+			equal
+		h: 
+			7
+		
+	D
+		type:
+			button
+		text: 
+			D
+		w: 
+			equal
+		h: 
+			7
+
+	Rec
+		type:
+			button
+		text: 
+			Recursion
+		w: 
+			equal
+		h: 
+			7
+			
+	### New Layer
+				
+	X
+		type:
+			label
+		text:
+			X
+		background-color:
+			255,0,0,100
+		x: 
+			left of view B
+		y: 
+			10
+		w: 
+			.3 of view B
+		h:
+			7
+	Y
+		type:
+			label
+		text:
+			Y
+		background-color:
+			0,255,0,100
+		w: 
+			.7 of view B
+		h:
+			.5 of view B
+	Z
+		type:
+			label
+		text:
+			Z
+		background-color:
+			0,0,255,100
+		w: 
+			1 of view Y
+		h:
+			7
+			
+	### New Layer
+				
+	H
+		type:
+			label
+		text:
+			H
+		background-color:
+			255,255,0,200
+		x: 
+			right of view X
+		y: 
+			bottom of view X
+		w: 
+			6
+		h:
+			6
+			

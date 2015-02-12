@@ -1,0 +1,47 @@
+name: 
+	N/A
+
+properties:
+	tablerow
+		height:
+			6
+		selected-condition:
+			. == app.quoteForm.when
+
+layout:
+	-> margin   option   margin2
+
+views:
+	margin
+		type:
+			space
+		w:
+			1
+		h:
+			1 of view option
+	
+	margin2
+		type:
+			space
+		w:
+			1
+		h:
+			1 of view margin
+	
+	option
+		type:
+			label
+		text:
+			{0}
+		key:
+			.
+		align:
+			left
+		vertical-align:
+			middle
+		max-font-size:
+			3
+		w: 
+			fill
+		h: 
+			6

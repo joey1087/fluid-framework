@@ -1,0 +1,16 @@
+screen-background:
+	255, 255, 255
+separator-background:
+	230,230,230
+separator-text:
+	100,100,100
+black:
+	0, 0, 0
+normal:
+	50, 50, 50
+note:
+	50, 50, 100
+measure-red:
+	FF3333
+measure-blue:
+	3366FF

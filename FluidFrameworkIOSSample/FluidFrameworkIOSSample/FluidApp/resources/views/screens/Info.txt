@@ -1,0 +1,27 @@
+name: 
+	Info
+
+background-color:
+	screen-background
+
+layout:
+	-> A
+
+views:
+	A
+		type:
+			label
+		text: 
+			A view is really interesting, it is the most interesting view in the world.
+		vertical-align:
+			middle
+		x: 
+			0
+		y: 
+			0
+		w: 
+			fill
+		h: 
+			fill
+		background-color:
+			120, 120, 0
