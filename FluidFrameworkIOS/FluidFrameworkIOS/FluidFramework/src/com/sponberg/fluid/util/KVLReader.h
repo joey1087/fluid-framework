@@ -27,6 +27,8 @@
 
 - (void)init__WithJavaIoBufferedReader:(JavaIoBufferedReader *)inArg OBJC_METHOD_FAMILY_NONE;
 
+- (BOOL)containsNonTabCharacterWithNSString:(NSString *)s;
+
 - (id<JavaUtilList>)getWithNSString:(NSString *)key;
 
 - (id<FFTKeyValueList>)getWithValueWithNSString:(NSString *)key

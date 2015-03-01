@@ -12,7 +12,9 @@
  withJavaUtilArrayList:(JavaUtilArrayList *)subtractors {
   if (self = [super init]) {
     self->edge_ = edge;
-    self->subtractors_ = subtractors;
+    if (subtractors != nil) {
+      [((JavaUtilArrayList *) nil_chk(self->subtractors_)) addAllWithJavaUtilCollection:subtractors];
+    }
   }
   return self;
 }

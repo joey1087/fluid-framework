@@ -20,6 +20,7 @@
 #include "com/sponberg/fluid/layout/LengthEquals.h"
 #include "com/sponberg/fluid/layout/LengthFill.h"
 #include "com/sponberg/fluid/layout/LengthFixed.h"
+#include "com/sponberg/fluid/layout/LengthFromDataModel.h"
 #include "com/sponberg/fluid/layout/LengthRelativeToLayer.h"
 #include "com/sponberg/fluid/layout/LengthRelativeToParent.h"
 #include "com/sponberg/fluid/layout/LengthRelativeToRow.h"
@@ -38,6 +39,7 @@
 #include "com/sponberg/fluid/util/Logger.h"
 #include "java/io/IOException.h"
 #include "java/lang/Boolean.h"
+#include "java/lang/Character.h"
 #include "java/lang/Double.h"
 #include "java/lang/Exception.h"
 #include "java/lang/Integer.h"
@@ -525,6 +527,9 @@
     }
     else if ([((NSString *) IOSObjectArray_Get(sa, 0)) isEqual:@"compute"]) {
       return [[FFTLengthCompute alloc] init];
+    }
+    else if ([JavaLangCharacter isLetterWithChar:[((NSString *) IOSObjectArray_Get(sa, 0)) charAtWithInt:0]] || [((NSString *) IOSObjectArray_Get(sa, 0)) charAtWithInt:0] == '/') {
+      return [[FFTLengthFromDataModel alloc] initWithNSString:IOSObjectArray_Get(sa, 0)];
     }
     else {
       return [[FFTLengthFixed alloc] initWithDouble:[((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) sizeToPixelsWithNSString:IOSObjectArray_Get(sa, 0)]];

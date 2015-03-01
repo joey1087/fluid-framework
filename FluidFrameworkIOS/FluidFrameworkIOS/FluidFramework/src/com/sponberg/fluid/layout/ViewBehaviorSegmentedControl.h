@@ -17,9 +17,13 @@
 @interface FFTViewBehaviorSegmentedControl : FFTViewBehavior {
  @public
   IOSObjectArray *options_;
-  FFTColor *color_;
+  FFTColor *textAndLineColor_;
+  FFTColor *selectedTextColor_;
+  FFTColor *backgroundColor_;
+  FFTColor *selectedBackgroundColor_;
   NSString *selectedIndexKey_;
   JavaLangDouble *androidPadding_;
+  JavaLangDouble *fontSize_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties;
@@ -28,19 +32,35 @@
 
 - (IOSObjectArray *)getOptions;
 
-- (FFTColor *)getColor;
+- (FFTColor *)getTextAndLineColor;
+
+- (FFTColor *)getSelectedTextColor;
+
+- (FFTColor *)getBackgroundColor;
+
+- (FFTColor *)getSelectedBackgroundColor;
 
 - (NSString *)getSelectedIndexKey;
 
 - (JavaLangDouble *)getAndroidPadding;
 
+- (JavaLangDouble *)getFontSize;
+
 - (void)setOptionsWithNSStringArray:(IOSObjectArray *)options;
 
-- (void)setColorWithFFTColor:(FFTColor *)color;
+- (void)setTextAndLineColorWithFFTColor:(FFTColor *)textAndLineColor;
+
+- (void)setSelectedTextColorWithFFTColor:(FFTColor *)selectedTextColor;
+
+- (void)setBackgroundColorWithFFTColor:(FFTColor *)backgroundColor;
+
+- (void)setSelectedBackgroundColorWithFFTColor:(FFTColor *)selectedBackgroundColor;
 
 - (void)setSelectedIndexKeyWithNSString:(NSString *)selectedIndexKey;
 
 - (void)setAndroidPaddingWithJavaLangDouble:(JavaLangDouble *)androidPadding;
+
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize;
 
 - (void)copyAllFieldsTo:(FFTViewBehaviorSegmentedControl *)other;
 
@@ -49,9 +69,13 @@
 __attribute__((always_inline)) inline void FFTViewBehaviorSegmentedControl_init() {}
 
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, options_, IOSObjectArray *)
-J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, color_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, textAndLineColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, selectedTextColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, backgroundColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, selectedBackgroundColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, selectedIndexKey_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, androidPadding_, JavaLangDouble *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, fontSize_, JavaLangDouble *)
 
 typedef FFTViewBehaviorSegmentedControl ComSponbergFluidLayoutViewBehaviorSegmentedControl;
 

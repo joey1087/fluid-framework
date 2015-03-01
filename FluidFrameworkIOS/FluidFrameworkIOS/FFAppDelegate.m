@@ -316,7 +316,7 @@
     
     if ([screen getBackButtonText]) {
         
-        [self currentNavigationController].topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[screen getBackButtonText] style:UIBarButtonItemStylePlain target:nil action:nil];
+        [self currentNavigationController].topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[[screen getBackButtonText] trim] style:UIBarButtonItemStylePlain target:nil action:nil];
     } else {
         // use default
         [self currentNavigationController].topViewController.navigationItem.backBarButtonItem = nil;

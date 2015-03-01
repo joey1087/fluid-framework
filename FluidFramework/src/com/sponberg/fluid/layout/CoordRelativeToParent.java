@@ -15,7 +15,9 @@ public class CoordRelativeToParent extends Coord {
 	
 	public CoordRelativeToParent(String edge, ArrayList<Subtractor> subtractors) {
 		this.edge = edge;
-		this.subtractors = subtractors;
+		if (subtractors != null) {
+			this.subtractors.addAll(subtractors);
+		}
 	}
 
 	@Override

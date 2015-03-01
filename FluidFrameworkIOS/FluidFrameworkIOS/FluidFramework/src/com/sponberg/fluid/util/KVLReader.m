@@ -4,6 +4,7 @@
 //
 
 #include "IOSClass.h"
+#include "IOSPrimitiveArray.h"
 #include "com/sponberg/fluid/util/KVLReader.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "com/sponberg/fluid/util/KeyValueListModifyable.h"
@@ -72,10 +73,10 @@ id<JavaUtilList> FFTKVLReader_emptyValueList_;
         }
       }
     }
-    if ([((NSString *) nil_chk([((NSString *) nil_chk(line)) trim])) isEqual:@""]) {
+    if (![self containsNonTabCharacterWithNSString:line]) {
       continue;
     }
-    unichar c = [line charAtWithInt:0];
+    unichar c = [((NSString *) nil_chk(line)) charAtWithInt:0];
     int numTabs = 0;
     while (c == 0x0009) {
       numTabs++;
@@ -105,6 +106,21 @@ id<JavaUtilList> FFTKVLReader_emptyValueList_;
       (void) [stack pushWithId:newKvl];
     }
   }
+}
+
+- (BOOL)containsNonTabCharacterWithNSString:(NSString *)s {
+  {
+    IOSByteArray *a__ = [((NSString *) nil_chk(s)) getBytes];
+    char const *b__ = ((IOSByteArray *) nil_chk(a__))->buffer_;
+    char const *e__ = b__ + a__->size_;
+    while (b__ < e__) {
+      char c = (*b__++);
+      if (c != 0x0009) {
+        return YES;
+      }
+    }
+  }
+  return NO;
 }
 
 - (id<JavaUtilList>)getWithNSString:(NSString *)key {
@@ -246,6 +262,7 @@ id<JavaUtilList> FFTKVLReader_emptyValueList_;
     { "initWithNSString:", "KVLReader", NULL, 0x1, "Ljava.io.IOException;" },
     { "initWithJavaIoBufferedReader:", "KVLReader", NULL, 0x1, "Ljava.io.IOException;" },
     { "init__WithJavaIoBufferedReader:", "init", "V", 0x2, "Ljava.io.IOException;" },
+    { "containsNonTabCharacterWithNSString:", "containsNonTabCharacter", "Z", 0x4, NULL },
     { "getWithNSString:", "get", "Ljava.util.List;", 0x1, NULL },
     { "getWithValueWithNSString:withNSString:", "getWithValue", "Lcom.sponberg.fluid.util.KeyValueList;", 0x1, NULL },
     { "containsWithNSString:", "contains", "Z", 0x1, NULL },
@@ -268,7 +285,7 @@ id<JavaUtilList> FFTKVLReader_emptyValueList_;
     { "emptyList_", NULL, 0x18, "Ljava.util.List;", &FFTKVLReader_emptyList_,  },
     { "emptyValueList_", NULL, 0x18, "Ljava.util.List;", &FFTKVLReader_emptyValueList_,  },
   };
-  static J2ObjcClassInfo _FFTKVLReader = { "KVLReader", "com.sponberg.fluid.util", NULL, 0x1, 19, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTKVLReader = { "KVLReader", "com.sponberg.fluid.util", NULL, 0x1, 20, methods, 3, fields, 0, NULL};
   return &_FFTKVLReader;
 }
 

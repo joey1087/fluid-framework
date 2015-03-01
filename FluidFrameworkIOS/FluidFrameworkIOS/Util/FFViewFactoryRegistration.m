@@ -53,6 +53,7 @@
 #import "ViewPosition.h"
 #import "PrecomputeLayoutManager.h"
 #include "UIService.h"
+#include "ViewManager.h"
 
 #include "com/sponberg/fluid/layout/DataModelManager.h"
 
@@ -234,7 +235,7 @@
     NSAttributedString *attString;
     while (fontSizeInUnits >= minimumSizeUnits) {
         
-        float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits] * [[UIScreen mainScreen] scale];
+        float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
         attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:defaultColor];
         
         fSize = [attString boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
@@ -267,7 +268,7 @@
 }
 
 + (UIFont *)fontFor:(NSString *)name sizeInUnits:(float)sizeInUnits {
-    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:sizeInUnits] * [[UIScreen mainScreen] scale];
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:sizeInUnits];
     return [UIFont fontWithName:name size:fontSize];
 }
 
@@ -853,7 +854,21 @@
     
     if (imageName) {
         if (![image.imageName isEqualToString:imageName]) {
-            [image setImage:[UIImage imageNamed:imageName]];
+            UIImage *uiImage;
+            if ([viewBehavior getTintColor] || [viewBehavior getTintColorKey]) {
+                uiImage = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                if ([viewBehavior getTintColor]) {
+                    image.tintColor = [FFView color:[viewBehavior getTintColor]];
+                } else {
+                    NSString *colorString = [[[FFTGlobalState fluidApp] getDataModelManager] getValueWithNSString:info.dataModelKeyPrefix withNSString:[viewBehavior getTintColorKey] withNSString:@"{0}" withNSString:nil];
+                    FFTColor *color = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorString];
+                    image.tintColor = [FFView color:color];
+                }
+            } else {
+                uiImage = [UIImage imageNamed:imageName];
+                image.tintColor = nil;
+            }
+            [image setImage:uiImage];
             image.imageBounds = imageBounds;
             image.imageName = imageName;
         }
@@ -1619,8 +1634,8 @@
     
     [control addTarget:self action:@selector(segControlAction:) forControlEvents:UIControlEventValueChanged];
     
-    if ([viewBehavior getColor]) {
-        UIColor *color = [FFView color:[viewBehavior getColor]];
+    if ([viewBehavior getTextAndLineColor]) {
+        UIColor *color = [FFView color:[viewBehavior getTextAndLineColor]];
         control.tintColor = color;
         [control setTitleTextAttributes:@{NSForegroundColorAttributeName:color} forState:UIControlStateNormal];
     }

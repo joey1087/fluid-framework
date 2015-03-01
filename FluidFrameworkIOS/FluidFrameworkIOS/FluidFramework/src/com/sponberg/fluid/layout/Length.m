@@ -24,6 +24,10 @@
   return NO;
 }
 
+- (BOOL)isFromDataModel {
+  return NO;
+}
+
 - (BOOL)fillRatio {
   return NO;
 }
@@ -53,7 +57,7 @@
 }
 
 - (BOOL)isDynamic {
-  return [self fill] || [self fillRatio] || [self equal] || [self relativeToView] || [self relativeToParent] || [self summation] || [self compute] || [self relativeToRow] || [self relativeToLayer];
+  return [self fill] || [self fillRatio] || [self equal] || [self relativeToView] || [self relativeToParent] || [self summation] || [self compute] || [self relativeToRow] || [self relativeToLayer] || [self isFromDataModel];
 }
 
 - (JavaLangDouble *)getFixedLength {
@@ -70,6 +74,10 @@
 
 - (int)getLayerIndex {
   @throw [[JavaLangRuntimeException alloc] initWithNSString:@"Not implemented"];
+}
+
+- (NSString *)getDataModelKey {
+  return nil;
 }
 
 - (IOSObjectArray *)getSummationOf {
@@ -101,6 +109,7 @@
     { "addSubtractorWithFFTSubtractor:", "addSubtractor", "V", 0x1, NULL },
     { "fill", NULL, "Z", 0x1, NULL },
     { "compute", NULL, "Z", 0x1, NULL },
+    { "isFromDataModel", NULL, "Z", 0x1, NULL },
     { "fillRatio", NULL, "Z", 0x1, NULL },
     { "equal", NULL, "Z", 0x1, NULL },
     { "relativeToView", NULL, "Z", 0x1, NULL },
@@ -113,6 +122,7 @@
     { "getRelativeId", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getRatio", NULL, "D", 0x1, NULL },
     { "getLayerIndex", NULL, "I", 0x1, NULL },
+    { "getDataModelKey", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getSummationOf", NULL, "[Ljava.lang.String;", 0x1, NULL },
     { "getSubtractors", NULL, "Ljava.util.ArrayList;", 0x1, NULL },
     { "setSubtractorsWithJavaUtilArrayList:", "setSubtractors", "V", 0x1, NULL },
@@ -121,7 +131,7 @@
   static J2ObjcFieldInfo fields[] = {
     { "subtractors_", NULL, 0x0, "Ljava.util.ArrayList;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTLength = { "Length", "com.sponberg.fluid.layout", NULL, 0x401, 19, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTLength = { "Length", "com.sponberg.fluid.layout", NULL, 0x401, 21, methods, 1, fields, 0, NULL};
   return &_FFTLength;
 }
 

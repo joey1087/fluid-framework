@@ -128,13 +128,12 @@ public class ViewManager implements ApplicationInitializer {
 	}
 
 	public double fontPointsToPixels(double points) {
-		// 1 point = 1/72 inch
-		double units = points / 72 * 25.4;
+		double units = points / 72 * 25.4 * devicePixelActualToPixelMultiplier;
 		return unitsToPixels(units);
 	}
 
 	public double unitsToFontPoints(double units) {
-		return units * 72 / 25.4;
+		return units * 72 / 25.4 / devicePixelActualToPixelMultiplier;
 	}
 
 	@Override

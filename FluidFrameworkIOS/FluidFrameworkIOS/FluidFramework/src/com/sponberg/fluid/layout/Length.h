@@ -24,6 +24,8 @@
 
 - (BOOL)compute;
 
+- (BOOL)isFromDataModel;
+
 - (BOOL)fillRatio;
 
 - (BOOL)equal;
@@ -47,6 +49,8 @@
 - (double)getRatio;
 
 - (int)getLayerIndex;
+
+- (NSString *)getDataModelKey;
 
 - (IOSObjectArray *)getSummationOf;
 

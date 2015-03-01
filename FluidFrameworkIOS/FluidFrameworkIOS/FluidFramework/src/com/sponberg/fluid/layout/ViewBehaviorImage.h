@@ -6,6 +6,7 @@
 #ifndef _FFTViewBehaviorImage_H_
 #define _FFTViewBehaviorImage_H_
 
+@class FFTColor;
 @class FFTViewBehaviorImage_ImageBounds;
 @class JavaLangDouble;
 @class JavaUtilArrayList;
@@ -23,6 +24,8 @@
   double marginTop_;
   JavaLangDouble *maxWidth_;
   JavaLangDouble *maxHeight_;
+  FFTColor *tintColor_;
+  NSString *tintColorKey_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties;
@@ -55,6 +58,10 @@
 
 - (JavaLangDouble *)getMaxHeight;
 
+- (FFTColor *)getTintColor;
+
+- (NSString *)getTintColorKey;
+
 - (void)setImagesWithJavaUtilArrayList:(JavaUtilArrayList *)images;
 
 - (void)setFillWithBoolean:(BOOL)fill;
@@ -69,6 +76,10 @@
 
 - (void)setMaxHeightWithJavaLangDouble:(JavaLangDouble *)maxHeight;
 
+- (void)setTintColorWithFFTColor:(FFTColor *)tintColor;
+
+- (void)setTintColorKeyWithNSString:(NSString *)tintColorKey;
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorImage *)other;
 
 @end
@@ -80,6 +91,8 @@ J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, align_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, verticalAlign_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, maxWidth_, JavaLangDouble *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, maxHeight_, JavaLangDouble *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, tintColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorImage, tintColorKey_, NSString *)
 
 typedef FFTViewBehaviorImage ComSponbergFluidLayoutViewBehaviorImage;
 

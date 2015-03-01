@@ -120,12 +120,12 @@
 }
 
 - (double)fontPointsToPixelsWithDouble:(double)points {
-  double units = points / 72 * 25.4;
+  double units = points / 72 * 25.4 * devicePixelActualToPixelMultiplier_;
   return [self unitsToPixelsWithDouble:units];
 }
 
 - (double)unitsToFontPointsWithDouble:(double)units {
-  return units * 72 / 25.4;
+  return units * 72 / 25.4 / devicePixelActualToPixelMultiplier_;
 }
 
 - (IOSObjectArray *)getSupportedPlatforms {

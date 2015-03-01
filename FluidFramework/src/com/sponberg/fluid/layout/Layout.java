@@ -199,7 +199,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 					@Override
 					public void run() {
 						double x = source.getX();
-						Double size = subtractorViewsWidth(view.getGivenConstraints().getX().subtractors, true);
+						Double size = subtractorViewsWidth(view.getGivenConstraints().getX2().subtractors, true);
 						if (size == null) {
 							if (!registered) {
 								registerDynamicCoordRelativeHeight(view, this);
@@ -218,7 +218,8 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 					@Override
 					public void run() {
 						double x = source.getX2();
-						Double size = subtractorViewsWidth(view.getGivenConstraints().getX().subtractors, true);
+						
+						Double size = subtractorViewsWidth(view.getGivenConstraints().getX2().subtractors, true);
 						if (size == null) {
 							if (!registered) {
 								registerDynamicCoordRelativeHeight(view, this);
@@ -283,7 +284,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 					@Override
 					public void run() {
 						double y = source.getY();
-						Double size = subtractorViewsHeight(view.getGivenConstraints().getY().subtractors, true);
+						Double size = subtractorViewsHeight(view.getGivenConstraints().getY2().subtractors, true);
 						if (size == null) {
 							if (!registered) {
 								registerDynamicCoordRelativeHeight2(view, this);
@@ -302,7 +303,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 					@Override
 					public void run() {
 						double y = source.getY2();
-						Double size = subtractorViewsHeight(view.getGivenConstraints().getY().subtractors, true);
+						Double size = subtractorViewsHeight(view.getGivenConstraints().getY2().subtractors, true);
 						if (size == null) {
 							if (!registered) {
 								registerDynamicCoordRelativeHeight2(view, this);
@@ -668,7 +669,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 			String viewPath) {
 		setOrientationLandscape(landscape);
 		reset(baseUnit, dataModelPrefix, width);
-		setWidths(width);
+		setWidths(width, dataModelPrefix);
 		setHeights(height, computingHeight, dataModelPrefix, useComputingHeightCache);
 		if (printTable) {
 			printTable();
@@ -685,14 +686,14 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 		return viewPositions;
 	}
 	
-	private void setWidths(double width) {
+	private void setWidths(double width, String dataModelPrefix) {
 		
 		for (Orientation.Layer layer : currentOrientation.layers) {
-			setWidthsHelper(width, layer);
+			setWidthsHelper(width, layer, dataModelPrefix);
 		}
 	}
 	
-	private void setWidthsHelper(double width, Orientation.Layer layer) {
+	private void setWidthsHelper(double width, Orientation.Layer layer, String dataModelPrefix) {
 		
 		// Some views width can be determined on the first pass, such as view width relative to other views
 		// Other views, such as equals or fill, need all the other views in that horizontal chain to be
@@ -716,7 +717,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 				continue;
 			}
 			
-			if (!computeWidth(view, width)) {
+			if (!computeWidth(view, width, dataModelPrefix)) {
 				viewsForSecondPass.add(view);
 			}
 		}
@@ -728,7 +729,7 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 		}
 	}
 
-	private boolean computeWidth(View view, double width) {
+	private boolean computeWidth(View view, double width, String dataModelPrefix) {
 	
 		if (view.getGivenConstraints().width.relativeToView()) {
 			View v = viewMap.get(view.getGivenConstraints().width.getRelativeId());
@@ -754,6 +755,10 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 				sum += v.getWidth() * baseUnit;
 			}
 			view.setWidth(sum);
+		} else if (view.getGivenConstraints().width.isFromDataModel()) {
+			String widthString = GlobalState.fluidApp.getDataModelManager().getValue(dataModelPrefix, 
+					view.getGivenConstraints().width.getDataModelKey(), "{0}", null);
+			view.setWidth(GlobalState.fluidApp.sizeToPixels(widthString));
 		} else {
 			return false;
 		}
@@ -1027,6 +1032,10 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 			double computedHeight = view.getViewBehavior().computeHeight(isInLandscape, dataModelPrefix, view, useComputingHeightCache);
 			computedHeight -= subtractorViewsHeight(view.getGivenConstraints().height.subtractors, false);
 			view.setHeight(computedHeight);
+		} else if (view.getGivenConstraints().height.isFromDataModel()) {
+			String heightString = GlobalState.fluidApp.getDataModelManager().getValue(dataModelPrefix, 
+					view.getGivenConstraints().height.getDataModelKey(), "{0}", null);
+			view.setHeight(GlobalState.fluidApp.sizeToPixels(heightString));
 		} else {
 			throw new RuntimeException("Can't resolve height for " + view);
 		}

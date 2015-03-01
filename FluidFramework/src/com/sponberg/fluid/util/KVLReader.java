@@ -67,11 +67,11 @@ public class KVLReader implements KeyValueListModifyable {
 				}
 			}
 			
-			if (line.trim().equals("")) {
+			if (!containsNonTabCharacter(line)) {
 				// No keys or values on this line
 				continue;
 			}
-
+			
 			// Find number of tabs
 			char c = line.charAt(0);
 			int numTabs = 0;
@@ -111,6 +111,15 @@ public class KVLReader implements KeyValueListModifyable {
 		}
 	}
 
+	protected boolean containsNonTabCharacter(String s) {
+		for (byte c : s.getBytes()) {
+			if (c != '\t') {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public List<? extends KeyValueList> get(String key) {
 		return root.get(key);

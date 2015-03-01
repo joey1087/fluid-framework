@@ -3,16 +3,25 @@
 //  source: src-delomboked/com/sponberg/fluid/util/PrettyPrint.java
 //
 
+#include "IOSClass.h"
+#include "IOSObjectArray.h"
 #include "com/eclipsesource/json/JsonArray.h"
 #include "com/eclipsesource/json/JsonObject.h"
 #include "com/eclipsesource/json/JsonValue.h"
 #include "com/sponberg/fluid/util/PrettyPrint.h"
+#include "java/io/FileReader.h"
+#include "java/lang/Exception.h"
 #include "java/lang/StringBuilder.h"
 #include "java/util/Iterator.h"
 #include "java/util/Map.h"
 #include "java/util/Set.h"
 
 @implementation FFTPrettyPrint
+
++ (void)mainWithNSStringArray:(IOSObjectArray *)args {
+  FFTJsonObject *json = [((FFTJsonValue *) nil_chk([FFTJsonValue readFromWithJavaIoReader:[[JavaIoFileReader alloc] initWithNSString:@"/Users/hsponberg/data.txt"]])) asObject];
+  (void) [FFTPrettyPrint toStringWithFFTJsonObject:json];
+}
 
 + (NSString *)toStringWithJavaUtilMap:(id<JavaUtilMap>)map {
   if (map == nil) {
@@ -96,13 +105,14 @@
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
+    { "mainWithNSStringArray:", "main", "V", 0x9, "Ljava.lang.Exception;" },
     { "toStringWithJavaUtilMap:", "toString", "Ljava.lang.String;", 0x9, NULL },
     { "toStringWithJavaUtilMap:withInt:", "toString", "Ljava.lang.String;", 0xc, NULL },
     { "toStringWithFFTJsonObject:", "toString", "Ljava.lang.String;", 0x9, NULL },
     { "toStringWithFFTJsonObject:withInt:", "toString", "Ljava.lang.String;", 0xc, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _FFTPrettyPrint = { "PrettyPrint", "com.sponberg.fluid.util", NULL, 0x1, 5, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTPrettyPrint = { "PrettyPrint", "com.sponberg.fluid.util", NULL, 0x1, 6, methods, 0, NULL, 0, NULL};
   return &_FFTPrettyPrint;
 }
 

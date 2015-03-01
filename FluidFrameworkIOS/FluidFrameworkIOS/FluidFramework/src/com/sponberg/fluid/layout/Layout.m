@@ -451,7 +451,7 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
     {
       [self setOrientationLandscapeWithBoolean:landscape];
       [self resetWithDouble:baseUnit_ withNSString:dataModelPrefix withDouble:width];
-      [self setWidthsWithDouble:width];
+      [self setWidthsWithDouble:width withNSString:dataModelPrefix];
       [self setHeightsWithDouble:height withBoolean:computingHeight withNSString:dataModelPrefix withBoolean:useComputingHeightCache];
       if (printTable) {
         [self printTable];
@@ -468,14 +468,16 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
   }
 }
 
-- (void)setWidthsWithDouble:(double)width {
+- (void)setWidthsWithDouble:(double)width
+               withNSString:(NSString *)dataModelPrefix {
   for (FFTLayout_Orientation_Layer * __strong layer in nil_chk(((FFTLayout_Orientation *) nil_chk(currentOrientation_))->layers_)) {
-    [self setWidthsHelperWithDouble:width withFFTLayout_Orientation_Layer:layer];
+    [self setWidthsHelperWithDouble:width withFFTLayout_Orientation_Layer:layer withNSString:dataModelPrefix];
   }
 }
 
 - (void)setWidthsHelperWithDouble:(double)width
-  withFFTLayout_Orientation_Layer:(FFTLayout_Orientation_Layer *)layer {
+  withFFTLayout_Orientation_Layer:(FFTLayout_Orientation_Layer *)layer
+                     withNSString:(NSString *)dataModelPrefix {
   JavaUtilArrayList *viewsForSecondPass = [[JavaUtilArrayList alloc] init];
   int horizontalChain = 0;
   for (FFTView * __strong view in nil_chk(((FFTLayout_Orientation_Layer *) nil_chk(layer))->views_)) {
@@ -491,7 +493,7 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
     if (((FFTView *) nil_chk(view))->width_ != nil) {
       continue;
     }
-    if (![self computeWidthWithFFTView:view withDouble:width]) {
+    if (![self computeWidthWithFFTView:view withDouble:width withNSString:dataModelPrefix]) {
       [viewsForSecondPass addWithId:view];
     }
   }
@@ -503,7 +505,8 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
 }
 
 - (BOOL)computeWidthWithFFTView:(FFTView *)view
-                     withDouble:(double)width {
+                     withDouble:(double)width
+                   withNSString:(NSString *)dataModelPrefix {
   if ([((FFTLength *) nil_chk(((FFTConstraints *) nil_chk([((FFTView *) nil_chk(view)) getGivenConstraints]))->width_)) relativeToView]) {
     FFTView *v = [((JavaUtilHashMap *) nil_chk(viewMap_)) getWithId:[((FFTConstraints *) nil_chk([view getGivenConstraints]))->width_ getRelativeId]];
     if ([((FFTView *) nil_chk(v)) getWidth] == nil) {
@@ -537,6 +540,10 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
       }
     }
     [view setWidthWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:sum]];
+  }
+  else if ([((FFTConstraints *) nil_chk([view getGivenConstraints]))->width_ isFromDataModel]) {
+    NSString *widthString = [((FFTDataModelManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getDataModelManager])) getValueWithNSString:dataModelPrefix withNSString:[((FFTConstraints *) nil_chk([view getGivenConstraints]))->width_ getDataModelKey] withNSString:@"{0}" withNSString:nil];
+    [view setWidthWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:widthString]]];
   }
   else {
     return NO;
@@ -792,6 +799,10 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
     double computedHeight = [((FFTViewBehavior *) nil_chk([view getViewBehavior])) computeHeightWithBoolean:isInLandscape__ withNSString:dataModelPrefix withFFTView:view withBoolean:useComputingHeightCache];
     computedHeight -= [((JavaLangDouble *) nil_chk([self subtractorViewsHeightWithJavaUtilArrayList:((FFTConstraints *) nil_chk([view getGivenConstraints]))->height_->subtractors_ withBoolean:NO])) doubleValue];
     [view setHeightWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:computedHeight]];
+  }
+  else if ([((FFTConstraints *) nil_chk([view getGivenConstraints]))->height_ isFromDataModel]) {
+    NSString *heightString = [((FFTDataModelManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getDataModelManager])) getValueWithNSString:dataModelPrefix withNSString:[((FFTConstraints *) nil_chk([view getGivenConstraints]))->height_ getDataModelKey] withNSString:@"{0}" withNSString:nil];
+    [view setHeightWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:heightString]]];
   }
   else {
     @throw [[JavaLangRuntimeException alloc] initWithNSString:[NSString stringWithFormat:@"Can't resolve height for %@", view]];
@@ -1475,9 +1486,9 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
     { "setOrientationLandscapeWithBoolean:", "setOrientationLandscape", "V", 0x21, NULL },
     { "sortAllViewsAccordingToLayerZIndex", NULL, "V", 0x2, NULL },
     { "layoutWithBoolean:withDouble:withDouble:withNSString:withBoolean:withBoolean:withBoolean:withNSString:", "layout", "Ljava.util.ArrayList;", 0x24, NULL },
-    { "setWidthsWithDouble:", "setWidths", "V", 0x2, NULL },
-    { "setWidthsHelperWithDouble:withFFTLayout_Orientation_Layer:", "setWidthsHelper", "V", 0x2, NULL },
-    { "computeWidthWithFFTView:withDouble:", "computeWidth", "Z", 0x2, NULL },
+    { "setWidthsWithDouble:withNSString:", "setWidths", "V", 0x2, NULL },
+    { "setWidthsHelperWithDouble:withFFTLayout_Orientation_Layer:withNSString:", "setWidthsHelper", "V", 0x2, NULL },
+    { "computeWidthWithFFTView:withDouble:withNSString:", "computeWidth", "Z", 0x2, NULL },
     { "computeWidthSecondPassWithFFTView:withDouble:withFFTLayout_Orientation_Layer:", "computeWidthSecondPass", "V", 0x2, NULL },
     { "getRemainingWidthCheckingEarlierChainWithJavaUtilArrayList:withInt:withDouble:withFFTLayout_Orientation_Layer:", "getRemainingWidthCheckingEarlierChain", "D", 0x2, NULL },
     { "setHeightsWithDouble:withBoolean:withNSString:withBoolean:", "setHeights", "V", 0x2, NULL },
@@ -1995,7 +2006,7 @@ FFTLayout_AlignEnum *FFTLayout_AlignEnum_values[6];
 
 - (void)run {
   double x = [((JavaLangDouble *) nil_chk([((FFTView *) nil_chk(val$source_)) getX])) doubleValue];
-  JavaLangDouble *size = [this$0_ subtractorViewsWidthWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getX]))->subtractors_ withBoolean:YES];
+  JavaLangDouble *size = [this$0_ subtractorViewsWidthWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getX2]))->subtractors_ withBoolean:YES];
   if (size == nil) {
     if (!registered_) {
       [this$0_ registerDynamicCoordRelativeHeightWithFFTView:val$view_ withFFTLayoutAction:self];
@@ -2045,7 +2056,7 @@ FFTLayout_AlignEnum *FFTLayout_AlignEnum_values[6];
 
 - (void)run {
   double x = [((JavaLangDouble *) nil_chk([((FFTView *) nil_chk(val$source_)) getX2])) doubleValue];
-  JavaLangDouble *size = [this$0_ subtractorViewsWidthWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getX]))->subtractors_ withBoolean:YES];
+  JavaLangDouble *size = [this$0_ subtractorViewsWidthWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getX2]))->subtractors_ withBoolean:YES];
   if (size == nil) {
     if (!registered_) {
       [this$0_ registerDynamicCoordRelativeHeightWithFFTView:val$view_ withFFTLayoutAction:self];
@@ -2195,7 +2206,7 @@ FFTLayout_AlignEnum *FFTLayout_AlignEnum_values[6];
 
 - (void)run {
   double y = [((JavaLangDouble *) nil_chk([((FFTView *) nil_chk(val$source_)) getY])) doubleValue];
-  JavaLangDouble *size = [this$0_ subtractorViewsHeightWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getY]))->subtractors_ withBoolean:YES];
+  JavaLangDouble *size = [this$0_ subtractorViewsHeightWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getY2]))->subtractors_ withBoolean:YES];
   if (size == nil) {
     if (!registered_) {
       [this$0_ registerDynamicCoordRelativeHeight2WithFFTView:val$view_ withFFTLayoutAction:self];
@@ -2245,7 +2256,7 @@ FFTLayout_AlignEnum *FFTLayout_AlignEnum_values[6];
 
 - (void)run {
   double y = [((JavaLangDouble *) nil_chk([((FFTView *) nil_chk(val$source_)) getY2])) doubleValue];
-  JavaLangDouble *size = [this$0_ subtractorViewsHeightWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getY]))->subtractors_ withBoolean:YES];
+  JavaLangDouble *size = [this$0_ subtractorViewsHeightWithJavaUtilArrayList:((FFTCoord *) nil_chk([((FFTConstraints *) nil_chk([((FFTView *) nil_chk(val$view_)) getGivenConstraints])) getY2]))->subtractors_ withBoolean:YES];
   if (size == nil) {
     if (!registered_) {
       [this$0_ registerDynamicCoordRelativeHeight2WithFFTView:val$view_ withFFTLayoutAction:self];

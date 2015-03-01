@@ -41,7 +41,10 @@ public class Color {
 	}
 	
 	public static Color colorFromString(String colorAsString) {
-		boolean useHtml = !colorAsString.contains(",");
+		boolean useHtml = !colorAsString.contains(",") || colorAsString.startsWith("#");
+		if (colorAsString.startsWith("#")) {
+			colorAsString = colorAsString.substring(1);
+		}
 		if (useHtml) {
 			int red, green, blue;
 			int alpha = 255;

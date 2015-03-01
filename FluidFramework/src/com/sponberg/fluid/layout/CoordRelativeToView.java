@@ -18,7 +18,9 @@ public class CoordRelativeToView extends Coord {
 	public CoordRelativeToView(String edge, String viewId, ArrayList<Subtractor> subtractors) {
 		this.edge = edge;
 		this.viewId = viewId;
-		this.subtractors = subtractors;
+		if (subtractors != null) {
+			this.subtractors.addAll(subtractors);
+		}
 	}
 
 	@Override

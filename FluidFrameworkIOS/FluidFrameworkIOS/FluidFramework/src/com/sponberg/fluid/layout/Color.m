@@ -59,13 +59,16 @@
 }
 
 + (FFTColor *)colorFromStringWithNSString:(NSString *)colorAsString {
-  BOOL useHtml = ![((NSString *) nil_chk(colorAsString)) contains:@","];
+  BOOL useHtml = ![((NSString *) nil_chk(colorAsString)) contains:@","] || [colorAsString hasPrefix:@"#"];
+  if ([colorAsString hasPrefix:@"#"]) {
+    colorAsString = [colorAsString substring:1];
+  }
   if (useHtml) {
     int red;
     int green;
     int blue;
     int alpha = 255;
-    switch (((int) [colorAsString length])) {
+    switch (((int) [((NSString *) nil_chk(colorAsString)) length])) {
       case 6:
       red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:2] withInt:16];
       green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:4] withInt:16];
@@ -94,7 +97,7 @@
     return [[FFTColor alloc] initWithInt:red withInt:green withInt:blue withInt:alpha];
   }
   else {
-    IOSObjectArray *ca = [colorAsString split:@","];
+    IOSObjectArray *ca = [((NSString *) nil_chk(colorAsString)) split:@","];
     if ((int) [((IOSObjectArray *) nil_chk(ca)) count] != 3 && (int) [ca count] != 4) {
       @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:[NSString stringWithFormat:@"Invalid color: %@", colorAsString]];
     }

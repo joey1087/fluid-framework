@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Coord {
 
-	ArrayList<Subtractor> subtractors = new ArrayList<>();
+	final ArrayList<Subtractor> subtractors = new ArrayList<>();
 	
 	public void addSubtractor(Subtractor length) {
 		subtractors.add(length);

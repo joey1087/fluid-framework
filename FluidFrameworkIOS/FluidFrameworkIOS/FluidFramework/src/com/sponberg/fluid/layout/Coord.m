@@ -63,7 +63,7 @@
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "subtractors_", NULL, 0x0, "Ljava.util.ArrayList;", NULL,  },
+    { "subtractors_", NULL, 0x10, "Ljava.util.ArrayList;", NULL,  },
   };
   static J2ObjcClassInfo _FFTCoord = { "Coord", "com.sponberg.fluid.layout", NULL, 0x401, 8, methods, 1, fields, 0, NULL};
   return &_FFTCoord;

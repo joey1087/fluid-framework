@@ -4,17 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.android.util.OnTouchListenerClick;
 import com.sponberg.fluid.layout.ActionListener;
+import com.sponberg.fluid.layout.Color;
 import com.sponberg.fluid.layout.ViewBehaviorImage.ImageBounds;
 
 public class FluidImageView extends View implements FluidViewAndroid {
 
 	protected Bitmap bitmap;
+	
+	protected BitmapDrawable bitmapDrawable;
 	
 	protected Bounds bounds;
 	
@@ -36,15 +41,24 @@ public class FluidImageView extends View implements FluidViewAndroid {
 	
 	boolean cleanedUp = false;
 	
+	Integer tintColor = null;
+	
 	public FluidImageView(Context context, Bitmap bitmap, String imageName, ImageBounds imageBounds, 
 			final String viewPath, final String dataModelKeyParent, final String dataModelKey,
 			final CustomLayout rootCustomLayout) {
+		this(context, bitmap, imageName, imageBounds, viewPath, dataModelKeyParent, dataModelKey, rootCustomLayout, null);
+	}
+	
+	public FluidImageView(Context context, Bitmap bitmap, String imageName, ImageBounds imageBounds, 
+			final String viewPath, final String dataModelKeyParent, final String dataModelKey,
+			final CustomLayout rootCustomLayout, final Color tintColor) {
 		super(context);
-		this.bitmap = bitmap;
+		this.tintColor = (tintColor == null) ? null : CustomLayout.getColor(tintColor);
 		this.imageName = imageName;
 		this.imageBounds = imageBounds;
 		this.rootCustomLayout = rootCustomLayout;
-
+		setBitmap(bitmap);
+		
 		paint.setAntiAlias(true);
 		paint.setFilterBitmap(true);
 		paint.setDither(true);
@@ -71,6 +85,7 @@ public class FluidImageView extends View implements FluidViewAndroid {
 		setMeasuredDimension(bounds.width, bounds.height);
 	}
 
+	@Override
 	public void setBounds(Bounds bounds) {
 		this.bounds = bounds;
 	}
@@ -88,7 +103,10 @@ public class FluidImageView extends View implements FluidViewAndroid {
 		}
 		super.onDraw(canvas);
 		
-		canvas.drawBitmap(bitmap, source, dest, paint);
+		if (bitmapDrawable != null) {
+			bitmapDrawable.setBounds(dest);
+			bitmapDrawable.draw(canvas);
+		}
 	}
 
 	@Override
@@ -109,6 +127,18 @@ public class FluidImageView extends View implements FluidViewAndroid {
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
 		this.needToComputeRects = true;
+		
+		if (bitmap == null) {
+			bitmapDrawable = null;
+			return;
+		}
+		
+		bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+		bitmapDrawable.setAntiAlias(true);
+		
+		if (tintColor != null) {
+			bitmapDrawable.mutate().setColorFilter(tintColor, Mode.MULTIPLY);
+		}
 	}
 	
 	public ImageBounds getImageBounds() {

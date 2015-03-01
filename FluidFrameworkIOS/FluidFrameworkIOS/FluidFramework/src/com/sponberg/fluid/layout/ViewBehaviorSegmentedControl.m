@@ -23,23 +23,39 @@
       @throw [[JavaLangRuntimeException alloc] initWithNSString:@"options must be specified for segmented-control"];
     }
     options_ = [optionsList toArrayWithNSObjectArray:[IOSObjectArray arrayWithLength:[((id<JavaUtilList>) nil_chk(optionsList)) size] type:[IOSClass classWithClass:[NSString class]]]];
-    self->color_ = [self getColorPropertyWithNSString:@"color" withFFTColor:nil withFFTKeyValueList:properties];
+    self->textAndLineColor_ = [self getColorPropertyWithNSString:@"text-and-line-color" withFFTColor:nil withFFTKeyValueList:properties];
+    self->selectedTextColor_ = [self getColorPropertyWithNSString:@"selected-text-color" withFFTColor:[[FFTColor alloc] initWithInt:255 withInt:255 withInt:255 withInt:255] withFFTKeyValueList:properties];
+    self->backgroundColor_ = [self getColorPropertyWithNSString:@"background-color" withFFTColor:[[FFTColor alloc] initWithInt:0 withInt:0 withInt:0 withInt:0] withFFTKeyValueList:properties];
+    self->selectedBackgroundColor_ = [self getColorPropertyWithNSString:@"background-color" withFFTColor:textAndLineColor_ withFFTKeyValueList:properties];
     self->selectedIndexKey_ = [FFTViewBehavior getStringPropertyWithNSString:@"selected-index" withNSString:nil withFFTKeyValueList:properties];
     self->androidPadding_ = [FFTViewBehavior getSizePropertyWithNSString:@"android-padding" withNSString:@"0" withFFTKeyValueList:properties];
+    self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
   }
   return self;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorSegmentedControl(options=%@, color=%@, selectedIndexKey=%@, androidPadding=%@)", [JavaUtilArrays deepToStringWithNSObjectArray:[self getOptions]], [self getColor], [self getSelectedIndexKey], [self getAndroidPadding]];
+  return [NSString stringWithFormat:@"ViewBehaviorSegmentedControl(options=%@, textAndLineColor=%@, selectedTextColor=%@, backgroundColor=%@, selectedBackgroundColor=%@, selectedIndexKey=%@, androidPadding=%@, fontSize=%@)", [JavaUtilArrays deepToStringWithNSObjectArray:[self getOptions]], [self getTextAndLineColor], [self getSelectedTextColor], [self getBackgroundColor], [self getSelectedBackgroundColor], [self getSelectedIndexKey], [self getAndroidPadding], [self getFontSize]];
 }
 
 - (IOSObjectArray *)getOptions {
   return self->options_;
 }
 
-- (FFTColor *)getColor {
-  return self->color_;
+- (FFTColor *)getTextAndLineColor {
+  return self->textAndLineColor_;
+}
+
+- (FFTColor *)getSelectedTextColor {
+  return self->selectedTextColor_;
+}
+
+- (FFTColor *)getBackgroundColor {
+  return self->backgroundColor_;
+}
+
+- (FFTColor *)getSelectedBackgroundColor {
+  return self->selectedBackgroundColor_;
 }
 
 - (NSString *)getSelectedIndexKey {
@@ -50,12 +66,28 @@
   return self->androidPadding_;
 }
 
+- (JavaLangDouble *)getFontSize {
+  return self->fontSize_;
+}
+
 - (void)setOptionsWithNSStringArray:(IOSObjectArray *)options {
   self->options_ = options;
 }
 
-- (void)setColorWithFFTColor:(FFTColor *)color {
-  self->color_ = color;
+- (void)setTextAndLineColorWithFFTColor:(FFTColor *)textAndLineColor {
+  self->textAndLineColor_ = textAndLineColor;
+}
+
+- (void)setSelectedTextColorWithFFTColor:(FFTColor *)selectedTextColor {
+  self->selectedTextColor_ = selectedTextColor;
+}
+
+- (void)setBackgroundColorWithFFTColor:(FFTColor *)backgroundColor {
+  self->backgroundColor_ = backgroundColor;
+}
+
+- (void)setSelectedBackgroundColorWithFFTColor:(FFTColor *)selectedBackgroundColor {
+  self->selectedBackgroundColor_ = selectedBackgroundColor;
 }
 
 - (void)setSelectedIndexKeyWithNSString:(NSString *)selectedIndexKey {
@@ -66,12 +98,20 @@
   self->androidPadding_ = androidPadding;
 }
 
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize {
+  self->fontSize_ = fontSize;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorSegmentedControl *)other {
   [super copyAllFieldsTo:other];
   other->androidPadding_ = androidPadding_;
-  other->color_ = color_;
+  other->backgroundColor_ = backgroundColor_;
+  other->fontSize_ = fontSize_;
   other->options_ = options_;
+  other->selectedBackgroundColor_ = selectedBackgroundColor_;
   other->selectedIndexKey_ = selectedIndexKey_;
+  other->selectedTextColor_ = selectedTextColor_;
+  other->textAndLineColor_ = textAndLineColor_;
 }
 
 + (J2ObjcClassInfo *)__metadata {
@@ -79,21 +119,33 @@
     { "initWithFFTKeyValueList:", "ViewBehaviorSegmentedControl", NULL, 0x1, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "getOptions", NULL, "[Ljava.lang.String;", 0x1, NULL },
-    { "getColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getTextAndLineColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getSelectedTextColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getBackgroundColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getSelectedBackgroundColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "getSelectedIndexKey", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getAndroidPadding", NULL, "Ljava.lang.Double;", 0x1, NULL },
+    { "getFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "setOptionsWithNSStringArray:", "setOptions", "V", 0x1, NULL },
-    { "setColorWithFFTColor:", "setColor", "V", 0x1, NULL },
+    { "setTextAndLineColorWithFFTColor:", "setTextAndLineColor", "V", 0x1, NULL },
+    { "setSelectedTextColorWithFFTColor:", "setSelectedTextColor", "V", 0x1, NULL },
+    { "setBackgroundColorWithFFTColor:", "setBackgroundColor", "V", 0x1, NULL },
+    { "setSelectedBackgroundColorWithFFTColor:", "setSelectedBackgroundColor", "V", 0x1, NULL },
     { "setSelectedIndexKeyWithNSString:", "setSelectedIndexKey", "V", 0x1, NULL },
     { "setAndroidPaddingWithJavaLangDouble:", "setAndroidPadding", "V", 0x1, NULL },
+    { "setFontSizeWithJavaLangDouble:", "setFontSize", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "options_", NULL, 0x2, "[Ljava.lang.String;", NULL,  },
-    { "color_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "textAndLineColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "selectedTextColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "backgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "selectedBackgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "selectedIndexKey_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "androidPadding_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
+    { "fontSize_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorSegmentedControl = { "ViewBehaviorSegmentedControl", "com.sponberg.fluid.layout", NULL, 0x1, 10, methods, 4, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorSegmentedControl = { "ViewBehaviorSegmentedControl", "com.sponberg.fluid.layout", NULL, 0x1, 18, methods, 8, fields, 0, NULL};
   return &_FFTViewBehaviorSegmentedControl;
 }
 

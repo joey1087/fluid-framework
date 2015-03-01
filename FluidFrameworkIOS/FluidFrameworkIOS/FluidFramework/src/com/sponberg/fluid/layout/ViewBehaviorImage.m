@@ -6,6 +6,7 @@
 #include "IOSClass.h"
 #include "com/sponberg/fluid/FluidApp.h"
 #include "com/sponberg/fluid/GlobalState.h"
+#include "com/sponberg/fluid/layout/Color.h"
 #include "com/sponberg/fluid/layout/DataModelManager.h"
 #include "com/sponberg/fluid/layout/ImageManager.h"
 #include "com/sponberg/fluid/layout/ViewBehavior.h"
@@ -29,6 +30,8 @@
     self->marginTop_ = [((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) unitsToPixelsWithDouble:[((JavaLangDouble *) nil_chk([FFTViewBehavior getDoublePropertyWithNSString:@"margin-top" withJavaLangDouble:[JavaLangDouble valueOfWithDouble:0.0] withFFTKeyValueList:properties])) doubleValue]];
     self->maxWidth_ = [FFTViewBehavior getSizePropertyWithNSString:@"image-max-width" withNSString:nil withFFTKeyValueList:properties];
     self->maxHeight_ = [FFTViewBehavior getSizePropertyWithNSString:@"image-max-height" withNSString:nil withFFTKeyValueList:properties];
+    self->tintColor_ = [self getColorPropertyWithNSString:@"tint-color" withFFTColor:nil withFFTKeyValueList:properties];
+    self->tintColorKey_ = [FFTViewBehavior getStringPropertyWithNSString:@"tint-color-key" withNSString:nil withFFTKeyValueList:properties];
   }
   return self;
 }
@@ -115,7 +118,7 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorImage(images=%@, fill=%@, align=%@, verticalAlign=%@, marginTop=%f, maxWidth=%@, maxHeight=%@)", [self getImages], [JavaLangBoolean toStringWithBoolean:[self isFill]], [self getAlign], [self getVerticalAlign], [self getMarginTop], [self getMaxWidth], [self getMaxHeight]];
+  return [NSString stringWithFormat:@"ViewBehaviorImage(images=%@, fill=%@, align=%@, verticalAlign=%@, marginTop=%f, maxWidth=%@, maxHeight=%@, tintColor=%@, tintColorKey=%@)", [self getImages], [JavaLangBoolean toStringWithBoolean:[self isFill]], [self getAlign], [self getVerticalAlign], [self getMarginTop], [self getMaxWidth], [self getMaxHeight], [self getTintColor], [self getTintColorKey]];
 }
 
 - (JavaUtilArrayList *)getImages {
@@ -146,6 +149,14 @@
   return self->maxHeight_;
 }
 
+- (FFTColor *)getTintColor {
+  return self->tintColor_;
+}
+
+- (NSString *)getTintColorKey {
+  return self->tintColorKey_;
+}
+
 - (void)setImagesWithJavaUtilArrayList:(JavaUtilArrayList *)images {
   self->images_ = images;
 }
@@ -174,6 +185,14 @@
   self->maxHeight_ = maxHeight;
 }
 
+- (void)setTintColorWithFFTColor:(FFTColor *)tintColor {
+  self->tintColor_ = tintColor;
+}
+
+- (void)setTintColorKeyWithNSString:(NSString *)tintColorKey {
+  self->tintColorKey_ = tintColorKey;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorImage *)other {
   [super copyAllFieldsTo:other];
   other->align_ = align_;
@@ -182,6 +201,8 @@
   other->marginTop_ = marginTop_;
   other->maxHeight_ = maxHeight_;
   other->maxWidth_ = maxWidth_;
+  other->tintColor_ = tintColor_;
+  other->tintColorKey_ = tintColorKey_;
   other->verticalAlign_ = verticalAlign_;
 }
 
@@ -200,6 +221,8 @@
     { "getMarginTop", NULL, "D", 0x1, NULL },
     { "getMaxWidth", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "getMaxHeight", NULL, "Ljava.lang.Double;", 0x1, NULL },
+    { "getTintColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getTintColorKey", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "setImagesWithJavaUtilArrayList:", "setImages", "V", 0x1, NULL },
     { "setFillWithBoolean:", "setFill", "V", 0x1, NULL },
     { "setAlignWithNSString:", "setAlign", "V", 0x1, NULL },
@@ -207,6 +230,8 @@
     { "setMarginTopWithDouble:", "setMarginTop", "V", 0x1, NULL },
     { "setMaxWidthWithJavaLangDouble:", "setMaxWidth", "V", 0x1, NULL },
     { "setMaxHeightWithJavaLangDouble:", "setMaxHeight", "V", 0x1, NULL },
+    { "setTintColorWithFFTColor:", "setTintColor", "V", 0x1, NULL },
+    { "setTintColorKeyWithNSString:", "setTintColorKey", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "images_", NULL, 0x2, "Ljava.util.ArrayList;", NULL,  },
@@ -216,8 +241,10 @@
     { "marginTop_", NULL, 0x2, "D", NULL,  },
     { "maxWidth_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "maxHeight_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
+    { "tintColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "tintColorKey_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorImage = { "ViewBehaviorImage", "com.sponberg.fluid.layout", NULL, 0x1, 20, methods, 7, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorImage = { "ViewBehaviorImage", "com.sponberg.fluid.layout", NULL, 0x1, 24, methods, 9, fields, 0, NULL};
   return &_FFTViewBehaviorImage;
 }
 

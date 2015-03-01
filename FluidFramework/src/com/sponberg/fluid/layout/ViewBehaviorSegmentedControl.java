@@ -15,12 +15,20 @@ public class ViewBehaviorSegmentedControl extends ViewBehavior {
 
 	private String[] options;
 
-	private Color color;
+	private Color textAndLineColor;
+	
+	private Color selectedTextColor;
+
+	private Color backgroundColor;
+
+	private Color selectedBackgroundColor;
 
 	private String selectedIndexKey;
 
 	private Double androidPadding;
 
+	private Double fontSize;
+	
 	public ViewBehaviorSegmentedControl(KeyValueList properties) {
 		super(ViewBehavior.segmentedControl, properties);
 
@@ -31,11 +39,16 @@ public class ViewBehaviorSegmentedControl extends ViewBehavior {
 
 		options = optionsList.toArray(new String[optionsList.size()]);
 
-		this.color = getColorProperty("color", null, properties);
+		this.textAndLineColor = getColorProperty("text-and-line-color", null, properties);
+		this.selectedTextColor = getColorProperty("selected-text-color", new Color(255, 255, 255, 255), properties);
+		this.backgroundColor = getColorProperty("background-color", new Color(0, 0, 0, 0), properties);
+		this.selectedBackgroundColor = getColorProperty("background-color", textAndLineColor, properties);
 
 		this.selectedIndexKey = getStringProperty("selected-index", null, properties);
 
 		this.androidPadding = getSizeProperty("android-padding", "0", properties);
+		
+		this.fontSize = getFontSizeProperty("font-size", null, properties);
 	}
 
 }

@@ -140,13 +140,16 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction;
                              withBoolean:(BOOL)useComputingHeightCache
                             withNSString:(NSString *)viewPath;
 
-- (void)setWidthsWithDouble:(double)width;
+- (void)setWidthsWithDouble:(double)width
+               withNSString:(NSString *)dataModelPrefix;
 
 - (void)setWidthsHelperWithDouble:(double)width
-  withFFTLayout_Orientation_Layer:(FFTLayout_Orientation_Layer *)layer;
+  withFFTLayout_Orientation_Layer:(FFTLayout_Orientation_Layer *)layer
+                     withNSString:(NSString *)dataModelPrefix;
 
 - (BOOL)computeWidthWithFFTView:(FFTView *)view
-                     withDouble:(double)width;
+                     withDouble:(double)width
+                   withNSString:(NSString *)dataModelPrefix;
 
 - (void)computeWidthSecondPassWithFFTView:(FFTView *)view
                                withDouble:(double)width

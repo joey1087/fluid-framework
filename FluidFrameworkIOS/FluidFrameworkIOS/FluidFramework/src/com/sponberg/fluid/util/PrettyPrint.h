@@ -7,12 +7,15 @@
 #define _FFTPrettyPrint_H_
 
 @class FFTJsonObject;
+@class IOSObjectArray;
 @protocol JavaUtilMap;
 
 #import "JreEmulation.h"
 
 @interface FFTPrettyPrint : NSObject {
 }
+
++ (void)mainWithNSStringArray:(IOSObjectArray *)args;
 
 + (NSString *)toStringWithJavaUtilMap:(id<JavaUtilMap>)map;
 

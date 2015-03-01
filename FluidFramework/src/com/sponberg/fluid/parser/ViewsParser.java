@@ -22,6 +22,7 @@ import com.sponberg.fluid.layout.LengthCompute;
 import com.sponberg.fluid.layout.LengthEquals;
 import com.sponberg.fluid.layout.LengthFill;
 import com.sponberg.fluid.layout.LengthFixed;
+import com.sponberg.fluid.layout.LengthFromDataModel;
 import com.sponberg.fluid.layout.LengthRelativeToLayer;
 import com.sponberg.fluid.layout.LengthRelativeToParent;
 import com.sponberg.fluid.layout.LengthRelativeToRow;
@@ -562,6 +563,8 @@ public class ViewsParser implements ApplicationInitializer {
 				return new LengthEquals(null);
 			} else if (sa[0].equals("compute")) {
 				return new LengthCompute();
+			} else if (Character.isLetter(sa[0].charAt(0)) || sa[0].charAt(0) == '/') {
+				return new LengthFromDataModel(sa[0]);
 			} else {
 				return new LengthFixed(GlobalState.fluidApp.sizeToPixels(sa[0]));
 			}

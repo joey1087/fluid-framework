@@ -27,7 +27,11 @@ public class ViewBehaviorImage extends ViewBehavior {
 	private Double maxWidth;
 
 	private Double maxHeight;
+	
+	private Color tintColor;
 
+	private String tintColorKey;
+	
 	public ViewBehaviorImage(KeyValueList properties) {
 		super(ViewBehavior.image, properties);
 		makeImages(properties);
@@ -37,6 +41,8 @@ public class ViewBehaviorImage extends ViewBehavior {
 		this.marginTop = GlobalState.fluidApp.unitsToPixels(getDoubleProperty("margin-top", 0d, properties));
 		this.maxWidth = getSizeProperty("image-max-width", null, properties);
 		this.maxHeight = getSizeProperty("image-max-height", null, properties);
+		this.tintColor = getColorProperty("tint-color", null, properties);
+		this.tintColorKey = getStringProperty("tint-color-key", null, properties);
 	}
 
 	private void makeImages(KeyValueList properties) {

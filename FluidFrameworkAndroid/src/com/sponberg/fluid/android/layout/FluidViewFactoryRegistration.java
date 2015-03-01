@@ -501,7 +501,17 @@ public class FluidViewFactoryRegistration {
 				bm = FluidViewFactoryRegistration.getBitmapFor(imageNameKey, imageBounds.getWidth(), imageBounds.getHeight(), info.context.getResources());
 			}
 
-			FluidImageView image = new FluidImageView(info.context, bm, imageNameKey, imageBounds, info.viewPath, info.dataModelPrefix, view.getKey(), info.customLayout);
+			com.sponberg.fluid.layout.Color tintColor = null;
+			if (viewBehavior.getTintColor() != null) {
+				tintColor = viewBehavior.getTintColor();
+			} else if (viewBehavior.getTintColorKey() != null) {
+				String colorString = GlobalState.fluidApp.getDataModelManager().getValue(info.dataModelPrefix, viewBehavior.getTintColorKey(), "{0}", null);
+				tintColor = GlobalState.fluidApp.getViewManager().getColor(colorString);
+			}
+			
+			FluidImageView image = new FluidImageView(info.context, bm, imageNameKey, imageBounds,
+					info.viewPath, info.dataModelPrefix, view.getKey(), info.customLayout,
+					tintColor);
 			image.bounds = info.bounds;
 
 			if (aspectRatio != null) {

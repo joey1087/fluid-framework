@@ -23,6 +23,10 @@ public abstract class Length {
 		return false;
 	}
 
+	public boolean isFromDataModel() {
+		return false;
+	}
+	
 	public boolean fillRatio() {
 		return false;
 	}
@@ -60,7 +64,8 @@ public abstract class Length {
 				summation() || 
 				compute() || 
 				relativeToRow() ||
-				relativeToLayer();
+				relativeToLayer() ||
+				isFromDataModel();
 	}
 	
 	public Double getFixedLength() {
@@ -77,6 +82,10 @@ public abstract class Length {
 	
 	public int getLayerIndex() {
 		throw new RuntimeException("Not implemented");		
+	}
+	
+	public String getDataModelKey() {
+		return null;
 	}
 	
 	public String[] getSummationOf() {

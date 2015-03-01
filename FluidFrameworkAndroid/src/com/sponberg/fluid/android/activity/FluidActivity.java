@@ -165,7 +165,11 @@ public class FluidActivity extends ActionBarActivity  {
 
 				for (com.sponberg.fluid.layout.Tab tab : GlobalState.fluidApp
 						.getTabs()) {
-					Tab tabView = actionBar.newTab().setText(tab.getLabel());
+					
+					Tab tabView = actionBar.newTab();
+					tabView.setText(tab.getLabel());
+					tabView.setCustomView(getCustomViewForTab(tab));
+					
 					baseScreenIdForTab.put(tabView.getText().toString(), tab.getScreenId());
 					tabForScreenId.put(tab.getScreenId(), tabView);
 					tabView.setTabListener(tabListener);
@@ -196,6 +200,10 @@ public class FluidActivity extends ActionBarActivity  {
 		}
 	}
 
+	protected View getCustomViewForTab(com.sponberg.fluid.layout.Tab tab) {
+		return null;
+	}
+	
 	protected void setFluidScreen(String screenId, boolean removeCurrentView, boolean saveCurrentScreen) {
 
 		String saveScreenId = screenId;
