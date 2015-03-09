@@ -17,6 +17,7 @@
   static J2ObjcMethodInfo methods[] = {
     { "initiatePhoneCallWithNSString:", "initiatePhoneCall", "V", 0x401, NULL },
     { "initiateEmailWithNSStringArray:withNSString:", "initiateEmail", "V", 0x401, NULL },
+    { "initiateExternalAppWithNSString:withId:", "initiateExternalApp", "Z", 0x401, NULL },
     { "runOnUiThreadWithJavaLangRunnable:", "runOnUiThread", "V", 0x401, NULL },
     { "isOnUiThread", NULL, "Z", 0x401, NULL },
     { "getDeviceNotificationIdWithFFTCallbackFailable:", "getDeviceNotificationId", "V", 0x401, NULL },
@@ -27,7 +28,7 @@
     { "getDeviceSystemVersion", NULL, "Ljava.lang.String;", 0x401, NULL },
     { "getAppVersion", NULL, "Ljava.lang.String;", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTSystemService = { "SystemService", "com.sponberg.fluid", NULL, 0x201, 11, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTSystemService = { "SystemService", "com.sponberg.fluid", NULL, 0x201, 12, methods, 0, NULL, 0, NULL};
   return &_FFTSystemService;
 }
 

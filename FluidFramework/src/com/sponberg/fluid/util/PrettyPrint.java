@@ -1,5 +1,6 @@
 package com.sponberg.fluid.util;
 
+import java.io.FileReader;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,6 +11,12 @@ import com.eclipsesource.json.JsonValue;
 
 public class PrettyPrint {
 
+	public static void main(String[] args) throws Exception {
+		JsonObject json = JsonValue.readFrom(new FileReader("/Users/hsponberg/data.txt")).asObject();
+		String s = toString(json);
+		System.out.println(s);
+	}
+	
 	public static <K, V> String toString(Map<K, V> map) {
 		if (map == null) {
 			return "";

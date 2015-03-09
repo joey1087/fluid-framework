@@ -91,4 +91,9 @@ public class MockSystemService implements SystemService {
 		return "mock";
 	}
 
+	@Override
+	public boolean initiateExternalApp(String customAppId, Object extra) {
+		return false;
+	}
+
 }

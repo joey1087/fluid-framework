@@ -91,28 +91,23 @@ public class DefaultUIService implements UIService {
 			}			
 		});
 	}
-	
-	@Override
+
 	public void setLayout(String screenId, boolean stack) {
 		app.setLayout(screenId, stack);
 	}
 
-	@Override
 	public void closeCurrentLayout() {
 		app.closeCurrentLayout();
 	}
 
-	@Override
 	public void showModalView(ModalView modalView) {
 		app.showModalView(modalView);
 	}
 
-	@Override
 	public void dismissModalView(ModalView modalView) {
 		app.dismissModalView(modalView);
 	}
 	
-	@Override
 	public float computeHeightOfText(String text, float width, String fontName, float fontSizeInUnits) {
 		Spannable s = FluidViewFactoryRegistration.createAttributedText(text);
 		BoundsWithFontSize boundsWithFontSize = 
@@ -121,12 +116,10 @@ public class DefaultUIService implements UIService {
 		return boundsWithFontSize.getComputedHeight();
 	}
 
-	@Override
 	public void removeSplashScreen(String firstScreenId, boolean insteadShowCurrentScreenIfAny) {
 		app.removeSplashScreen(firstScreenId, insteadShowCurrentScreenIfAny);
 	}
 
-	@Override
 	public int getScreenWidthInPixels() {
 		Display display = app.getCurrentActivity().getWindowManager().getDefaultDisplay();
 		return display.getWidth();
@@ -138,7 +131,6 @@ public class DefaultUIService implements UIService {
 		return display.getHeight();
 	}
 
-	@Override
 	public void refreshMenuButtons() {
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 			@Override
@@ -148,22 +140,18 @@ public class DefaultUIService implements UIService {
 		});
 	}
 
-	@Override
 	public void grabFocusForView(String viewId) {
 		app.grabFocusForView(viewId);
 	}
 
-	@Override
 	public void hideKeyboard() {
 		app.hideKeyboard();
 	}
 
-	@Override
 	public void setLayoutStack(String... screenIds) {
 		app.setLayoutStack(screenIds);
 	}
 
-	@Override
 	public void scrollToBottom(final String viewPath, final String viewId) {
 		app.scrollToBottom(viewPath, viewId);
 	}

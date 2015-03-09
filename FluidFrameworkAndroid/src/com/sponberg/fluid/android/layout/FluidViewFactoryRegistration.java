@@ -46,6 +46,7 @@ import com.sponberg.fluid.layout.FluidViewFactory.FluidViewBuilder;
 import com.sponberg.fluid.layout.ModalView;
 import com.sponberg.fluid.layout.View;
 import com.sponberg.fluid.layout.ViewBehavior;
+import com.sponberg.fluid.layout.ViewBehaviorBaseLabel;
 import com.sponberg.fluid.layout.ViewBehaviorButton;
 import com.sponberg.fluid.layout.ViewBehaviorImage;
 import com.sponberg.fluid.layout.ViewBehaviorImage.ImageBounds;
@@ -310,6 +311,23 @@ public class FluidViewFactoryRegistration {
 			if (viewBehavior.isEllipsize()) {
 				label.setEllipsize(TruncateAt.END);
 				label.setHorizontallyScrolling(true);
+			}
+				
+			if (viewBehavior.getFontFamilyName() != null) {
+				String familyName = viewBehavior.getFontFamilyName();
+				int style = Typeface.NORMAL;
+				if (viewBehavior.getFontStyle() != null) {
+					if (viewBehavior.getFontStyle().equals(ViewBehaviorBaseLabel.kFontStyleBold)) {
+						style = Typeface.BOLD;
+					} else if (viewBehavior.getFontStyle().equals(ViewBehaviorBaseLabel.kFontStyleItalic)) {
+						style = Typeface.ITALIC;
+					} else if (viewBehavior.getFontStyle().equals(ViewBehaviorBaseLabel.kFontStyleBoldItaclic)) {
+						style = Typeface.BOLD_ITALIC;
+					}
+				}
+				
+				Typeface typeface = Typeface.create(familyName, style);
+				label.setTypeface(typeface);
 			}
 		}
 

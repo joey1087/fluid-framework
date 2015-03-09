@@ -43,6 +43,11 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneUrl]];
 }
 
+- (BOOL)initiateCustomAppWithNSString:(NSString *)customAppId
+                               withId:(id)extra OBJC_METHOD_FAMILY_NONE {
+    return NO;
+}
+
 - (void)initiateEmailWithNSStringArray:(IOSObjectArray *)emails
                           withNSString:(NSString *)subject OBJC_METHOD_FAMILY_NONE {
     

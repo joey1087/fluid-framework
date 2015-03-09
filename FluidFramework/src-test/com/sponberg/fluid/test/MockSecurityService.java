@@ -49,7 +49,8 @@ public class MockSecurityService implements SecurityService {
 
 	@Override
 	public boolean hasUserSalt() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

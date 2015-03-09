@@ -6,6 +6,8 @@ public interface SystemService {
 
 	public void initiateEmail(String[] emails, String subject);
 	
+	public boolean initiateExternalApp(String customAppId, Object extra);
+	
 	public void runOnUiThread(Runnable runnable);
 	
 	public boolean isOnUiThread();
@@ -23,5 +25,4 @@ public interface SystemService {
 	public String getDeviceSystemVersion();
 
 	public String getAppVersion();
-	
 }

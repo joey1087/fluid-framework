@@ -19,6 +19,9 @@
 - (void)initiateEmailWithNSStringArray:(IOSObjectArray *)emails
                           withNSString:(NSString *)subject OBJC_METHOD_FAMILY_NONE;
 
+- (BOOL)initiateExternalAppWithNSString:(NSString *)customAppId
+                                 withId:(id)extra OBJC_METHOD_FAMILY_NONE;
+
 - (void)runOnUiThreadWithJavaLangRunnable:(id<JavaLangRunnable>)runnable;
 
 - (BOOL)isOnUiThread;

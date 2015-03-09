@@ -1,6 +1,6 @@
 package com.sponberg.fluid.datastore;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public abstract class DSBase implements SQLQueryResult, SQLDataInput {
 
-	protected HashMap<String, Object> _data = new HashMap<>();
+	protected ConcurrentHashMap<String, Object> _data = new ConcurrentHashMap<>();
 
 	@Override
 	public void _setString(String columnName, String value) {
@@ -37,7 +37,7 @@ public abstract class DSBase implements SQLQueryResult, SQLDataInput {
 	}
 
 	@Override
-	public HashMap<String, Object> _getData() {
+	public ConcurrentHashMap<String, Object> _getData() {
 		return _data;
 	}
 	

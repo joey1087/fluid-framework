@@ -44,6 +44,18 @@ public class DefaultSystemService implements SystemService {
 		intent.setData(Uri.parse("tel:" + phoneNumber));
 		getCurrentActivityContext().startActivity(intent);
 	}
+	
+	public boolean initiateExternalApp(String customAppId, Object extra) {
+		String packageName = customAppId;
+		Intent intent = getCurrentActivityContext().getPackageManager().getLaunchIntentForPackage(packageName);
+		
+		if(intent == null) {
+			return false;
+		} else {
+			getCurrentActivityContext().startActivity(intent);
+			return true;
+		}
+	}
 
 	@Override
 	public void runOnUiThread(final Runnable runnable) {

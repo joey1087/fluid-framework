@@ -57,6 +57,14 @@
                                withJavaLangDouble:(JavaLangDouble *)defaultValue
                               withFFTKeyValueList:(id<FFTKeyValueList>)properties;
 
++ (NSString *)getFontFamilyNameWithNSString:(NSString *)key
+                               withNSString:(NSString *)defaultValue
+                        withFFTKeyValueList:(id<FFTKeyValueList>)properties;
+
++ (NSString *)getFontStyleWithNSString:(NSString *)key
+                          withNSString:(NSString *)defaultValue
+                   withFFTKeyValueList:(id<FFTKeyValueList>)properties;
+
 + (JavaLangDouble *)getFontSizePropertyWithNSString:(NSString *)key
                                  withJavaLangDouble:(JavaLangDouble *)defaultValue
                                 withFFTKeyValueList:(id<FFTKeyValueList>)properties;

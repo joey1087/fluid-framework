@@ -8,35 +8,35 @@
 #include "com/sponberg/fluid/datastore/DSBase.h"
 #include "java/lang/Double.h"
 #include "java/lang/Integer.h"
-#include "java/util/HashMap.h"
+#include "java/util/concurrent/ConcurrentHashMap.h"
 
 @implementation FFTDSBase
 
 - (void)_setStringWithNSString:(NSString *)columnName
                   withNSString:(NSString *)value {
-  (void) [((JavaUtilHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
+  (void) [((JavaUtilConcurrentConcurrentHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
 }
 
 - (void)_setIntegerWithNSString:(NSString *)columnName
             withJavaLangInteger:(JavaLangInteger *)value {
-  (void) [((JavaUtilHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
+  (void) [((JavaUtilConcurrentConcurrentHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
 }
 
 - (void)_setDoubleWithNSString:(NSString *)columnName
             withJavaLangDouble:(JavaLangDouble *)value {
-  (void) [((JavaUtilHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
+  (void) [((JavaUtilConcurrentConcurrentHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
 }
 
 - (void)_setNullWithNSString:(NSString *)columnName {
-  (void) [((JavaUtilHashMap *) nil_chk(_data_)) putWithId:columnName withId:nil];
+  (void) [((JavaUtilConcurrentConcurrentHashMap *) nil_chk(_data_)) putWithId:columnName withId:nil];
 }
 
 - (void)_setBlobWithNSString:(NSString *)columnName
                withByteArray:(IOSByteArray *)value {
-  (void) [((JavaUtilHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
+  (void) [((JavaUtilConcurrentConcurrentHashMap *) nil_chk(_data_)) putWithId:columnName withId:value];
 }
 
-- (JavaUtilHashMap *)_getData {
+- (JavaUtilConcurrentConcurrentHashMap *)_getData {
   return _data_;
 }
 
@@ -69,7 +69,7 @@
 
 - (id)init {
   if (self = [super init]) {
-    _data_ = [[JavaUtilHashMap alloc] init];
+    _data_ = [[JavaUtilConcurrentConcurrentHashMap alloc] init];
   }
   return self;
 }
@@ -86,7 +86,7 @@
     { "_setDoubleWithNSString:withJavaLangDouble:", "_setDouble", "V", 0x1, NULL },
     { "_setNullWithNSString:", "_setNull", "V", 0x1, NULL },
     { "_setBlobWithNSString:withByteArray:", "_setBlob", "V", 0x1, NULL },
-    { "_getData", NULL, "Ljava.util.HashMap;", 0x1, NULL },
+    { "_getData", NULL, "Ljava.util.concurrent.ConcurrentHashMap;", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
     { "canEqualWithId:", "canEqual", "Z", 0x4, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
@@ -94,7 +94,7 @@
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "_data_", NULL, 0x4, "Ljava.util.HashMap;", NULL,  },
+    { "_data_", NULL, 0x4, "Ljava.util.concurrent.ConcurrentHashMap;", NULL,  },
   };
   static J2ObjcClassInfo _FFTDSBase = { "DSBase", "com.sponberg.fluid.datastore", NULL, 0x401, 11, methods, 1, fields, 0, NULL};
   return &_FFTDSBase;

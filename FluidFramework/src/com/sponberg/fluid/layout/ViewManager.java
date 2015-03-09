@@ -18,6 +18,10 @@ public class ViewManager implements ApplicationInitializer {
 	KeyValueList colorsByName;
 
 	KeyValueList sizesByName;
+	
+	KeyValueList fontsByName;
+	
+	KeyValueList fontStyles;
 
 	ArrayList<Tab> tabs = new ArrayList<>();
 
@@ -81,7 +85,15 @@ public class ViewManager implements ApplicationInitializer {
 	public void setSizesByName(KeyValueList sizesByName) {
 		this.sizesByName = sizesByName;
 	}
-
+	
+	public void setFontsByName(KeyValueList fontsByName) {
+		this.fontsByName = fontsByName;
+	}
+	
+	public void setFontStyles(KeyValueList fontStyles) {
+		this.fontStyles = fontStyles;
+	}
+	
 	public Color getColor(String name) {
 		if (colorsByName.contains(name)) {
 			return Color.colorFromString(colorsByName.getValue(name));
@@ -89,7 +101,39 @@ public class ViewManager implements ApplicationInitializer {
 			return Color.colorFromString(name);
 		}
 	}
-
+	
+	public String getFontFamilyName(String refId) {
+		if (fontsByName != null && fontsByName.contains(refId)) {
+			return fontsByName.getValue(refId);
+		} else {
+			return null;
+		}
+	}
+	
+	public String getFontStyle(String refId) {
+		if (fontStyles != null && fontStyles.contains(refId)) {
+			return fontStyles.getValue(refId);
+		} else {
+			return null;
+		}
+	}
+	
+	public String getSpecifiedDefaultFontFamilyName() { 
+		if (fontsByName != null && fontsByName.contains("default-font")) {
+			return fontsByName.getValue("default-font");
+		} else {
+			return null;
+		}
+	}
+	
+	public String getSpecifiedDefaultFontStyle() {
+		if (fontStyles != null && fontStyles.contains("default-style")) {
+			return fontStyles.getValue("default-style");
+		} else {
+			return null;
+		}
+	}
+	
 	public String getSize(String name) {
 		if (sizesByName.contains(name)) {
 			return sizesByName.getValue(name);

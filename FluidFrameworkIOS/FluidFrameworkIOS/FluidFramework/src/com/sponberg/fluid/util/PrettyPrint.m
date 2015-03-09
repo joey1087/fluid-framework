@@ -10,8 +10,10 @@
 #include "com/eclipsesource/json/JsonValue.h"
 #include "com/sponberg/fluid/util/PrettyPrint.h"
 #include "java/io/FileReader.h"
+#include "java/io/PrintStream.h"
 #include "java/lang/Exception.h"
 #include "java/lang/StringBuilder.h"
+#include "java/lang/System.h"
 #include "java/util/Iterator.h"
 #include "java/util/Map.h"
 #include "java/util/Set.h"
@@ -20,7 +22,8 @@
 
 + (void)mainWithNSStringArray:(IOSObjectArray *)args {
   FFTJsonObject *json = [((FFTJsonValue *) nil_chk([FFTJsonValue readFromWithJavaIoReader:[[JavaIoFileReader alloc] initWithNSString:@"/Users/hsponberg/data.txt"]])) asObject];
-  (void) [FFTPrettyPrint toStringWithFFTJsonObject:json];
+  NSString *s = [FFTPrettyPrint toStringWithFFTJsonObject:json];
+  [((JavaIoPrintStream *) nil_chk(JavaLangSystem_get_out_())) printlnWithNSString:s];
 }
 
 + (NSString *)toStringWithJavaUtilMap:(id<JavaUtilMap>)map {

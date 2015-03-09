@@ -9,7 +9,6 @@ import lombok.Data;
 import com.sponberg.fluid.Callback;
 import com.sponberg.fluid.layout.ModalView;
 import com.sponberg.fluid.layout.UIService;
-import com.sponberg.fluid.util.Logger;
 
 @Data
 public class MockUIService implements UIService {
@@ -31,8 +30,6 @@ public class MockUIService implements UIService {
 	
 	Object completeModalWithData;
 	
-	boolean log = true;
-	
 	public MockUIService(CountDownLatch removeSplashLatch) {
 		this.removeSplashLatch = removeSplashLatch;
 	}
@@ -43,22 +40,12 @@ public class MockUIService implements UIService {
 	
 	@Override
 	public void pushLayout(String screenId) {
-		
-		if (log) {
-			Logger.debug(this, "pop layout " + screenIds.peek());
-		}
-		
 		screenIds.pop();
 		screenChangedSemphore.release();
 	}
 
 	@Override
 	public void popLayout() {
-		
-		if (log) {
-			Logger.debug(this, "pop layout " + screenIds.peek());
-		}
-
 		screenIds.pop();
 		screenChangedSemphore.release();
 	}
@@ -72,41 +59,20 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void setLayout(String screenId, boolean stack) {
-		
-		if (log) {
-			Logger.debug(this, "setLayout " + screenId);
-		}
-
 		screenIds.add(screenId);
 		screenChangedSemphore.release();
 	}
 
 	@Override
 	public void closeCurrentLayout() {
-		
-		if (log) {
-			Logger.debug(this, "closeCurrentLayout " + screenIds.peek());
-		}
-
 		screenIds.pop();
 		screenChangedSemphore.release();
 	}
 
 	@Override
 	public void showModalView(ModalView modalView) {
-		
 		currentModalView = modalView;
-		
-		if (modalView.getSystemId().equals(ModalView.FluidLayout) || modalView.getSystemId().equals(ModalView.FluidLayout)) {
-			screenIds.add(modalView.getFluidData().toString());	
-		} else {
-			screenIds.add(modalView.getSystemId());
-		}
-		
-		if (log) {
-			Logger.debug(this, "showModalView " + screenIds.peek());
-		}
-		
+		screenIds.add("modalView");
 		modalDialogSemaphore.release();
 		if (completeModalWithData != null) {
 			modalView.modalComplete(completeModalWithData);
@@ -121,11 +87,6 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void dismissModalView(ModalView modalView) {
-		
-		if (log) {
-			Logger.debug(this, "pop layout " + screenIds.peek());
-		}
-
 		currentModalView = null;
 		screenIds.pop();
 		modalDialogSemaphore.release();
@@ -133,11 +94,6 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void removeSplashScreen(String firstScreenId, boolean insteadShowCurrentScreenIfAny) {
-		
-		if (log) {
-			Logger.debug(this, "removeSplashScreen to " + firstScreenId);
-		}
-		
 		screenIds.clear();
 		screenIds.add(firstScreenId);
 		removeSplashLatch.countDown();
@@ -170,31 +126,19 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void setLayoutStack(String... screenIds) {
-		
-		this.screenIds.clear();
-		
-		for (String screenId : screenIds) {
-			
-			if (log) {
-				Logger.debug(this, "push layout " + screenId);
-			}
-			
-			this.screenIds.push(screenId);
-		}
-		
-		screenChangedSemphore.release();
 	}
 
-	@Override
 	public void hideKeyboard() {
+		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void scrollToBottom(final String viewPath, final String viewId) {
+	public void scrollToBottom(String viewPath, String viewId) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public boolean isOrientationLandscape() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	

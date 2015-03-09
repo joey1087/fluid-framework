@@ -21,8 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2308C5461A8828BE00D600F8 /* WebviewEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */; };
-		2308C5491A8828C700D600F8 /* WebviewActionListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 2308C5481A8828C700D600F8 /* WebviewActionListener.m */; };
 		237F09F018F7DAFC003B3031 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09EF18F7DAFC003B3031 /* Foundation.framework */; };
 		237F09FE18F7DAFC003B3031 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09FD18F7DAFC003B3031 /* XCTest.framework */; };
 		237F09FF18F7DAFC003B3031 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09EF18F7DAFC003B3031 /* Foundation.framework */; };
@@ -223,6 +221,8 @@
 		23D9B9791A676FFA00AECE7F /* FFTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A01A676FFA00AECE7F /* FFTabBarViewController.m */; };
 		23D9B97A1A676FFA00AECE7F /* FFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A21A676FFA00AECE7F /* FFViewController.m */; };
 		3AFF559319061070006C3273 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AFF559219061070006C3273 /* libsqlite3.dylib */; };
+		D43613AD1A9D77A600B1B298 /* LengthFromDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D43613AC1A9D77A600B1B298 /* LengthFromDataModel.m */; };
+		D4BAFD3C1A9C4EDB000CE0EB /* WebviewEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BAFD3B1A9C4EDB000CE0EB /* WebviewEventsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,10 +248,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2308C5441A8828BE00D600F8 /* WebviewEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewEventsManager.h; sourceTree = "<group>"; };
-		2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewEventsManager.m; sourceTree = "<group>"; };
-		2308C5471A8828C700D600F8 /* WebviewActionListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewActionListener.h; sourceTree = "<group>"; };
-		2308C5481A8828C700D600F8 /* WebviewActionListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewActionListener.m; sourceTree = "<group>"; };
 		237F09EC18F7DAFC003B3031 /* libFluidFrameworkIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFluidFrameworkIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		237F09EF18F7DAFC003B3031 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		237F09F318F7DAFC003B3031 /* FluidFrameworkIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FluidFrameworkIOS-Prefix.pch"; sourceTree = "<group>"; };
@@ -2377,6 +2373,10 @@
 		23D9B8A11A676FFA00AECE7F /* FFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFViewController.h; sourceTree = "<group>"; };
 		23D9B8A21A676FFA00AECE7F /* FFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFViewController.m; sourceTree = "<group>"; };
 		3AFF559219061070006C3273 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D43613AB1A9D77A600B1B298 /* LengthFromDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LengthFromDataModel.h; path = layout/LengthFromDataModel.h; sourceTree = "<group>"; };
+		D43613AC1A9D77A600B1B298 /* LengthFromDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LengthFromDataModel.m; path = layout/LengthFromDataModel.m; sourceTree = "<group>"; };
+		D4BAFD3A1A9C4EDB000CE0EB /* WebviewEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewEventsManager.h; sourceTree = "<group>"; };
+		D4BAFD3B1A9C4EDB000CE0EB /* WebviewEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewEventsManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5726,8 +5726,10 @@
 		23D9B73A1A676FFA00AECE7F /* fluid */ = {
 			isa = PBXGroup;
 			children = (
-				2308C5441A8828BE00D600F8 /* WebviewEventsManager.h */,
-				2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */,
+				D43613AB1A9D77A600B1B298 /* LengthFromDataModel.h */,
+				D43613AC1A9D77A600B1B298 /* LengthFromDataModel.m */,
+				D4BAFD3A1A9C4EDB000CE0EB /* WebviewEventsManager.h */,
+				D4BAFD3B1A9C4EDB000CE0EB /* WebviewEventsManager.m */,
 				23D9B73B1A676FFA00AECE7F /* ApplicationInitializer.h */,
 				23D9B73C1A676FFA00AECE7F /* ApplicationInitializer.m */,
 				23D9B73D1A676FFA00AECE7F /* ApplicationLoader.h */,
@@ -5856,8 +5858,6 @@
 		23D9B7931A676FFA00AECE7F /* layout */ = {
 			isa = PBXGroup;
 			children = (
-				2308C5471A8828C700D600F8 /* WebviewActionListener.h */,
-				2308C5481A8828C700D600F8 /* WebviewActionListener.m */,
 				23D9B7941A676FFA00AECE7F /* ActionListener.h */,
 				23D9B7951A676FFA00AECE7F /* ActionListener.m */,
 				23D9B7961A676FFA00AECE7F /* ActionListenerAdapter.h */,
@@ -6321,7 +6321,6 @@
 				23D9B9241A676FFA00AECE7F /* ViewBehaviorBaseLabel.m in Sources */,
 				23D9B8C51A676FFA00AECE7F /* JsonArray.m in Sources */,
 				23D9B8F01A676FFA00AECE7F /* SQLWhereClause.m in Sources */,
-				2308C5491A8828C700D600F8 /* WebviewActionListener.m in Sources */,
 				23D9B9001A676FFA00AECE7F /* CoordRelativeToParent.m in Sources */,
 				23D9B93F1A676FFA00AECE7F /* PlatformSpecifier.m in Sources */,
 				23D9B8F81A676FFA00AECE7F /* LoggingInitializer.m in Sources */,
@@ -6417,6 +6416,7 @@
 				23D9B91C1A676FFA00AECE7F /* TableLayout.m in Sources */,
 				23D9B9401A676FFA00AECE7F /* ResourceService.m in Sources */,
 				23D9B8D31A676FFA00AECE7F /* DatastoreException.m in Sources */,
+				D43613AD1A9D77A600B1B298 /* LengthFromDataModel.m in Sources */,
 				23D9B8FD1A676FFA00AECE7F /* Constraints.m in Sources */,
 				23D9B8E31A676FFA00AECE7F /* SQLQueryJoinBase.m in Sources */,
 				23D9B9721A676FFA00AECE7F /* FFTextView.m in Sources */,
@@ -6472,7 +6472,7 @@
 				23D9B8CA1A676FFA00AECE7F /* JsonString.m in Sources */,
 				23D9B9261A676FFA00AECE7F /* ViewBehaviorImage.m in Sources */,
 				23D9B8C01A676FFA00AECE7F /* SBJsonBase.m in Sources */,
-				2308C5461A8828BE00D600F8 /* WebviewEventsManager.m in Sources */,
+				D4BAFD3C1A9C4EDB000CE0EB /* WebviewEventsManager.m in Sources */,
 				23D9B8F21A676FFA00AECE7F /* EventsManager.m in Sources */,
 				23D9B9531A676FFA00AECE7F /* LRUCacheTree.m in Sources */,
 				23D9B8BD1A676FFA00AECE7F /* NSObject+SBJSON.m in Sources */,

@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -47,6 +48,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.android.FluidFrameworkAndroidApp;

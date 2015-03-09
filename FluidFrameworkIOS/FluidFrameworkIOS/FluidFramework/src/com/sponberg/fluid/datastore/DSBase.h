@@ -9,7 +9,7 @@
 @class IOSByteArray;
 @class JavaLangDouble;
 @class JavaLangInteger;
-@class JavaUtilHashMap;
+@class JavaUtilConcurrentConcurrentHashMap;
 
 #import "JreEmulation.h"
 #include "com/sponberg/fluid/datastore/SQLDataInput.h"
@@ -17,7 +17,7 @@
 
 @interface FFTDSBase : NSObject < FFTSQLQueryResult, FFTSQLDataInput > {
  @public
-  JavaUtilHashMap *_data_;
+  JavaUtilConcurrentConcurrentHashMap *_data_;
 }
 
 - (void)_setStringWithNSString:(NSString *)columnName
@@ -34,7 +34,7 @@
 - (void)_setBlobWithNSString:(NSString *)columnName
                withByteArray:(IOSByteArray *)value;
 
-- (JavaUtilHashMap *)_getData;
+- (JavaUtilConcurrentConcurrentHashMap *)_getData;
 
 - (BOOL)isEqual:(id)o;
 
@@ -52,7 +52,7 @@
 
 __attribute__((always_inline)) inline void FFTDSBase_init() {}
 
-J2OBJC_FIELD_SETTER(FFTDSBase, _data_, JavaUtilHashMap *)
+J2OBJC_FIELD_SETTER(FFTDSBase, _data_, JavaUtilConcurrentConcurrentHashMap *)
 
 typedef FFTDSBase ComSponbergFluidDatastoreDSBase;
 
