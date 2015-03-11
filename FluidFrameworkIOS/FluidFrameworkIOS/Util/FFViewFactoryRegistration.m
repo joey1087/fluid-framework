@@ -292,6 +292,7 @@
     button.dataModelKey = [view getKey];
     button.modalView = info.modalView;
     button.viewId = [view getId];
+    button.dataModelListenerId = (info.fluidView.listenToDataModelChanges) ? info.listenerId : nil;
     
     if ([viewBehavior getBorderSize].doubleValue > 0) {
         [button.button.layer setBorderWidth:[viewBehavior getBorderSize].floatValue];
@@ -308,6 +309,16 @@
     [button.button addTarget:button action:@selector(userTapped) forControlEvents:UIControlEventTouchUpInside];
     
     button.button.userInteractionEnabled = YES;
+    
+     __weak typeof(self) weakSelf = self;
+    if (info.fluidView.listenToDataModelChanges) {
+        [FFViewFactoryRegistration addDataChangeObserverFor:info.dataModelKeyPrefix dataModelKey:view->key_ listenerId:button.dataModelListenerId
+                                          listenForChildren:NO
+                                                      block:^(NSString *key, NSArray *subkeys) {
+                                                          [weakSelf updateText:button.button view:view baseText:viewBehavior->text_ dataModelPrefix:info.dataModelKeyPrefix];
+                                                      }
+                                           blockDataRemoved:nil];
+    }
     
     return button;
 }
@@ -394,6 +405,10 @@
 }
 
 - (void)cleanupFluidViewWithId:(id)fluidView {
+    FFButton *vc = fluidView;
+    if (vc.dataModelListenerId) {
+        [FFViewFactoryRegistration removeDataChangeObserverFor:vc.dataModelListenerId];
+    }
 }
 
 @end

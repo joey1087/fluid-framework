@@ -24,6 +24,7 @@
 @property (nonatomic, assign) float imageY;
 @property (nonatomic, assign) float imageWidth;
 @property (nonatomic, assign) float imageHeight;
+@property (nonatomic, strong) NSString *dataModelListenerId;
 
 + (id)buttonWithType:(UIButtonType)buttonType frame:(CGRect)frame imageInButton:(NSString *)imageName;
 

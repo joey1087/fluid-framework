@@ -17,6 +17,7 @@ typedef void (^tappedOutsideWhileFocusedListener)();
     CGSize keyboardSize;
 }
 
+@property (nonatomic, strong) NSMutableDictionary *viewsById;
 @property (nonatomic, strong) FFTLayout *layout;
 @property (nonatomic, strong) NSString *dataModelKeyPrefix;
 @property (nonatomic, strong) NSString *viewPath;

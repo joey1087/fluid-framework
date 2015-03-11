@@ -446,6 +446,7 @@ public class DataModelManager {
 		dclWrapper.dataChangeListenerId = listenerId;
 		dclWrapper.listenForChildren = listenForChildren;
 		
+		key = makeKey("", key);
 		String[] tokens = key.split("\\.");
 		
 		addDataChangeListenerHelper(dataChangeListeners, tokens, 0,

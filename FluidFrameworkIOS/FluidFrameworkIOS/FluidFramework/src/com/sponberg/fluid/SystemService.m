@@ -26,8 +26,9 @@
     { "getDeviceSystemName", NULL, "Ljava.lang.String;", 0x401, NULL },
     { "getDeviceSystemVersion", NULL, "Ljava.lang.String;", 0x401, NULL },
     { "getAppVersion", NULL, "Ljava.lang.String;", 0x401, NULL },
+    { "openAppStorePageForRating", NULL, "V", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTSystemService = { "SystemService", "com.sponberg.fluid", NULL, 0x201, 11, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTSystemService = { "SystemService", "com.sponberg.fluid", NULL, 0x201, 12, methods, 0, NULL, 0, NULL};
   return &_FFTSystemService;
 }
 

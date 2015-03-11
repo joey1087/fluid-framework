@@ -52,7 +52,6 @@ static int containerId = 1;
 
 @interface FFView ()
 
-@property (nonatomic, strong) NSMutableDictionary *viewsById;
 @property (nonatomic, assign) CGFloat animatedDistance;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, assign) UIView *currentTextField;
@@ -238,7 +237,8 @@ static int containerId = 1;
         info.precompute = [self.layout isPrecomputedPositions];
         
         UIView *uiView = [self.viewsById objectForKey:view->id__];
-        if (uiView == nil && [view isVisible]) {
+        //if (uiView == nil && [view isVisible]) {
+        if (uiView == nil) {
             uiView = [[[FFTGlobalState fluidApp] getFluidViewFactory] createViewWithNSString:[viewBehavior getType] withFFTViewPosition:view withId:info];
             if ([uiView isKindOfClass:[FFView class]]) {
                 ((FFView *) uiView).rootFFView = self;

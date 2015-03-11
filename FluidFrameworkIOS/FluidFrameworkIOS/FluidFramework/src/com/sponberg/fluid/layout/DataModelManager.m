@@ -442,6 +442,7 @@ NSString * FFTDataModelManager_kNotEqual_ = @"!=";
   dclWrapper->listener_ = dataChangeListener;
   dclWrapper->dataChangeListenerId_ = listenerId;
   dclWrapper->listenForChildren_ = listenForChildren;
+  key = [FFTDataModelManager makeKeyWithNSString:@"" withNSString:key];
   IOSObjectArray *tokens = [((NSString *) nil_chk(key)) split:@"\\."];
   [self addDataChangeListenerHelperWithJavaUtilHashMap:dataChangeListeners_ withNSStringArray:tokens withInt:0 withFFTDataModelManager_DataChangeListenerWrapper:dclWrapper];
   (void) [((JavaUtilHashMap *) nil_chk(listenersEnabled_)) putWithId:listenerId withId:[JavaLangBoolean valueOfWithBoolean:YES]];

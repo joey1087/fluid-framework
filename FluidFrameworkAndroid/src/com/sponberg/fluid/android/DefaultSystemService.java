@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -22,7 +23,7 @@ import com.sponberg.fluid.util.Logger;
 
 public class DefaultSystemService implements SystemService {
 	
-	private FluidFrameworkAndroidApp app;
+	private final FluidFrameworkAndroidApp app;
 
 	static boolean googlePlayAvailable = true;
 	
@@ -51,6 +52,7 @@ public class DefaultSystemService implements SystemService {
 		// Return really quick by sending to an already existing thread
 		
 		Runnable r = new Runnable() {
+			@Override
 			public void run() {
 				runOnUiThreadHelper(runnable);
 			}
@@ -95,6 +97,7 @@ public class DefaultSystemService implements SystemService {
 		Logger.debug(this, "registering with GCM");
 		
 		new Thread() {
+			@Override
 			public void run() {
 				
 				int attempt = 0;
@@ -145,8 +148,9 @@ public class DefaultSystemService implements SystemService {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/rfc822");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
-		if (subject != null)
+		if (subject != null) {
 			intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+		}
 		getCurrentActivityContext().startActivity(Intent.createChooser(intent, "Send Email"));
 	}
 
@@ -203,6 +207,17 @@ public class DefaultSystemService implements SystemService {
 	public void openBrowserWith(String url) {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		getCurrentActivityContext().startActivity(browserIntent);
+	}
+
+	@Override
+	public void openAppStorePageForRating() {
+		Uri uri = Uri.parse("market://details?id=" + getCurrentActivityContext().getPackageName());
+		Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+		try {
+			getCurrentActivityContext().startActivity(goToMarket);
+		} catch (ActivityNotFoundException e) {
+			getCurrentActivityContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getCurrentActivityContext().getPackageName())));
+		}
 	}
 
 }

@@ -37,6 +37,8 @@
 
 - (NSString *)getAppVersion;
 
+- (void)openAppStorePageForRating;
+
 @end
 
 __attribute__((always_inline)) inline void FFTSystemService_init() {}

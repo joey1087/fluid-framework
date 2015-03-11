@@ -23,5 +23,7 @@ public interface SystemService {
 	public String getDeviceSystemVersion();
 
 	public String getAppVersion();
+
+	public void openAppStorePageForRating();
 	
 }

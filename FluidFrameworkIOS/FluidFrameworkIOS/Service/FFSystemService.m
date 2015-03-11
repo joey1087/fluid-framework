@@ -154,4 +154,10 @@
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
+- (void)openAppStorePageForRating {
+    if ([[UIApplication sharedApplication].delegate respondsToSelector:@selector(openAppStorePageForRating)]) {
+        [[UIApplication sharedApplication].delegate performSelector:@selector(openAppStorePageForRating) withObject:nil];
+    }
+}
+
 @end

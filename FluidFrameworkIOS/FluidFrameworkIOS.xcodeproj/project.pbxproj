@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		2308C5461A8828BE00D600F8 /* WebviewEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */; };
 		2308C5491A8828C700D600F8 /* WebviewActionListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 2308C5481A8828C700D600F8 /* WebviewActionListener.m */; };
+		230D6D811AAE75A2009EF95F /* LengthFromDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 230D6D801AAE75A2009EF95F /* LengthFromDataModel.m */; };
 		237F09F018F7DAFC003B3031 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09EF18F7DAFC003B3031 /* Foundation.framework */; };
 		237F09FE18F7DAFC003B3031 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09FD18F7DAFC003B3031 /* XCTest.framework */; };
 		237F09FF18F7DAFC003B3031 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237F09EF18F7DAFC003B3031 /* Foundation.framework */; };
@@ -252,6 +253,8 @@
 		2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewEventsManager.m; sourceTree = "<group>"; };
 		2308C5471A8828C700D600F8 /* WebviewActionListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebviewActionListener.h; sourceTree = "<group>"; };
 		2308C5481A8828C700D600F8 /* WebviewActionListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebviewActionListener.m; sourceTree = "<group>"; };
+		230D6D7F1AAE75A2009EF95F /* LengthFromDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LengthFromDataModel.h; sourceTree = "<group>"; };
+		230D6D801AAE75A2009EF95F /* LengthFromDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LengthFromDataModel.m; sourceTree = "<group>"; };
 		237F09EC18F7DAFC003B3031 /* libFluidFrameworkIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFluidFrameworkIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		237F09EF18F7DAFC003B3031 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		237F09F318F7DAFC003B3031 /* FluidFrameworkIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FluidFrameworkIOS-Prefix.pch"; sourceTree = "<group>"; };
@@ -5856,6 +5859,8 @@
 		23D9B7931A676FFA00AECE7F /* layout */ = {
 			isa = PBXGroup;
 			children = (
+				230D6D7F1AAE75A2009EF95F /* LengthFromDataModel.h */,
+				230D6D801AAE75A2009EF95F /* LengthFromDataModel.m */,
 				2308C5471A8828C700D600F8 /* WebviewActionListener.h */,
 				2308C5481A8828C700D600F8 /* WebviewActionListener.m */,
 				23D9B7941A676FFA00AECE7F /* ActionListener.h */,
@@ -6336,6 +6341,7 @@
 				23D9B91A1A676FFA00AECE7F /* Subtractor.m in Sources */,
 				23D9B9191A676FFA00AECE7F /* ScreenListenerAdapter.m in Sources */,
 				23D9B8D51A676FFA00AECE7F /* DatastoreService.m in Sources */,
+				230D6D811AAE75A2009EF95F /* LengthFromDataModel.m in Sources */,
 				23D9B8D81A676FFA00AECE7F /* DSBase.m in Sources */,
 				23D9B9551A676FFA00AECE7F /* MethodUtil.m in Sources */,
 				23D9B9031A676FFA00AECE7F /* DataModelManager.m in Sources */,

@@ -16,16 +16,20 @@ public class MockSystemService implements SystemService {
 	
 	boolean getDeviceNotificationIdEnabled = true;
 	
+	@Override
 	public void initiatePhoneCall(String phoneNumber) {
 		Integer i = phoneCallCounts.get(phoneNumber);
-		if (i == null)
+		if (i == null) {
 			i = 0;
+		}
 		i++;
 		phoneCallCounts.put(phoneNumber, i);
 	}
 
+	@Override
 	public void runOnUiThread(final Runnable runnable) {
 		new Thread() {
+			@Override
 			public void run() {
 				runnable.run();
 			}
@@ -40,6 +44,7 @@ public class MockSystemService implements SystemService {
 		}
 		
 		new Thread() {
+			@Override
 			public void run() {
 				callback.run("testNotificationId");
 			}
@@ -50,8 +55,9 @@ public class MockSystemService implements SystemService {
 	public void initiateEmail(String[] emails, String subject) {
 		for (String email : emails) {
 			Integer i = emailCounts.get(email);
-			if (i == null)
+			if (i == null) {
 				i = 0;
+			}
 			i++;
 			emailCounts.put(email, i);
 		}
@@ -89,6 +95,10 @@ public class MockSystemService implements SystemService {
 	@Override
 	public String getAppVersion() {
 		return "mock";
+	}
+
+	@Override
+	public void openAppStorePageForRating() {
 	}
 
 }
