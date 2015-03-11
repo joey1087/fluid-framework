@@ -137,6 +137,25 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
   }
 }
 
++ (NSString *)getFontFamilyNameWithNSString:(NSString *)key
+                               withNSString:(NSString *)defaultValue
+                        withFFTKeyValueList:(id<FFTKeyValueList>)properties {
+  if (properties == nil || key == nil) {
+    return nil;
+  }
+  if (![((id<FFTKeyValueList>) nil_chk(properties)) containsWithNSString:key]) {
+    return defaultValue;
+  }
+  else {
+    NSString *fontNameOrfontRefId = [properties getValueWithNSString:key];
+    NSString *fontName = [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getViewManager])) getFontFamilyNameWithNSString:fontNameOrfontRefId];
+    if (fontName == nil) {
+      fontName = fontNameOrfontRefId;
+    }
+    return fontName;
+  }
+}
+
 + (JavaLangDouble *)getFontSizePropertyWithNSString:(NSString *)key
                                  withJavaLangDouble:(JavaLangDouble *)defaultValue
                                 withFFTKeyValueList:(id<FFTKeyValueList>)properties {
@@ -285,6 +304,7 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
     { "getBooleanPropertyWithNSString:withBoolean:withFFTKeyValueList:", "getBooleanProperty", "Ljava.lang.Boolean;", 0x9, NULL },
     { "getIntegerPropertyWithNSString:withJavaLangInteger:withFFTKeyValueList:", "getIntegerProperty", "Ljava.lang.Integer;", 0x9, NULL },
     { "getDoublePropertyWithNSString:withJavaLangDouble:withFFTKeyValueList:", "getDoubleProperty", "Ljava.lang.Double;", 0x9, NULL },
+    { "getFontFamilyNameWithNSString:withNSString:withFFTKeyValueList:", "getFontFamilyName", "Ljava.lang.String;", 0x9, NULL },
     { "getFontSizePropertyWithNSString:withJavaLangDouble:withFFTKeyValueList:", "getFontSizeProperty", "Ljava.lang.Double;", 0x9, NULL },
     { "getSizePropertyWithNSString:withNSString:withFFTKeyValueList:", "getSizeProperty", "Ljava.lang.Double;", 0x9, NULL },
     { "getSizeFromLayoutVariablesOrSizesWithNSString:withFFTKeyValueList:", "getSizeFromLayoutVariablesOrSizes", "Ljava.lang.String;", 0xa, NULL },
@@ -324,7 +344,7 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
     { "borderSize_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "borderColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehavior = { "ViewBehavior", "com.sponberg.fluid.layout", NULL, 0x401, 27, methods, 18, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehavior = { "ViewBehavior", "com.sponberg.fluid.layout", NULL, 0x401, 28, methods, 18, fields, 0, NULL};
   return &_FFTViewBehavior;
 }
 

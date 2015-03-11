@@ -1648,10 +1648,14 @@
     control.selectedSegmentIndex = 0;
     
     [control addTarget:self action:@selector(segControlAction:) forControlEvents:UIControlEventValueChanged];
-    
-    if ([viewBehavior getTextAndLineColor]) {
-        UIColor *color = [FFView color:[viewBehavior getTextAndLineColor]];
+        
+    if ([viewBehavior getLineColor]) {
+        UIColor *color = [FFView color:[viewBehavior getLineColor]];
         control.tintColor = color;
+    }
+    
+    if ([viewBehavior getSelectedTextColor]) {
+        UIColor *color = [FFView color:[viewBehavior getSelectedTextColor]];
         [control setTitleTextAttributes:@{NSForegroundColorAttributeName:color} forState:UIControlStateNormal];
     }
     

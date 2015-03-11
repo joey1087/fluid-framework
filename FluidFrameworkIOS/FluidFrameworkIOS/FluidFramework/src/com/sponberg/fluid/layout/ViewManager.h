@@ -27,6 +27,7 @@
   JavaUtilHashMap *tableLayouts_;
   id<FFTKeyValueList> colorsByName_;
   id<FFTKeyValueList> sizesByName_;
+  id<FFTKeyValueList> fontsByName_;
   JavaUtilArrayList *tabs_;
   double baseUnit_;
   double devicePixelToPixelMultiplier_;
@@ -59,7 +60,13 @@
 
 - (void)setSizesByNameWithFFTKeyValueList:(id<FFTKeyValueList>)sizesByName;
 
+- (void)setFontsByNameWithFFTKeyValueList:(id<FFTKeyValueList>)fontsByName;
+
 - (FFTColor *)getColorWithNSString:(NSString *)name;
+
+- (NSString *)getFontFamilyNameWithNSString:(NSString *)refId;
+
+- (NSString *)getSpecifiedDefaultFontFamilyName;
 
 - (NSString *)getSizeWithNSString:(NSString *)name;
 
@@ -100,6 +107,7 @@ J2OBJC_FIELD_SETTER(FFTViewManager, layouts_, JavaUtilHashMap *)
 J2OBJC_FIELD_SETTER(FFTViewManager, tableLayouts_, JavaUtilHashMap *)
 J2OBJC_FIELD_SETTER(FFTViewManager, colorsByName_, id<FFTKeyValueList>)
 J2OBJC_FIELD_SETTER(FFTViewManager, sizesByName_, id<FFTKeyValueList>)
+J2OBJC_FIELD_SETTER(FFTViewManager, fontsByName_, id<FFTKeyValueList>)
 J2OBJC_FIELD_SETTER(FFTViewManager, tabs_, JavaUtilArrayList *)
 
 typedef FFTViewManager ComSponbergFluidLayoutViewManager;

@@ -31,6 +31,20 @@ public class SettingsParser implements ApplicationInitializer {
 			throw new RuntimeException("Unable to find sizes.txt");
 		}
 		
+		String fontsFileName = "fonts@" + app.getPlatform() + ".txt";
+		String fontsNames = app.getResourceService().getResourceAsString("", fontsFileName);
+		if (fontsNames == null) {
+			fontsFileName = "fonts.txt";
+			fontsNames = app.getResourceService().getResourceAsString("", fontsFileName);
+		}
+		
+		String fontStylesFileName = "font-styles@" + app.getPlatform() + ".txt";
+		String fontStyles = app.getResourceService().getResourceAsString("", fontStylesFileName);
+		if (fontStyles == null) {
+			fontStylesFileName = "font-styles.txt";
+			fontStyles = app.getResourceService().getResourceAsString("", fontStylesFileName);
+		}
+		
 		try {
 			
 			KVLReader reader = new KVLReader(s);
@@ -70,7 +84,16 @@ public class SettingsParser implements ApplicationInitializer {
 			setColors(app, kvlColors);
 			
 			setSizes(app, new KVLReader(sizes));
+					
+			if (fontsNames != null) {
+				KVLReader kvlFontsNames = new KVLReader(fontsNames);
+				setFontsNames(app, kvlFontsNames);
+			}
 			
+			if (fontStyles != null) {
+				KVLReader kvlFontStyles = new KVLReader(fontStyles);
+				setFontStyles(app, kvlFontStyles);
+			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}	
@@ -131,6 +154,14 @@ public class SettingsParser implements ApplicationInitializer {
 	private void setSizes(FluidApp app, KeyValueList kvl) {
 		
 		app.getViewManager().setSizesByName(kvl);
+	}
+	
+	private void setFontsNames(FluidApp app, KeyValueList kvl) {
+		app.getViewManager().setFontsByName(kvl);
+	}
+	
+	private void setFontStyles(FluidApp app, KeyValueList kvl) {
+		app.getViewManager().setFontStyles(kvl);
 	}
 	
 	@Override
