@@ -30,6 +30,12 @@
   if (sizes == nil) {
     @throw [[JavaLangRuntimeException alloc] initWithNSString:@"Unable to find sizes.txt"];
   }
+  NSString *fontsFileName = [NSString stringWithFormat:@"fonts@%@.txt", [app getPlatform]];
+  NSString *fontsNames = [((id<FFTResourceService>) nil_chk([app getResourceService])) getResourceAsStringWithNSString:@"" withNSString:fontsFileName];
+  if (fontsNames == nil) {
+    fontsFileName = @"fonts.txt";
+    fontsNames = [((id<FFTResourceService>) nil_chk([app getResourceService])) getResourceAsStringWithNSString:@"" withNSString:fontsFileName];
+  }
   @try {
     FFTKVLReader *reader = [[FFTKVLReader alloc] initWithNSString:s];
     NSString *platformSpecific = [NSString stringWithFormat:@"settings@%@.txt", [app getPlatform]];
@@ -61,6 +67,10 @@
     }
     [self setColorsWithFFTFluidApp:app withFFTKeyValueList:kvlColors];
     [self setSizesWithFFTFluidApp:app withFFTKeyValueList:[[FFTKVLReader alloc] initWithNSString:sizes]];
+    if (fontsNames != nil) {
+      FFTKVLReader *kvlFontsNames = [[FFTKVLReader alloc] initWithNSString:fontsNames];
+      [self setFontsNamesWithFFTFluidApp:app withFFTKeyValueList:kvlFontsNames];
+    }
   }
   @catch (JavaIoIOException *e) {
     @throw [[JavaLangRuntimeException alloc] initWithJavaLangThrowable:e];
@@ -121,6 +131,11 @@
   [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(app)) getViewManager])) setSizesByNameWithFFTKeyValueList:kvl];
 }
 
+- (void)setFontsNamesWithFFTFluidApp:(FFTFluidApp *)app
+                 withFFTKeyValueList:(id<FFTKeyValueList>)kvl {
+  [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(app)) getViewManager])) setFontsByNameWithFFTKeyValueList:kvl];
+}
+
 - (IOSObjectArray *)getSupportedPlatforms {
   return nil;
 }
@@ -136,10 +151,11 @@
     { "setDefaultsWithFFTFluidApp:", "setDefaults", "V", 0x2, NULL },
     { "setColorsWithFFTFluidApp:withFFTKeyValueList:", "setColors", "V", 0x2, NULL },
     { "setSizesWithFFTFluidApp:withFFTKeyValueList:", "setSizes", "V", 0x2, NULL },
+    { "setFontsNamesWithFFTFluidApp:withFFTKeyValueList:", "setFontsNames", "V", 0x2, NULL },
     { "getSupportedPlatforms", NULL, "[Ljava.lang.String;", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _FFTSettingsParser = { "SettingsParser", "com.sponberg.fluid.parser", NULL, 0x1, 7, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTSettingsParser = { "SettingsParser", "com.sponberg.fluid.parser", NULL, 0x1, 8, methods, 0, NULL, 0, NULL};
   return &_FFTSettingsParser;
 }
 

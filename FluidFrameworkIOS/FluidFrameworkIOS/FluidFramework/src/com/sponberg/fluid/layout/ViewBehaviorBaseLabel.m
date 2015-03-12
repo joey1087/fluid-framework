@@ -4,9 +4,12 @@
 //
 
 #include "IOSClass.h"
+#include "com/sponberg/fluid/FluidApp.h"
+#include "com/sponberg/fluid/GlobalState.h"
 #include "com/sponberg/fluid/layout/Color.h"
 #include "com/sponberg/fluid/layout/ViewBehavior.h"
 #include "com/sponberg/fluid/layout/ViewBehaviorBaseLabel.h"
+#include "com/sponberg/fluid/layout/ViewManager.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "java/lang/Boolean.h"
 #include "java/lang/Double.h"
@@ -20,6 +23,10 @@ NSString * FFTViewBehaviorBaseLabel_kAlignRight_ = @"right";
 NSString * FFTViewBehaviorBaseLabel_kVerticalAlignTop_ = @"top";
 NSString * FFTViewBehaviorBaseLabel_kVerticalAlignMiddle_ = @"middle";
 NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
+NSString * FFTViewBehaviorBaseLabel_kFontStyleNormal_ = @"normal";
+NSString * FFTViewBehaviorBaseLabel_kFontStyleBold_ = @"bold";
+NSString * FFTViewBehaviorBaseLabel_kFontStyleItalic_ = @"italic";
+NSString * FFTViewBehaviorBaseLabel_kFontStyleBoldItaclic_ = @"bold-italic";
 
 - (id)initWithNSString:(NSString *)type
    withFFTKeyValueList:(id<FFTKeyValueList>)properties {
@@ -29,6 +36,9 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
     self->verticalAlign_ = [FFTViewBehavior getStringPropertyWithNSString:@"vertical-align" withNSString:nil withFFTKeyValueList:properties];
     self->textColor_ = [self getColorPropertyWithNSString:@"text-color" withFFTColor:nil withFFTKeyValueList:properties];
     self->unknownTextColor_ = [self getColorPropertyWithNSString:@"unknown-text-color" withFFTColor:nil withFFTKeyValueList:properties];
+    NSString *specifiedDefaultFontName = [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getViewManager])) getSpecifiedDefaultFontFamilyName];
+    self->fontFamilyName_ = [FFTViewBehavior getFontFamilyNameWithNSString:@"font-family" withNSString:specifiedDefaultFontName withFFTKeyValueList:properties];
+    self->fontStyle_ = [FFTViewBehavior getStringPropertyWithNSString:@"font-style" withNSString:FFTViewBehaviorBaseLabel_kFontStyleNormal_ withFFTKeyValueList:properties];
     self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
     self->maxFontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"max-font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
     self->minFontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"min-font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
@@ -48,7 +58,7 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorBaseLabel(text=%@, textColor=%@, unknownTextColor=%@, align=%@, verticalAlign=%@, fontSize=%@, maxFontSize=%@, minFontSize=%@, backgroundColorPressed=%@, ellipsize=%@)", [self getText], [self getTextColor], [self getUnknownTextColor], [self getAlign], [self getVerticalAlign], [self getFontSize], [self getMaxFontSize], [self getMinFontSize], [self getBackgroundColorPressed], [JavaLangBoolean toStringWithBoolean:[self isEllipsize]]];
+  return [NSString stringWithFormat:@"ViewBehaviorBaseLabel(text=%@, textColor=%@, unknownTextColor=%@, align=%@, verticalAlign=%@, fontFamilyName=%@, fontStyle=%@, fontSize=%@, maxFontSize=%@, minFontSize=%@, backgroundColorPressed=%@, ellipsize=%@)", [self getText], [self getTextColor], [self getUnknownTextColor], [self getAlign], [self getVerticalAlign], [self getFontFamilyName], [self getFontStyle], [self getFontSize], [self getMaxFontSize], [self getMinFontSize], [self getBackgroundColorPressed], [JavaLangBoolean toStringWithBoolean:[self isEllipsize]]];
 }
 
 - (NSString *)getText {
@@ -69,6 +79,14 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
 
 - (NSString *)getVerticalAlign {
   return self->verticalAlign_;
+}
+
+- (NSString *)getFontFamilyName {
+  return self->fontFamilyName_;
+}
+
+- (NSString *)getFontStyle {
+  return self->fontStyle_;
 }
 
 - (JavaLangDouble *)getFontSize {
@@ -111,6 +129,14 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
   self->verticalAlign_ = verticalAlign;
 }
 
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName {
+  self->fontFamilyName_ = fontFamilyName;
+}
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle {
+  self->fontStyle_ = fontStyle;
+}
+
 - (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize {
   self->fontSize_ = fontSize;
 }
@@ -136,7 +162,9 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
   other->align_ = align_;
   other->backgroundColorPressed_ = backgroundColorPressed_;
   other->ellipsize_ = ellipsize_;
+  other->fontFamilyName_ = fontFamilyName_;
   other->fontSize_ = fontSize_;
+  other->fontStyle_ = fontStyle_;
   other->maxFontSize_ = maxFontSize_;
   other->minFontSize_ = minFontSize_;
   other->text_ = text_;
@@ -154,6 +182,8 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
     { "getUnknownTextColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "getAlign", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getVerticalAlign", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontStyle", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "getMaxFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "getMinFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
@@ -164,6 +194,8 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
     { "setUnknownTextColorWithFFTColor:", "setUnknownTextColor", "V", 0x1, NULL },
     { "setAlignWithNSString:", "setAlign", "V", 0x1, NULL },
     { "setVerticalAlignWithNSString:", "setVerticalAlign", "V", 0x1, NULL },
+    { "setFontFamilyNameWithNSString:", "setFontFamilyName", "V", 0x1, NULL },
+    { "setFontStyleWithNSString:", "setFontStyle", "V", 0x1, NULL },
     { "setFontSizeWithJavaLangDouble:", "setFontSize", "V", 0x1, NULL },
     { "setMaxFontSizeWithJavaLangDouble:", "setMaxFontSize", "V", 0x1, NULL },
     { "setMinFontSizeWithJavaLangDouble:", "setMinFontSize", "V", 0x1, NULL },
@@ -177,18 +209,24 @@ NSString * FFTViewBehaviorBaseLabel_kVerticalAlignBottom_ = @"bottom";
     { "kVerticalAlignTop_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kVerticalAlignTop_,  },
     { "kVerticalAlignMiddle_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kVerticalAlignMiddle_,  },
     { "kVerticalAlignBottom_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kVerticalAlignBottom_,  },
+    { "kFontStyleNormal_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kFontStyleNormal_,  },
+    { "kFontStyleBold_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kFontStyleBold_,  },
+    { "kFontStyleItalic_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kFontStyleItalic_,  },
+    { "kFontStyleBoldItaclic_", NULL, 0x9, "Ljava.lang.String;", &FFTViewBehaviorBaseLabel_kFontStyleBoldItaclic_,  },
     { "text_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
     { "textColor_", NULL, 0x4, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "unknownTextColor_", NULL, 0x4, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "align_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
     { "verticalAlign_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
+    { "fontFamilyName_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
+    { "fontStyle_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
     { "fontSize_", NULL, 0x4, "Ljava.lang.Double;", NULL,  },
     { "maxFontSize_", NULL, 0x4, "Ljava.lang.Double;", NULL,  },
     { "minFontSize_", NULL, 0x4, "Ljava.lang.Double;", NULL,  },
     { "backgroundColorPressed_", NULL, 0x4, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "ellipsize_", NULL, 0x4, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorBaseLabel = { "ViewBehaviorBaseLabel", "com.sponberg.fluid.layout", NULL, 0x1, 22, methods, 16, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorBaseLabel = { "ViewBehaviorBaseLabel", "com.sponberg.fluid.layout", NULL, 0x1, 26, methods, 22, fields, 0, NULL};
   return &_FFTViewBehaviorBaseLabel;
 }
 

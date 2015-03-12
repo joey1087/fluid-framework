@@ -20,6 +20,8 @@
   FFTColor *unknownTextColor_;
   NSString *align_;
   NSString *verticalAlign_;
+  NSString *fontFamilyName_;
+  NSString *fontStyle_;
   JavaLangDouble *fontSize_;
   JavaLangDouble *maxFontSize_;
   JavaLangDouble *minFontSize_;
@@ -42,6 +44,10 @@
 
 - (NSString *)getVerticalAlign;
 
+- (NSString *)getFontFamilyName;
+
+- (NSString *)getFontStyle;
+
 - (JavaLangDouble *)getFontSize;
 
 - (JavaLangDouble *)getMaxFontSize;
@@ -61,6 +67,10 @@
 - (void)setAlignWithNSString:(NSString *)align;
 
 - (void)setVerticalAlignWithNSString:(NSString *)verticalAlign;
+
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName;
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle;
 
 - (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize;
 
@@ -83,6 +93,8 @@ J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, textColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, unknownTextColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, align_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, verticalAlign_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, fontFamilyName_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, fontStyle_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, fontSize_, JavaLangDouble *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, maxFontSize_, JavaLangDouble *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorBaseLabel, minFontSize_, JavaLangDouble *)
@@ -111,6 +123,22 @@ J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kVerticalAlignMiddle_, NSSt
 FOUNDATION_EXPORT NSString *FFTViewBehaviorBaseLabel_kVerticalAlignBottom_;
 J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorBaseLabel, kVerticalAlignBottom_, NSString *)
 J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kVerticalAlignBottom_, NSString *)
+
+FOUNDATION_EXPORT NSString *FFTViewBehaviorBaseLabel_kFontStyleNormal_;
+J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorBaseLabel, kFontStyleNormal_, NSString *)
+J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kFontStyleNormal_, NSString *)
+
+FOUNDATION_EXPORT NSString *FFTViewBehaviorBaseLabel_kFontStyleBold_;
+J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorBaseLabel, kFontStyleBold_, NSString *)
+J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kFontStyleBold_, NSString *)
+
+FOUNDATION_EXPORT NSString *FFTViewBehaviorBaseLabel_kFontStyleItalic_;
+J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorBaseLabel, kFontStyleItalic_, NSString *)
+J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kFontStyleItalic_, NSString *)
+
+FOUNDATION_EXPORT NSString *FFTViewBehaviorBaseLabel_kFontStyleBoldItaclic_;
+J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorBaseLabel, kFontStyleBoldItaclic_, NSString *)
+J2OBJC_STATIC_FIELD_SETTER(FFTViewBehaviorBaseLabel, kFontStyleBoldItaclic_, NSString *)
 
 typedef FFTViewBehaviorBaseLabel ComSponbergFluidLayoutViewBehaviorBaseLabel;
 

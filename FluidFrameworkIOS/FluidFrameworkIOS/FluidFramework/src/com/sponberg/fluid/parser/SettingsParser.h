@@ -31,6 +31,9 @@
 - (void)setSizesWithFFTFluidApp:(FFTFluidApp *)app
             withFFTKeyValueList:(id<FFTKeyValueList>)kvl;
 
+- (void)setFontsNamesWithFFTFluidApp:(FFTFluidApp *)app
+                 withFFTKeyValueList:(id<FFTKeyValueList>)kvl;
+
 - (IOSObjectArray *)getSupportedPlatforms;
 
 - (id)init;

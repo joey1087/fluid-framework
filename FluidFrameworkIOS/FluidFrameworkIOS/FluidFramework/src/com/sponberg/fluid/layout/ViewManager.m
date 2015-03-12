@@ -73,12 +73,34 @@
   self->sizesByName_ = sizesByName;
 }
 
+- (void)setFontsByNameWithFFTKeyValueList:(id<FFTKeyValueList>)fontsByName {
+  self->fontsByName_ = fontsByName;
+}
+
 - (FFTColor *)getColorWithNSString:(NSString *)name {
   if ([((id<FFTKeyValueList>) nil_chk(colorsByName_)) containsWithNSString:name]) {
     return [FFTColor colorFromStringWithNSString:[colorsByName_ getValueWithNSString:name]];
   }
   else {
     return [FFTColor colorFromStringWithNSString:name];
+  }
+}
+
+- (NSString *)getFontFamilyNameWithNSString:(NSString *)refId {
+  if (fontsByName_ != nil && [fontsByName_ containsWithNSString:refId]) {
+    return [fontsByName_ getValueWithNSString:refId];
+  }
+  else {
+    return nil;
+  }
+}
+
+- (NSString *)getSpecifiedDefaultFontFamilyName {
+  if (fontsByName_ != nil && [fontsByName_ containsWithNSString:@"default-font"]) {
+    return [fontsByName_ getValueWithNSString:@"default-font"];
+  }
+  else {
+    return nil;
   }
 }
 
@@ -167,6 +189,7 @@
   other->colorsByName_ = colorsByName_;
   other->devicePixelActualToPixelMultiplier_ = devicePixelActualToPixelMultiplier_;
   other->devicePixelToPixelMultiplier_ = devicePixelToPixelMultiplier_;
+  other->fontsByName_ = fontsByName_;
   other->layouts_ = layouts_;
   other->screens_ = screens_;
   other->sizesByName_ = sizesByName_;
@@ -189,7 +212,10 @@
     { "getTableLayoutWithNSString:", "getTableLayout", "Lcom.sponberg.fluid.layout.TableLayout;", 0x1, NULL },
     { "setColorsByNameWithFFTKeyValueList:", "setColorsByName", "V", 0x1, NULL },
     { "setSizesByNameWithFFTKeyValueList:", "setSizesByName", "V", 0x1, NULL },
+    { "setFontsByNameWithFFTKeyValueList:", "setFontsByName", "V", 0x1, NULL },
     { "getColorWithNSString:", "getColor", "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getFontFamilyNameWithNSString:", "getFontFamilyName", "Ljava.lang.String;", 0x1, NULL },
+    { "getSpecifiedDefaultFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getSizeWithNSString:", "getSize", "Ljava.lang.String;", 0x1, NULL },
     { "sizeToPixelsWithNSString:", "sizeToPixels", "D", 0x1, NULL },
     { "unitsToPixelsWithDouble:", "unitsToPixels", "D", 0x1, NULL },
@@ -211,12 +237,13 @@
     { "tableLayouts_", NULL, 0x0, "Ljava.util.HashMap;", NULL,  },
     { "colorsByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
     { "sizesByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
+    { "fontsByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
     { "tabs_", NULL, 0x0, "Ljava.util.ArrayList;", NULL,  },
     { "baseUnit_", NULL, 0x2, "D", NULL,  },
     { "devicePixelToPixelMultiplier_", NULL, 0x2, "D", NULL,  },
     { "devicePixelActualToPixelMultiplier_", NULL, 0x2, "D", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewManager = { "ViewManager", "com.sponberg.fluid.layout", NULL, 0x1, 28, methods, 9, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewManager = { "ViewManager", "com.sponberg.fluid.layout", NULL, 0x1, 31, methods, 10, fields, 0, NULL};
   return &_FFTViewManager;
 }
 

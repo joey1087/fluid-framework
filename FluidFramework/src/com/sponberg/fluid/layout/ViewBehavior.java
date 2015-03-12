@@ -115,6 +115,46 @@ public abstract class ViewBehavior {
 		}
 	}
 
+	public static String getFontFamilyName(String key, String defaultValue, KeyValueList properties) {
+		if (properties == null || key == null) {
+			return null;
+		}
+		
+		if (!properties.contains(key)) {
+			return defaultValue;
+		} else {		
+			String fontNameOrfontRefId = properties.getValue(key); /// font might have been specified using actual font name or a ref to an entry in fonts.txt
+			
+			String fontName = GlobalState.fluidApp.getViewManager().getFontFamilyName(fontNameOrfontRefId);
+			
+			if (fontName == null) { /// if fontNameOrfontRefId is not a ref to a font in fonts.txt
+				fontName = fontNameOrfontRefId;
+			}
+			
+			return fontName;
+		}
+	}
+	
+	public static String getFontStyle(String key, String defaultValue, KeyValueList properties) {
+		if (properties == null || key == null) {
+			return null;
+		}
+		
+		if (!properties.contains(key)) {
+			return defaultValue;
+		} else {		
+			String styleValueOrRefId = properties.getValue(key); 
+			
+			String fontStyle = GlobalState.fluidApp.getViewManager().getFontStyle(styleValueOrRefId);
+			
+			if (fontStyle == null) {
+				fontStyle = styleValueOrRefId;
+			}
+			
+			return fontStyle;
+		}
+	}
+	
 	public static Double getFontSizeProperty(String key, Double defaultValue, KeyValueList properties) {
 		if (!properties.contains(key)) {
 			return defaultValue;
@@ -136,7 +176,7 @@ public abstract class ViewBehavior {
 			return GlobalState.fluidApp.sizeToPixels(size);
 		}
 	}
-
+		
 	private static String getSizeFromLayoutVariablesOrSizes(String key,
 			KeyValueList properties) {
 		String size;
