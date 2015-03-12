@@ -14,8 +14,6 @@ import com.sponberg.fluid.util.KeyValueList;
 public class ViewBehaviorSegmentedControl extends ViewBehavior {
 
 	private String[] options;
-
-	//private Color textAndLineColor;
 	
 	private Color textColor;
 	

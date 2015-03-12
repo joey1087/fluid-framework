@@ -176,20 +176,7 @@ public abstract class ViewBehavior {
 			return GlobalState.fluidApp.sizeToPixels(size);
 		}
 	}
-	
-//	private static String getFontNameFromApplicationFontSpecification(String key, KeyValueList properties) {
-//		
-//		String fontNameOrfontRefId = properties.getValue(key); /// font might have been specified using actual font name or a ref to an entry in fonts.txt
-//		
-//		String fontName = GlobalState.fluidApp.getViewManager().getFontFamilyName(fontNameOrfontRefId);
-//		
-//		if (fontName == null) { /// if fontNameOrfontRefId is not a ref to a font in fonts.txt
-//			fontName = fontNameOrfontRefId;
-//		}
-//		
-//		return fontName;
-//	}
-	
+		
 	private static String getSizeFromLayoutVariablesOrSizes(String key,
 			KeyValueList properties) {
 		String size;
