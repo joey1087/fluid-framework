@@ -1654,9 +1654,14 @@
         control.tintColor = color;
     }
     
+    if ([viewBehavior getTextColor]) {
+        UIColor *color = [FFView color:[viewBehavior getTextColor]];
+        [control setTitleTextAttributes:@{NSForegroundColorAttributeName:color} forState:UIControlStateNormal];
+    }
+    
     if ([viewBehavior getSelectedTextColor]) {
         UIColor *color = [FFView color:[viewBehavior getSelectedTextColor]];
-        [control setTitleTextAttributes:@{NSForegroundColorAttributeName:color} forState:UIControlStateNormal];
+        [control setTitleTextAttributes:@{NSForegroundColorAttributeName:color} forState:UIControlStateSelected];
     }
     
     return control;
