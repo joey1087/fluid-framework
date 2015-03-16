@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -48,7 +47,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
 
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.android.FluidFrameworkAndroidApp;
@@ -71,7 +69,7 @@ public class FluidActivity extends ActionBarActivity  {
 	public static final int ACTIVITY_RESULT_CUSTOM_START_INDEX = 1000; // FluidActivity reserves the first 1000 activity response codes
 
 	static boolean rootIsRunning = false;
-	static boolean nonRootIsRunning = false;
+	protected static boolean nonRootIsRunning = false;
 
 	protected HashMap<String, CustomLayout> screensById = new HashMap<>();
 
@@ -107,7 +105,7 @@ public class FluidActivity extends ActionBarActivity  {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
+		
 		if (!GlobalState.fluidApp.isLoaded()) {
 
 			aborted = true;
