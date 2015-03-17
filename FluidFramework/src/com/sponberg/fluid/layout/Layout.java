@@ -758,7 +758,11 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 		} else if (view.getGivenConstraints().width.isFromDataModel()) {
 			String widthString = GlobalState.fluidApp.getDataModelManager().getValue(dataModelPrefix, 
 					view.getGivenConstraints().width.getDataModelKey(), "{0}", null);
-			view.setWidth(GlobalState.fluidApp.sizeToPixels(widthString));
+			if (widthString.equals("nan")) {
+				view.setWidth(0d);
+			} else {
+				view.setWidth(GlobalState.fluidApp.sizeToPixels(widthString));
+			}
 		} else {
 			return false;
 		}
@@ -1035,7 +1039,11 @@ public class Layout implements LRUCache.RemovedListener<String, Layout.LastLayou
 		} else if (view.getGivenConstraints().height.isFromDataModel()) {
 			String heightString = GlobalState.fluidApp.getDataModelManager().getValue(dataModelPrefix, 
 					view.getGivenConstraints().height.getDataModelKey(), "{0}", null);
-			view.setHeight(GlobalState.fluidApp.sizeToPixels(heightString));
+			if (heightString.equals("nan")) {
+				view.setHeight(0d);
+			} else {
+				view.setHeight(GlobalState.fluidApp.sizeToPixels(heightString));
+			}
 		} else {
 			throw new RuntimeException("Can't resolve height for " + view);
 		}

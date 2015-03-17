@@ -237,8 +237,8 @@ static int containerId = 1;
         info.precompute = [self.layout isPrecomputedPositions];
         
         UIView *uiView = [self.viewsById objectForKey:view->id__];
-        //if (uiView == nil && [view isVisible]) {
-        if (uiView == nil) {
+        if (uiView == nil && [view isVisible]) {
+        //if (uiView == nil) { // If the child class wants to access this view, for animating and such, we need to create it even if its not visible
             uiView = [[[FFTGlobalState fluidApp] getFluidViewFactory] createViewWithNSString:[viewBehavior getType] withFFTViewPosition:view withId:info];
             if ([uiView isKindOfClass:[FFView class]]) {
                 ((FFView *) uiView).rootFFView = self;

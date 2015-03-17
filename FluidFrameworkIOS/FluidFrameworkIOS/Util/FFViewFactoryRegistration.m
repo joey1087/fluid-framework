@@ -680,9 +680,10 @@
         table.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
-    if ([viewBehavior isScrollToBottomOnLoad] && table.contentSize.height > table.frame.size.height) {
-        CGPoint offset = CGPointMake(0, table.contentSize.height - table.frame.size.height);
-        [table setContentOffset:offset animated:NO];
+    if ([viewBehavior isScrollToBottomOnLoad]) {//  && table.contentSize.height > table.frame.size.height) {
+        //CGPoint offset = CGPointMake(0, table.contentSize.height - table.frame.size.height);
+        //[table setContentOffset:offset animated:NO];
+        [table setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
     }
     
     BOOL scrollToBottomOnLoad = [viewBehavior isScrollToBottomOnLoad];
