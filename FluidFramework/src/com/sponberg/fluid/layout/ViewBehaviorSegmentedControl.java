@@ -54,7 +54,7 @@ public class ViewBehaviorSegmentedControl extends ViewBehavior {
 		
 		this.selectedTextColor = getColorProperty("selected-text-color", null, properties);
 		this.backgroundColor = getColorProperty("background-color", new Color(0, 0, 0, 0), properties);
-		this.selectedBackgroundColor = getColorProperty("background-color", lineColor, properties);
+		this.selectedBackgroundColor = getColorProperty("selected-background-color", lineColor, properties);
 
 		this.selectedIndexKey = getStringProperty("selected-index", null, properties);
 
