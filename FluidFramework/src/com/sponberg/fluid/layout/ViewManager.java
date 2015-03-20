@@ -102,6 +102,10 @@ public class ViewManager implements ApplicationInitializer {
 		}
 	}
 	
+	public int getInt(String intString) {
+		return Integer.parseInt(intString);
+	}
+	
 	public String getFontFamilyName(String refId) {
 		if (fontsByName != null && fontsByName.contains(refId)) {
 			return fontsByName.getValue(refId);

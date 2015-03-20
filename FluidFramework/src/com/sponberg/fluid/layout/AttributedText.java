@@ -77,7 +77,10 @@ public class AttributedText {
 							} else if (s.startsWith("color")) {
 								Color color = viewManager.getColor(s.substring(6));
 								attribute.color = color;
-							} else if (s.startsWith("disable-attributed-text")) {
+							} else if (s.startsWith("corner-radius")) {
+								attribute.cornerRadius = viewManager.getInt(s.substring(14));
+							}
+							else if (s.startsWith("disable-attributed-text")) {
 								disabled = true;
 							}
 						}
@@ -140,7 +143,7 @@ public class AttributedText {
 		
 		int startIndex;
 		int endIndex;
-		
+		int cornerRadius;
 	}
 	
 }
