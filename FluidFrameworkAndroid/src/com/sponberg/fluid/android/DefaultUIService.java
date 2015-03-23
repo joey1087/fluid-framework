@@ -7,6 +7,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Configuration;
 import android.text.Spannable;
 import android.view.Display;
+import android.view.WindowManager;
 
 import com.sponberg.fluid.Callback;
 import com.sponberg.fluid.GlobalState;
@@ -128,13 +129,15 @@ public class DefaultUIService implements UIService {
 
 	@Override
 	public int getScreenWidthInPixels() {
-		Display display = app.getCurrentActivity().getWindowManager().getDefaultDisplay();
+		WindowManager wm = (WindowManager) app.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
 		return display.getWidth();
 	}
 
 	@Override
 	public int getScreenHeightInPixels() {
-		Display display = app.getCurrentActivity().getWindowManager().getDefaultDisplay();
+		WindowManager wm = (WindowManager) app.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
 		return display.getHeight();
 	}
 

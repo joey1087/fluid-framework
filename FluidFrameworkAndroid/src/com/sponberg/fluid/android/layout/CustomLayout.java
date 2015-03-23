@@ -785,4 +785,16 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 		super.requestLayout();
 	}
 
+	protected OnClickListener onClickListener;
+	
+	@Override
+	public void setOnClickListener(OnClickListener l) {
+		super.setOnClickListener(l);
+		this.onClickListener = l;
+	}
+
+	public OnClickListener getOnClickListener() {
+		return onClickListener;
+	}
+	
 }

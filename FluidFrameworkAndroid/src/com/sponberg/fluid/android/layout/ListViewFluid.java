@@ -2,7 +2,6 @@ package com.sponberg.fluid.android.layout;
 
 import android.content.Context;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.layout.ViewBehaviorTable;
@@ -10,13 +9,13 @@ import com.sponberg.fluid.util.Logger;
 
 public class ListViewFluid extends ListView implements FluidViewAndroid {
 
-	private FluidListAdapter adapter;
+	private final FluidListAdapter adapter;
 	
 	Bounds bounds;
 	
 	private String dataModelListenerId;
 	
-	private String viewPath;
+	private final String viewPath;
 	
 	final static boolean kPrecomputeHeights = true;
 	
@@ -48,6 +47,7 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 		setAdapter(adapter);
 	}
 	
+	@Override
 	public void setBounds(Bounds bounds) {
 		this.bounds = bounds;
 	}
@@ -78,6 +78,19 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 			android.view.View view = this.getChildAt(index);
 			view.layout(view.getLeft(), view.getTop(), view.getLeft() + (r - l), view.getBottom());
 		}
+		
+		checkAndScrollToBottom();
+	}
+
+	public void checkAndScrollToBottom() {
+
+		if (shouldScrollToBottom) {
+			if (this.viewBehavior != null && this.viewBehavior.isScrollToBottomOnLoad()) {
+				scrollToBottom();
+			}
+			
+			shouldScrollToBottom = false;
+		}
 	}
 
 	public void hideViewWithId(long id) {
@@ -90,13 +103,7 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 			adapter.precomputeHeightsAsync(this, true);
 		}
 		adapter.notifyDataSetChanged();
-		if (shouldScrollToBottom) {
-			if (this.viewBehavior != null && this.viewBehavior.isScrollToBottomOnLoad()) {
-				scrollToBottom();
-			}
-			
-			shouldScrollToBottom = false;
-		}
+		checkAndScrollToBottom();
 	}
 
 	public void scrollToBottom() {
@@ -133,6 +140,7 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 		return viewPath;
 	}
 	
+	@Override
 	protected void onAttachedToWindow () {
 		
 		super.onAttachedToWindow();

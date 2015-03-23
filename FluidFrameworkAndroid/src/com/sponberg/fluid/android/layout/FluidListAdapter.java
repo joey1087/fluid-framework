@@ -185,32 +185,18 @@ public class FluidListAdapter extends BaseAdapter {
 		
 		final String dataPrefixKeyFinal = dataPrefixKey;
 		if (tableRow != null) {
-			final TableRow tableRowFinal = tableRow;
-			customLayout.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					
-					if (!rootCustomLayout.isUserActivityEnabled()) {
-						return;
-					}
-					
-					EventInfo eventInfo = new EventInfo();
-					eventInfo.setDataModelKeyParent(dataPrefixKeyFinal);
-					eventInfo.setDataModelKey(tableRowFinal.getId() + "");
-					
-					if (FluidListAdapter.this.viewBehavior.getTableLayoutId() != null) {
-						// Table Layout, use name of row
-						String[] comps = tableRowFinal.getLayout().split("\\.");
-				        String rowLayout = comps[comps.length - 1];
-				        eventInfo.setUserInfo(rowLayout);
-					} else {
-						// Use index of row
-						eventInfo.setUserInfo(tableRowFinal.getId());
-					}
-					
-					GlobalState.fluidApp.getEventsManager().userTapped(parentLayout.getViewPath(), eventInfo);
-				}
-			});
+			
+			ListAdapterClickListener listener = (ListAdapterClickListener) customLayout.getOnClickListener();
+			if (listener == null) {
+	            listener = new ListAdapterClickListener();
+	            customLayout.setOnClickListener(listener);
+			}
+			
+			listener.rootCustomLayout = rootCustomLayout;
+			listener.dataPrefixKeyFinal = dataPrefixKeyFinal;
+			listener.tableRowFinal = tableRow;
+			listener.tableLayoutId = FluidListAdapter.this.viewBehavior.getTableLayoutId();
+			listener.parentViewPath = parentLayout.getViewPath();
 		}
 		
 		return customLayout;
@@ -498,5 +484,38 @@ public class FluidListAdapter extends BaseAdapter {
         }
 
     }
+
+	static class ListAdapterClickListener implements OnClickListener {
+		
+		CustomLayout rootCustomLayout;
+		String dataPrefixKeyFinal;
+		TableRow tableRowFinal;
+		String tableLayoutId;//FluidListAdapter.this.viewBehavior.getTableLayoutId()
+		String parentViewPath;//parentLayout.getViewPath()
+		
+		@Override
+		public void onClick(View v) {
+			
+			if (!rootCustomLayout.isUserActivityEnabled()) {
+				return;
+			}
+			
+			EventInfo eventInfo = new EventInfo();
+			eventInfo.setDataModelKeyParent(dataPrefixKeyFinal);
+			eventInfo.setDataModelKey(tableRowFinal.getId() + "");
+			
+			if (tableLayoutId != null) {
+				// Table Layout, use name of row
+				String[] comps = tableRowFinal.getLayout().split("\\.");
+		        String rowLayout = comps[comps.length - 1];
+		        eventInfo.setUserInfo(rowLayout);
+			} else {
+				// Use index of row
+				eventInfo.setUserInfo(tableRowFinal.getId());
+			}
+			
+			GlobalState.fluidApp.getEventsManager().userTapped(parentViewPath, eventInfo);
+		}
+	}	
 	
 }
