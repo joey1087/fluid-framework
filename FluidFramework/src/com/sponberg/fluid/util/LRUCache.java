@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.sponberg.fluid.GlobalState;
+
 @SuppressWarnings("serial")
 public class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
@@ -17,12 +19,18 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
 	}
 	
 	@Override
-	protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+	protected boolean removeEldestEntry(final Map.Entry<K,V> eldest) {
 		boolean shouldRemove = size() > maxEntries;
 		if (shouldRemove) {
-			for (RemovedListener<K, V> l : removedListeners) {
-				l.entryWasRemoved(eldest.getKey(), eldest.getValue());
-			}
+			Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					for (RemovedListener<K, V> l : removedListeners) {
+						l.entryWasRemoved(eldest.getKey(), eldest.getValue());
+					}					
+				}
+			};
+			GlobalState.fluidApp.getSystemService().runOnUiThread(r);
 		}
 	   return size() > maxEntries;
 	}
