@@ -82,6 +82,9 @@
                 FFTColor *color = [((FFTViewManager *) nil_chk(viewManager)) getColorWithNSString:[s substring:6]];
                 attribute->color_ = color;
               }
+              else if ([s hasPrefix:@"corner-radius"]) {
+                attribute->cornerRadius_ = [((FFTViewManager *) nil_chk(viewManager)) getIntWithNSString:[s substring:14]];
+              }
               else if ([s hasPrefix:@"disable-attributed-text"]) {
                 disabled = YES;
               }
@@ -288,6 +291,10 @@
   return self->endIndex_;
 }
 
+- (int)getCornerRadius {
+  return self->cornerRadius_;
+}
+
 - (void)setBoldWithBoolean:(BOOL)bold {
   self->bold_ = bold;
 }
@@ -316,6 +323,10 @@
   self->endIndex_ = endIndex;
 }
 
+- (void)setCornerRadiusWithInt:(int)cornerRadius {
+  self->cornerRadius_ = cornerRadius;
+}
+
 - (BOOL)isEqual:(id)o {
   if (o == self) return YES;
   if (!([o isKindOfClass:[FFTAttributedText_Attribute class]])) return NO;
@@ -332,6 +343,7 @@
   if (this$color == nil ? other$color != nil : ![this$color isEqual:other$color]) return NO;
   if ([self getStartIndex] != [other getStartIndex]) return NO;
   if ([self getEndIndex] != [other getEndIndex]) return NO;
+  if ([self getCornerRadius] != [other getCornerRadius]) return NO;
   return YES;
 }
 
@@ -351,11 +363,12 @@
   result = result * PRIME + ($color == nil ? 0 : ((int) [$color hash]));
   result = result * PRIME + [self getStartIndex];
   result = result * PRIME + [self getEndIndex];
+  result = result * PRIME + [self getCornerRadius];
   return result;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"AttributedText.Attribute(bold=%@, italic=%@, underline=%@, backgroundColor=%@, color=%@, startIndex=%d, endIndex=%d)", [JavaLangBoolean toStringWithBoolean:[self isBold]], [JavaLangBoolean toStringWithBoolean:[self isItalic]], [JavaLangBoolean toStringWithBoolean:[self isUnderline]], [self getBackgroundColor], [self getColor], [self getStartIndex], [self getEndIndex]];
+  return [NSString stringWithFormat:@"AttributedText.Attribute(bold=%@, italic=%@, underline=%@, backgroundColor=%@, color=%@, startIndex=%d, endIndex=%d, cornerRadius=%d)", [JavaLangBoolean toStringWithBoolean:[self isBold]], [JavaLangBoolean toStringWithBoolean:[self isItalic]], [JavaLangBoolean toStringWithBoolean:[self isUnderline]], [self getBackgroundColor], [self getColor], [self getStartIndex], [self getEndIndex], [self getCornerRadius]];
 }
 
 - (void)copyAllFieldsTo:(FFTAttributedText_Attribute *)other {
@@ -363,6 +376,7 @@
   other->backgroundColor_ = backgroundColor_;
   other->bold_ = bold_;
   other->color_ = color_;
+  other->cornerRadius_ = cornerRadius_;
   other->endIndex_ = endIndex_;
   other->italic_ = italic_;
   other->startIndex_ = startIndex_;
@@ -379,6 +393,7 @@
     { "getColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "getStartIndex", NULL, "I", 0x1, NULL },
     { "getEndIndex", NULL, "I", 0x1, NULL },
+    { "getCornerRadius", NULL, "I", 0x1, NULL },
     { "setBoldWithBoolean:", "setBold", "V", 0x1, NULL },
     { "setItalicWithBoolean:", "setItalic", "V", 0x1, NULL },
     { "setUnderlineWithBoolean:", "setUnderline", "V", 0x1, NULL },
@@ -386,6 +401,7 @@
     { "setColorWithFFTColor:", "setColor", "V", 0x1, NULL },
     { "setStartIndexWithInt:", "setStartIndex", "V", 0x1, NULL },
     { "setEndIndexWithInt:", "setEndIndex", "V", 0x1, NULL },
+    { "setCornerRadiusWithInt:", "setCornerRadius", "V", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
     { "canEqualWithId:", "canEqual", "Z", 0x4, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
@@ -399,8 +415,9 @@
     { "color_", NULL, 0x0, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "startIndex_", NULL, 0x0, "I", NULL,  },
     { "endIndex_", NULL, 0x0, "I", NULL,  },
+    { "cornerRadius_", NULL, 0x0, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTAttributedText_Attribute = { "Attribute", "com.sponberg.fluid.layout", "AttributedText", 0x9, 19, methods, 7, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTAttributedText_Attribute = { "Attribute", "com.sponberg.fluid.layout", "AttributedText", 0x9, 21, methods, 8, fields, 0, NULL};
   return &_FFTAttributedText_Attribute;
 }
 

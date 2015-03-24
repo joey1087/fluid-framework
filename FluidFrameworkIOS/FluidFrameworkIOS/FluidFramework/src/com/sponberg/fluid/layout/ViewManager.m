@@ -13,6 +13,7 @@
 #include "com/sponberg/fluid/layout/ViewManager.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "java/lang/Double.h"
+#include "java/lang/Integer.h"
 #include "java/lang/RuntimeException.h"
 #include "java/util/ArrayList.h"
 #include "java/util/HashMap.h"
@@ -77,6 +78,10 @@
   self->fontsByName_ = fontsByName;
 }
 
+- (void)setFontStylesWithFFTKeyValueList:(id<FFTKeyValueList>)fontStyles {
+  self->fontStyles_ = fontStyles;
+}
+
 - (FFTColor *)getColorWithNSString:(NSString *)name {
   if ([((id<FFTKeyValueList>) nil_chk(colorsByName_)) containsWithNSString:name]) {
     return [FFTColor colorFromStringWithNSString:[colorsByName_ getValueWithNSString:name]];
@@ -84,6 +89,10 @@
   else {
     return [FFTColor colorFromStringWithNSString:name];
   }
+}
+
+- (int)getIntWithNSString:(NSString *)intString {
+  return [JavaLangInteger parseIntWithNSString:intString];
 }
 
 - (NSString *)getFontFamilyNameWithNSString:(NSString *)refId {
@@ -95,9 +104,27 @@
   }
 }
 
+- (NSString *)getFontStyleWithNSString:(NSString *)refId {
+  if (fontStyles_ != nil && [fontStyles_ containsWithNSString:refId]) {
+    return [fontStyles_ getValueWithNSString:refId];
+  }
+  else {
+    return nil;
+  }
+}
+
 - (NSString *)getSpecifiedDefaultFontFamilyName {
   if (fontsByName_ != nil && [fontsByName_ containsWithNSString:@"default-font"]) {
     return [fontsByName_ getValueWithNSString:@"default-font"];
+  }
+  else {
+    return nil;
+  }
+}
+
+- (NSString *)getSpecifiedDefaultFontStyle {
+  if (fontStyles_ != nil && [fontStyles_ containsWithNSString:@"default-style"]) {
+    return [fontStyles_ getValueWithNSString:@"default-style"];
   }
   else {
     return nil;
@@ -189,6 +216,7 @@
   other->colorsByName_ = colorsByName_;
   other->devicePixelActualToPixelMultiplier_ = devicePixelActualToPixelMultiplier_;
   other->devicePixelToPixelMultiplier_ = devicePixelToPixelMultiplier_;
+  other->fontStyles_ = fontStyles_;
   other->fontsByName_ = fontsByName_;
   other->layouts_ = layouts_;
   other->screens_ = screens_;
@@ -213,9 +241,13 @@
     { "setColorsByNameWithFFTKeyValueList:", "setColorsByName", "V", 0x1, NULL },
     { "setSizesByNameWithFFTKeyValueList:", "setSizesByName", "V", 0x1, NULL },
     { "setFontsByNameWithFFTKeyValueList:", "setFontsByName", "V", 0x1, NULL },
+    { "setFontStylesWithFFTKeyValueList:", "setFontStyles", "V", 0x1, NULL },
     { "getColorWithNSString:", "getColor", "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getIntWithNSString:", "getInt", "I", 0x1, NULL },
     { "getFontFamilyNameWithNSString:", "getFontFamilyName", "Ljava.lang.String;", 0x1, NULL },
+    { "getFontStyleWithNSString:", "getFontStyle", "Ljava.lang.String;", 0x1, NULL },
     { "getSpecifiedDefaultFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getSpecifiedDefaultFontStyle", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getSizeWithNSString:", "getSize", "Ljava.lang.String;", 0x1, NULL },
     { "sizeToPixelsWithNSString:", "sizeToPixels", "D", 0x1, NULL },
     { "unitsToPixelsWithDouble:", "unitsToPixels", "D", 0x1, NULL },
@@ -238,12 +270,13 @@
     { "colorsByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
     { "sizesByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
     { "fontsByName_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
+    { "fontStyles_", NULL, 0x0, "Lcom.sponberg.fluid.util.KeyValueList;", NULL,  },
     { "tabs_", NULL, 0x0, "Ljava.util.ArrayList;", NULL,  },
     { "baseUnit_", NULL, 0x2, "D", NULL,  },
     { "devicePixelToPixelMultiplier_", NULL, 0x2, "D", NULL,  },
     { "devicePixelActualToPixelMultiplier_", NULL, 0x2, "D", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewManager = { "ViewManager", "com.sponberg.fluid.layout", NULL, 0x1, 31, methods, 10, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewManager = { "ViewManager", "com.sponberg.fluid.layout", NULL, 0x1, 35, methods, 11, fields, 0, NULL};
   return &_FFTViewManager;
 }
 

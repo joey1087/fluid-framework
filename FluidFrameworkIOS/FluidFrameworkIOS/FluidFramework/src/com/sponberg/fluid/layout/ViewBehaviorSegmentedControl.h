@@ -17,7 +17,8 @@
 @interface FFTViewBehaviorSegmentedControl : FFTViewBehavior {
  @public
   IOSObjectArray *options_;
-  FFTColor *textAndLineColor_;
+  FFTColor *textColor_;
+  FFTColor *lineColor_;
   FFTColor *selectedTextColor_;
   FFTColor *backgroundColor_;
   FFTColor *selectedBackgroundColor_;
@@ -32,7 +33,9 @@
 
 - (IOSObjectArray *)getOptions;
 
-- (FFTColor *)getTextAndLineColor;
+- (FFTColor *)getTextColor;
+
+- (FFTColor *)getLineColor;
 
 - (FFTColor *)getSelectedTextColor;
 
@@ -48,7 +51,9 @@
 
 - (void)setOptionsWithNSStringArray:(IOSObjectArray *)options;
 
-- (void)setTextAndLineColorWithFFTColor:(FFTColor *)textAndLineColor;
+- (void)setTextColorWithFFTColor:(FFTColor *)textColor;
+
+- (void)setLineColorWithFFTColor:(FFTColor *)lineColor;
 
 - (void)setSelectedTextColorWithFFTColor:(FFTColor *)selectedTextColor;
 
@@ -69,7 +74,8 @@
 __attribute__((always_inline)) inline void FFTViewBehaviorSegmentedControl_init() {}
 
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, options_, IOSObjectArray *)
-J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, textAndLineColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, textColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, lineColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, selectedTextColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, backgroundColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSegmentedControl, selectedBackgroundColor_, FFTColor *)

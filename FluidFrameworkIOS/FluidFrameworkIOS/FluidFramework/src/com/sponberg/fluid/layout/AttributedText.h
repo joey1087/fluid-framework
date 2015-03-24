@@ -91,6 +91,7 @@ __attribute__((always_inline)) inline void FFTAttributedText_Tag_Range_init() {}
   FFTColor *color_;
   int startIndex_;
   int endIndex_;
+  int cornerRadius_;
 }
 
 - (id)init;
@@ -109,6 +110,8 @@ __attribute__((always_inline)) inline void FFTAttributedText_Tag_Range_init() {}
 
 - (int)getEndIndex;
 
+- (int)getCornerRadius;
+
 - (void)setBoldWithBoolean:(BOOL)bold;
 
 - (void)setItalicWithBoolean:(BOOL)italic;
@@ -122,6 +125,8 @@ __attribute__((always_inline)) inline void FFTAttributedText_Tag_Range_init() {}
 - (void)setStartIndexWithInt:(int)startIndex;
 
 - (void)setEndIndexWithInt:(int)endIndex;
+
+- (void)setCornerRadiusWithInt:(int)cornerRadius;
 
 - (BOOL)isEqual:(id)o;
 

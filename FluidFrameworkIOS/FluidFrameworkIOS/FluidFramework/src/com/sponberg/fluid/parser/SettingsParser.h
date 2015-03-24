@@ -34,6 +34,9 @@
 - (void)setFontsNamesWithFFTFluidApp:(FFTFluidApp *)app
                  withFFTKeyValueList:(id<FFTKeyValueList>)kvl;
 
+- (void)setFontStylesWithFFTFluidApp:(FFTFluidApp *)app
+                 withFFTKeyValueList:(id<FFTKeyValueList>)kvl;
+
 - (IOSObjectArray *)getSupportedPlatforms;
 
 - (id)init;

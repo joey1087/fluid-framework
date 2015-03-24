@@ -67,56 +67,35 @@ import com.sponberg.fluid.layout.ViewPosition;
 
 class RoundedBackgroundSpan extends ReplacementSpan
 {
-  private final int _padding = 20;
+  private final int _padding = 15;
   private int _backgroundColor;
   private int _textColor;
   private int _cornerRadius;
 
   public RoundedBackgroundSpan(int backgroundColor, int textColor, int cornerRadius) {
-    super();
-    _backgroundColor = backgroundColor;
-    _textColor = textColor;
-    _cornerRadius = cornerRadius;
+	  super();
+	  _backgroundColor = backgroundColor;
+	  _textColor = textColor;
+	  _cornerRadius = cornerRadius;
   }
 
   @Override
   public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
-    return (int) (_padding + paint.measureText(text.subSequence(start, end).toString()) + _padding);
+	  return (int) (_padding + paint.measureText(text.subSequence(start, end).toString()) + _padding);
   }
 
   @Override
-  public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
-  {
-    float width = paint.measureText(text.subSequence(start, end).toString());
-    RectF rect = new RectF(x - _padding, top, x + width + _padding, bottom);
-    paint.setColor(_backgroundColor);
-    canvas.drawRoundRect(rect, _cornerRadius, _cornerRadius, paint);
-    paint.setColor(_textColor);
-    canvas.drawText(text, start, end, x, y, paint);
+  public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
+	  float width = paint.measureText(text.subSequence(start, end).toString());
+	  RectF rect = new RectF(x - _padding, top, x + width + _padding, top + bottom);
+	  paint.setColor(_backgroundColor);
+	  canvas.drawRoundRect(rect, _cornerRadius, _cornerRadius, paint);
+	  paint.setColor(_textColor);
+	  canvas.drawText(text, start, end, x, y, paint);
   }
 }
 
 public class FluidViewFactoryRegistration {
-	
-//	public class RoundedBackgroundSpan extends ReplacementSpan
-//	{
-//
-//	    @Override
-//	    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
-//	        return 0;
-//	    }
-//
-//	    @Override
-//	    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
-//	    {
-//	        RectF rect = new RectF(x, top, x + text.length(), bottom);
-//	        paint.setColor(Color.CYAN);
-//	        canvas.drawRoundRect(rect, 20, 20, paint);
-//	        paint.setColor(Color.WHITE);
-//	        canvas.drawText(text, start, end, x, y, paint);
-//	    }
-//	}
-	
 	
 	public static void registerViews(FluidApp fluidApp) {
 
@@ -1355,7 +1334,7 @@ public class FluidViewFactoryRegistration {
 		}
 	}
 
-	public static SpannableString createAttributedText(String text) { //Instead of returning just a spannable string, we can return a structure that contains the string and 
+	public static SpannableString createAttributedText(String text) {
 
 		AttributedText attributedText = new AttributedText(text);
 

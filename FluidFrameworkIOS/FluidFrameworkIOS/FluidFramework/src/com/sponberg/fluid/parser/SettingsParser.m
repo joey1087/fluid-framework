@@ -36,6 +36,12 @@
     fontsFileName = @"fonts.txt";
     fontsNames = [((id<FFTResourceService>) nil_chk([app getResourceService])) getResourceAsStringWithNSString:@"" withNSString:fontsFileName];
   }
+  NSString *fontStylesFileName = [NSString stringWithFormat:@"font-styles@%@.txt", [app getPlatform]];
+  NSString *fontStyles = [((id<FFTResourceService>) nil_chk([app getResourceService])) getResourceAsStringWithNSString:@"" withNSString:fontStylesFileName];
+  if (fontStyles == nil) {
+    fontStylesFileName = @"font-styles.txt";
+    fontStyles = [((id<FFTResourceService>) nil_chk([app getResourceService])) getResourceAsStringWithNSString:@"" withNSString:fontStylesFileName];
+  }
   @try {
     FFTKVLReader *reader = [[FFTKVLReader alloc] initWithNSString:s];
     NSString *platformSpecific = [NSString stringWithFormat:@"settings@%@.txt", [app getPlatform]];
@@ -70,6 +76,10 @@
     if (fontsNames != nil) {
       FFTKVLReader *kvlFontsNames = [[FFTKVLReader alloc] initWithNSString:fontsNames];
       [self setFontsNamesWithFFTFluidApp:app withFFTKeyValueList:kvlFontsNames];
+    }
+    if (fontStyles != nil) {
+      FFTKVLReader *kvlFontStyles = [[FFTKVLReader alloc] initWithNSString:fontStyles];
+      [self setFontStylesWithFFTFluidApp:app withFFTKeyValueList:kvlFontStyles];
     }
   }
   @catch (JavaIoIOException *e) {
@@ -136,6 +146,11 @@
   [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(app)) getViewManager])) setFontsByNameWithFFTKeyValueList:kvl];
 }
 
+- (void)setFontStylesWithFFTFluidApp:(FFTFluidApp *)app
+                 withFFTKeyValueList:(id<FFTKeyValueList>)kvl {
+  [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(app)) getViewManager])) setFontStylesWithFFTKeyValueList:kvl];
+}
+
 - (IOSObjectArray *)getSupportedPlatforms {
   return nil;
 }
@@ -152,10 +167,11 @@
     { "setColorsWithFFTFluidApp:withFFTKeyValueList:", "setColors", "V", 0x2, NULL },
     { "setSizesWithFFTFluidApp:withFFTKeyValueList:", "setSizes", "V", 0x2, NULL },
     { "setFontsNamesWithFFTFluidApp:withFFTKeyValueList:", "setFontsNames", "V", 0x2, NULL },
+    { "setFontStylesWithFFTFluidApp:withFFTKeyValueList:", "setFontStyles", "V", 0x2, NULL },
     { "getSupportedPlatforms", NULL, "[Ljava.lang.String;", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _FFTSettingsParser = { "SettingsParser", "com.sponberg.fluid.parser", NULL, 0x1, 8, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTSettingsParser = { "SettingsParser", "com.sponberg.fluid.parser", NULL, 0x1, 9, methods, 0, NULL, 0, NULL};
   return &_FFTSettingsParser;
 }
 
