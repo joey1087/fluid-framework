@@ -543,7 +543,12 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
   }
   else if ([((FFTConstraints *) nil_chk([view getGivenConstraints]))->width_ isFromDataModel]) {
     NSString *widthString = [((FFTDataModelManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getDataModelManager])) getValueWithNSString:dataModelPrefix withNSString:[((FFTConstraints *) nil_chk([view getGivenConstraints]))->width_ getDataModelKey] withNSString:@"{0}" withNSString:nil];
-    [view setWidthWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:widthString]]];
+    if ([((NSString *) nil_chk(widthString)) isEqual:@"nan"]) {
+      [view setWidthWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:0.0]];
+    }
+    else {
+      [view setWidthWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:widthString]]];
+    }
   }
   else {
     return NO;
@@ -802,7 +807,12 @@ withFFTLayout_DirectionEnum:(FFTLayout_DirectionEnum *)direction {
   }
   else if ([((FFTConstraints *) nil_chk([view getGivenConstraints]))->height_ isFromDataModel]) {
     NSString *heightString = [((FFTDataModelManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getDataModelManager])) getValueWithNSString:dataModelPrefix withNSString:[((FFTConstraints *) nil_chk([view getGivenConstraints]))->height_ getDataModelKey] withNSString:@"{0}" withNSString:nil];
-    [view setHeightWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:heightString]]];
+    if ([((NSString *) nil_chk(heightString)) isEqual:@"nan"]) {
+      [view setHeightWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:0.0]];
+    }
+    else {
+      [view setHeightWithJavaLangDouble:[JavaLangDouble valueOfWithDouble:[FFTGlobalState_get_fluidApp__() sizeToPixelsWithNSString:heightString]]];
+    }
   }
   else {
     @throw [[JavaLangRuntimeException alloc] initWithNSString:[NSString stringWithFormat:@"Can't resolve height for %@", view]];

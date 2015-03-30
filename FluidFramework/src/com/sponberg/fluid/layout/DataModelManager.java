@@ -720,7 +720,7 @@ public class DataModelManager {
 		
 		if (dataModelPrefix == null) {
 			dataModelPrefix = "";
-		} else {
+		} else if (!dataModelPrefix.endsWith(".")) {
 			dataModelPrefix += ".";
 		}
 			

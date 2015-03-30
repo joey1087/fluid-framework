@@ -63,7 +63,11 @@
   NSString *layoutId = [((FFTViewBehaviorSubview *) nil_chk(((FFTViewBehaviorSubview *) check_class_cast([((FFTViewPosition *) nil_chk(view)) getViewBehavior], [FFTViewBehaviorSubview class])))) getSubview];
   FFTLayout *subviewLayout = [((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getLayoutWithNSString:layoutId];
   if ([((FFTLayout *) nil_chk(subviewLayout)) isPrecomputedPositions]) {
-    NSString *precomputePrefixView = [FFTDataModelManager getFullKeyWithNSString:precomputePrefix withNSString:[view getKey]];
+    NSString *key = [view getKey];
+    if (key == nil) {
+      key = @".";
+    }
+    NSString *precomputePrefixView = [FFTDataModelManager getFullKeyWithNSString:precomputePrefix withNSString:key];
     [FFTPrecomputeLayoutManager precomputeViewPositionsForWithFFTLayout:subviewLayout withBoolean:landscape withNSString:viewPathPrefixView withNSString:precomputePrefixView withFFTViewPosition:view withFFTTableRowWithIdAndHeight:nil withJavaUtilCollection:newViewPositions];
   }
 }

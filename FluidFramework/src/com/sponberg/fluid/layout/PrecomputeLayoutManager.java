@@ -189,7 +189,7 @@ public class PrecomputeLayoutManager implements ApplicationInitializer {
 			Collection<ViewPosition> newViewPositions) {
 				
 		if (!layout.isPrecomputedPositions()) {
-			throw new RuntimeException("Not expected");
+			throw new RuntimeException("Expecting precompute positions to be true for layout " + layout.getId());
 		}
 		
 		double calcHeight = layout.calculateHeight(false, (float) viewPosition.width, precomputePrefix, false);

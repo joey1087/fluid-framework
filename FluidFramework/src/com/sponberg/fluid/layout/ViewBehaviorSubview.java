@@ -59,7 +59,12 @@ public class ViewBehaviorSubview extends ViewBehavior {
 		String layoutId = ((ViewBehaviorSubview) view.getViewBehavior()).getSubview();
 		Layout subviewLayout = GlobalState.fluidApp.getLayout(layoutId);
 		if (subviewLayout.isPrecomputedPositions()) {
-			String precomputePrefixView = DataModelManager.getFullKey(precomputePrefix, view.getKey());
+
+			String key = view.getKey();
+			if (key == null) {
+				key = ".";
+			}
+			String precomputePrefixView = DataModelManager.getFullKey(precomputePrefix, key);
 			PrecomputeLayoutManager.precomputeViewPositionsFor(subviewLayout, landscape, viewPathPrefixView, precomputePrefixView, view, null, newViewPositions);
 		}
 	}

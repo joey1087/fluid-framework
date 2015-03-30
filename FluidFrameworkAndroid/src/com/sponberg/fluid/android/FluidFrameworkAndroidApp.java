@@ -529,4 +529,10 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		return fluidActivityClass;
 	}
 
+	
+	public boolean isInitializedAndLoaded() {
+	
+		return initializedAndLoaded;
+	}
+
 }
