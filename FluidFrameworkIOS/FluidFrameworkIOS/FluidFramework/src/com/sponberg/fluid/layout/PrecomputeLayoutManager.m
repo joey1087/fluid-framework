@@ -88,7 +88,7 @@ withFFTPrecomputeLayoutManager_SetPrecomputedHeightsCallback:(id<FFTPrecomputeLa
                    withFFTTableRowWithIdAndHeight:(id<FFTTableRowWithIdAndHeight>)rowWithId
                            withJavaUtilCollection:(id<JavaUtilCollection>)newViewPositions {
   if (![((FFTLayout *) nil_chk(layout)) isPrecomputedPositions]) {
-    @throw [[JavaLangRuntimeException alloc] initWithNSString:@"Not expected"];
+    @throw [[JavaLangRuntimeException alloc] initWithNSString:[NSString stringWithFormat:@"Expecting precompute positions to be true for layout %@", [layout getId]]];
   }
   double calcHeight = [layout calculateHeightWithBoolean:NO withFloat:(float) ((FFTViewPosition *) nil_chk(viewPosition))->width_ withNSString:precomputePrefix withBoolean:NO];
   if (rowWithId != nil) {

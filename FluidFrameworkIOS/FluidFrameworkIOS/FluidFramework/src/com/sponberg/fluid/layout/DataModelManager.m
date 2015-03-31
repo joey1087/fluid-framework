@@ -665,7 +665,7 @@ NSString * FFTDataModelManager_kNotEqual_ = @"!=";
   if (dataModelPrefix == nil) {
     dataModelPrefix = @"";
   }
-  else {
+  else if (![dataModelPrefix hasSuffix:@"."]) {
     dataModelPrefix = [NSString stringWithFormat:@"%@.", dataModelPrefix];
   }
   NSString *sideA;
