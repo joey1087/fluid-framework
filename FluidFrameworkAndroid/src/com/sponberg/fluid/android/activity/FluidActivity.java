@@ -91,7 +91,7 @@ public class FluidActivity extends ActionBarActivity  {
 
 	protected FluidTabListener tabListener = null;
 
-	String selectedTab;
+	protected String selectedTab;
 
 	boolean landscape = false;
 
