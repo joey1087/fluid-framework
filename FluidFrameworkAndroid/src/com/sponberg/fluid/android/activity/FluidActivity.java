@@ -39,6 +39,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -204,8 +205,7 @@ public class FluidActivity extends ActionBarActivity  {
 		return null;
 	}
 	
-	protected void setFluidScreen(String screenId, boolean removeCurrentView, boolean saveCurrentScreen) {
-
+	protected void setFluidScreen(String screenId, boolean removeCurrentView, boolean saveCurrentScreen, boolean animated) {
 		String saveScreenId = screenId;
 
 		Screen screen = GlobalState.fluidApp.getScreen(screenId);
@@ -242,6 +242,105 @@ public class FluidActivity extends ActionBarActivity  {
 		layout.viewWillAppear();
 
 		view.addView(layout);
+		
+		if (animated) {
+			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+			anim.setDuration(300);
+			layout.startAnimation(anim);
+		}
+
+		layout.viewDidAppear();
+
+		currentContentView = layout;
+
+		currentContentView.setUserActivityEnabled(true);
+
+		String name = GlobalState.fluidApp.getScreen(screenId).getName();
+		String nameKey = GlobalState.fluidApp.getScreen(screenId).getNameKey();
+
+		if (nameKey != null) {
+			String text = GlobalState.fluidApp.getDataModelManager().getValue(null, nameKey, name, null);
+			getSupportActionBar().setTitle(text);
+		} else {
+			getSupportActionBar().setTitle(name);
+		}
+
+		String subtitle = GlobalState.fluidApp.getScreen(screenId).getSubtitle();
+		String subtitleKey = GlobalState.fluidApp.getScreen(screenId).getSubtitleKey();
+
+		String subtitleText = null;
+		if (subtitleKey != null) {
+			subtitleText = GlobalState.fluidApp.getDataModelManager().getValue(null, subtitleKey, subtitle, null);
+		} else if (subtitle != null) {
+			subtitleText = subtitle;
+		}
+
+		if (subtitleText == null || subtitleText.equals("")) {
+			getSupportActionBar().setSubtitle(null);
+		} else {
+			getSupportActionBar().setSubtitle(subtitleText);
+		}
+
+		// Update options menu
+		invalidateOptionsMenu(); // Android will call onPrepareOptionsMenu
+
+		if (!overridingUpButton) {
+			if (shouldShowUpButton()) {
+				showUpButton(true, null);
+			} else {
+				showUpButton(false, null);
+			}
+		}
+
+		if (rootActivity && saveCurrentScreen) {
+			((FluidFrameworkAndroidApp) this.getApplicationContext()).setScreenId(saveScreenId);
+		}
+	}
+	
+	
+	protected void setFluidScreen(String screenId, boolean removeCurrentView, boolean saveCurrentScreen) {
+		
+		String saveScreenId = screenId;
+
+		Screen screen = GlobalState.fluidApp.getScreen(screenId);
+
+		saveCurrentScreen = initScreenWithTab(screen, saveCurrentScreen);
+
+		CustomLayout layout = screensById.get(screenId);
+		if (layout == null) {
+			Layout l = screen.getLayout();
+			Display display = getWindowManager().getDefaultDisplay();
+			int width = display.getWidth();
+			int height = display.getHeight();
+			layout = new CustomLayout(this, screen, l, new Bounds(0, 0, width, height), null, null, screen.getScreenId(), false, null, true, null, null, l.isWrapInScrollView(), false, null);
+			layout.setRoot(true);
+			screensById.put(screenId, layout);
+		}
+		layout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+		if (currentContentView == null) {
+			setContentView(R.layout.activity_main);
+		}
+
+		FrameLayout view = (FrameLayout) findViewById(R.id.container);
+
+		if (currentContentView != null && removeCurrentView) {
+			// currentContentView.cleanup(); // hstdbc should we do this here? if they are not the same
+			view.removeView(currentContentView);
+		}
+
+		if (currentContentView != null) {
+			//currentContentView.viewDidDisappear();
+		}
+
+		layout.viewWillAppear();
+
+		view.addView(layout);
+		
+//		//---TESTING CODE
+//		AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+//		anim.setDuration(300);
+//		layout.startAnimation(anim);
 
 		layout.viewDidAppear();
 
@@ -625,7 +724,7 @@ public class FluidActivity extends ActionBarActivity  {
 
 		this.currentContentView.setUserActivityEnabled(false);
 	}
-
+	
 	public void pushLayout(String screenId) {
 
 		InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -644,7 +743,7 @@ public class FluidActivity extends ActionBarActivity  {
 		this.currentContentView.startAnimation(anim);
 
 		setFluidScreen(screenId, true, false); //hstdbc
-
+		
 		this.currentContentView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
 	}
 
@@ -1168,7 +1267,7 @@ public class FluidActivity extends ActionBarActivity  {
 				public void run() {
 					GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 						@Override
-						public void run() {
+						public void run() {							
 							setFluidScreen(getScreenIdForTab(tab.getText().toString()), true, true);
 						}
 					});
@@ -1190,7 +1289,7 @@ public class FluidActivity extends ActionBarActivity  {
 					GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							setFluidScreen(getScreenIdForTab(tab.getText().toString()), true, true);
+							setFluidScreen(getScreenIdForTab(tab.getText().toString()), true, true, true);
 						}
 					});
 				}
