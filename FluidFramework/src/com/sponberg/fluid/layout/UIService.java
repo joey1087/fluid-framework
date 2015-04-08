@@ -40,4 +40,6 @@ public interface UIService {
 	
 	public boolean isOrientationLandscape();
 	
+	public String getCurrentScreenId();
+	
 }

@@ -33,8 +33,9 @@
     { "setLayoutStackWithNSStringArray:", "setLayoutStack", "V", 0x481, NULL },
     { "scrollToBottomWithNSString:withNSString:", "scrollToBottom", "V", 0x401, NULL },
     { "isOrientationLandscape", NULL, "Z", 0x401, NULL },
+    { "getCurrentScreenId", NULL, "Ljava.lang.String;", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 18, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 19, methods, 0, NULL, 0, NULL};
   return &_FFTUIService;
 }
 

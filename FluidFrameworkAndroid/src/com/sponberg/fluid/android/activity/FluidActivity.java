@@ -101,7 +101,21 @@ public class FluidActivity extends ActionBarActivity  {
 	boolean aborted = false;
 
 	CustomLayout currentContentView = null;
-
+	
+	public String getCurrentScreenId() {
+		if (currentContentView == null) {
+			return null;
+		}
+		
+		String returnString = null;
+		
+		if (currentContentView.getScreen() != null) {
+			returnString = currentContentView.getScreen().getScreenId();
+		}
+		
+		return returnString;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 

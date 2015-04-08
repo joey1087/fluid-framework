@@ -59,6 +59,8 @@
 
 - (BOOL)isOrientationLandscape;
 
+- (NSString *)getCurrentScreenId;
+
 @end
 
 __attribute__((always_inline)) inline void FFTUIService_init() {}

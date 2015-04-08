@@ -33,6 +33,11 @@ public class MockUIService implements UIService {
 	
 	boolean log = true;
 	
+	public String getCurrentScreenId() {
+		//TODO : implement?
+		return null;
+	}
+	
 	public MockUIService(CountDownLatch removeSplashLatch) {
 		this.removeSplashLatch = removeSplashLatch;
 	}

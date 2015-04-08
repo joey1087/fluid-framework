@@ -50,7 +50,21 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 	Class<? extends FluidActivity> fluidActivityClass;
 
 	ArrayList<Callback> initializeAndLoadCallbacks = new ArrayList<>();
+	
+	public String getCurrentScreenId() {
+		String id = null;
+		
+		if (currentActivity != null) {
 
+			id = currentActivity.getCurrentScreenId();
+		} else if(currentRootActivity != null) {
+
+			id = currentRootActivity.getCurrentScreenId();
+		}
+		
+		return id;
+	}
+	
 	public static FluidFrameworkAndroidApp getFluidAndroidApp() {
 		return fluidAndroidApp;
 	}

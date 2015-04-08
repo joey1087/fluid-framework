@@ -20,7 +20,11 @@ import com.sponberg.fluid.layout.UIService;
 public class DefaultUIService implements UIService {
 	
 	private final FluidFrameworkAndroidApp app;
-
+	
+	public String getCurrentScreenId() {
+		return app.getCurrentScreenId();
+	}
+	
 	public DefaultUIService(FluidFrameworkAndroidApp app) {
 		this.app = app;
 	}
