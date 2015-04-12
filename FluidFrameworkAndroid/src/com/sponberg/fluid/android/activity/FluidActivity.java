@@ -939,6 +939,10 @@ public class FluidActivity extends ActionBarActivity  {
 	}
 
 	public void dismissModalView(final ModalView modalView) {
+		if (modalView == null) {
+			return;
+		}
+		
 		Dialog d = (Dialog) modalView.getFluidData();
 		if (d == null) {
 			return;
@@ -1218,7 +1222,7 @@ public class FluidActivity extends ActionBarActivity  {
 		}
 
 		if (rootActivity && clearRootActivityOnDestroy && this.getApplicationContext() != null && !aborted) {
-			((FluidFrameworkAndroidApp) this.getApplicationContext()).setCurrentRootActivity(null);
+			((FluidFrameworkAndroidApp) this.getApplicationContext()).setCurrentRootActivity(null); //TODO : do we need to check if the currentRootActivity is this one? cuz you might nullify a different one
 		}
 
 		if (rootActivity) {

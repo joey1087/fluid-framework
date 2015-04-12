@@ -54,6 +54,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 	public String getCurrentScreenId() {
 		String id = null;
 		
+		//TODO: replace this code block with getCurrentActivity()
 		if (currentActivity != null) {
 
 			id = currentActivity.getCurrentScreenId();
@@ -432,10 +433,28 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		if (launcherActivity != null) {
 			return;
 		}
+		
+		if (modalView == null) {
+			return;
+		}
+		
+		/*
+		 * The app might be put in the background from user 
+		 * pressing back button which means there will be 
+		 * no running activity. 
+		 * 
+		 * TODO : I will refactor this whole setting up of 
+		 * activities for the app, this is just a patch for 
+		 * now.
+		 */
+		if ((FluidActivity) getCurrentActivity() == null) {
+			return;
+		}
+		
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				((FluidActivity) getCurrentActivity()).dismissModalView(modalView);
+				((FluidActivity) getCurrentActivity()).dismissModalView(modalView); //TODO : it crashes here
 			}
 		});
 	}
