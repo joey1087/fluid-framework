@@ -42,8 +42,10 @@ public class DefaultSystemService implements SystemService {
 	@Override
 	public void initiatePhoneCall(String phoneNumber) {
 		Intent intent = new Intent(Intent.ACTION_CALL);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setData(Uri.parse("tel:" + phoneNumber));
-		getCurrentActivityContext().startActivity(intent);
+		//getCurrentActivityContext().startActivity(intent);
+		app.getCurrentActivity().startActivity(intent);
 	}
 
 	@Override
