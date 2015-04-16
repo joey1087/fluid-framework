@@ -119,6 +119,10 @@ public class DefaultUIService implements UIService {
 	
 	@Override
 	public float computeHeightOfText(String text, float width, String fontName, float fontSizeInUnits) {
+		if (getCurrentActivityContext() == null) {
+			return 0; //TODO : this shouldnt be called when there's no activity 
+		}
+		
 		Spannable s = FluidViewFactoryRegistration.createAttributedText(text);
 		BoundsWithFontSize boundsWithFontSize = 
 			CustomTextView.computeHeightOfText(s, (int) Math.ceil(width), Float.MAX_VALUE, fontName, 
