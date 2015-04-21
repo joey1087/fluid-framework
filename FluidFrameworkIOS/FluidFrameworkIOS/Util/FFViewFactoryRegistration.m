@@ -483,9 +483,11 @@
     
     if (![view isVisible]) {
         label.hidden = YES;
+        viewContainer.hidden = YES;
         return;
     } else {
         label.hidden = NO;
+        viewContainer.hidden = NO;
     }
     
     CGRect labelFrame = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
