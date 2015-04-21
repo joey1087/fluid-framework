@@ -8,12 +8,12 @@
 
 #import "FFTabBarViewController.h"
 #import "FFViewController.h"
-#import "Screen.h"
+//#import "Screen.h"
 #import "GlobalState.h"
 #import "FluidApp.h"
 #import "ViewHistory.h"
 
-@interface FFTabBarViewController ()
+@interface FFTabBarViewController () <UITabBarControllerDelegate>
 
 @end
 
@@ -31,6 +31,39 @@
 - (void)setSelectedViewController:(UIViewController *)selectedViewController {
     
     [super setSelectedViewController:selectedViewController];
+    if ([selectedViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = (UINavigationController*)selectedViewController;
+        if (nav.viewControllers.count > 0) {
+            [[nav.viewControllers objectAtIndex:0] view].alpha = 0.1;
+            
+            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [[nav.viewControllers objectAtIndex:0] view].alpha  = 1.0;
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
+        
+    }
+    
+//    NSArray *tabViewControllers = self.viewControllers;
+//    UIView * fromView = self.selectedViewController.view;
+//    UIView * toView = selectedViewController.view;
+//    if (fromView == toView)
+//        return;
+//    NSUInteger fromIndex = [tabViewControllers indexOfObject:self.selectedViewController];
+//    NSUInteger toIndex = [tabViewControllers indexOfObject:selectedViewController];
+//    
+//    [UIView transitionFromView:fromView
+//                        toView:toView
+//                      duration:0.3
+//                       options: toIndex > fromIndex ? UIViewAnimationOptionTransitionCrossDissolve : UIViewAnimationOptionTransitionCrossDissolve
+//                    completion:^(BOOL finished) {
+//                        if (finished) {
+//                            self.selectedIndex = toIndex;
+//                        }
+//                    }];
+//    return;
+    
 }
 
 @end
