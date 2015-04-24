@@ -1261,6 +1261,7 @@
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
     
+    
     if ([viewBehavior getFormattedPlaceholder]) {
         FFTAttributedText *attText = [[FFTAttributedText alloc] initWithNSString:[viewBehavior getFormattedPlaceholder]];
         NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor]];
@@ -1278,6 +1279,8 @@
         textfield.keyboardType = UIKeyboardTypePhonePad;
     } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardUrl_]) {
         textfield.keyboardType = UIKeyboardTypeURL;
+    } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardAlphabet_]) {
+        textfield.keyboardType = UIKeyboardTypeAlphabet;
     } else {
         textfield.keyboardType = UIKeyboardTypeDefault;
     }
@@ -1373,10 +1376,12 @@
         textfield.keyboardType = UIKeyboardTypePhonePad;
     } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardUrl_]) {
         textfield.keyboardType = UIKeyboardTypeURL;
+    } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardAlphabet_]) {
+        textfield.keyboardType = UIKeyboardTypeAlphabet;
     } else {
         textfield.keyboardType = UIKeyboardTypeDefault;
     }
-    
+
     if (![viewBehavior isAutoCorrect]) {
         textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     }

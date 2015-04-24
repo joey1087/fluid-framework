@@ -13,6 +13,7 @@ import com.sponberg.fluid.util.KeyValueList;
 public class ViewBehaviorTextfield extends ViewBehavior {
 
 	public static final String kKeyboardDefault = "default";
+	public static final String kKeyboardAlphabet = "alphabet";
 	public static final String kKeyboardEmail = "email";
 	public static final String kKeyboardUrl = "url";
 	public static final String kKeyboardNumber = "number";

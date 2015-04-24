@@ -117,6 +117,9 @@ J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, androidLineColor_, FFTColor *)
 FOUNDATION_EXPORT NSString *FFTViewBehaviorTextfield_kKeyboardDefault_;
 J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorTextfield, kKeyboardDefault_, NSString *)
 
+FOUNDATION_EXPORT NSString *FFTViewBehaviorTextfield_kKeyboardAlphabet_;
+J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorTextfield, kKeyboardAlphabet_, NSString *)
+
 FOUNDATION_EXPORT NSString *FFTViewBehaviorTextfield_kKeyboardEmail_;
 J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorTextfield, kKeyboardEmail_, NSString *)
 

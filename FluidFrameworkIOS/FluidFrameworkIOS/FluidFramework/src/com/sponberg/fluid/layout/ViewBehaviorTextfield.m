@@ -16,6 +16,7 @@
 @implementation FFTViewBehaviorTextfield
 
 NSString * FFTViewBehaviorTextfield_kKeyboardDefault_ = @"default";
+NSString * FFTViewBehaviorTextfield_kKeyboardAlphabet_ = @"alphabet";
 NSString * FFTViewBehaviorTextfield_kKeyboardEmail_ = @"email";
 NSString * FFTViewBehaviorTextfield_kKeyboardUrl_ = @"url";
 NSString * FFTViewBehaviorTextfield_kKeyboardNumber_ = @"number";
@@ -244,6 +245,7 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
   };
   static J2ObjcFieldInfo fields[] = {
     { "kKeyboardDefault_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardDefault_,  },
+    { "kKeyboardAlphabet_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardAlphabet_,  },
     { "kKeyboardEmail_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardEmail_,  },
     { "kKeyboardUrl_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardUrl_,  },
     { "kKeyboardNumber_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardNumber_,  },
@@ -265,7 +267,7 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
     { "capitalize_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "androidLineColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorTextfield = { "ViewBehaviorTextfield", "com.sponberg.fluid.layout", NULL, 0x1, 33, methods, 21, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorTextfield = { "ViewBehaviorTextfield", "com.sponberg.fluid.layout", NULL, 0x1, 33, methods, 22, fields, 0, NULL};
   return &_FFTViewBehaviorTextfield;
 }
 
