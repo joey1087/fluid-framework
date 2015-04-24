@@ -252,6 +252,7 @@
         [self setLayoutWithNSString:showScreenId withBoolean:NO];
     }
     
+    //TODO : why do we set up a webview here and load HTML here
     UIWebView *view = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [view loadHTMLString:@"<html><body></body></html>" baseURL:nil];
 }
@@ -292,7 +293,7 @@
             [UIApplication sharedApplication].statusBarHidden = YES;
         }
         
-        // End: Keep this in sync with setLayoutStack
+        // End: Keep this in sync with setLayoutStack 
         
         FFNavigationViewController *controller = [self currentNavigationController];
         FFNavigationViewController *vc = (FFNavigationViewController *) [controller presentedViewController];
@@ -1001,4 +1002,44 @@
     return retVal;
 }
 
+- (NSString *)getCurrentScreenId {
+    
+    NSString* returnStr = Nil;
+
+    FFNavigationViewController* nav = [self currentNavigationController];
+    
+    if (nav && nav.visibleViewController) {
+        
+        if ([[self currentNavigationController].visibleViewController isKindOfClass:[FFViewController class]]) {
+            FFViewController *fvc = (FFViewController*)[self currentNavigationController].visibleViewController;
+            
+            returnStr = [[fvc screen] getScreenId];
+        }
+    }
+    
+    return returnStr;
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
