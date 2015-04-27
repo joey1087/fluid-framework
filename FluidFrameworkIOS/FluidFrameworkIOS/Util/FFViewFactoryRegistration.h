@@ -33,7 +33,7 @@
 + (UIFont *)fontFor:(NSString *)name sizeInUnits:(float)sizeInUnits;
 + (void)addDataChangeObserverFor:(NSString *)prefix dataModelKey:(NSString *)dataModelKey listenerId:(NSString *)listenerId listenForChildren:(BOOL)listenForChildren block:(observerBlock)block blockDataRemoved:(observerBlockDataRemoved)blockRemoved;
 + (void)removeDataChangeObserverFor:(NSString *)listenerId;
-+ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor;
++ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor fontName:(NSString*)fontName;
 
 @end
 

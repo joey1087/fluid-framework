@@ -54,8 +54,9 @@
 #import "PrecomputeLayoutManager.h"
 #include "UIService.h"
 #include "ViewManager.h"
-
 #include "com/sponberg/fluid/layout/DataModelManager.h"
+
+
 
 @interface ButtonBuilder : NSObject<FFTFluidViewFactory_FluidViewBuilder>
 @end
@@ -141,7 +142,7 @@
     [[appDelegate dataNotificationService] removeDataChangeObserverFor:listenerId];
 }
 
-+ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor {
++ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor fontName:(NSString*)fontName {
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[attText getText]];
     
@@ -150,6 +151,13 @@
     [attrString addAttribute:NSFontAttributeName
                        value:[UIFont systemFontOfSize:pointSize]
                        range:NSMakeRange(0, [[attText getText] length])];
+    
+    if (fontName) {
+        UIFont* font = [UIFont fontWithName:fontName size:pointSize];
+        [attrString addAttribute:NSFontAttributeName
+                           value:font
+                           range:NSMakeRange(0, [[attText getText] length])];
+    }
     
     for (FFTAttributedText_Attribute *att in [attText getAttributes]) {
         NSRange range = NSMakeRange([att getStartIndex], [att getEndIndex] - [att getStartIndex]);
@@ -236,7 +244,7 @@
     while (fontSizeInUnits >= minimumSizeUnits) {
         
         float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
-        attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:defaultColor];
+        attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:defaultColor fontName:fontName];
         
         fSize = [attString boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
         fSize.size.width = ceil(fSize.size.width);
@@ -526,6 +534,16 @@
         [label setTextColor:textColor];
     } else {
         [label setTextColor:nil];
+    }
+    
+    if ([viewBehavior getFontFamilyName]) {
+        NSString* fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:[viewBehavior getFontSize].doubleValue];
+        [label setFont:font];
     }
     
     [self sizeAndPositionLabel:label fontSize:[viewBehavior->fontSize_ doubleValue] minFontSize:[viewBehavior->minFontSize_ doubleValue] maxFontSize:[viewBehavior->maxFontSize_ doubleValue]parentFrame:info.bounds verticalAlign:viewBehavior->verticalAlign_ attributedText:attText];
@@ -1264,7 +1282,7 @@
     
     if ([viewBehavior getFormattedPlaceholder]) {
         FFTAttributedText *attText = [[FFTAttributedText alloc] initWithNSString:[viewBehavior getFormattedPlaceholder]];
-        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor]];
+        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor] fontName:Nil];
         textfield.attributedPlaceholder = attString;
     } else {
         textfield.placeholder = [viewBehavior getLabel];        
