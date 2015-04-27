@@ -13,6 +13,7 @@
   NSString *tabId_;
   NSString *label_;
   NSString *image_;
+  NSString *selectedImage_;
   NSString *screenId_;
 }
 
@@ -24,6 +25,8 @@
 
 - (NSString *)getImage;
 
+- (NSString *)getSelectedImage;
+
 - (NSString *)getScreenId;
 
 - (void)setTabIdWithNSString:(NSString *)tabId;
@@ -31,6 +34,8 @@
 - (void)setLabelWithNSString:(NSString *)label;
 
 - (void)setImageWithNSString:(NSString *)image;
+
+- (void)setSelectedImageWithNSString:(NSString *)selectedImage;
 
 - (void)setScreenIdWithNSString:(NSString *)screenId;
 
@@ -51,6 +56,7 @@ __attribute__((always_inline)) inline void FFTTab_init() {}
 J2OBJC_FIELD_SETTER(FFTTab, tabId_, NSString *)
 J2OBJC_FIELD_SETTER(FFTTab, label_, NSString *)
 J2OBJC_FIELD_SETTER(FFTTab, image_, NSString *)
+J2OBJC_FIELD_SETTER(FFTTab, selectedImage_, NSString *)
 J2OBJC_FIELD_SETTER(FFTTab, screenId_, NSString *)
 
 typedef FFTTab ComSponbergFluidLayoutTab;

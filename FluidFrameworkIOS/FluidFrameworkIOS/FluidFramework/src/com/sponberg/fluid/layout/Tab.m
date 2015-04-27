@@ -8,7 +8,7 @@
 @implementation FFTTab
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"Tab(tabId=%@, label=%@, image=%@, screenId=%@)", [self getTabId], [self getLabel], [self getImage], [self getScreenId]];
+  return [NSString stringWithFormat:@"Tab(tabId=%@, label=%@, image=%@, selectedImage=%@, screenId=%@)", [self getTabId], [self getLabel], [self getImage], [self getSelectedImage], [self getScreenId]];
 }
 
 - (NSString *)getTabId {
@@ -21,6 +21,10 @@
 
 - (NSString *)getImage {
   return self->image_;
+}
+
+- (NSString *)getSelectedImage {
+  return self->selectedImage_;
 }
 
 - (NSString *)getScreenId {
@@ -37,6 +41,10 @@
 
 - (void)setImageWithNSString:(NSString *)image {
   self->image_ = image;
+}
+
+- (void)setSelectedImageWithNSString:(NSString *)selectedImage {
+  self->selectedImage_ = selectedImage;
 }
 
 - (void)setScreenIdWithNSString:(NSString *)screenId {
@@ -57,6 +65,9 @@
   id this$image = [self getImage];
   id other$image = [other getImage];
   if (this$image == nil ? other$image != nil : ![this$image isEqual:other$image]) return NO;
+  id this$selectedImage = [self getSelectedImage];
+  id other$selectedImage = [other getSelectedImage];
+  if (this$selectedImage == nil ? other$selectedImage != nil : ![this$selectedImage isEqual:other$selectedImage]) return NO;
   id this$screenId = [self getScreenId];
   id other$screenId = [other getScreenId];
   if (this$screenId == nil ? other$screenId != nil : ![this$screenId isEqual:other$screenId]) return NO;
@@ -76,6 +87,8 @@
   result = result * PRIME + ($label == nil ? 0 : ((int) [$label hash]));
   id $image = [self getImage];
   result = result * PRIME + ($image == nil ? 0 : ((int) [$image hash]));
+  id $selectedImage = [self getSelectedImage];
+  result = result * PRIME + ($selectedImage == nil ? 0 : ((int) [$selectedImage hash]));
   id $screenId = [self getScreenId];
   result = result * PRIME + ($screenId == nil ? 0 : ((int) [$screenId hash]));
   return result;
@@ -90,6 +103,7 @@
   other->image_ = image_;
   other->label_ = label_;
   other->screenId_ = screenId_;
+  other->selectedImage_ = selectedImage_;
   other->tabId_ = tabId_;
 }
 
@@ -99,10 +113,12 @@
     { "getTabId", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getLabel", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getImage", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getSelectedImage", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getScreenId", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "setTabIdWithNSString:", "setTabId", "V", 0x1, NULL },
     { "setLabelWithNSString:", "setLabel", "V", 0x1, NULL },
     { "setImageWithNSString:", "setImage", "V", 0x1, NULL },
+    { "setSelectedImageWithNSString:", "setSelectedImage", "V", 0x1, NULL },
     { "setScreenIdWithNSString:", "setScreenId", "V", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
     { "canEqualWithId:", "canEqual", "Z", 0x4, NULL },
@@ -113,9 +129,10 @@
     { "tabId_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
     { "label_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
     { "image_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "selectedImage_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
     { "screenId_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTTab = { "Tab", "com.sponberg.fluid.layout", NULL, 0x1, 13, methods, 4, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTTab = { "Tab", "com.sponberg.fluid.layout", NULL, 0x1, 15, methods, 5, fields, 0, NULL};
   return &_FFTTab;
 }
 

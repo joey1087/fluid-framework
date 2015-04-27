@@ -193,9 +193,14 @@
         UINavigationController *nav = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
         nav.title = view->label_;
         NSString *imageName = [view getImage];
+        NSString *selectedImage = [view getSelectedImage];
         if (imageName) {
+            if (!selectedImage) {
+                selectedImage = imageName;
+            }
+            
             if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] selectedImage:[UIImage imageNamed:imageName]];
+                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] selectedImage:[UIImage imageNamed:selectedImage]];
             } else {
                 nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] tag:0];
             }
