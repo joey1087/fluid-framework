@@ -280,6 +280,8 @@
         } else {
             self.navigationController.navigationBar.tintColor = color;
         }
+        
+        self.navigationController.navigationBar.translucent = NO;
     }
     
     if (self.partOfRootView && [self.screen isShowTabBar]) {
