@@ -358,13 +358,14 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			public void run() {
 
 				Intent i = new Intent(FluidFrameworkAndroidApp.this, FluidFrameworkAndroidApp.fluidAndroidApp.fluidActivityClass);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				Bundle b = new Bundle();
 				b.putString(FluidActivity.kScreenId, showScreenId);
 				i.putExtras(b);
 				launcherActivity.startActivity(i);
-
+				launcherActivity.overridePendingTransition(0, 0);
 				launcherActivity.finish();
-
+	
 				launcherActivity = null;
 			}
 		};

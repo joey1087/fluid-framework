@@ -100,7 +100,7 @@ public class FluidActivity extends ActionBarActivity  {
 
 	boolean aborted = false;
 
-	CustomLayout currentContentView = null;
+	protected CustomLayout currentContentView = null;
 	
 	public String getCurrentScreenId() {
 		if (currentContentView == null) {
