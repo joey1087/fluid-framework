@@ -344,7 +344,7 @@ public class FluidActivity extends ActionBarActivity  {
 		}
 
 		if (currentContentView != null) {
-			//currentContentView.viewDidDisappear();
+			//currentContentView.viewDidDisappear(); //TODO : this could be the reason for new tags not being removed
 		}
 
 		layout.viewWillAppear();

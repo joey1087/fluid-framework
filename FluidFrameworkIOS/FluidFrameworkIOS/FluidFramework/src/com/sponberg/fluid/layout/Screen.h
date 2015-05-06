@@ -23,6 +23,7 @@
   BOOL showStatusBar_;
   NSString *backButtonText_;
   BOOL hideBackButton_;
+  id nativePlugin_;
   JavaUtilArrayList *screenListeners_;
 }
 
@@ -51,6 +52,10 @@
 - (void)screenDidDisappear;
 
 - (void)screenWasRemoved;
+
+- (void)setNativePluginWithId:(id)plugin;
+
+- (id)getNativePlugin;
 
 - (NSString *)description;
 
@@ -91,6 +96,7 @@ __attribute__((always_inline)) inline void FFTScreen_init() {}
 J2OBJC_FIELD_SETTER(FFTScreen, layout_, FFTLayout *)
 J2OBJC_FIELD_SETTER(FFTScreen, navigationMenuItems_, id<JavaUtilList>)
 J2OBJC_FIELD_SETTER(FFTScreen, backButtonText_, NSString *)
+J2OBJC_FIELD_SETTER(FFTScreen, nativePlugin_, id)
 J2OBJC_FIELD_SETTER(FFTScreen, screenListeners_, JavaUtilArrayList *)
 
 typedef FFTScreen ComSponbergFluidLayoutScreen;

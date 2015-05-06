@@ -22,6 +22,7 @@
     showStatusBar_ = YES;
     backButtonText_ = nil;
     hideBackButton_ = NO;
+    nativePlugin_ = nil;
     screenListeners_ = [[JavaUtilArrayList alloc] init];
     self->layout_ = layout;
   }
@@ -83,8 +84,16 @@
   }
 }
 
+- (void)setNativePluginWithId:(id)plugin {
+  self->nativePlugin_ = plugin;
+}
+
+- (id)getNativePlugin {
+  return self->nativePlugin_;
+}
+
 - (NSString *)description {
-  return [NSString stringWithFormat:@"Screen(layout=%@, navigationMenuItems=%@, showTabBar=%@, showNavigationBar=%@, showStatusBar=%@, backButtonText=%@, hideBackButton=%@, screenListeners=%@)", [self getLayout], [self getNavigationMenuItems], [JavaLangBoolean toStringWithBoolean:[self isShowTabBar]], [JavaLangBoolean toStringWithBoolean:[self isShowNavigationBar]], [JavaLangBoolean toStringWithBoolean:[self isShowStatusBar]], [self getBackButtonText], [JavaLangBoolean toStringWithBoolean:[self isHideBackButton]], [self getScreenListeners]];
+  return [NSString stringWithFormat:@"Screen(layout=%@, navigationMenuItems=%@, showTabBar=%@, showNavigationBar=%@, showStatusBar=%@, backButtonText=%@, hideBackButton=%@, nativePlugin=%@, screenListeners=%@)", [self getLayout], [self getNavigationMenuItems], [JavaLangBoolean toStringWithBoolean:[self isShowTabBar]], [JavaLangBoolean toStringWithBoolean:[self isShowNavigationBar]], [JavaLangBoolean toStringWithBoolean:[self isShowStatusBar]], [self getBackButtonText], [JavaLangBoolean toStringWithBoolean:[self isHideBackButton]], [self getNativePlugin], [self getScreenListeners]];
 }
 
 - (FFTLayout *)getLayout {
@@ -148,6 +157,7 @@
   other->backButtonText_ = backButtonText_;
   other->hideBackButton_ = hideBackButton_;
   other->layout_ = layout_;
+  other->nativePlugin_ = nativePlugin_;
   other->navigationMenuItems_ = navigationMenuItems_;
   other->screenListeners_ = screenListeners_;
   other->showNavigationBar_ = showNavigationBar_;
@@ -170,6 +180,8 @@
     { "screenDidAppear", NULL, "V", 0x1, NULL },
     { "screenDidDisappear", NULL, "V", 0x1, NULL },
     { "screenWasRemoved", NULL, "V", 0x1, NULL },
+    { "setNativePluginWithId:", "setNativePlugin", "V", 0x1, NULL },
+    { "getNativePlugin", NULL, "Ljava.lang.Object;", 0x1, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "getLayout", NULL, "Lcom.sponberg.fluid.layout.Layout;", 0x1, NULL },
     { "getNavigationMenuItems", NULL, "Ljava.util.List;", 0x1, NULL },
@@ -194,9 +206,10 @@
     { "showStatusBar_", NULL, 0x2, "Z", NULL,  },
     { "backButtonText_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "hideBackButton_", NULL, 0x2, "Z", NULL,  },
+    { "nativePlugin_", NULL, 0x2, "Ljava.lang.Object;", NULL,  },
     { "screenListeners_", NULL, 0x4, "Ljava.util.ArrayList;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTScreen = { "Screen", "com.sponberg.fluid.layout", NULL, 0x1, 28, methods, 8, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTScreen = { "Screen", "com.sponberg.fluid.layout", NULL, 0x1, 30, methods, 9, fields, 0, NULL};
   return &_FFTScreen;
 }
 
