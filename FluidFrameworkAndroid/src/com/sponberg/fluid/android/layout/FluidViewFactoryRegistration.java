@@ -435,7 +435,7 @@ public class FluidViewFactoryRegistration {
 			if (viewBehavior.getBorderSize() > 0 || viewBehavior.getBackgroundColorPressed() != null) {
 				styleButtonWithColors(button, info, viewBehavior);
 			}
-
+			
 		}
 
 		private void updateText(ButtonFluid button, ViewPosition view, String baseText, String dataModelPrefix) {
@@ -494,7 +494,12 @@ public class FluidViewFactoryRegistration {
 			} else {
 				gd.setColor(Color.TRANSPARENT);
 			}
-	        gd.setCornerRadius(0);
+			
+			if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
+				gd.setCornerRadius(viewBehavior.getCornerRadius());				
+			} else {
+				gd.setCornerRadius(0);
+			}
 
 	        if (viewBehavior.getBorderSize() > 0) {
 				gd.setStroke((int) Math.round(viewBehavior.getBorderSize()), CustomLayout.getColor(viewBehavior.getBorderColor()));
@@ -503,7 +508,11 @@ public class FluidViewFactoryRegistration {
 			if (viewBehavior.getBackgroundColorPressed() != null) {
 				gdp = new GradientDrawable();
 				gdp.setColor(CustomLayout.getColor(viewBehavior.getBackgroundColorPressed()));
-		        gdp.setCornerRadius(0);
+				if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
+					gdp.setCornerRadius(viewBehavior.getCornerRadius());				
+				} else {
+					gdp.setCornerRadius(0);
+				}
 		        if (viewBehavior.getBorderSize() > 0) {
 					gdp.setStroke((int) Math.round(viewBehavior.getBorderSize()), CustomLayout.getColor(viewBehavior.getBorderColor()));
 				}
@@ -1043,7 +1052,12 @@ public class FluidViewFactoryRegistration {
 				hasStyle = true;
 				gd.setColor(CustomLayout.getColor(viewBehavior.getBackgroundColor(info.dataModelPrefix)));
 			}
-	        gd.setCornerRadius(0);
+			
+			if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
+				gd.setCornerRadius(viewBehavior.getCornerRadius());				
+			} else {
+				gd.setCornerRadius(0);
+			}
 
 	        if (viewBehavior.getBorderSize() > 0) {
 	        	hasStyle = true;
