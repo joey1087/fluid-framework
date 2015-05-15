@@ -150,19 +150,42 @@ public class FluidViewFactoryRegistration {
 			GlobalState.fluidApp.getDataModelManager().removeDataChangeListener(listenerId);
 		}
 	}
-
-	protected static void styleBorder(android.view.View view, int borderSize, int color, Integer cornerRadius) {
+	
+	protected static float[] setupCornerRadii(ViewBehavior vb) {
+		
+		int radius = vb.getCornerRadius();
+		int topLeft = vb.getCornerTopLeftRadius();
+		int topRight = vb.getCornerTopRightRadius();
+		int botRight = vb.getCornerBottomRightRadius();
+		int botLeft = vb.getCornerBottomLeftRadius();
+		
+		if(radius > 0) {
+			topLeft = topLeft <= 0 ? radius : topLeft;
+			topRight = topRight <= 0 ? radius : topRight;
+			botRight = botRight <= 0 ? radius : botRight;
+			botLeft = botLeft <= 0 ? radius : botLeft;
+		}
+		
+		float[] cornerRadii = new float[] {topLeft, topLeft, topRight, topRight, botRight, botRight, botLeft, botLeft};
+		
+		return cornerRadii;
+	}
+	
+	protected static void styleBorder(android.view.View view, ViewBehavior viewBehavior, float[] cornerRadii) {
 
 		GradientDrawable bg = new GradientDrawable();
 
-		if (cornerRadius != null) {
-			int cr = cornerRadius * 2;
-			bg.setCornerRadius(cr);
+		if (cornerRadii != null) {
+			bg.setCornerRadii(cornerRadii);
+		}
+		
+		if (viewBehavior.getBorderSize() != null && viewBehavior.getBorderSize().intValue() > 0 && viewBehavior.getBorderColor() != null) {
+		
+			int borderColor = 0;
+			borderColor = CustomLayout.getColor(viewBehavior.getBorderColor());
+			bg.setStroke(viewBehavior.getBorderSize().intValue() * 2, borderColor);
 		}
 
-		bg.setStroke(borderSize * 2, color);
-
-		//view.setBackground(bg);
 		view.setBackgroundDrawable(bg);
 	}
 
@@ -256,13 +279,9 @@ public class FluidViewFactoryRegistration {
 			}
 
 			updateFluidView(vc, view, userInfo);
-
-			if (viewBehavior.getBorderSize() != null && viewBehavior.getBorderSize().intValue() > 0 && viewBehavior.getBorderColor() != null) {
-				int borderColor = 0;
-				borderColor = CustomLayout.getColor(viewBehavior.getBorderColor());
-				styleBorder(vc, viewBehavior.getBorderSize().intValue(), borderColor, viewBehavior.getCornerRadius());
-			}
-
+			
+			styleBorder(vc, viewBehavior, setupCornerRadii(viewBehavior));
+			
 			return vc;
 		}
 
@@ -495,11 +514,7 @@ public class FluidViewFactoryRegistration {
 				gd.setColor(Color.TRANSPARENT);
 			}
 			
-			if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
-				gd.setCornerRadius(viewBehavior.getCornerRadius());				
-			} else {
-				gd.setCornerRadius(0);
-			}
+			gd.setCornerRadii(setupCornerRadii(viewBehavior));
 
 	        if (viewBehavior.getBorderSize() > 0) {
 				gd.setStroke((int) Math.round(viewBehavior.getBorderSize()), CustomLayout.getColor(viewBehavior.getBorderColor()));
@@ -508,11 +523,7 @@ public class FluidViewFactoryRegistration {
 			if (viewBehavior.getBackgroundColorPressed() != null) {
 				gdp = new GradientDrawable();
 				gdp.setColor(CustomLayout.getColor(viewBehavior.getBackgroundColorPressed()));
-				if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
-					gdp.setCornerRadius(viewBehavior.getCornerRadius());				
-				} else {
-					gdp.setCornerRadius(0);
-				}
+				gdp.setCornerRadii(setupCornerRadii(viewBehavior));
 		        if (viewBehavior.getBorderSize() > 0) {
 					gdp.setStroke((int) Math.round(viewBehavior.getBorderSize()), CustomLayout.getColor(viewBehavior.getBorderColor()));
 				}
@@ -668,11 +679,8 @@ public class FluidViewFactoryRegistration {
 
 			ViewBehaviorSpace viewBehavior = (ViewBehaviorSpace) view.getViewBehavior();
 
-			if (viewBehavior.getBorderSize() != null && viewBehavior.getBorderSize().intValue() > 0 && viewBehavior.getBorderColor() != null) {
-				int borderColor = 0;
-				borderColor = CustomLayout.getColor(viewBehavior.getBorderColor());
-				styleBorder(space, viewBehavior.getBorderSize().intValue(), borderColor, viewBehavior.getCornerRadius());
-			}
+			styleBorder(space, viewBehavior, setupCornerRadii(viewBehavior));
+			
 			return space;
 		}
 
@@ -1053,11 +1061,7 @@ public class FluidViewFactoryRegistration {
 				gd.setColor(CustomLayout.getColor(viewBehavior.getBackgroundColor(info.dataModelPrefix)));
 			}
 			
-			if (viewBehavior.getCornerRadius() != null && viewBehavior.getCornerRadius() > 0) {
-				gd.setCornerRadius(viewBehavior.getCornerRadius());				
-			} else {
-				gd.setCornerRadius(0);
-			}
+			gd.setCornerRadii(setupCornerRadii(viewBehavior));
 
 	        if (viewBehavior.getBorderSize() > 0) {
 	        	hasStyle = true;
