@@ -17,6 +17,7 @@
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties
 withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowProvider {
   if (self = [super initWithNSString:FFTViewBehavior_get_table_() withFFTKeyValueList:properties]) {
+    scrollToTopWhenUpdate_ = NO;
     self->sectionFooterHeight_ = [FFTViewBehavior getUnitsToPixelsPropertyWithNSString:@"section-footer-height" withJavaLangDouble:nil withFFTKeyValueList:properties];
     self->sectionHeaderHeight_ = [FFTViewBehavior getUnitsToPixelsPropertyWithNSString:@"section-header-height" withJavaLangDouble:nil withFFTKeyValueList:properties];
     self->headerHeight_ = [FFTViewBehavior getDoublePropertyWithNSString:@"header-height" withJavaLangDouble:nil withFFTKeyValueList:properties];
@@ -30,6 +31,7 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
     self->stickyHeaders_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"sticky-headers" withBoolean:NO withFFTKeyValueList:properties])) booleanValue];
     self->paddingBottom_ = [FFTViewBehavior getSizePropertyWithNSString:@"padding-bottom" withNSString:nil withFFTKeyValueList:properties];
     self->scrollToBottomOnLoad_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"scroll-to-bottom-on-load" withBoolean:NO withFFTKeyValueList:properties])) booleanValue];
+    self->scrollToTopWhenUpdate_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"scroll-to-top-on-update" withBoolean:NO withFFTKeyValueList:properties])) booleanValue];
   }
   return self;
 }
@@ -55,7 +57,7 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorTable(rowHeight=%@, sectionFooterHeight=%@, sectionHeaderHeight=%@, headerHeight=%@, footerHeight=%@, scrollEnabled=%@, showsVerticalScrollIndicator=%@, showRowDivider=%@, rowProvider=%@, tableLayoutId=%@, stickyHeaders=%@, paddingBottom=%@, scrollToBottomOnLoad=%@)", [self getRowHeight], [self getSectionFooterHeight], [self getSectionHeaderHeight], [self getHeaderHeight], [self getFooterHeight], [self getScrollEnabled], [self getShowsVerticalScrollIndicator], [JavaLangBoolean toStringWithBoolean:[self isShowRowDivider]], [self getRowProvider], [self getTableLayoutId], [JavaLangBoolean toStringWithBoolean:[self isStickyHeaders]], [self getPaddingBottom], [JavaLangBoolean toStringWithBoolean:[self isScrollToBottomOnLoad]]];
+  return [NSString stringWithFormat:@"ViewBehaviorTable(rowHeight=%@, sectionFooterHeight=%@, sectionHeaderHeight=%@, headerHeight=%@, footerHeight=%@, scrollEnabled=%@, showsVerticalScrollIndicator=%@, showRowDivider=%@, rowProvider=%@, tableLayoutId=%@, stickyHeaders=%@, paddingBottom=%@, scrollToBottomOnLoad=%@, scrollToTopWhenUpdate=%@)", [self getRowHeight], [self getSectionFooterHeight], [self getSectionHeaderHeight], [self getHeaderHeight], [self getFooterHeight], [self getScrollEnabled], [self getShowsVerticalScrollIndicator], [JavaLangBoolean toStringWithBoolean:[self isShowRowDivider]], [self getRowProvider], [self getTableLayoutId], [JavaLangBoolean toStringWithBoolean:[self isStickyHeaders]], [self getPaddingBottom], [JavaLangBoolean toStringWithBoolean:[self isScrollToBottomOnLoad]], [JavaLangBoolean toStringWithBoolean:[self isScrollToTopWhenUpdate]]];
 }
 
 - (JavaLangDouble *)getRowHeight {
@@ -110,6 +112,10 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
   return self->scrollToBottomOnLoad_;
 }
 
+- (BOOL)isScrollToTopWhenUpdate {
+  return self->scrollToTopWhenUpdate_;
+}
+
 - (void)setRowHeightWithJavaLangDouble:(JavaLangDouble *)rowHeight {
   self->rowHeight_ = rowHeight;
 }
@@ -158,6 +164,10 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
   self->scrollToBottomOnLoad_ = scrollToBottomOnLoad;
 }
 
+- (void)setScrollToTopWhenUpdateWithBoolean:(BOOL)scrollToTopWhenUpdate {
+  self->scrollToTopWhenUpdate_ = scrollToTopWhenUpdate;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorTable *)other {
   [super copyAllFieldsTo:other];
   other->footerHeight_ = footerHeight_;
@@ -167,6 +177,7 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
   other->rowProvider_ = rowProvider_;
   other->scrollEnabled_ = scrollEnabled_;
   other->scrollToBottomOnLoad_ = scrollToBottomOnLoad_;
+  other->scrollToTopWhenUpdate_ = scrollToTopWhenUpdate_;
   other->sectionFooterHeight_ = sectionFooterHeight_;
   other->sectionHeaderHeight_ = sectionHeaderHeight_;
   other->showRowDivider_ = showRowDivider_;
@@ -197,6 +208,7 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
     { "isStickyHeaders", NULL, "Z", 0x1, NULL },
     { "getPaddingBottom", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "isScrollToBottomOnLoad", NULL, "Z", 0x1, NULL },
+    { "isScrollToTopWhenUpdate", NULL, "Z", 0x1, NULL },
     { "setRowHeightWithJavaLangDouble:", "setRowHeight", "V", 0x1, NULL },
     { "setSectionFooterHeightWithJavaLangDouble:", "setSectionFooterHeight", "V", 0x1, NULL },
     { "setSectionHeaderHeightWithJavaLangDouble:", "setSectionHeaderHeight", "V", 0x1, NULL },
@@ -209,6 +221,7 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
     { "setStickyHeadersWithBoolean:", "setStickyHeaders", "V", 0x1, NULL },
     { "setPaddingBottomWithJavaLangDouble:", "setPaddingBottom", "V", 0x1, NULL },
     { "setScrollToBottomOnLoadWithBoolean:", "setScrollToBottomOnLoad", "V", 0x1, NULL },
+    { "setScrollToTopWhenUpdateWithBoolean:", "setScrollToTopWhenUpdate", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "rowHeight_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
@@ -224,8 +237,9 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
     { "stickyHeaders_", NULL, 0x2, "Z", NULL,  },
     { "paddingBottom_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "scrollToBottomOnLoad_", NULL, 0x2, "Z", NULL,  },
+    { "scrollToTopWhenUpdate_", NULL, 0x2, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorTable = { "ViewBehaviorTable", "com.sponberg.fluid.layout", NULL, 0x1, 32, methods, 13, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorTable = { "ViewBehaviorTable", "com.sponberg.fluid.layout", NULL, 0x1, 34, methods, 14, fields, 0, NULL};
   return &_FFTViewBehaviorTable;
 }
 

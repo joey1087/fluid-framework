@@ -707,6 +707,8 @@
     }
     
     BOOL scrollToBottomOnLoad = [viewBehavior isScrollToBottomOnLoad];
+    BOOL scrollToTopOnUpdate = [viewBehavior isScrollToTopWhenUpdate];
+    
     
     __weak typeof(table) weakRef = table;
     __weak typeof(tableLayoutId) weakLayoutId = tableLayoutId;
@@ -726,6 +728,10 @@
                             }
                         });
                     });
+                }
+                
+                if (scrollToTopOnUpdate) {
+                    [weakRef scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
                 }
             } else {
                 
