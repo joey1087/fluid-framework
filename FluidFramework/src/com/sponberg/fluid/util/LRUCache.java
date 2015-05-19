@@ -14,7 +14,8 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
 	ArrayList<RemovedListener<K, V>> removedListeners = new ArrayList<>();
 	
 	public LRUCache(int maxEntries) {
-		super(8, .75f, true);
+		//super(8, .75f, true);
+		super(maxEntries, 0.75f, true);
 		this.maxEntries = maxEntries;
 	}
 	

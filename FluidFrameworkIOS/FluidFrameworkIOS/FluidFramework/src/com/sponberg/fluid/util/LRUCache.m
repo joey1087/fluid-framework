@@ -15,7 +15,7 @@
 @implementation FFTLRUCache
 
 - (id)initWithInt:(int)maxEntries {
-  if (self = [super initWithInt:8 withFloat:.75f withBoolean:YES]) {
+  if (self = [super initWithInt:maxEntries withFloat:0.75f withBoolean:YES]) {
     removedListeners_ = [[JavaUtilArrayList alloc] init];
     self->maxEntries_ = maxEntries;
   }
