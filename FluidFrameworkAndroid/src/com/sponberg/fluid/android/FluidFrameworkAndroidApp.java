@@ -390,20 +390,25 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		if (launcherActivity != null) {
 			throw new RuntimeException("Must removeSlashScreen first");
 		}
-
-		disableUserActivityForCurrentView();
-
-		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-
-				if (currentActivity != null) {
-					currentActivity.setLayout(screenId, stack);
-				} else {
-					currentRootActivity.setLayout(screenId, stack);
+		
+		if (!GlobalState.fluidApp.getSystemService().isOnUiThread()) {
+			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					setLayout(screenId, stack);
 				}
-			}
-		});
+			});
+			
+			return;
+		}
+		
+		disableUserActivityForCurrentView();
+		
+		if (currentActivity != null) {
+			currentActivity.setLayout(screenId, stack);
+		} else {
+			currentRootActivity.setLayout(screenId, stack);
+		}
 	}
 
 	public void showModalView(final ModalView modalView) {
