@@ -27,9 +27,10 @@
 #include "Logger.h"
 #include "Layout.h"
 
+
 @interface FFViewController ()
 
-@property (nonatomic, strong, readwrite) FFView *baseView;
+//@property (nonatomic, strong, readwrite) FFView *baseView;
 @property (nonatomic, assign) BOOL viewWillRotate;
 @property (nonatomic, assign) BOOL viewNeedsRefreshOnAppear;
 @property (nonatomic, assign) BOOL partOfRootView;
@@ -395,7 +396,7 @@
         }
     }
     
-    return CGRectMake(0, yStart, size.width, size.height);
+    return CGRectMake(0, 0, size.width, size.height);
 }
 
 - (CGRect)statusBarFrameViewRect:(UIView*)view {

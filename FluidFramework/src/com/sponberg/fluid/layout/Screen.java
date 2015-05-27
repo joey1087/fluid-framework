@@ -93,6 +93,10 @@ public class Screen {
 		this.nativePlugin = plugin;
 	}
 	
+	/*
+	 * 21-05-15: we could create a base 
+	 * native plugin class 
+	 */
 	public Object getNativePlugin() {
 		return this.nativePlugin;
 	}
