@@ -462,12 +462,7 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 
 		GradientDrawable bg = new GradientDrawable();
 
-		Integer cornerRadius = viewBehavior.getCornerRadius();
-
-		if (cornerRadius != null) {
-			int cr = cornerRadius * 2;
-			bg.setCornerRadius(cr);
-		}
+		bg.setCornerRadii(setupCornerRadii(viewBehavior));
 
 		if (backgroundColor == null) {
 			backgroundColor = viewBehavior.getBackgroundColor(getDataModelKeyPrefix());
@@ -487,6 +482,26 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 
 		//view.setBackground(bg); next version of ADK
 		view.setBackgroundDrawable(bg);
+	}
+	
+	protected static float[] setupCornerRadii(ViewBehavior vb) {
+		
+		int radius = vb.getCornerRadius();
+		int topLeft = vb.getCornerTopLeftRadius();
+		int topRight = vb.getCornerTopRightRadius();
+		int botRight = vb.getCornerBottomRightRadius();
+		int botLeft = vb.getCornerBottomLeftRadius();
+		
+		if(radius > 0) {
+			topLeft = topLeft <= 0 ? radius : topLeft;
+			topRight = topRight <= 0 ? radius : topRight;
+			botRight = botRight <= 0 ? radius : botRight;
+			botLeft = botLeft <= 0 ? radius : botLeft;
+		}
+		
+		float[] cornerRadii = new float[] {topLeft, topLeft, topRight, topRight, botRight, botRight, botLeft, botLeft};
+		
+		return cornerRadii;
 	}
 
 	public void setViewBoundsAndMeasureOrLayout(FluidViewAndroid view, Bounds bounds) {

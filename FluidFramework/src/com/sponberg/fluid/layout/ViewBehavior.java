@@ -31,6 +31,10 @@ public abstract class ViewBehavior {
 	private String unknownText = null;
 	
 	protected Integer cornerRadius;
+	protected Integer cornerTopLeftRadius;
+	protected Integer cornerTopRightRadius;
+	protected Integer cornerBottomRightRadius;
+	protected Integer cornerBottomLeftRadius;
 	
 	private Double borderSize;
 	
@@ -49,7 +53,12 @@ public abstract class ViewBehavior {
 		if (list.contains("unknown-text")) {
 			unknownText = list.getValue("unknown-text");
 		}
-		this.cornerRadius = getIntegerProperty("corner-radius", null, list);
+		this.cornerRadius = getIntegerProperty("corner-radius", 0, list);
+		this.cornerTopLeftRadius = getIntegerProperty("corner-top-left-radius", 0, list);
+		this.cornerTopRightRadius = getIntegerProperty("corner-top-right-radius", 0, list);
+		this.cornerBottomRightRadius = getIntegerProperty("corner-bottom-right-radius", 0, list);
+		this.cornerBottomLeftRadius = getIntegerProperty("corner-bottom-left-radius", 0, list);
+		
 		this.borderSize = getSizeProperty("border-size", "0p", list);
 		this.borderColor = getColorProperty("border-color", null, list);
 	}
