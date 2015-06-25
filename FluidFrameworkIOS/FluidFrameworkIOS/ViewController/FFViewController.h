@@ -22,6 +22,8 @@
 
 - (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView;
 
+- (id)initWithScreenId:(NSString *)screenId withNibName:(NSString*)nibName partOfRootView:(BOOL)partOfRootView;
+
 - (void)refreshMenuButtons;
 
 //TODO : Below are the protected functions, they should be encapsulated into

@@ -39,11 +39,15 @@
 
 @implementation FFViewController
 
-- (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {
-    self = [super initWithNibName:nil bundle:nil];
+- (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {    
+    return [self initWithScreenId:screenId withNibName:nil partOfRootView:partOfRootView];
+}
+
+- (id)initWithScreenId:(NSString *)screenId withNibName:(NSString*)nibName partOfRootView:(BOOL)partOfRootView {
+    self = [super initWithNibName:nibName bundle:nil];
     if (self) {
         self.screen = [[FFTGlobalState fluidApp] getScreenWithNSString:screenId];
-
+        
         if (self.screen == nil) {
             [NSException raise:@"No screen" format:@"Screen %@ is nil, did you forget to add the .txt file to Xcode?", screenId];
         }
@@ -71,7 +75,10 @@
 }
 
 - (void)dealloc {
-    [self.baseView cleanup];
+    if (self.baseView) {
+        [self.baseView cleanup];
+    }
+    
     [self.screen screenWasRemoved];
 }
 
@@ -82,7 +89,7 @@
     NSMutableArray *leftArray = [NSMutableArray array];
     
     for (FFTMenuButtonItem * __strong item in nil_chk([self.screen getNavigationMenuItems])) {
-        
+       
         UIBarButtonSystemItem buttonItem = 0;
         if ([item getSystemId] && ![[item getSystemId] isEqualToString:FFTMenuButtonItem_SystemItemCustom_]) {
             buttonItem = [self systemItemFor:item];
@@ -261,6 +268,7 @@
             button = [self.navigationController.topViewController.navigationItem.rightBarButtonItems objectAtIndex:index];
             index++;
         }
+        
         button.enabled = [item isEnabled];
     }
 }
@@ -303,7 +311,7 @@
         [UIApplication sharedApplication].statusBarHidden = YES;
     }
 
-    if (self.viewNeedsRefreshOnAppear) {
+    if (self.viewNeedsRefreshOnAppear && self.baseView) {
         // Setting the baseView frame triggers viewWillLayoutSubviews, which will call createOrUpdateView
         CGRect bounds = [self computeSizeOfView];
         self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
@@ -351,8 +359,10 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     self.viewWillRotate = NO;
     // Setting the baseView frame triggers viewWillLayoutSubviews, which will call createOrUpdateView
-    CGRect bounds = [self computeSizeOfView];
-    self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
+    if (self.baseView) {
+        CGRect bounds = [self computeSizeOfView];
+        self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
+    }
 }
 
 - (void)viewDidLayoutSubviews {
