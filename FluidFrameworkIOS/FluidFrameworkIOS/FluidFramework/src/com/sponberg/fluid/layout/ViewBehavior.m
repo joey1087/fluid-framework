@@ -58,7 +58,11 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
   if ([((id<FFTKeyValueList>) nil_chk(list)) containsWithNSString:@"unknown-text"]) {
     unknownText_ = [list getValueWithNSString:@"unknown-text"];
   }
-  self->cornerRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-radius" withJavaLangInteger:nil withFFTKeyValueList:list];
+  self->cornerRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-radius" withJavaLangInteger:[JavaLangInteger valueOfWithInt:0] withFFTKeyValueList:list];
+  self->cornerTopLeftRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-top-left-radius" withJavaLangInteger:[JavaLangInteger valueOfWithInt:0] withFFTKeyValueList:list];
+  self->cornerTopRightRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-top-right-radius" withJavaLangInteger:[JavaLangInteger valueOfWithInt:0] withFFTKeyValueList:list];
+  self->cornerBottomRightRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-bottom-right-radius" withJavaLangInteger:[JavaLangInteger valueOfWithInt:0] withFFTKeyValueList:list];
+  self->cornerBottomLeftRadius_ = [FFTViewBehavior getIntegerPropertyWithNSString:@"corner-bottom-left-radius" withJavaLangInteger:[JavaLangInteger valueOfWithInt:0] withFFTKeyValueList:list];
   self->borderSize_ = [FFTViewBehavior getSizePropertyWithNSString:@"border-size" withNSString:@"0p" withFFTKeyValueList:list];
   self->borderColor_ = [self getColorPropertyWithNSString:@"border-color" withFFTColor:nil withFFTKeyValueList:list];
 }
@@ -294,6 +298,22 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
   return self->cornerRadius_;
 }
 
+- (JavaLangInteger *)getCornerTopLeftRadius {
+  return self->cornerTopLeftRadius_;
+}
+
+- (JavaLangInteger *)getCornerTopRightRadius {
+  return self->cornerTopRightRadius_;
+}
+
+- (JavaLangInteger *)getCornerBottomRightRadius {
+  return self->cornerBottomRightRadius_;
+}
+
+- (JavaLangInteger *)getCornerBottomLeftRadius {
+  return self->cornerBottomLeftRadius_;
+}
+
 - (JavaLangDouble *)getBorderSize {
   return self->borderSize_;
 }
@@ -307,7 +327,11 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
   other->backgroundColors_ = backgroundColors_;
   other->borderColor_ = borderColor_;
   other->borderSize_ = borderSize_;
+  other->cornerBottomLeftRadius_ = cornerBottomLeftRadius_;
+  other->cornerBottomRightRadius_ = cornerBottomRightRadius_;
   other->cornerRadius_ = cornerRadius_;
+  other->cornerTopLeftRadius_ = cornerTopLeftRadius_;
+  other->cornerTopRightRadius_ = cornerTopRightRadius_;
   other->type_ = type_;
   other->unknownText_ = unknownText_;
 }
@@ -341,6 +365,10 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
     { "getBackgroundColors", NULL, "Ljava.util.ArrayList;", 0x1, NULL },
     { "getUnknownText", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getCornerRadius", NULL, "Ljava.lang.Integer;", 0x1, NULL },
+    { "getCornerTopLeftRadius", NULL, "Ljava.lang.Integer;", 0x1, NULL },
+    { "getCornerTopRightRadius", NULL, "Ljava.lang.Integer;", 0x1, NULL },
+    { "getCornerBottomRightRadius", NULL, "Ljava.lang.Integer;", 0x1, NULL },
+    { "getCornerBottomLeftRadius", NULL, "Ljava.lang.Integer;", 0x1, NULL },
     { "getBorderSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "getBorderColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
   };
@@ -361,10 +389,14 @@ NSString * FFTViewBehavior_segmentedControl_ = @"com.sponberg.fluid.segmentedCon
     { "backgroundColors_", NULL, 0x4, "Ljava.util.ArrayList;", NULL,  },
     { "unknownText_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "cornerRadius_", NULL, 0x4, "Ljava.lang.Integer;", NULL,  },
+    { "cornerTopLeftRadius_", NULL, 0x4, "Ljava.lang.Integer;", NULL,  },
+    { "cornerTopRightRadius_", NULL, 0x4, "Ljava.lang.Integer;", NULL,  },
+    { "cornerBottomRightRadius_", NULL, 0x4, "Ljava.lang.Integer;", NULL,  },
+    { "cornerBottomLeftRadius_", NULL, 0x4, "Ljava.lang.Integer;", NULL,  },
     { "borderSize_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "borderColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehavior = { "ViewBehavior", "com.sponberg.fluid.layout", NULL, 0x401, 29, methods, 18, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehavior = { "ViewBehavior", "com.sponberg.fluid.layout", NULL, 0x401, 33, methods, 22, fields, 0, NULL};
   return &_FFTViewBehavior;
 }
 
