@@ -503,6 +503,10 @@
 
 - (void)showModalViewWithFFTModalViewHelper:(FFTModalView *)modalView {
     
+    if (!modalView) {
+        return;
+    }
+    
     if ([[modalView getSystemId] isEqualToString:FFTModalView_FluidLayout_]) {
         
         NSString *screenId = [modalView getUserData];
@@ -612,7 +616,13 @@
             
             [[self currentNavigationController] presentViewController:picker animated:YES completion:^{}];
         }
+    } else if ([[modalView getSystemId] isEqualToString:FFTModalView_Custom_]){
+        [self showCustomModalView:modalView];
     }
+}
+
+//Subclass to override this function
+- (void)showCustomModalView:(FFTModalView *)modalView {
     
 }
 

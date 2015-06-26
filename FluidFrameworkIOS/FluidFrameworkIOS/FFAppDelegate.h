@@ -11,6 +11,7 @@
 #import "FFFluidAppDelegate.h"
 
 @class FFViewController, FFTScreen;
+@class FFNavigationViewController;
 
 @interface FFAppDelegate : UIResponder <UIApplicationDelegate, FFTUIService, FFFluidAppDelegate>
 
@@ -34,4 +35,5 @@
 
 - (void)parseLaunchOptions:(NSDictionary *)launchOptions;
 
+- (FFNavigationViewController *)currentNavigationController;
 @end
