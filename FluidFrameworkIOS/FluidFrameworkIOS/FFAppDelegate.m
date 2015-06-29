@@ -40,6 +40,7 @@
 #include "LaunchOptionsManager.h"
 
 #import "Callback.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface AppLoadedCallback : NSObject<FFTCallback>
 
@@ -200,7 +201,7 @@
             }
             
             if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] selectedImage:[UIImage imageNamed:selectedImage]];
+                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             } else {
                 nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] tag:0];
             }
@@ -246,6 +247,15 @@
     UITabBarController *tabController = [[FFTabBarViewController alloc] init];
     self.tabController = tabController;
     tabController.viewControllers = tabArray;
+    
+    property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+    colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+    if (colorProperty) {
+        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+        UIColor *color = [FFView color:fftColor];
+        tabController.tabBar.layer.borderWidth = 0.50;
+        tabController.tabBar.layer.borderColor = color.CGColor;
+    }
     
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = tabController;
