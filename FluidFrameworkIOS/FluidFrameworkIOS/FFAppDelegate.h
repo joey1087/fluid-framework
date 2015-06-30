@@ -36,4 +36,6 @@
 - (void)parseLaunchOptions:(NSDictionary *)launchOptions;
 
 - (FFNavigationViewController *)currentNavigationController;
+
+- (void)showModalViewWithFFTModalViewHelper:(FFTModalView *)modalView;
 @end
