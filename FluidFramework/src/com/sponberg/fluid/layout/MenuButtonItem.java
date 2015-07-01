@@ -45,6 +45,8 @@ public class MenuButtonItem {
 	public static final int ActionFlavorNone = 0;
 	public static final int ActionFlavorSearch = 1;
 	
+	public static final String kItemPropertyTextColor = "textColor";
+	
 	ArrayList<ActionListener> actionListeners = new ArrayList<>();
 
 	final String systemId;

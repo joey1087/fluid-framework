@@ -38,6 +38,7 @@ NSString * FFTMenuButtonItem_SystemItemFastForward_ = @"SystemItemFastForward";
 NSString * FFTMenuButtonItem_SystemItemUndo_ = @"SystemItemUndo";
 NSString * FFTMenuButtonItem_SystemItemRedo_ = @"SystemItemRedo";
 NSString * FFTMenuButtonItem_SystemItemPageCurl_ = @"SystemItemPageCurl";
+NSString * FFTMenuButtonItem_kItemPropertyTextColor_ = @"textColor";
 
 - (id)initFFTMenuButtonItemWithNSString:(NSString *)systemId
                            withNSString:(NSString *)title
@@ -360,6 +361,7 @@ NSString * FFTMenuButtonItem_SystemItemPageCurl_ = @"SystemItemPageCurl";
     { "SystemItemPageCurl_", NULL, 0x19, "Ljava.lang.String;", &FFTMenuButtonItem_SystemItemPageCurl_,  },
     { "ActionFlavorNone_", NULL, 0x19, "I", NULL, .constantValue.asInt = FFTMenuButtonItem_ActionFlavorNone },
     { "ActionFlavorSearch_", NULL, 0x19, "I", NULL, .constantValue.asInt = FFTMenuButtonItem_ActionFlavorSearch },
+    { "kItemPropertyTextColor_", NULL, 0x19, "Ljava.lang.String;", &FFTMenuButtonItem_kItemPropertyTextColor_,  },
     { "actionListeners_", NULL, 0x0, "Ljava.util.ArrayList;", NULL,  },
     { "systemId_", NULL, 0x10, "Ljava.lang.String;", NULL,  },
     { "title_", NULL, 0x10, "Ljava.lang.String;", NULL,  },
@@ -370,7 +372,7 @@ NSString * FFTMenuButtonItem_SystemItemPageCurl_ = @"SystemItemPageCurl";
     { "preferenceShowOnLeft_", NULL, 0x0, "Z", NULL,  },
     { "properties_", NULL, 0x0, "Ljava.util.HashMap;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTMenuButtonItem = { "MenuButtonItem", "com.sponberg.fluid.layout", NULL, 0x1, 26, methods, 36, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTMenuButtonItem = { "MenuButtonItem", "com.sponberg.fluid.layout", NULL, 0x1, 26, methods, 37, fields, 0, NULL};
   return &_FFTMenuButtonItem;
 }
 

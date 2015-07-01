@@ -82,6 +82,14 @@
     [self.screen screenWasRemoved];
 }
 
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -122,6 +130,10 @@
             [array addObject:button];
         }
         
+        if ([item getPropertyWithNSString:FFTMenuButtonItem_kItemPropertyTextColor_]) {
+            NSString* textColor = [item getPropertyWithNSString:FFTMenuButtonItem_kItemPropertyTextColor_];
+            [button setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys: [self colorFromHexString:textColor],  UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+        }
     }
 
     if ([array count] > 0) {
@@ -251,6 +263,8 @@
     self.viewNeedsRefreshOnAppear = NO;
     
     [self createOrUpdateBaseView];
+    
+
 }
 
 - (void)refreshMenuButtons {
