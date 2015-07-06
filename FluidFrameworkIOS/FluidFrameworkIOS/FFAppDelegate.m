@@ -266,7 +266,7 @@
         //[self pushLayoutWithNSString:showScreenId];
         [self setLayoutWithNSString:showScreenId withBoolean:NO];
     }
-    
+        
     //TODO : why do we set up a webview here and load HTML here
     UIWebView *view = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [view loadHTMLString:@"<html><body></body></html>" baseURL:nil];
@@ -313,10 +313,8 @@
         FFNavigationViewController *controller = [self currentNavigationController];
         FFNavigationViewController *vc = (FFNavigationViewController *) [controller presentedViewController];
         if (vc) {
-
             [vc pushViewController:fvc animated:YES];
         } else {
-            
             [[self currentNavigationController] pushViewController:fvc animated:YES];
         }
     } else {
@@ -410,6 +408,7 @@
                 FFViewController *fvc = [nav.viewControllers firstObject];
                 if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
                     [nav popToRootViewControllerAnimated:NO];
+                    break;
                 }
             }
             return;
@@ -432,6 +431,21 @@
                 FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
                 UIColor *color = [FFView color:fftColor];
                 rootNavController.navigationBar.tintColor = color;
+            }
+            
+            IOSObjectArray *statusBarColorProperty = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-status-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+            NSString *statusBarColorPropertyString = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:statusBarColorProperty];
+            if (statusBarColorPropertyString) {
+                /*
+                 * This is to change to status bar color indepently off the navigation bar color
+                 */
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+                    FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:statusBarColorPropertyString];
+                    UIColor *color = [FFView color:fftColor];
+                    UIView *topView=[[UIView alloc] initWithFrame:CGRectMake(0, 0,320, 20)];
+                    topView.backgroundColor = color;
+                    [rootNavController.view addSubview:topView];
+                }
             }
             
             self.window.rootViewController = rootNavController;
