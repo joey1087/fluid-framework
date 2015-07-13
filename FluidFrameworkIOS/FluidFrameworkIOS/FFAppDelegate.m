@@ -896,15 +896,16 @@
         
         FFTScreen *screen = [[FFTGlobalState fluidApp] getScreenWithNSString:screenId];
 
-        // Keep in sync with [self setBackButton]
-        if ([screen getBackButtonText]) {
-            
-            topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[screen getBackButtonText] style:UIBarButtonItemStylePlain target:nil action:nil];
-        } else {
-            // use default
-            topViewController.navigationItem.backBarButtonItem = nil;
-        }
-        // End: Keep in sync with [self setBackButton]
+        [self setBackButton:screen];
+//        // Keep in sync with [self setBackButton]
+//        if ([screen getBackButtonText]) {
+//            
+//            topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[screen getBackButtonText] style:UIBarButtonItemStylePlain target:nil action:nil];
+//        } else {
+//            // use default
+//            topViewController.navigationItem.backBarButtonItem = nil;
+//        }
+//        // End: Keep in sync with [self setBackButton]
         
         FFViewController *fvc = [self createFFViewController:screenId partOfRootView:YES];
         
