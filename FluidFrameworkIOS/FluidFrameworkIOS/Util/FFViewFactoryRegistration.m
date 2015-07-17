@@ -328,6 +328,20 @@
                                            blockDataRemoved:nil];
     }
     
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [button.button.titleLabel setFont:font];
+    }
+    
     return button;
 }
 

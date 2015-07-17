@@ -18,6 +18,8 @@
   NSString *text_;
   FFTColor *textColor_;
   JavaLangDouble *fontSize_;
+  NSString *fontFamilyName_;
+  NSString *fontStyle_;
   FFTColor *backgroundColorPressed_;
   NSString *backgroundImage_;
   NSString *image_ViewBehaviorButton_;
@@ -38,6 +40,10 @@
 
 - (JavaLangDouble *)getFontSize;
 
+- (NSString *)getFontFamilyName;
+
+- (NSString *)getFontStyle;
+
 - (FFTColor *)getBackgroundColorPressed;
 
 - (NSString *)getBackgroundImage;
@@ -55,6 +61,10 @@
 - (void)setTextColorWithFFTColor:(FFTColor *)textColor;
 
 - (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize;
+
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName;
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle;
 
 - (void)setBackgroundColorPressedWithFFTColor:(FFTColor *)backgroundColorPressed;
 
@@ -77,6 +87,8 @@ __attribute__((always_inline)) inline void FFTViewBehaviorButton_init() {}
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, text_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, textColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, fontSize_, JavaLangDouble *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, fontFamilyName_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, fontStyle_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, backgroundColorPressed_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, backgroundImage_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorButton, image_ViewBehaviorButton_, NSString *)

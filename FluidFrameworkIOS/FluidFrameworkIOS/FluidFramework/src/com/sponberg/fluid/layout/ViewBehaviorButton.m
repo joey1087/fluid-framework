@@ -4,9 +4,12 @@
 //
 
 #include "IOSClass.h"
+#include "com/sponberg/fluid/FluidApp.h"
+#include "com/sponberg/fluid/GlobalState.h"
 #include "com/sponberg/fluid/layout/Color.h"
 #include "com/sponberg/fluid/layout/ViewBehavior.h"
 #include "com/sponberg/fluid/layout/ViewBehaviorButton.h"
+#include "com/sponberg/fluid/layout/ViewManager.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "java/lang/Double.h"
 #include "java/lang/RuntimeException.h"
@@ -18,7 +21,6 @@
     self->text_ = [FFTViewBehavior getStringPropertyWithNSString:@"text" withNSString:@"" withFFTKeyValueList:properties];
     ;
     self->textColor_ = [self getColorPropertyWithNSString:@"text-color" withFFTColor:nil withFFTKeyValueList:properties];
-    self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
     self->backgroundColorPressed_ = [self getColorPropertyWithNSString:@"background-color-pressed" withFFTColor:nil withFFTKeyValueList:properties];
     self->image_ViewBehaviorButton_ = [FFTViewBehavior getStringPropertyWithNSString:@"image" withNSString:nil withFFTKeyValueList:properties];
     self->backgroundImage_ = [FFTViewBehavior getStringPropertyWithNSString:@"background-image" withNSString:nil withFFTKeyValueList:properties];
@@ -33,6 +35,11 @@
         @throw [[JavaLangRuntimeException alloc] initWithNSString:@"image height must be specified"];
       }
     }
+    self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
+    NSString *specifiedDefaultFontName = [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getViewManager])) getSpecifiedDefaultFontFamilyName];
+    self->fontFamilyName_ = [FFTViewBehavior getFontFamilyNameWithNSString:@"font-family" withNSString:specifiedDefaultFontName withFFTKeyValueList:properties];
+    NSString *specifiedDefaultFontStyle = [((FFTViewManager *) nil_chk([FFTGlobalState_get_fluidApp__() getViewManager])) getSpecifiedDefaultFontStyle];
+    self->fontStyle_ = [FFTViewBehavior getFontStyleWithNSString:@"font-style" withNSString:specifiedDefaultFontStyle withFFTKeyValueList:properties];
   }
   return self;
 }
@@ -42,7 +49,7 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorButton(text=%@, textColor=%@, fontSize=%@, backgroundColorPressed=%@, backgroundImage=%@, image=%@, imageWidth=%@, imageHeight=%@, imageSpace=%@)", [self getText], [self getTextColor], [self getFontSize], [self getBackgroundColorPressed], [self getBackgroundImage], [self getImage], [self getImageWidth], [self getImageHeight], [self getImageSpace]];
+  return [NSString stringWithFormat:@"ViewBehaviorButton(text=%@, textColor=%@, fontSize=%@, fontFamilyName=%@, fontStyle=%@, backgroundColorPressed=%@, backgroundImage=%@, image=%@, imageWidth=%@, imageHeight=%@, imageSpace=%@)", [self getText], [self getTextColor], [self getFontSize], [self getFontFamilyName], [self getFontStyle], [self getBackgroundColorPressed], [self getBackgroundImage], [self getImage], [self getImageWidth], [self getImageHeight], [self getImageSpace]];
 }
 
 - (NSString *)getText {
@@ -55,6 +62,14 @@
 
 - (JavaLangDouble *)getFontSize {
   return self->fontSize_;
+}
+
+- (NSString *)getFontFamilyName {
+  return self->fontFamilyName_;
+}
+
+- (NSString *)getFontStyle {
+  return self->fontStyle_;
 }
 
 - (FFTColor *)getBackgroundColorPressed {
@@ -93,6 +108,14 @@
   self->fontSize_ = fontSize;
 }
 
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName {
+  self->fontFamilyName_ = fontFamilyName;
+}
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle {
+  self->fontStyle_ = fontStyle;
+}
+
 - (void)setBackgroundColorPressedWithFFTColor:(FFTColor *)backgroundColorPressed {
   self->backgroundColorPressed_ = backgroundColorPressed;
 }
@@ -121,7 +144,9 @@
   [super copyAllFieldsTo:other];
   other->backgroundColorPressed_ = backgroundColorPressed_;
   other->backgroundImage_ = backgroundImage_;
+  other->fontFamilyName_ = fontFamilyName_;
   other->fontSize_ = fontSize_;
+  other->fontStyle_ = fontStyle_;
   other->image_ViewBehaviorButton_ = image_ViewBehaviorButton_;
   other->imageHeight_ = imageHeight_;
   other->imageSpace_ = imageSpace_;
@@ -138,6 +163,8 @@
     { "getText", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getTextColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "getFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
+    { "getFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontStyle", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getBackgroundColorPressed", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "getBackgroundImage", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getImage", NULL, "Ljava.lang.String;", 0x1, NULL },
@@ -147,6 +174,8 @@
     { "setTextWithNSString:", "setText", "V", 0x1, NULL },
     { "setTextColorWithFFTColor:", "setTextColor", "V", 0x1, NULL },
     { "setFontSizeWithJavaLangDouble:", "setFontSize", "V", 0x1, NULL },
+    { "setFontFamilyNameWithNSString:", "setFontFamilyName", "V", 0x1, NULL },
+    { "setFontStyleWithNSString:", "setFontStyle", "V", 0x1, NULL },
     { "setBackgroundColorPressedWithFFTColor:", "setBackgroundColorPressed", "V", 0x1, NULL },
     { "setBackgroundImageWithNSString:", "setBackgroundImage", "V", 0x1, NULL },
     { "setImageWithNSString:", "setImage", "V", 0x1, NULL },
@@ -158,6 +187,8 @@
     { "text_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "textColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "fontSize_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
+    { "fontFamilyName_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
+    { "fontStyle_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
     { "backgroundColorPressed_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "backgroundImage_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "image_ViewBehaviorButton_", "image", 0x2, "Ljava.lang.String;", NULL,  },
@@ -165,7 +196,7 @@
     { "imageHeight_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "imageSpace_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorButton = { "ViewBehaviorButton", "com.sponberg.fluid.layout", NULL, 0x1, 21, methods, 9, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorButton = { "ViewBehaviorButton", "com.sponberg.fluid.layout", NULL, 0x1, 25, methods, 11, fields, 0, NULL};
   return &_FFTViewBehaviorButton;
 }
 
