@@ -181,6 +181,10 @@
     return baseUnit; // 6.41732264 for iPhone 5
 }
 
+- (void)customizeTabbarItem:(UITabBarItem*)tabBarItem forTab:(FFTTab*)tab{
+    //Subclass can overide this
+}
+
 - (void)setupWindow:(NSString *)showScreenId {
     
     self.window.rootViewController = nil;
@@ -206,6 +210,9 @@
                 nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] tag:0];
             }
         }
+        
+        [self customizeTabbarItem:nav.tabBarItem forTab:view];
+        
         [tabArray addObject:nav];
         
         IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-nav-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
@@ -277,8 +284,8 @@
     return [[FFViewController alloc] initWithScreenId:screenId partOfRootView:YES];
 }
 
-- (void)pushLayoutWithNSString:(NSString *)screenId {
-    
+- (void)pushLayoutWithNSString:(NSString *)screenId
+                   withBoolean:(BOOL)animated {
     if ([NSThread isMainThread]) {
         
         // Keep this in sync with setLayoutStack
@@ -301,21 +308,21 @@
             
             fvc.hidesBottomBarWhenPushed = YES;
         }
-
+        
         if ([screen isShowStatusBar]) {
             [UIApplication sharedApplication].statusBarHidden = NO;
         } else {
             [UIApplication sharedApplication].statusBarHidden = YES;
         }
         
-        // End: Keep this in sync with setLayoutStack 
+        // End: Keep this in sync with setLayoutStack
         
         FFNavigationViewController *controller = [self currentNavigationController];
         FFNavigationViewController *vc = (FFNavigationViewController *) [controller presentedViewController];
         if (vc) {
-            [vc pushViewController:fvc animated:YES];
+            [vc pushViewController:fvc animated:animated];
         } else {
-            [[self currentNavigationController] pushViewController:fvc animated:YES];
+            [[self currentNavigationController] pushViewController:fvc animated:animated];
         }
     } else {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -324,6 +331,11 @@
             });
         });
     }
+}
+
+- (void)pushLayoutWithNSString:(NSString *)screenId {
+    
+    [self pushLayoutWithNSString:screenId withBoolean:YES];
 }
 
 - (void)setBackButton:(FFTScreen *)screen {
