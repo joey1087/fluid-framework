@@ -18,6 +18,8 @@ public class ViewBehaviorSearchbar extends ViewBehavior {
 	private boolean showCancelButton;
 
 	private String placeholderText;
+	
+	private Color searchBarBackgroundColor;
 
 	public ViewBehaviorSearchbar(KeyValueList properties) {
 		super(ViewBehavior.searchbar, properties);
@@ -25,6 +27,7 @@ public class ViewBehaviorSearchbar extends ViewBehavior {
 		this.textColor = getColorProperty("text-color", null, properties);
 		showCancelButton = getBooleanProperty("show-cancel-button", true, properties);
 		placeholderText = getStringProperty("placeholder", null, properties);
+		searchBarBackgroundColor = getColorProperty("search-bar-background-color", null, properties);
 	}
 
 }

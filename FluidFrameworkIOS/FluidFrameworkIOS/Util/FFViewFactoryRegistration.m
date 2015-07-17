@@ -1656,6 +1656,9 @@
     
     searchBar.delegate = self;
     
+    searchBar.backgroundImage = [[UIImage alloc] init];
+    searchBar.backgroundColor = [FFView color:[viewBehavior getSearchBarBackgroundColor]];
+    
     return searchBar;
 }
 

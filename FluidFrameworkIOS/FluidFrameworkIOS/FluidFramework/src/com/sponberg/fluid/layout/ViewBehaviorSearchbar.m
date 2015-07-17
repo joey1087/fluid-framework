@@ -18,12 +18,13 @@
     self->textColor_ = [self getColorPropertyWithNSString:@"text-color" withFFTColor:nil withFFTKeyValueList:properties];
     showCancelButton_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"show-cancel-button" withBoolean:YES withFFTKeyValueList:properties])) booleanValue];
     placeholderText_ = [FFTViewBehavior getStringPropertyWithNSString:@"placeholder" withNSString:nil withFFTKeyValueList:properties];
+    searchBarBackgroundColor_ = [self getColorPropertyWithNSString:@"search-bar-background-color" withFFTColor:nil withFFTKeyValueList:properties];
   }
   return self;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, showCancelButton=%@, placeholderText=%@)", [self getText], [self getTextColor], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText]];
+  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@)", [self getText], [self getTextColor], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor]];
 }
 
 - (NSString *)getText {
@@ -42,6 +43,10 @@
   return self->placeholderText_;
 }
 
+- (FFTColor *)getSearchBarBackgroundColor {
+  return self->searchBarBackgroundColor_;
+}
+
 - (void)setTextWithNSString:(NSString *)text {
   self->text_ = text;
 }
@@ -58,9 +63,14 @@
   self->placeholderText_ = placeholderText;
 }
 
+- (void)setSearchBarBackgroundColorWithFFTColor:(FFTColor *)searchBarBackgroundColor {
+  self->searchBarBackgroundColor_ = searchBarBackgroundColor;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorSearchbar *)other {
   [super copyAllFieldsTo:other];
   other->placeholderText_ = placeholderText_;
+  other->searchBarBackgroundColor_ = searchBarBackgroundColor_;
   other->showCancelButton_ = showCancelButton_;
   other->text_ = text_;
   other->textColor_ = textColor_;
@@ -74,18 +84,21 @@
     { "getTextColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "isShowCancelButton", NULL, "Z", 0x1, NULL },
     { "getPlaceholderText", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getSearchBarBackgroundColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "setTextWithNSString:", "setText", "V", 0x1, NULL },
     { "setTextColorWithFFTColor:", "setTextColor", "V", 0x1, NULL },
     { "setShowCancelButtonWithBoolean:", "setShowCancelButton", "V", 0x1, NULL },
     { "setPlaceholderTextWithNSString:", "setPlaceholderText", "V", 0x1, NULL },
+    { "setSearchBarBackgroundColorWithFFTColor:", "setSearchBarBackgroundColor", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "text_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "textColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "showCancelButton_", NULL, 0x2, "Z", NULL,  },
     { "placeholderText_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
+    { "searchBarBackgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 10, methods, 4, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 12, methods, 5, fields, 0, NULL};
   return &_FFTViewBehaviorSearchbar;
 }
 

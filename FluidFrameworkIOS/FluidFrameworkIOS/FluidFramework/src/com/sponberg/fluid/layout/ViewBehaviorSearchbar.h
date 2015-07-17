@@ -18,6 +18,7 @@
   FFTColor *textColor_;
   BOOL showCancelButton_;
   NSString *placeholderText_;
+  FFTColor *searchBarBackgroundColor_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties;
@@ -32,6 +33,8 @@
 
 - (NSString *)getPlaceholderText;
 
+- (FFTColor *)getSearchBarBackgroundColor;
+
 - (void)setTextWithNSString:(NSString *)text;
 
 - (void)setTextColorWithFFTColor:(FFTColor *)textColor;
@@ -39,6 +42,8 @@
 - (void)setShowCancelButtonWithBoolean:(BOOL)showCancelButton;
 
 - (void)setPlaceholderTextWithNSString:(NSString *)placeholderText;
+
+- (void)setSearchBarBackgroundColorWithFFTColor:(FFTColor *)searchBarBackgroundColor;
 
 - (void)copyAllFieldsTo:(FFTViewBehaviorSearchbar *)other;
 
@@ -49,6 +54,7 @@ __attribute__((always_inline)) inline void FFTViewBehaviorSearchbar_init() {}
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, text_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, textColor_, FFTColor *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, placeholderText_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, searchBarBackgroundColor_, FFTColor *)
 
 typedef FFTViewBehaviorSearchbar ComSponbergFluidLayoutViewBehaviorSearchbar;
 
