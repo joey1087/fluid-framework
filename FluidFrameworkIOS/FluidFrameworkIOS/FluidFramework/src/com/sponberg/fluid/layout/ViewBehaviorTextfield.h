@@ -7,6 +7,7 @@
 #define _FFTViewBehaviorTextfield_H_
 
 @class FFTColor;
+@class JavaLangDouble;
 @protocol FFTKeyValueList;
 
 #import "JreEmulation.h"
@@ -28,6 +29,9 @@
   NSString *formattedPlaceholder_;
   NSString *capitalize_;
   FFTColor *androidLineColor_;
+  NSString *fontFamilyName_;
+  NSString *fontStyle_;
+  JavaLangDouble *fontSize_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties;
@@ -69,6 +73,12 @@
 
 - (FFTColor *)getAndroidLineColor;
 
+- (NSString *)getFontFamilyName;
+
+- (NSString *)getFontStyle;
+
+- (JavaLangDouble *)getFontSize;
+
 - (void)setLabelWithNSString:(NSString *)label;
 
 - (void)setKeyboardWithNSString:(NSString *)keyboard;
@@ -97,6 +107,12 @@
 
 - (void)setAndroidLineColorWithFFTColor:(FFTColor *)androidLineColor;
 
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName;
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle;
+
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize;
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorTextfield *)other;
 
 @end
@@ -113,6 +129,9 @@ J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, enabledKey_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, formattedPlaceholder_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, capitalize_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, androidLineColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, fontFamilyName_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, fontStyle_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorTextfield, fontSize_, JavaLangDouble *)
 
 FOUNDATION_EXPORT NSString *FFTViewBehaviorTextfield_kKeyboardDefault_;
 J2OBJC_STATIC_FIELD_GETTER(FFTViewBehaviorTextfield, kKeyboardDefault_, NSString *)

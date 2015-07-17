@@ -10,8 +10,10 @@
 #include "com/sponberg/fluid/layout/DataModelManager.h"
 #include "com/sponberg/fluid/layout/ViewBehavior.h"
 #include "com/sponberg/fluid/layout/ViewBehaviorTextfield.h"
+#include "com/sponberg/fluid/layout/ViewManager.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "java/lang/Boolean.h"
+#include "java/lang/Double.h"
 
 @implementation FFTViewBehaviorTextfield
 
@@ -40,6 +42,11 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
     self->androidLineColor_ = [self getColorPropertyWithNSString:@"android-line-color" withFFTColor:nil withFFTKeyValueList:properties];
     self->textEnabledColor_ = [self getColorPropertyWithNSString:@"text-enabled-color" withFFTColor:nil withFFTKeyValueList:properties];
     self->textDisabledColor_ = [self getColorPropertyWithNSString:@"text-disabled-color" withFFTColor:nil withFFTKeyValueList:properties];
+    NSString *specifiedDefaultFontName = [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getViewManager])) getSpecifiedDefaultFontFamilyName];
+    self->fontFamilyName_ = [FFTViewBehavior getFontFamilyNameWithNSString:@"font-family" withNSString:specifiedDefaultFontName withFFTKeyValueList:properties];
+    NSString *specifiedDefaultFontStyle = [((FFTViewManager *) nil_chk([FFTGlobalState_get_fluidApp__() getViewManager])) getSpecifiedDefaultFontStyle];
+    self->fontStyle_ = [FFTViewBehavior getFontStyleWithNSString:@"font-style" withNSString:specifiedDefaultFontStyle withFFTKeyValueList:properties];
+    self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
   }
   return self;
 }
@@ -74,7 +81,7 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorTextfield(label=%@, keyboard=%@, borderStyle=%@, dismissKeyboardWithTap=%@, multiLine=%@, autoCorrect=%@, password=%@, placeholderTextColor=%@, textEnabledColor=%@, textDisabledColor=%@, enabledKey=%@, formattedPlaceholder=%@, capitalize=%@, androidLineColor=%@)", [self getLabel], [self getKeyboard], [self getBorderStyle], [JavaLangBoolean toStringWithBoolean:[self isDismissKeyboardWithTap]], [JavaLangBoolean toStringWithBoolean:[self isMultiLine]], [JavaLangBoolean toStringWithBoolean:[self isAutoCorrect]], [JavaLangBoolean toStringWithBoolean:[self isPassword]], [self getPlaceholderTextColor], [self getTextEnabledColor], [self getTextDisabledColor], [self getEnabledKey], [self getFormattedPlaceholder], [self getCapitalize], [self getAndroidLineColor]];
+  return [NSString stringWithFormat:@"ViewBehaviorTextfield(label=%@, keyboard=%@, borderStyle=%@, dismissKeyboardWithTap=%@, multiLine=%@, autoCorrect=%@, password=%@, placeholderTextColor=%@, textEnabledColor=%@, textDisabledColor=%@, enabledKey=%@, formattedPlaceholder=%@, capitalize=%@, androidLineColor=%@, fontFamilyName=%@, fontStyle=%@, fontSize=%@)", [self getLabel], [self getKeyboard], [self getBorderStyle], [JavaLangBoolean toStringWithBoolean:[self isDismissKeyboardWithTap]], [JavaLangBoolean toStringWithBoolean:[self isMultiLine]], [JavaLangBoolean toStringWithBoolean:[self isAutoCorrect]], [JavaLangBoolean toStringWithBoolean:[self isPassword]], [self getPlaceholderTextColor], [self getTextEnabledColor], [self getTextDisabledColor], [self getEnabledKey], [self getFormattedPlaceholder], [self getCapitalize], [self getAndroidLineColor], [self getFontFamilyName], [self getFontStyle], [self getFontSize]];
 }
 
 - (NSString *)getLabel {
@@ -133,6 +140,18 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
   return self->androidLineColor_;
 }
 
+- (NSString *)getFontFamilyName {
+  return self->fontFamilyName_;
+}
+
+- (NSString *)getFontStyle {
+  return self->fontStyle_;
+}
+
+- (JavaLangDouble *)getFontSize {
+  return self->fontSize_;
+}
+
 - (void)setLabelWithNSString:(NSString *)label {
   self->label_ViewBehaviorTextfield_ = label;
 }
@@ -189,6 +208,18 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
   self->androidLineColor_ = androidLineColor;
 }
 
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName {
+  self->fontFamilyName_ = fontFamilyName;
+}
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle {
+  self->fontStyle_ = fontStyle;
+}
+
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize {
+  self->fontSize_ = fontSize;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorTextfield *)other {
   [super copyAllFieldsTo:other];
   other->androidLineColor_ = androidLineColor_;
@@ -197,6 +228,9 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
   other->capitalize_ = capitalize_;
   other->dismissKeyboardWithTap_ = dismissKeyboardWithTap_;
   other->enabledKey_ = enabledKey_;
+  other->fontFamilyName_ = fontFamilyName_;
+  other->fontSize_ = fontSize_;
+  other->fontStyle_ = fontStyle_;
   other->formattedPlaceholder_ = formattedPlaceholder_;
   other->keyboard_ = keyboard_;
   other->label_ViewBehaviorTextfield_ = label_ViewBehaviorTextfield_;
@@ -228,6 +262,9 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
     { "getFormattedPlaceholder", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getCapitalize", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getAndroidLineColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontStyle", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "setLabelWithNSString:", "setLabel", "V", 0x1, NULL },
     { "setKeyboardWithNSString:", "setKeyboard", "V", 0x1, NULL },
     { "setBorderStyleWithNSString:", "setBorderStyle", "V", 0x1, NULL },
@@ -242,6 +279,9 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
     { "setFormattedPlaceholderWithNSString:", "setFormattedPlaceholder", "V", 0x1, NULL },
     { "setCapitalizeWithNSString:", "setCapitalize", "V", 0x1, NULL },
     { "setAndroidLineColorWithFFTColor:", "setAndroidLineColor", "V", 0x1, NULL },
+    { "setFontFamilyNameWithNSString:", "setFontFamilyName", "V", 0x1, NULL },
+    { "setFontStyleWithNSString:", "setFontStyle", "V", 0x1, NULL },
+    { "setFontSizeWithJavaLangDouble:", "setFontSize", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "kKeyboardDefault_", NULL, 0x19, "Ljava.lang.String;", &FFTViewBehaviorTextfield_kKeyboardDefault_,  },
@@ -266,8 +306,11 @@ NSString * FFTViewBehaviorTextfield_kBorderStyleNone_ = @"none";
     { "formattedPlaceholder_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "capitalize_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "androidLineColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "fontFamilyName_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
+    { "fontStyle_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
+    { "fontSize_", NULL, 0x4, "Ljava.lang.Double;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorTextfield = { "ViewBehaviorTextfield", "com.sponberg.fluid.layout", NULL, 0x1, 33, methods, 22, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorTextfield = { "ViewBehaviorTextfield", "com.sponberg.fluid.layout", NULL, 0x1, 39, methods, 25, fields, 0, NULL};
   return &_FFTViewBehaviorTextfield;
 }
 

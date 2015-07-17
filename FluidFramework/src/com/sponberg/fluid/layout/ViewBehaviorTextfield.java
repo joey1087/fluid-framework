@@ -50,6 +50,10 @@ public class ViewBehaviorTextfield extends ViewBehavior {
 
 	private Color androidLineColor; // Use border-style: none to turn off the bracketed line for android
 
+	protected String fontFamilyName;
+	protected String fontStyle; 
+	protected Double fontSize;
+	
 	public ViewBehaviorTextfield(KeyValueList properties) {
 		super(ViewBehavior.textfield, properties);
 		this.label = getStringProperty("label", null, properties);
@@ -66,6 +70,14 @@ public class ViewBehaviorTextfield extends ViewBehavior {
 		this.androidLineColor = getColorProperty("android-line-color", null, properties);
 		this.textEnabledColor = getColorProperty("text-enabled-color", null, properties);
 		this.textDisabledColor = getColorProperty("text-disabled-color", null, properties);
+		
+		String specifiedDefaultFontName = GlobalState.fluidApp.getViewManager().getSpecifiedDefaultFontFamilyName();	         
+		this.fontFamilyName = getFontFamilyName("font-family", specifiedDefaultFontName, properties); 
+		
+		String specifiedDefaultFontStyle = GlobalState.fluidApp.getViewManager().getSpecifiedDefaultFontStyle();
+		this.fontStyle = getFontStyle("font-style", specifiedDefaultFontStyle, properties);
+		
+		this.fontSize = getFontSizeProperty("font-size", null, properties);
 	}
 
 	static boolean getBoolean(String dismissKeyboardWithTap, boolean defaultValue) {

@@ -436,7 +436,7 @@
     viewContainer.dataModelListenerId = (info.fluidView.listenToDataModelChanges) ? info.listenerId : nil;
     
     FFTViewBehaviorLabel *viewBehavior = (FFTViewBehaviorLabel *) view->viewBehavior_;
-    
+
     if ([viewBehavior getCornerRadius]) {
         viewContainer.layer.cornerRadius = [[viewBehavior getCornerRadius] intValue];
         viewContainer.layer.masksToBounds = YES;
@@ -542,7 +542,10 @@
         if ([viewBehavior getFontStyle]) {
             fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
         }
-        UIFont* font = [UIFont fontWithName:fontName size:[viewBehavior getFontSize].doubleValue];
+        
+        float fontSize = [viewBehavior getFontSize].doubleValue;
+        
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
         [label setFont:font];
     }
     
@@ -1285,10 +1288,24 @@
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
     
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
     
     if ([viewBehavior getFormattedPlaceholder]) {
         FFTAttributedText *attText = [[FFTAttributedText alloc] initWithNSString:[viewBehavior getFormattedPlaceholder]];
-        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor] fontName:Nil];
+        //NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor] fontName:Nil];
+        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:[UIColor darkTextColor] fontName:fontName];
         textfield.attributedPlaceholder = attString;
     } else {
         textfield.placeholder = [viewBehavior getLabel];        
@@ -1381,6 +1398,7 @@
     textfield.dataModelKeyPrefix = info.dataModelKeyPrefix;
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
+    
     if ([viewBehavior getPlaceholderTextColor]) {
         textfield.placeholderColor = [FFView color:[viewBehavior getPlaceholderTextColor]];
     }
@@ -1426,7 +1444,21 @@
     if (textfield.placeholderColor) {
         textfield.textColor = textfield.placeholderColor;
     }
-
+    
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
+    
     __weak typeof(textfield) weakTf = textfield;
     __weak typeof(viewBehavior) weakViewBehavior = viewBehavior;
     [info.fluidView addTappedOutsideWhileFocusedListener:textfield tappedOutsideWhileFocusedListener:^{
@@ -1524,10 +1556,24 @@
         textfield.textColor = nil;
     }
     
-    UITextField *field = [[UITextField alloc] init];
-    float defaultPointSize = field.font.pointSize;
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
     
-    [textfield setFont:[UIFont systemFontOfSize:defaultPointSize]];
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
+    
+//    UITextField *field = [[UITextField alloc] init];
+//    float defaultPointSize = field.font.pointSize;
+//    
+//    [textfield setFont:[UIFont systemFontOfSize:defaultPointSize]];
 }
 
 - (void)editingChanged:(FFTextField *)field {
