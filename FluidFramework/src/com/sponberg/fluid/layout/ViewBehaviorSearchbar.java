@@ -20,6 +20,8 @@ public class ViewBehaviorSearchbar extends ViewBehavior {
 	private String placeholderText;
 	
 	private Color searchBarBackgroundColor;
+	
+	private boolean shouldBecomeFirstResponderWhenViewLoaded;
 
 	public ViewBehaviorSearchbar(KeyValueList properties) {
 		super(ViewBehavior.searchbar, properties);
@@ -28,6 +30,7 @@ public class ViewBehaviorSearchbar extends ViewBehavior {
 		showCancelButton = getBooleanProperty("show-cancel-button", true, properties);
 		placeholderText = getStringProperty("placeholder", null, properties);
 		searchBarBackgroundColor = getColorProperty("search-bar-background-color", null, properties);
+		shouldBecomeFirstResponderWhenViewLoaded = getBooleanProperty("become-first-responder-on-load", false, properties);
 	}
 
 }

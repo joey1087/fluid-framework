@@ -19,12 +19,13 @@
     showCancelButton_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"show-cancel-button" withBoolean:YES withFFTKeyValueList:properties])) booleanValue];
     placeholderText_ = [FFTViewBehavior getStringPropertyWithNSString:@"placeholder" withNSString:nil withFFTKeyValueList:properties];
     searchBarBackgroundColor_ = [self getColorPropertyWithNSString:@"search-bar-background-color" withFFTColor:nil withFFTKeyValueList:properties];
+    shouldBecomeFirstResponderWhenViewLoaded_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"become-first-responder-on-load" withBoolean:NO withFFTKeyValueList:properties])) booleanValue];
   }
   return self;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@)", [self getText], [self getTextColor], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor]];
+  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@, shouldBecomeFirstResponderWhenViewLoaded=%@)", [self getText], [self getTextColor], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor], [JavaLangBoolean toStringWithBoolean:[self isShouldBecomeFirstResponderWhenViewLoaded]]];
 }
 
 - (NSString *)getText {
@@ -47,6 +48,10 @@
   return self->searchBarBackgroundColor_;
 }
 
+- (BOOL)isShouldBecomeFirstResponderWhenViewLoaded {
+  return self->shouldBecomeFirstResponderWhenViewLoaded_;
+}
+
 - (void)setTextWithNSString:(NSString *)text {
   self->text_ = text;
 }
@@ -67,10 +72,15 @@
   self->searchBarBackgroundColor_ = searchBarBackgroundColor;
 }
 
+- (void)setShouldBecomeFirstResponderWhenViewLoadedWithBoolean:(BOOL)shouldBecomeFirstResponderWhenViewLoaded {
+  self->shouldBecomeFirstResponderWhenViewLoaded_ = shouldBecomeFirstResponderWhenViewLoaded;
+}
+
 - (void)copyAllFieldsTo:(FFTViewBehaviorSearchbar *)other {
   [super copyAllFieldsTo:other];
   other->placeholderText_ = placeholderText_;
   other->searchBarBackgroundColor_ = searchBarBackgroundColor_;
+  other->shouldBecomeFirstResponderWhenViewLoaded_ = shouldBecomeFirstResponderWhenViewLoaded_;
   other->showCancelButton_ = showCancelButton_;
   other->text_ = text_;
   other->textColor_ = textColor_;
@@ -85,11 +95,13 @@
     { "isShowCancelButton", NULL, "Z", 0x1, NULL },
     { "getPlaceholderText", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getSearchBarBackgroundColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "isShouldBecomeFirstResponderWhenViewLoaded", NULL, "Z", 0x1, NULL },
     { "setTextWithNSString:", "setText", "V", 0x1, NULL },
     { "setTextColorWithFFTColor:", "setTextColor", "V", 0x1, NULL },
     { "setShowCancelButtonWithBoolean:", "setShowCancelButton", "V", 0x1, NULL },
     { "setPlaceholderTextWithNSString:", "setPlaceholderText", "V", 0x1, NULL },
     { "setSearchBarBackgroundColorWithFFTColor:", "setSearchBarBackgroundColor", "V", 0x1, NULL },
+    { "setShouldBecomeFirstResponderWhenViewLoadedWithBoolean:", "setShouldBecomeFirstResponderWhenViewLoaded", "V", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "text_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
@@ -97,8 +109,9 @@
     { "showCancelButton_", NULL, 0x2, "Z", NULL,  },
     { "placeholderText_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "searchBarBackgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "shouldBecomeFirstResponderWhenViewLoaded_", NULL, 0x2, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 12, methods, 5, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 14, methods, 6, fields, 0, NULL};
   return &_FFTViewBehaviorSearchbar;
 }
 

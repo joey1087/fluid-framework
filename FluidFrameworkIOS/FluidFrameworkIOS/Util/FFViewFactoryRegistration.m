@@ -1673,6 +1673,8 @@
     searchBar.backgroundImage = [[UIImage alloc] init];
     searchBar.backgroundColor = [FFView color:[viewBehavior getSearchBarBackgroundColor]];
     
+    
+    
     return searchBar;
 }
 
@@ -1712,6 +1714,10 @@
         return;
     } else {
         searchBar.hidden = NO;
+    }
+    
+    if ([viewBehavior isShouldBecomeFirstResponderWhenViewLoaded]) {
+        [searchBar becomeFirstResponder];
     }
 }
 

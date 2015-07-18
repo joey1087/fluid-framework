@@ -19,6 +19,7 @@
   BOOL showCancelButton_;
   NSString *placeholderText_;
   FFTColor *searchBarBackgroundColor_;
+  BOOL shouldBecomeFirstResponderWhenViewLoaded_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties;
@@ -35,6 +36,8 @@
 
 - (FFTColor *)getSearchBarBackgroundColor;
 
+- (BOOL)isShouldBecomeFirstResponderWhenViewLoaded;
+
 - (void)setTextWithNSString:(NSString *)text;
 
 - (void)setTextColorWithFFTColor:(FFTColor *)textColor;
@@ -44,6 +47,8 @@
 - (void)setPlaceholderTextWithNSString:(NSString *)placeholderText;
 
 - (void)setSearchBarBackgroundColorWithFFTColor:(FFTColor *)searchBarBackgroundColor;
+
+- (void)setShouldBecomeFirstResponderWhenViewLoadedWithBoolean:(BOOL)shouldBecomeFirstResponderWhenViewLoaded;
 
 - (void)copyAllFieldsTo:(FFTViewBehaviorSearchbar *)other;
 
