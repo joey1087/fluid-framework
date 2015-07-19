@@ -185,6 +185,38 @@
     //Subclass can overide this
 }
 
+- (UIViewController*)createViewControllerForTab:(FFTTab*)tab {
+    FFViewController *fvc = [self createFFViewController:[tab getScreenId] partOfRootView:YES];
+    UINavigationController *nav = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
+
+    nav.title = tab->label_;
+    NSString *imageName = [tab getImage];
+    NSString *selectedImage = [tab getSelectedImage];
+    if (imageName) {
+        if (!selectedImage) {
+            selectedImage = imageName;
+        }
+        
+        if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
+            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        } else {
+            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[UIImage imageNamed:imageName] tag:0];
+        }
+    }
+    
+    [self customizeTabbarItem:nav.tabBarItem forTab:tab];
+    
+    IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-nav-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+    NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+    if (colorProperty) {
+        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+        UIColor *color = [FFView color:fftColor];
+        nav.navigationBar.tintColor = color;
+    }
+
+    return nav;
+}
+
 - (void)setupWindow:(NSString *)showScreenId {
     
     self.window.rootViewController = nil;
@@ -194,34 +226,8 @@
     id<JavaUtilList> list = [[FFTGlobalState fluidApp] getTabs];
     NSMutableArray *tabArray = [NSMutableArray array];
     for (FFTTab * __strong view in nil_chk(list)) {
-        FFViewController *fvc = [self createFFViewController:[view getScreenId] partOfRootView:YES];
-        UINavigationController *nav = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
-        nav.title = view->label_;
-        NSString *imageName = [view getImage];
-        NSString *selectedImage = [view getSelectedImage];
-        if (imageName) {
-            if (!selectedImage) {
-                selectedImage = imageName;
-            }
-            
-            if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-            } else {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] tag:0];
-            }
-        }
-        
-        [self customizeTabbarItem:nav.tabBarItem forTab:view];
-        
-        [tabArray addObject:nav];
-        
-        IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-nav-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
-        NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
-        if (colorProperty) {
-            FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
-            UIColor *color = [FFView color:fftColor];
-            nav.navigationBar.tintColor = color;
-        }
+        UIViewController* controller = [self createViewControllerForTab:view];
+        [tabArray addObject:controller];
     }
     
     IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
@@ -410,19 +416,19 @@
         // If screenId is a tab
         
         if ([self selectTab:screenId]) {
-            /*
-             * This is to pop to the root of the current nav on
-             * the current selected tab.
-             */
-            UITabBarController *tabController = self.tabController;
-            for (UIViewController *controller in tabController.viewControllers) {
-                FFNavigationViewController *nav = (FFNavigationViewController *) controller;
-                FFViewController *fvc = [nav.viewControllers firstObject];
-                if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
-                    [nav popToRootViewControllerAnimated:NO];
-                    break;
-                }
-            }
+//            /*
+//             * This is to pop to the root of the current nav on
+//             * the current selected tab.
+//             */
+//            UITabBarController *tabController = self.tabController;
+//            for (UIViewController *controller in tabController.viewControllers) {
+//                FFNavigationViewController *nav = (FFNavigationViewController *) controller;
+//                FFViewController *fvc = [nav.viewControllers firstObject];
+//                if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
+//                    [nav popToRootViewControllerAnimated:NO];
+//                    break;
+//                }
+//            }
             return;
         }
         
@@ -499,6 +505,7 @@
     
     for (UIViewController *controller in tabController.viewControllers) {
         FFNavigationViewController *nav = (FFNavigationViewController *) controller;
+        
         FFViewController *fvc = [nav.viewControllers firstObject];
         if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
             [tabController setSelectedViewController:controller];
@@ -522,6 +529,8 @@
             }
             
             self.window.rootViewController = tabController;
+            
+            [nav popToRootViewControllerAnimated:NO];
             
             return YES;
         }
