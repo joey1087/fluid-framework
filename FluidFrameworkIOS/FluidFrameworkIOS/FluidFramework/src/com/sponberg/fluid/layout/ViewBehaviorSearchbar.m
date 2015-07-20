@@ -4,18 +4,26 @@
 //
 
 #include "IOSClass.h"
+#include "com/sponberg/fluid/FluidApp.h"
+#include "com/sponberg/fluid/GlobalState.h"
 #include "com/sponberg/fluid/layout/Color.h"
 #include "com/sponberg/fluid/layout/ViewBehavior.h"
 #include "com/sponberg/fluid/layout/ViewBehaviorSearchbar.h"
+#include "com/sponberg/fluid/layout/ViewManager.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "java/lang/Boolean.h"
+#include "java/lang/Double.h"
 
 @implementation FFTViewBehaviorSearchbar
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties {
   if (self = [super initWithNSString:FFTViewBehavior_get_searchbar_() withFFTKeyValueList:properties]) {
+    NSString *specifiedDefaultFontName = [((FFTViewManager *) nil_chk([((FFTFluidApp *) nil_chk(FFTGlobalState_get_fluidApp__())) getViewManager])) getSpecifiedDefaultFontFamilyName];
     self->text_ = [FFTViewBehavior getStringPropertyWithNSString:@"text" withNSString:nil withFFTKeyValueList:properties];
     self->textColor_ = [self getColorPropertyWithNSString:@"text-color" withFFTColor:nil withFFTKeyValueList:properties];
+    self->fontFamilyName_ = [FFTViewBehavior getStringPropertyWithNSString:@"font-family" withNSString:specifiedDefaultFontName withFFTKeyValueList:properties];
+    self->fontStyle_ = [FFTViewBehavior getStringPropertyWithNSString:@"font-style" withNSString:nil withFFTKeyValueList:properties];
+    self->fontSize_ = [FFTViewBehavior getFontSizePropertyWithNSString:@"font-size" withJavaLangDouble:nil withFFTKeyValueList:properties];
     showCancelButton_ = [((JavaLangBoolean *) nil_chk([FFTViewBehavior getBooleanPropertyWithNSString:@"show-cancel-button" withBoolean:YES withFFTKeyValueList:properties])) booleanValue];
     placeholderText_ = [FFTViewBehavior getStringPropertyWithNSString:@"placeholder" withNSString:nil withFFTKeyValueList:properties];
     searchBarBackgroundColor_ = [self getColorPropertyWithNSString:@"search-bar-background-color" withFFTColor:nil withFFTKeyValueList:properties];
@@ -24,7 +32,7 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@)", [self getText], [self getTextColor], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor]];
+  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, fontFamilyName=%@, fontStyle=%@, fontSize=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@)", [self getText], [self getTextColor], [self getFontFamilyName], [self getFontStyle], [self getFontSize], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor]];
 }
 
 - (NSString *)getText {
@@ -33,6 +41,18 @@
 
 - (FFTColor *)getTextColor {
   return self->textColor_;
+}
+
+- (NSString *)getFontFamilyName {
+  return self->fontFamilyName_;
+}
+
+- (NSString *)getFontStyle {
+  return self->fontStyle_;
+}
+
+- (JavaLangDouble *)getFontSize {
+  return self->fontSize_;
 }
 
 - (BOOL)isShowCancelButton {
@@ -55,6 +75,18 @@
   self->textColor_ = textColor;
 }
 
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName {
+  self->fontFamilyName_ = fontFamilyName;
+}
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle {
+  self->fontStyle_ = fontStyle;
+}
+
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize {
+  self->fontSize_ = fontSize;
+}
+
 - (void)setShowCancelButtonWithBoolean:(BOOL)showCancelButton {
   self->showCancelButton_ = showCancelButton;
 }
@@ -69,6 +101,9 @@
 
 - (void)copyAllFieldsTo:(FFTViewBehaviorSearchbar *)other {
   [super copyAllFieldsTo:other];
+  other->fontFamilyName_ = fontFamilyName_;
+  other->fontSize_ = fontSize_;
+  other->fontStyle_ = fontStyle_;
   other->placeholderText_ = placeholderText_;
   other->searchBarBackgroundColor_ = searchBarBackgroundColor_;
   other->showCancelButton_ = showCancelButton_;
@@ -82,11 +117,17 @@
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "getText", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getTextColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
+    { "getFontFamilyName", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontStyle", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getFontSize", NULL, "Ljava.lang.Double;", 0x1, NULL },
     { "isShowCancelButton", NULL, "Z", 0x1, NULL },
     { "getPlaceholderText", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getSearchBarBackgroundColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x1, NULL },
     { "setTextWithNSString:", "setText", "V", 0x1, NULL },
     { "setTextColorWithFFTColor:", "setTextColor", "V", 0x1, NULL },
+    { "setFontFamilyNameWithNSString:", "setFontFamilyName", "V", 0x1, NULL },
+    { "setFontStyleWithNSString:", "setFontStyle", "V", 0x1, NULL },
+    { "setFontSizeWithJavaLangDouble:", "setFontSize", "V", 0x1, NULL },
     { "setShowCancelButtonWithBoolean:", "setShowCancelButton", "V", 0x1, NULL },
     { "setPlaceholderTextWithNSString:", "setPlaceholderText", "V", 0x1, NULL },
     { "setSearchBarBackgroundColorWithFFTColor:", "setSearchBarBackgroundColor", "V", 0x1, NULL },
@@ -94,11 +135,14 @@
   static J2ObjcFieldInfo fields[] = {
     { "text_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "textColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
+    { "fontFamilyName_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
+    { "fontStyle_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
+    { "fontSize_", NULL, 0x2, "Ljava.lang.Double;", NULL,  },
     { "showCancelButton_", NULL, 0x2, "Z", NULL,  },
     { "placeholderText_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "searchBarBackgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 12, methods, 5, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 18, methods, 8, fields, 0, NULL};
   return &_FFTViewBehaviorSearchbar;
 }
 
