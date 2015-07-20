@@ -7,6 +7,7 @@
 #define _FFTViewBehaviorSearchbar_H_
 
 @class FFTColor;
+@class JavaLangDouble;
 @protocol FFTKeyValueList;
 
 #import "JreEmulation.h"
@@ -16,6 +17,9 @@
  @public
   NSString *text_;
   FFTColor *textColor_;
+  NSString *fontFamilyName_;
+  NSString *fontStyle_;
+  JavaLangDouble *fontSize_;
   BOOL showCancelButton_;
   NSString *placeholderText_;
   FFTColor *searchBarBackgroundColor_;
@@ -30,6 +34,12 @@
 
 - (FFTColor *)getTextColor;
 
+- (NSString *)getFontFamilyName;
+
+- (NSString *)getFontStyle;
+
+- (JavaLangDouble *)getFontSize;
+
 - (BOOL)isShowCancelButton;
 
 - (NSString *)getPlaceholderText;
@@ -41,6 +51,12 @@
 - (void)setTextWithNSString:(NSString *)text;
 
 - (void)setTextColorWithFFTColor:(FFTColor *)textColor;
+
+- (void)setFontFamilyNameWithNSString:(NSString *)fontFamilyName;
+
+- (void)setFontStyleWithNSString:(NSString *)fontStyle;
+
+- (void)setFontSizeWithJavaLangDouble:(JavaLangDouble *)fontSize;
 
 - (void)setShowCancelButtonWithBoolean:(BOOL)showCancelButton;
 
@@ -58,6 +74,9 @@ __attribute__((always_inline)) inline void FFTViewBehaviorSearchbar_init() {}
 
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, text_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, textColor_, FFTColor *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, fontFamilyName_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, fontStyle_, NSString *)
+J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, fontSize_, JavaLangDouble *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, placeholderText_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehaviorSearchbar, searchBarBackgroundColor_, FFTColor *)
 
