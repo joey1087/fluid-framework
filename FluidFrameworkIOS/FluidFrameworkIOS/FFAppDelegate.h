@@ -38,4 +38,6 @@
 - (FFNavigationViewController *)currentNavigationController;
 
 - (void)showModalViewWithFFTModalViewHelper:(FFTModalView *)modalView;
+
+- (UIViewController*)createAppContainerViewController:(NSMutableArray*)tabControllers;
 @end

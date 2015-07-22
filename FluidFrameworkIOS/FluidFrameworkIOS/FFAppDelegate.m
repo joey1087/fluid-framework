@@ -257,22 +257,24 @@
         [[UITabBar appearance] setTintColor:color];
     }
     
-    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
-    self.tabController = tabController;
-    tabController.viewControllers = tabArray;
+//    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
+//    self.tabController = tabController;
+//    tabController.viewControllers = tabArray;
+//    
+//    property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+//    colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+//    if (colorProperty) {
+//        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+//        UIColor *color = [FFView color:fftColor];
+//        tabController.tabBar.layer.borderWidth = 0.50;
+//        tabController.tabBar.layer.borderColor = color.CGColor;
+//    }
     
-    property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
-    colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
-    if (colorProperty) {
-        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
-        UIColor *color = [FFView color:fftColor];
-        tabController.tabBar.layer.borderWidth = 0.50;
-        tabController.tabBar.layer.borderColor = color.CGColor;
-    }
+    UIViewController* appContainerViewController = [self createAppContainerViewController:tabArray];
     
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = tabController;
-    [self.window addSubview:tabController.view];
+    self.window.rootViewController = appContainerViewController;
+    [self.window addSubview:appContainerViewController.view];
     [self.window makeKeyAndVisible];
     
     if (showScreenId != [self currentScreenId]) {
@@ -283,6 +285,25 @@
     //TODO : why do we set up a webview here and load HTML here
     UIWebView *view = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [view loadHTMLString:@"<html><body></body></html>" baseURL:nil];
+}
+
+- (UIViewController*)createAppContainerViewController:(NSMutableArray*)tabControllers {
+    
+    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
+    self.tabController = tabController;
+    tabController.viewControllers = tabControllers;
+   
+    
+    IOSObjectArray * property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+    NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+    if (colorProperty) {
+        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+        UIColor *color = [FFView color:fftColor];
+        tabController.tabBar.layer.borderWidth = 0.50;
+        tabController.tabBar.layer.borderColor = color.CGColor;
+    }
+    
+    return tabController;
 }
 
 - (FFViewController *)createFFViewController:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {
@@ -466,7 +487,7 @@
                 }
             }
             
-            self.window.rootViewController = rootNavController;
+//            self.window.rootViewController = rootNavController;
         };
         
         FFNavigationViewController *controller = [self currentNavigationController];
@@ -528,7 +549,8 @@
                 [UIApplication sharedApplication].statusBarHidden = YES;
             }
             
-            self.window.rootViewController = tabController;
+//            self.window.rootViewController = tabController;
+            [self setRootViewController:tabController];
             
             [nav popToRootViewControllerAnimated:NO];
             
@@ -536,6 +558,10 @@
         }
     }
     return NO;
+}
+
+- (void)setRootViewController:(UITabBarController*)tabController {
+    self.window.rootViewController = tabController;
 }
 
 - (void)showModalViewWithFFTModalView:(FFTModalView *)modalView {
