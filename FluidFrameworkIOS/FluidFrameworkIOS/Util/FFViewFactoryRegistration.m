@@ -596,7 +596,11 @@
         adjust = 0;
     }
     
-    label.frame = CGRectMake(0, adjust, label.frame.size.width, MIN(label.frame.size.height, fSize.size.height));
+    float labelH = label.frame.size.height;
+    float fSizeH = fSize.size.height;
+    NSString* text = label.text;
+    
+    label.frame = CGRectMake(0, adjust, label.frame.size.width, fSize.size.height);
 }
 
 - (void)cleanupFluidViewWithId:(id)fluidView {
