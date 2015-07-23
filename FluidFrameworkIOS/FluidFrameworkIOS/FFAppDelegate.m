@@ -487,7 +487,7 @@
                 }
             }
             
-//            self.window.rootViewController = rootNavController;
+            self.window.rootViewController = rootNavController;
         };
         
         FFNavigationViewController *controller = [self currentNavigationController];
@@ -549,9 +549,9 @@
                 [UIApplication sharedApplication].statusBarHidden = YES;
             }
             
-//            self.window.rootViewController = tabController;
-            [self setRootViewController:tabController];
-            
+            self.window.rootViewController = [self getAppContainerViewController];
+            //[self setRootViewController:tabController];
+            //self.window.rootViewController = self.tabController;
             [nav popToRootViewControllerAnimated:NO];
             
             return YES;
@@ -560,8 +560,8 @@
     return NO;
 }
 
-- (void)setRootViewController:(UITabBarController*)tabController {
-    self.window.rootViewController = tabController;
+- (UIViewController*)getAppContainerViewController {
+    return  self.tabController;
 }
 
 - (void)showModalViewWithFFTModalView:(FFTModalView *)modalView {
