@@ -31,19 +31,19 @@
 - (void)setSelectedViewController:(UIViewController *)selectedViewController {
     
     [super setSelectedViewController:selectedViewController];
-    if ([selectedViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController* nav = (UINavigationController*)selectedViewController;
-        if (nav.viewControllers.count > 0) {
-            [[nav.viewControllers objectAtIndex:0] view].alpha = 0.1;
-            
-            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                [[nav.viewControllers objectAtIndex:0] view].alpha  = 1.0;
-            } completion:^(BOOL finished) {
-                
-            }];
-        }
-        
-    }
+//    if ([selectedViewController isKindOfClass:[UINavigationController class]]) {
+//        UINavigationController* nav = (UINavigationController*)selectedViewController;
+//        if (nav.viewControllers.count > 0) {
+//            [[nav.viewControllers objectAtIndex:0] view].alpha = 0.1;
+//            
+//            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//                [[nav.viewControllers objectAtIndex:0] view].alpha  = 1.0;
+//            } completion:^(BOOL finished) {
+//                
+//            }];
+//        }
+//        
+//    }
     
 //    NSArray *tabViewControllers = self.viewControllers;
 //    UIView * fromView = self.selectedViewController.view;
