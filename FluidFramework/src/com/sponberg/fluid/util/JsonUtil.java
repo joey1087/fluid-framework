@@ -464,7 +464,7 @@ public class JsonUtil {
 		
 		if (value == null || !value.isNumber()) {
 			int returnValue = defaultValue;
-			if (value.isString()) {
+			if (value != null && value.isString()) {
 				try {
 					returnValue = Integer.parseInt(value.asString());
 				} catch (NumberFormatException e) {}
