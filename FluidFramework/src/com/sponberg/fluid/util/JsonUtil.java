@@ -463,7 +463,14 @@ public class JsonUtil {
 		JsonValue value = object.get(key);
 		
 		if (value == null || !value.isNumber()) {
-			return defaultValue;
+			int returnValue = defaultValue;
+			if (value != null && value.isString()) {
+				try {
+					returnValue = Integer.parseInt(value.asString());
+				} catch (NumberFormatException e) {}
+			}
+			
+			return returnValue;
 		} else {
 			return  value.asInt();
 		}
