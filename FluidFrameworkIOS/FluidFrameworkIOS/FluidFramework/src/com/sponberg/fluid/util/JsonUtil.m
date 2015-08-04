@@ -19,6 +19,7 @@
 #include "java/lang/Integer.h"
 #include "java/lang/Long.h"
 #include "java/lang/NoSuchMethodException.h"
+#include "java/lang/NumberFormatException.h"
 #include "java/lang/RuntimeException.h"
 #include "java/lang/StringBuffer.h"
 #include "java/lang/reflect/Array.h"
@@ -467,7 +468,15 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
                        withInt:(int)defaultValue {
   FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
   if (value == nil || ![value isNumber]) {
-    return defaultValue;
+    int returnValue = defaultValue;
+    if ([((FFTJsonValue *) nil_chk(value)) isString]) {
+      @try {
+        returnValue = [JavaLangInteger parseIntWithNSString:[value asString]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+      }
+    }
+    return returnValue;
   }
   else {
     return [value asInt];
