@@ -447,8 +447,12 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		 * activities for the app, this is just a patch for 
 		 * now.
 		 */
-		if ((FluidActivity) getCurrentActivity() == null) {
-			return;
+		try {
+			if ((FluidActivity) getCurrentActivity() == null) {
+				return;
+			}
+		} catch (ClassCastException e) {
+			e.printStackTrace();
 		}
 		
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
