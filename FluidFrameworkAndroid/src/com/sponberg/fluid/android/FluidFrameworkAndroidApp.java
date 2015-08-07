@@ -407,6 +407,10 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 
 	public void showModalView(final ModalView modalView) {
 
+		if (modalView == null) {
+			return;
+		}
+		
 		if (launcherActivity != null) {
 			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 				@Override
@@ -419,6 +423,14 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 				}
 			});
 			return;
+		}
+		
+		try {
+			if ((FluidActivity) getCurrentActivity() == null) {
+				return;
+			}
+		} catch (ClassCastException e) {
+			e.printStackTrace();
 		}
 
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
