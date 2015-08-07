@@ -442,6 +442,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 	}
 
 	public void dismissModalView(final ModalView modalView) {
+		
 		if (launcherActivity != null) {
 			return;
 		}
