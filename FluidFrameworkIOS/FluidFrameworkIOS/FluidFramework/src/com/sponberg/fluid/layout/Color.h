@@ -34,6 +34,8 @@
 
 + (FFTColor *)colorFromStringWithNSString:(NSString *)colorAsString;
 
++ (FFTColor *)getDefaultColor;
+
 - (NSString *)getHtml;
 
 - (NSString *)description;

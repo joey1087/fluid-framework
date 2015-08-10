@@ -7,8 +7,8 @@
 #include "IOSObjectArray.h"
 #include "com/sponberg/fluid/layout/Color.h"
 #include "java/lang/Double.h"
-#include "java/lang/IllegalArgumentException.h"
 #include "java/lang/Integer.h"
+#include "java/lang/NullPointerException.h"
 
 @implementation FFTColor
 
@@ -59,52 +59,63 @@
 }
 
 + (FFTColor *)colorFromStringWithNSString:(NSString *)colorAsString {
-  BOOL useHtml = ![((NSString *) nil_chk(colorAsString)) contains:@","] || [colorAsString hasPrefix:@"#"];
-  if ([colorAsString hasPrefix:@"#"]) {
-    colorAsString = [colorAsString substring:1];
-  }
-  if (useHtml) {
-    int red;
-    int green;
-    int blue;
-    int alpha = 255;
-    switch (((int) [((NSString *) nil_chk(colorAsString)) length])) {
-      case 6:
-      red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:2] withInt:16];
-      green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:4] withInt:16];
-      blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:4 endIndex:6] withInt:16];
-      break;
-      case 3:
-      red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:1] withInt:16];
-      green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:1 endIndex:2] withInt:16];
-      blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:3] withInt:16];
-      break;
-      case 8:
-      red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:2] withInt:16];
-      green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:4] withInt:16];
-      blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:4 endIndex:6] withInt:16];
-      alpha = [JavaLangInteger parseIntWithNSString:[colorAsString substring:6 endIndex:8] withInt:16];
-      break;
-      case 4:
-      red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:1] withInt:16];
-      green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:1 endIndex:2] withInt:16];
-      blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:3] withInt:16];
-      alpha = [JavaLangInteger parseIntWithNSString:[colorAsString substring:3 endIndex:4] withInt:16];
-      break;
-      default:
-      @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:[NSString stringWithFormat:@"Invalid color: %@", colorAsString]];
+  @try {
+    BOOL useHtml = ![((NSString *) nil_chk(colorAsString)) contains:@","] || [colorAsString hasPrefix:@"#"];
+    if ([colorAsString hasPrefix:@"#"]) {
+      colorAsString = [colorAsString substring:1];
     }
-    return [[FFTColor alloc] initWithInt:red withInt:green withInt:blue withInt:alpha];
-  }
-  else {
-    IOSObjectArray *ca = [((NSString *) nil_chk(colorAsString)) split:@","];
-    if ((int) [((IOSObjectArray *) nil_chk(ca)) count] != 3 && (int) [ca count] != 4) {
-      @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:[NSString stringWithFormat:@"Invalid color: %@", colorAsString]];
+    if (useHtml) {
+      int red;
+      int green;
+      int blue;
+      int alpha = 255;
+      switch (((int) [((NSString *) nil_chk(colorAsString)) length])) {
+        case 6:
+        red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:2] withInt:16];
+        green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:4] withInt:16];
+        blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:4 endIndex:6] withInt:16];
+        break;
+        case 3:
+        red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:1] withInt:16];
+        green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:1 endIndex:2] withInt:16];
+        blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:3] withInt:16];
+        break;
+        case 8:
+        red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:2] withInt:16];
+        green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:4] withInt:16];
+        blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:4 endIndex:6] withInt:16];
+        alpha = [JavaLangInteger parseIntWithNSString:[colorAsString substring:6 endIndex:8] withInt:16];
+        break;
+        case 4:
+        red = [JavaLangInteger parseIntWithNSString:[colorAsString substring:0 endIndex:1] withInt:16];
+        green = [JavaLangInteger parseIntWithNSString:[colorAsString substring:1 endIndex:2] withInt:16];
+        blue = [JavaLangInteger parseIntWithNSString:[colorAsString substring:2 endIndex:3] withInt:16];
+        alpha = [JavaLangInteger parseIntWithNSString:[colorAsString substring:3 endIndex:4] withInt:16];
+        break;
+        default:
+        return [FFTColor getDefaultColor];
+      }
+      return [[FFTColor alloc] initWithInt:red withInt:green withInt:blue withInt:alpha];
     }
     else {
-      return [[FFTColor alloc] initWithNSStringArray:[colorAsString split:@","]];
+      IOSObjectArray *ca = [((NSString *) nil_chk(colorAsString)) split:@","];
+      if ((int) [((IOSObjectArray *) nil_chk(ca)) count] != 3 && (int) [ca count] != 4) {
+        return [FFTColor getDefaultColor];
+      }
+      else {
+        return [[FFTColor alloc] initWithNSStringArray:[colorAsString split:@","]];
+      }
     }
   }
+  @catch (JavaLangNullPointerException *e) {
+    [((JavaLangNullPointerException *) nil_chk(e)) printStackTrace];
+    return [FFTColor getDefaultColor];
+  }
+}
+
++ (FFTColor *)getDefaultColor {
+  FFTColor *defaultColor = [[FFTColor alloc] initWithInt:255 withInt:255 withInt:255 withInt:255];
+  return defaultColor;
 }
 
 - (NSString *)getHtml {
@@ -176,6 +187,7 @@
     { "initWithNSStringArray:", "Color", NULL, 0x4, NULL },
     { "getAlphaWithNSStringArray:", "getAlpha", "I", 0x9, NULL },
     { "colorFromStringWithNSString:", "colorFromString", "Lcom.sponberg.fluid.layout.Color;", 0x9, NULL },
+    { "getDefaultColor", NULL, "Lcom.sponberg.fluid.layout.Color;", 0x9, NULL },
     { "getHtml", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "getRed", NULL, "D", 0x1, NULL },
@@ -192,7 +204,7 @@
     { "blue_", NULL, 0x10, "D", NULL,  },
     { "alpha_", NULL, 0x10, "D", NULL,  },
   };
-  static J2ObjcClassInfo _FFTColor = { "Color", "com.sponberg.fluid.layout", NULL, 0x1, 14, methods, 4, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTColor = { "Color", "com.sponberg.fluid.layout", NULL, 0x1, 15, methods, 4, fields, 0, NULL};
   return &_FFTColor;
 }
 
