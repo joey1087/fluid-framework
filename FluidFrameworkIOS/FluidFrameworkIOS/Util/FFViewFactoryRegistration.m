@@ -54,8 +54,9 @@
 #import "PrecomputeLayoutManager.h"
 #include "UIService.h"
 #include "ViewManager.h"
-
 #include "com/sponberg/fluid/layout/DataModelManager.h"
+
+
 
 @interface ButtonBuilder : NSObject<FFTFluidViewFactory_FluidViewBuilder>
 @end
@@ -141,7 +142,7 @@
     [[appDelegate dataNotificationService] removeDataChangeObserverFor:listenerId];
 }
 
-+ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor {
++ (NSAttributedString *)createAttributedString:(FFTAttributedText *)attText size:(float)pointSize defaultColor:(UIColor *)defaultColor fontName:(NSString*)fontName {
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[attText getText]];
     
@@ -150,6 +151,13 @@
     [attrString addAttribute:NSFontAttributeName
                        value:[UIFont systemFontOfSize:pointSize]
                        range:NSMakeRange(0, [[attText getText] length])];
+    
+    if (fontName) {
+        UIFont* font = [UIFont fontWithName:fontName size:pointSize];
+        [attrString addAttribute:NSFontAttributeName
+                           value:font
+                           range:NSMakeRange(0, [[attText getText] length])];
+    }
     
     for (FFTAttributedText_Attribute *att in [attText getAttributes]) {
         NSRange range = NSMakeRange([att getStartIndex], [att getEndIndex] - [att getStartIndex]);
@@ -236,7 +244,7 @@
     while (fontSizeInUnits >= minimumSizeUnits) {
         
         float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
-        attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:defaultColor];
+        attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:defaultColor fontName:fontName];
         
         fSize = [attString boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
         fSize.size.width = ceil(fSize.size.width);
@@ -318,6 +326,20 @@
                                                           [weakSelf updateText:button.button view:view baseText:viewBehavior->text_ dataModelPrefix:info.dataModelKeyPrefix];
                                                       }
                                            blockDataRemoved:nil];
+    }
+    
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [button.button.titleLabel setFont:font];
     }
     
     return button;
@@ -428,7 +450,7 @@
     viewContainer.dataModelListenerId = (info.fluidView.listenToDataModelChanges) ? info.listenerId : nil;
     
     FFTViewBehaviorLabel *viewBehavior = (FFTViewBehaviorLabel *) view->viewBehavior_;
-    
+
     if ([viewBehavior getCornerRadius]) {
         viewContainer.layer.cornerRadius = [[viewBehavior getCornerRadius] intValue];
         viewContainer.layer.masksToBounds = YES;
@@ -483,9 +505,11 @@
     
     if (![view isVisible]) {
         label.hidden = YES;
+        viewContainer.hidden = YES;
         return;
     } else {
         label.hidden = NO;
+        viewContainer.hidden = NO;
     }
     
     CGRect labelFrame = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
@@ -526,6 +550,19 @@
         [label setTextColor:nil];
     }
     
+    if ([viewBehavior getFontFamilyName]) {
+        NSString* fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        
+        float fontSize = [viewBehavior getFontSize].doubleValue;
+        
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [label setFont:font];
+    }
+    
     [self sizeAndPositionLabel:label fontSize:[viewBehavior->fontSize_ doubleValue] minFontSize:[viewBehavior->minFontSize_ doubleValue] maxFontSize:[viewBehavior->maxFontSize_ doubleValue]parentFrame:info.bounds verticalAlign:viewBehavior->verticalAlign_ attributedText:attText];
 }
 
@@ -559,7 +596,11 @@
         adjust = 0;
     }
     
-    label.frame = CGRectMake(0, adjust, label.frame.size.width, MIN(label.frame.size.height, fSize.size.height));
+    float labelH = label.frame.size.height;
+    float fSizeH = fSize.size.height;
+    NSString* text = label.text;
+    
+    label.frame = CGRectMake(0, adjust, label.frame.size.width, fSize.size.height);
 }
 
 - (void)cleanupFluidViewWithId:(id)fluidView {
@@ -687,6 +728,8 @@
     }
     
     BOOL scrollToBottomOnLoad = [viewBehavior isScrollToBottomOnLoad];
+    BOOL scrollToTopOnUpdate = [viewBehavior isScrollToTopWhenUpdate];
+    
     
     __weak typeof(table) weakRef = table;
     __weak typeof(tableLayoutId) weakLayoutId = tableLayoutId;
@@ -706,6 +749,10 @@
                             }
                         });
                     });
+                }
+                
+                if (scrollToTopOnUpdate) {
+                    [weakRef scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
                 }
             } else {
                 
@@ -1259,9 +1306,24 @@
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
     
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
+    
     if ([viewBehavior getFormattedPlaceholder]) {
         FFTAttributedText *attText = [[FFTAttributedText alloc] initWithNSString:[viewBehavior getFormattedPlaceholder]];
-        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor]];
+        //NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:12 defaultColor:[UIColor darkTextColor] fontName:Nil];
+        NSAttributedString *attString = [FFViewFactoryRegistration createAttributedString:attText size:fontSize defaultColor:[UIColor darkTextColor] fontName:fontName];
         textfield.attributedPlaceholder = attString;
     } else {
         textfield.placeholder = [viewBehavior getLabel];        
@@ -1276,6 +1338,8 @@
         textfield.keyboardType = UIKeyboardTypePhonePad;
     } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardUrl_]) {
         textfield.keyboardType = UIKeyboardTypeURL;
+    } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardAlphabet_]) {
+        textfield.keyboardType = UIKeyboardTypeAlphabet;
     } else {
         textfield.keyboardType = UIKeyboardTypeDefault;
     }
@@ -1352,6 +1416,7 @@
     textfield.dataModelKeyPrefix = info.dataModelKeyPrefix;
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
+    
     if ([viewBehavior getPlaceholderTextColor]) {
         textfield.placeholderColor = [FFView color:[viewBehavior getPlaceholderTextColor]];
     }
@@ -1371,10 +1436,12 @@
         textfield.keyboardType = UIKeyboardTypePhonePad;
     } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardUrl_]) {
         textfield.keyboardType = UIKeyboardTypeURL;
+    } else if ([keyboard isEqualToString:FFTViewBehaviorTextfield_kKeyboardAlphabet_]) {
+        textfield.keyboardType = UIKeyboardTypeAlphabet;
     } else {
         textfield.keyboardType = UIKeyboardTypeDefault;
     }
-    
+
     if (![viewBehavior isAutoCorrect]) {
         textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     }
@@ -1395,7 +1462,21 @@
     if (textfield.placeholderColor) {
         textfield.textColor = textfield.placeholderColor;
     }
-
+    
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
+    
     __weak typeof(textfield) weakTf = textfield;
     __weak typeof(viewBehavior) weakViewBehavior = viewBehavior;
     [info.fluidView addTappedOutsideWhileFocusedListener:textfield tappedOutsideWhileFocusedListener:^{
@@ -1493,10 +1574,24 @@
         textfield.textColor = nil;
     }
     
-    UITextField *field = [[UITextField alloc] init];
-    float defaultPointSize = field.font.pointSize;
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
     
-    [textfield setFont:[UIFont systemFontOfSize:defaultPointSize]];
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [textfield setFont:font];
+    }
+    
+//    UITextField *field = [[UITextField alloc] init];
+//    float defaultPointSize = field.font.pointSize;
+//    
+//    [textfield setFont:[UIFont systemFontOfSize:defaultPointSize]];
 }
 
 - (void)editingChanged:(FFTextField *)field {
@@ -1574,10 +1669,31 @@
     if ([viewBehavior getPlaceholderText]) {
         searchBar.placeholder = [viewBehavior getPlaceholderText];
     }
+    
+    NSString* fontName = Nil;
+    float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue:12;
+    float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];
+    
+    if ([viewBehavior getFontFamilyName]) {
+        fontName = [viewBehavior getFontFamilyName];
+        
+        if ([viewBehavior getFontStyle]) {
+            fontName = [NSString stringWithFormat:@"%@-%@", fontName, [viewBehavior getFontStyle]];
+        }
+        UIFont* font = [UIFont fontWithName:fontName size:fontSize];
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:font];
+        [[UIButton appearanceWhenContainedIn:[UISearchBar class], nil] setFont:font];
+    }
+
 
     searchBar.showsCancelButton = [viewBehavior isShowCancelButton];
     
     searchBar.delegate = self;
+    
+    searchBar.backgroundImage = [[UIImage alloc] init];
+    searchBar.backgroundColor = [FFView color:[viewBehavior getSearchBarBackgroundColor]];
+    
+    
     
     return searchBar;
 }
@@ -1618,6 +1734,10 @@
         return;
     } else {
         searchBar.hidden = NO;
+    }
+    
+    if ([viewBehavior isShouldBecomeFirstResponderWhenViewLoaded]) {
+        [searchBar becomeFirstResponder];
     }
 }
 

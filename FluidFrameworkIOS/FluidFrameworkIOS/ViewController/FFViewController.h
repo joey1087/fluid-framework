@@ -12,11 +12,22 @@
 
 @interface FFViewController : UIViewController
 
-@property (nonatomic, strong, readonly) FFView *baseView;
+//@property (nonatomic, strong, readonly) FFView *baseView;
+//This was changed to read-write instead of read only because
+//we're overriding the view in the subclass, this should be
+//captured in a protected category
+@property (nonatomic, strong) FFView *baseView;
+
 @property (nonatomic, strong) FFTScreen *screen;
 
 - (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView;
 
+- (id)initWithScreenId:(NSString *)screenId withNibName:(NSString*)nibName partOfRootView:(BOOL)partOfRootView;
+
 - (void)refreshMenuButtons;
+
+//TODO : Below are the protected functions, they should be encapsulated into
+//a protected category instead of being exposed to public 
+- (CGRect)computeSizeOfView;
 
 @end

@@ -358,13 +358,14 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			public void run() {
 
 				Intent i = new Intent(FluidFrameworkAndroidApp.this, FluidFrameworkAndroidApp.fluidAndroidApp.fluidActivityClass);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				Bundle b = new Bundle();
 				b.putString(FluidActivity.kScreenId, showScreenId);
 				i.putExtras(b);
 				launcherActivity.startActivity(i);
-
+				launcherActivity.overridePendingTransition(0, 0);
 				launcherActivity.finish();
-
+	
 				launcherActivity = null;
 			}
 		};
@@ -389,20 +390,25 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		if (launcherActivity != null) {
 			throw new RuntimeException("Must removeSlashScreen first");
 		}
-
-		disableUserActivityForCurrentView();
-
-		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-
-				if (currentActivity != null) {
-					currentActivity.setLayout(screenId, stack);
-				} else {
-					currentRootActivity.setLayout(screenId, stack);
+		
+		if (!GlobalState.fluidApp.getSystemService().isOnUiThread()) {
+			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					setLayout(screenId, stack);
 				}
-			}
-		});
+			});
+			
+			return;
+		}
+		
+		disableUserActivityForCurrentView();
+		
+		if (currentActivity != null) {
+			currentActivity.setLayout(screenId, stack);
+		} else {
+			currentRootActivity.setLayout(screenId, stack);
+		}
 	}
 
 	public void showModalView(final ModalView modalView) {

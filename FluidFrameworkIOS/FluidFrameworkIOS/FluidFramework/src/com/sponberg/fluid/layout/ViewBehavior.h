@@ -26,6 +26,10 @@
   JavaUtilArrayList *backgroundColors_;
   NSString *unknownText_;
   JavaLangInteger *cornerRadius_;
+  JavaLangInteger *cornerTopLeftRadius_;
+  JavaLangInteger *cornerTopRightRadius_;
+  JavaLangInteger *cornerBottomRightRadius_;
+  JavaLangInteger *cornerBottomLeftRadius_;
   JavaLangDouble *borderSize_;
   FFTColor *borderColor_;
 }
@@ -113,6 +117,14 @@
 
 - (JavaLangInteger *)getCornerRadius;
 
+- (JavaLangInteger *)getCornerTopLeftRadius;
+
+- (JavaLangInteger *)getCornerTopRightRadius;
+
+- (JavaLangInteger *)getCornerBottomRightRadius;
+
+- (JavaLangInteger *)getCornerBottomLeftRadius;
+
 - (JavaLangDouble *)getBorderSize;
 
 - (FFTColor *)getBorderColor;
@@ -127,6 +139,10 @@ J2OBJC_FIELD_SETTER(FFTViewBehavior, type_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehavior, backgroundColors_, JavaUtilArrayList *)
 J2OBJC_FIELD_SETTER(FFTViewBehavior, unknownText_, NSString *)
 J2OBJC_FIELD_SETTER(FFTViewBehavior, cornerRadius_, JavaLangInteger *)
+J2OBJC_FIELD_SETTER(FFTViewBehavior, cornerTopLeftRadius_, JavaLangInteger *)
+J2OBJC_FIELD_SETTER(FFTViewBehavior, cornerTopRightRadius_, JavaLangInteger *)
+J2OBJC_FIELD_SETTER(FFTViewBehavior, cornerBottomRightRadius_, JavaLangInteger *)
+J2OBJC_FIELD_SETTER(FFTViewBehavior, cornerBottomLeftRadius_, JavaLangInteger *)
 J2OBJC_FIELD_SETTER(FFTViewBehavior, borderSize_, JavaLangDouble *)
 J2OBJC_FIELD_SETTER(FFTViewBehavior, borderColor_, FFTColor *)
 

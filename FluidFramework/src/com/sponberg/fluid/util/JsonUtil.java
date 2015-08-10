@@ -23,6 +23,10 @@ public class JsonUtil {
 		return underscoreSeparatesWords;
 	}
 
+	public static void getRandom() {
+		
+	}
+	
 	public static void setUnderscoreSeparatesWords(boolean underscoreSeparatesWords) {
 		JsonUtil.underscoreSeparatesWords = underscoreSeparatesWords;
 	}
@@ -445,12 +449,30 @@ public class JsonUtil {
 		
 		JsonValue value = object.get(key);
 		
-		if (value.isNull() || !value.isString()) {
+		if (value == null || !value.isString()) {
 			
 			return defaultValue;
 		} else {
 			
 			return value.asString();
+		}
+	}
+	
+	public static int getInt(JsonObject object, String key, int defaultValue) {
+		
+		JsonValue value = object.get(key);
+		
+		if (value == null || !value.isNumber()) {
+			int returnValue = defaultValue;
+			if (value != null && value.isString()) {
+				try {
+					returnValue = Integer.parseInt(value.asString());
+				} catch (NumberFormatException e) {}
+			}
+			
+			return returnValue;
+		} else {
+			return  value.asInt();
 		}
 	}
 	

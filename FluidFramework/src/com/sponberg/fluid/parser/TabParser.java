@@ -23,6 +23,10 @@ public class TabParser implements ApplicationInitializer {
 			if (tabProps.contains("ios-icon")) {
 				tab.setImage(tabProps.getValue("ios-icon"));
 			}
+			
+			if (tabProps.contains("ios-selected-icon")) {
+				tab.setSelectedImage(tabProps.getValue("ios-selected-icon"));
+			}
 			app.getViewManager().addTab(tab);
 		}
 	}

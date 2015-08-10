@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.util.KeyValueList;
 
 @ToString
@@ -16,6 +17,8 @@ public class ViewBehaviorButton extends ViewBehavior {
 	private Color textColor;
 	
 	private Double fontSize;
+	protected String fontFamilyName;
+	protected String fontStyle;
 	
 	private Color backgroundColorPressed;
 	
@@ -34,7 +37,6 @@ public class ViewBehaviorButton extends ViewBehavior {
 		
 		this.text = getStringProperty("text", "", properties);;
 		this.textColor = getColorProperty("text-color", null, properties);
-		this.fontSize = getFontSizeProperty("font-size", null, properties);
 		this.backgroundColorPressed = getColorProperty("background-color-pressed", null, properties);
 		this.image = getStringProperty("image", null, properties);
 		this.backgroundImage = getStringProperty("background-image", null, properties);
@@ -50,6 +52,13 @@ public class ViewBehaviorButton extends ViewBehavior {
 				throw new RuntimeException("image height must be specified");
 			}
 		}
+		
+		this.fontSize = getFontSizeProperty("font-size", null, properties);
+		String specifiedDefaultFontName = GlobalState.fluidApp.getViewManager().getSpecifiedDefaultFontFamilyName();	         
+		this.fontFamilyName = getFontFamilyName("font-family", specifiedDefaultFontName, properties); 
+		
+		String specifiedDefaultFontStyle = GlobalState.fluidApp.getViewManager().getSpecifiedDefaultFontStyle();
+		this.fontStyle = getFontStyle("font-style", specifiedDefaultFontStyle, properties);
 	}
 
 	@Override

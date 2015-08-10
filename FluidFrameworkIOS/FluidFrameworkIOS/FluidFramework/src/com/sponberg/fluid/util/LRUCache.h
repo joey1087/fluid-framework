@@ -11,6 +11,7 @@
 @protocol JavaUtilMap_Entry;
 
 #import "JreEmulation.h"
+#include "java/lang/Runnable.h"
 #include "java/util/LinkedHashMap.h"
 
 @interface FFTLRUCache : JavaUtilLinkedHashMap {
@@ -43,5 +44,23 @@ typedef FFTLRUCache ComSponbergFluidUtilLRUCache;
 @end
 
 __attribute__((always_inline)) inline void FFTLRUCache_RemovedListener_init() {}
+
+@interface FFTLRUCache_$1 : NSObject < JavaLangRunnable > {
+ @public
+  FFTLRUCache *this$0_;
+  id<JavaUtilMap_Entry> val$eldest_;
+}
+
+- (void)run;
+
+- (id)initWithFFTLRUCache:(FFTLRUCache *)outer$
+    withJavaUtilMap_Entry:(id<JavaUtilMap_Entry>)capture$0;
+
+@end
+
+__attribute__((always_inline)) inline void FFTLRUCache_$1_init() {}
+
+J2OBJC_FIELD_SETTER(FFTLRUCache_$1, this$0_, FFTLRUCache *)
+J2OBJC_FIELD_SETTER(FFTLRUCache_$1, val$eldest_, id<JavaUtilMap_Entry>)
 
 #endif // _FFTLRUCache_H_

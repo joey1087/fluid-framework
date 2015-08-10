@@ -12,4 +12,5 @@
 
 @interface FFHttpService : NSObject<FFTHttpService>
 
+
 @end

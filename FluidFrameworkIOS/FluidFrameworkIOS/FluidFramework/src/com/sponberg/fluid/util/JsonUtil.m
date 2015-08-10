@@ -19,6 +19,7 @@
 #include "java/lang/Integer.h"
 #include "java/lang/Long.h"
 #include "java/lang/NoSuchMethodException.h"
+#include "java/lang/NumberFormatException.h"
 #include "java/lang/RuntimeException.h"
 #include "java/lang/StringBuffer.h"
 #include "java/lang/reflect/Array.h"
@@ -38,6 +39,9 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 
 + (BOOL)isUnderscoreSeparatesWords {
   return FFTJsonUtil_underscoreSeparatesWords_;
+}
+
++ (void)getRandom {
 }
 
 + (void)setUnderscoreSeparatesWordsWithBoolean:(BOOL)underscoreSeparatesWords {
@@ -451,11 +455,31 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
                             withNSString:(NSString *)key
                             withNSString:(NSString *)defaultValue {
   FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
-  if ([((FFTJsonValue *) nil_chk(value)) isNull] || ![value isString]) {
+  if (value == nil || ![value isString]) {
     return defaultValue;
   }
   else {
     return [value asString];
+  }
+}
+
++ (int)getIntWithFFTJsonObject:(FFTJsonObject *)object
+                  withNSString:(NSString *)key
+                       withInt:(int)defaultValue {
+  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
+  if (value == nil || ![value isNumber]) {
+    int returnValue = defaultValue;
+    if (value != nil && [value isString]) {
+      @try {
+        returnValue = [JavaLangInteger parseIntWithNSString:[value asString]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+      }
+    }
+    return returnValue;
+  }
+  else {
+    return [value asInt];
   }
 }
 
@@ -466,6 +490,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "isUnderscoreSeparatesWords", NULL, "Z", 0x9, NULL },
+    { "getRandom", NULL, "V", 0x9, NULL },
     { "setUnderscoreSeparatesWordsWithBoolean:", "setUnderscoreSeparatesWords", "V", 0x9, NULL },
     { "setValuesToWithId:withFFTJsonObject:", "setValuesTo", "V", 0x9, NULL },
     { "setValuesToHelperWithId:withFFTJsonObject:", "setValuesToHelper", "V", 0x8, "Ljava.lang.Exception;" },
@@ -493,12 +518,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     { "getJsonObjectWithFFTJsonObject:withNSString:", "getJsonObject", "Lcom.eclipsesource.json.JsonObject;", 0x9, NULL },
     { "getStringWithFFTJsonObject:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
     { "getStringWithFFTJsonObject:withNSString:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
+    { "getIntWithFFTJsonObject:withNSString:withInt:", "getInt", "I", 0x9, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "underscoreSeparatesWords_", NULL, 0x8, "Z", &FFTJsonUtil_underscoreSeparatesWords_,  },
   };
-  static J2ObjcClassInfo _FFTJsonUtil = { "JsonUtil", "com.sponberg.fluid.util", NULL, 0x1, 29, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTJsonUtil = { "JsonUtil", "com.sponberg.fluid.util", NULL, 0x1, 31, methods, 1, fields, 0, NULL};
   return &_FFTJsonUtil;
 }
 

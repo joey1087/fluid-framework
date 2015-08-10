@@ -31,6 +31,7 @@
   BOOL stickyHeaders_;
   JavaLangDouble *paddingBottom_;
   BOOL scrollToBottomOnLoad_;
+  BOOL scrollToTopWhenUpdate_;
 }
 
 - (id)initWithFFTKeyValueList:(id<FFTKeyValueList>)properties
@@ -74,6 +75,8 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
 
 - (BOOL)isScrollToBottomOnLoad;
 
+- (BOOL)isScrollToTopWhenUpdate;
+
 - (void)setRowHeightWithJavaLangDouble:(JavaLangDouble *)rowHeight;
 
 - (void)setSectionFooterHeightWithJavaLangDouble:(JavaLangDouble *)sectionFooterHeight;
@@ -97,6 +100,8 @@ withFFTViewBehaviorTable_RowProvider:(id<FFTViewBehaviorTable_RowProvider>)rowPr
 - (void)setPaddingBottomWithJavaLangDouble:(JavaLangDouble *)paddingBottom;
 
 - (void)setScrollToBottomOnLoadWithBoolean:(BOOL)scrollToBottomOnLoad;
+
+- (void)setScrollToTopWhenUpdateWithBoolean:(BOOL)scrollToTopWhenUpdate;
 
 - (void)copyAllFieldsTo:(FFTViewBehaviorTable *)other;
 

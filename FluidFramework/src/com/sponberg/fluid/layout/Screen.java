@@ -26,6 +26,8 @@ public class Screen {
 	
 	private boolean hideBackButton = false;
 	
+	private Object nativePlugin = null;
+	
 	protected ArrayList<ScreenListener> screenListeners = new ArrayList<>();
 
 	public Screen(Layout layout) {
@@ -87,4 +89,23 @@ public class Screen {
 		}
 	}
 	
+	public void setNativePlugin(Object plugin) {
+		this.nativePlugin = plugin;
+	}
+	
+	/*
+	 * 21-05-15: we could create a base 
+	 * native plugin class 
+	 */
+	public Object getNativePlugin() {
+		return this.nativePlugin;
+	}
 }
+
+
+
+
+
+
+
+

@@ -175,6 +175,9 @@ J2OBJC_STATIC_FIELD_GETTER(FFTMenuButtonItem, ActionFlavorNone, int)
 
 J2OBJC_STATIC_FIELD_GETTER(FFTMenuButtonItem, ActionFlavorSearch, int)
 
+FOUNDATION_EXPORT NSString *FFTMenuButtonItem_kItemPropertyTextColor_;
+J2OBJC_STATIC_FIELD_GETTER(FFTMenuButtonItem, kItemPropertyTextColor_, NSString *)
+
 typedef FFTMenuButtonItem ComSponbergFluidLayoutMenuButtonItem;
 
 #endif // _FFTMenuButtonItem_H_

@@ -40,6 +40,7 @@
 #include "LaunchOptionsManager.h"
 
 #import "Callback.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface AppLoadedCallback : NSObject<FFTCallback>
 
@@ -180,6 +181,42 @@
     return baseUnit; // 6.41732264 for iPhone 5
 }
 
+- (void)customizeTabbarItem:(UITabBarItem*)tabBarItem forTab:(FFTTab*)tab{
+    //Subclass can overide this
+}
+
+- (UIViewController*)createViewControllerForTab:(FFTTab*)tab {
+    FFViewController *fvc = [self createFFViewController:[tab getScreenId] partOfRootView:YES];
+    UINavigationController *nav = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
+
+    nav.title = tab->label_;
+    NSString *imageName = [tab getImage];
+    NSString *selectedImage = [tab getSelectedImage];
+    if (imageName) {
+        if (!selectedImage) {
+            selectedImage = imageName;
+        }
+        
+        if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
+            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        } else {
+            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[UIImage imageNamed:imageName] tag:0];
+        }
+    }
+    
+    [self customizeTabbarItem:nav.tabBarItem forTab:tab];
+    
+    IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-nav-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+    NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+    if (colorProperty) {
+        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+        UIColor *color = [FFView color:fftColor];
+        nav.navigationBar.tintColor = color;
+    }
+
+    return nav;
+}
+
 - (void)setupWindow:(NSString *)showScreenId {
     
     self.window.rootViewController = nil;
@@ -189,26 +226,8 @@
     id<JavaUtilList> list = [[FFTGlobalState fluidApp] getTabs];
     NSMutableArray *tabArray = [NSMutableArray array];
     for (FFTTab * __strong view in nil_chk(list)) {
-        FFViewController *fvc = [self createFFViewController:[view getScreenId] partOfRootView:YES];
-        UINavigationController *nav = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
-        nav.title = view->label_;
-        NSString *imageName = [view getImage];
-        if (imageName) {
-            if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] selectedImage:[UIImage imageNamed:imageName]];
-            } else {
-                nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:view->label_ image:[UIImage imageNamed:imageName] tag:0];
-            }
-        }
-        [tabArray addObject:nav];
-        
-        IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-nav-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
-        NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
-        if (colorProperty) {
-            FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
-            UIColor *color = [FFView color:fftColor];
-            nav.navigationBar.tintColor = color;
-        }
+        UIViewController* controller = [self createViewControllerForTab:view];
+        [tabArray addObject:controller];
     }
     
     IOSObjectArray *property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
@@ -238,22 +257,53 @@
         [[UITabBar appearance] setTintColor:color];
     }
     
-    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
-    self.tabController = tabController;
-    tabController.viewControllers = tabArray;
+//    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
+//    self.tabController = tabController;
+//    tabController.viewControllers = tabArray;
+//    
+//    property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+//    colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+//    if (colorProperty) {
+//        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+//        UIColor *color = [FFView color:fftColor];
+//        tabController.tabBar.layer.borderWidth = 0.50;
+//        tabController.tabBar.layer.borderColor = color.CGColor;
+//    }
+    
+    UIViewController* appContainerViewController = [self createAppContainerViewController:tabArray];
     
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = tabController;
-    [self.window addSubview:tabController.view];
+    self.window.rootViewController = appContainerViewController;
+    [self.window addSubview:appContainerViewController.view];
     [self.window makeKeyAndVisible];
     
     if (showScreenId != [self currentScreenId]) {
         //[self pushLayoutWithNSString:showScreenId];
         [self setLayoutWithNSString:showScreenId withBoolean:NO];
     }
-    
+        
+    //TODO : why do we set up a webview here and load HTML here
     UIWebView *view = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [view loadHTMLString:@"<html><body></body></html>" baseURL:nil];
+}
+
+- (UIViewController*)createAppContainerViewController:(NSMutableArray*)tabControllers {
+    
+    UITabBarController *tabController = [[FFTabBarViewController alloc] init];
+    self.tabController = tabController;
+    tabController.viewControllers = tabControllers;
+   
+    
+    IOSObjectArray * property = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-tab-bar-border-color" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+    NSString *colorProperty = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:property];
+    if (colorProperty) {
+        FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
+        UIColor *color = [FFView color:fftColor];
+        tabController.tabBar.layer.borderWidth = 0.50;
+        tabController.tabBar.layer.borderColor = color.CGColor;
+    }
+    
+    return tabController;
 }
 
 - (FFViewController *)createFFViewController:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {
@@ -261,8 +311,8 @@
     return [[FFViewController alloc] initWithScreenId:screenId partOfRootView:YES];
 }
 
-- (void)pushLayoutWithNSString:(NSString *)screenId {
-    
+- (void)pushLayoutWithNSString:(NSString *)screenId
+                   withBoolean:(BOOL)animated {
     if ([NSThread isMainThread]) {
         
         // Keep this in sync with setLayoutStack
@@ -285,7 +335,7 @@
             
             fvc.hidesBottomBarWhenPushed = YES;
         }
-
+        
         if ([screen isShowStatusBar]) {
             [UIApplication sharedApplication].statusBarHidden = NO;
         } else {
@@ -297,11 +347,9 @@
         FFNavigationViewController *controller = [self currentNavigationController];
         FFNavigationViewController *vc = (FFNavigationViewController *) [controller presentedViewController];
         if (vc) {
-
-            [vc pushViewController:fvc animated:YES];
+            [vc pushViewController:fvc animated:animated];
         } else {
-            
-            [[self currentNavigationController] pushViewController:fvc animated:YES];
+            [[self currentNavigationController] pushViewController:fvc animated:animated];
         }
     } else {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -310,6 +358,11 @@
             });
         });
     }
+}
+
+- (void)pushLayoutWithNSString:(NSString *)screenId {
+    
+    [self pushLayoutWithNSString:screenId withBoolean:YES];
 }
 
 - (void)setBackButton:(FFTScreen *)screen {
@@ -384,18 +437,19 @@
         // If screenId is a tab
         
         if ([self selectTab:screenId]) {
-            /*
-             * This is to pop to the root of the current nav on
-             * the current selected tab.
-             */
-            UITabBarController *tabController = self.tabController;
-            for (UIViewController *controller in tabController.viewControllers) {
-                FFNavigationViewController *nav = (FFNavigationViewController *) controller;
-                FFViewController *fvc = [nav.viewControllers firstObject];
-                if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
-                    [nav popToRootViewControllerAnimated:NO];
-                }
-            }
+//            /*
+//             * This is to pop to the root of the current nav on
+//             * the current selected tab.
+//             */
+//            UITabBarController *tabController = self.tabController;
+//            for (UIViewController *controller in tabController.viewControllers) {
+//                FFNavigationViewController *nav = (FFNavigationViewController *) controller;
+//                FFViewController *fvc = [nav.viewControllers firstObject];
+//                if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
+//                    [nav popToRootViewControllerAnimated:NO];
+//                    break;
+//                }
+//            }
             return;
         }
         
@@ -416,6 +470,21 @@
                 FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:colorProperty];
                 UIColor *color = [FFView color:fftColor];
                 rootNavController.navigationBar.tintColor = color;
+            }
+            
+            IOSObjectArray *statusBarColorProperty = [IOSObjectArray arrayWithObjects:(id[]){ @"defaults", @"colors", @"ios-status-bar-tint" } count:3 type:[IOSClass classWithClass:[NSObject class]]];
+            NSString *statusBarColorPropertyString = [[FFTGlobalState fluidApp] getSettingWithNSStringArray:statusBarColorProperty];
+            if (statusBarColorPropertyString) {
+                /*
+                 * This is to change to status bar color indepently off the navigation bar color
+                 */
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+                    FFTColor *fftColor = [[[FFTGlobalState fluidApp] getViewManager] getColorWithNSString:statusBarColorPropertyString];
+                    UIColor *color = [FFView color:fftColor];
+                    UIView *topView=[[UIView alloc] initWithFrame:CGRectMake(0, 0,320, 20)];
+                    topView.backgroundColor = color;
+                    [rootNavController.view addSubview:topView];
+                }
             }
             
             self.window.rootViewController = rootNavController;
@@ -457,6 +526,7 @@
     
     for (UIViewController *controller in tabController.viewControllers) {
         FFNavigationViewController *nav = (FFNavigationViewController *) controller;
+        
         FFViewController *fvc = [nav.viewControllers firstObject];
         if ([[fvc.screen getScreenId] isEqualToString:screenId]) {
             [tabController setSelectedViewController:controller];
@@ -479,12 +549,19 @@
                 [UIApplication sharedApplication].statusBarHidden = YES;
             }
             
-            self.window.rootViewController = tabController;
+            self.window.rootViewController = [self getAppContainerViewController];
+            //[self setRootViewController:tabController];
+            //self.window.rootViewController = self.tabController;
+            [nav popToRootViewControllerAnimated:NO];
             
             return YES;
         }
     }
     return NO;
+}
+
+- (UIViewController*)getAppContainerViewController {
+    return  self.tabController;
 }
 
 - (void)showModalViewWithFFTModalView:(FFTModalView *)modalView {
@@ -496,6 +573,10 @@
 }
 
 - (void)showModalViewWithFFTModalViewHelper:(FFTModalView *)modalView {
+    
+    if (!modalView) {
+        return;
+    }
     
     if ([[modalView getSystemId] isEqualToString:FFTModalView_FluidLayout_]) {
         
@@ -606,7 +687,13 @@
             
             [[self currentNavigationController] presentViewController:picker animated:YES completion:^{}];
         }
+    } else if ([[modalView getSystemId] isEqualToString:FFTModalView_Custom_]){
+        [self showCustomModalView:modalView];
     }
+}
+
+//Subclass to override this function
+- (void)showCustomModalView:(FFTModalView *)modalView {
     
 }
 
@@ -856,15 +943,16 @@
         
         FFTScreen *screen = [[FFTGlobalState fluidApp] getScreenWithNSString:screenId];
 
-        // Keep in sync with [self setBackButton]
-        if ([screen getBackButtonText]) {
-            
-            topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[screen getBackButtonText] style:UIBarButtonItemStylePlain target:nil action:nil];
-        } else {
-            // use default
-            topViewController.navigationItem.backBarButtonItem = nil;
-        }
-        // End: Keep in sync with [self setBackButton]
+        [self setBackButton:screen];
+//        // Keep in sync with [self setBackButton]
+//        if ([screen getBackButtonText]) {
+//            
+//            topViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[screen getBackButtonText] style:UIBarButtonItemStylePlain target:nil action:nil];
+//        } else {
+//            // use default
+//            topViewController.navigationItem.backBarButtonItem = nil;
+//        }
+//        // End: Keep in sync with [self setBackButton]
         
         FFViewController *fvc = [self createFFViewController:screenId partOfRootView:YES];
         
@@ -1001,4 +1089,44 @@
     return retVal;
 }
 
+- (NSString *)getCurrentScreenId {
+    
+    NSString* returnStr = Nil;
+
+    FFNavigationViewController* nav = [self currentNavigationController];
+    
+    if (nav && nav.visibleViewController) {
+        
+        if ([[self currentNavigationController].visibleViewController isKindOfClass:[FFViewController class]]) {
+            FFViewController *fvc = (FFViewController*)[self currentNavigationController].visibleViewController;
+            
+            returnStr = [[fvc screen] getScreenId];
+        }
+    }
+    
+    return returnStr;
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

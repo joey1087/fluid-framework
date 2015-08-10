@@ -359,15 +359,21 @@ static int containerId = 1;
             return;
         }
         
-        // Move a little bit so user sees the screen scroll
-        if (y > 100) {
+        if ((screenHeight - keyboardHeight - KEYBOARD_PADDING_TOP) - bottom < 50) {
             self.animatedDistance = 50;
-        } else if (y > 50) {
-            self.animatedDistance = 25;
         } else {
-            // At the top, don't scroll
             self.animatedDistance = 0;
         }
+        
+//        // Move a little bit so user sees the screen scroll
+//        if (y > 100) {
+//            self.animatedDistance = 50;
+//        } else if (y > 50) {
+//            self.animatedDistance = 25;
+//        } else {
+//            // At the top, don't scroll
+//            self.animatedDistance = 0;
+//        }
         
     } else {
         self.animatedDistance = bottom - (screenHeight - keyboardHeight - KEYBOARD_PADDING_TOP);

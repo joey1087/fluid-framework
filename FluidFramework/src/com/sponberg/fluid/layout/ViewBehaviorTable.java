@@ -33,7 +33,9 @@ public class ViewBehaviorTable extends ViewBehavior {
 	private Double paddingBottom;
 
 	private boolean scrollToBottomOnLoad;
-
+	
+	private boolean scrollToTopWhenUpdate = false;
+	
 	public ViewBehaviorTable(KeyValueList properties, RowProvider rowProvider) {
 		super(ViewBehavior.table, properties);
 		this.sectionFooterHeight = getUnitsToPixelsProperty("section-footer-height", null, properties);
@@ -49,6 +51,7 @@ public class ViewBehaviorTable extends ViewBehavior {
 		this.stickyHeaders = getBooleanProperty("sticky-headers", false, properties);
 		this.paddingBottom = getSizeProperty("padding-bottom", null, properties);
 		this.scrollToBottomOnLoad = getBooleanProperty("scroll-to-bottom-on-load", false, properties);
+		this.scrollToTopWhenUpdate = getBooleanProperty("scroll-to-top-on-update", false, properties);
 	}
 
 	public void setRowProvider(RowProvider rowProvider) {

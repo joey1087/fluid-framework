@@ -22,6 +22,8 @@
 
 + (BOOL)isUnderscoreSeparatesWords;
 
++ (void)getRandom;
+
 + (void)setUnderscoreSeparatesWordsWithBoolean:(BOOL)underscoreSeparatesWords;
 
 + (void)setValuesToWithId:(id)object
@@ -109,6 +111,10 @@
 + (NSString *)getStringWithFFTJsonObject:(FFTJsonObject *)object
                             withNSString:(NSString *)key
                             withNSString:(NSString *)defaultValue;
+
++ (int)getIntWithFFTJsonObject:(FFTJsonObject *)object
+                  withNSString:(NSString *)key
+                       withInt:(int)defaultValue;
 
 - (id)init;
 

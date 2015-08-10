@@ -18,7 +18,9 @@ typedef enum {
     Put
 } HttpRequestMethod;
 
-@interface FFHttpRequest ()
+@interface FFHttpRequest (){
+    BOOL finished;
+}
 
 @property(nonatomic, strong) NSMutableData *webData;
 @property(nonatomic, strong) NSMutableDictionary *map;
@@ -62,6 +64,8 @@ typedef enum {
         self.requestMethod = requestMethod;
         self.successCallback = successCallback;
         self.failCallback = failCallback;
+        
+        finished = NO;
     }
     return self;
 }
@@ -136,12 +140,23 @@ typedef enum {
             break;
         }
     }
+    
+    //IMPORTANT - this keeps the thread alive for the delegate to be called
+    while(!finished) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
 }
 
 - (BOOL)initConnection {
-    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self];
+    
+    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:YES];
+    
     if (theConnection) {
         self.webData = [NSMutableData data];
+        
+        //[theConnection setDelegateQueue:self.queue];
+        [theConnection start];
+    
         return YES;
     } else {
         return NO;
@@ -168,6 +183,8 @@ typedef enum {
         self.attempt++;
         [self initConnection];
     }
+    
+    finished = YES;
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -176,6 +193,8 @@ typedef enum {
     } else {
         [self processNonBinary];
     }
+    
+    finished = YES;
 }
 
 - (void)processBinary {

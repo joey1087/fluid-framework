@@ -16,6 +16,10 @@
 - (void)screenDidDisappear {
 }
 
+- (void)screenWasRemoved {
+    
+}
+
 - (id)init {
   return [super init];
 }

@@ -27,9 +27,10 @@
 #include "Logger.h"
 #include "Layout.h"
 
+
 @interface FFViewController ()
 
-@property (nonatomic, strong, readwrite) FFView *baseView;
+//@property (nonatomic, strong, readwrite) FFView *baseView;
 @property (nonatomic, assign) BOOL viewWillRotate;
 @property (nonatomic, assign) BOOL viewNeedsRefreshOnAppear;
 @property (nonatomic, assign) BOOL partOfRootView;
@@ -38,11 +39,15 @@
 
 @implementation FFViewController
 
-- (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {
-    self = [super initWithNibName:nil bundle:nil];
+- (id)initWithScreenId:(NSString *)screenId partOfRootView:(BOOL)partOfRootView {    
+    return [self initWithScreenId:screenId withNibName:nil partOfRootView:partOfRootView];
+}
+
+- (id)initWithScreenId:(NSString *)screenId withNibName:(NSString*)nibName partOfRootView:(BOOL)partOfRootView {
+    self = [super initWithNibName:nibName bundle:nil];
     if (self) {
         self.screen = [[FFTGlobalState fluidApp] getScreenWithNSString:screenId];
-
+        
         if (self.screen == nil) {
             [NSException raise:@"No screen" format:@"Screen %@ is nil, did you forget to add the .txt file to Xcode?", screenId];
         }
@@ -70,8 +75,19 @@
 }
 
 - (void)dealloc {
-    [self.baseView cleanup];
+    if (self.baseView) {
+        [self.baseView cleanup];
+    }
+    
     [self.screen screenWasRemoved];
+}
+
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 - (void)viewDidLoad {
@@ -81,7 +97,7 @@
     NSMutableArray *leftArray = [NSMutableArray array];
     
     for (FFTMenuButtonItem * __strong item in nil_chk([self.screen getNavigationMenuItems])) {
-        
+       
         UIBarButtonSystemItem buttonItem = 0;
         if ([item getSystemId] && ![[item getSystemId] isEqualToString:FFTMenuButtonItem_SystemItemCustom_]) {
             buttonItem = [self systemItemFor:item];
@@ -114,6 +130,10 @@
             [array addObject:button];
         }
         
+        if ([item getPropertyWithNSString:FFTMenuButtonItem_kItemPropertyTextColor_]) {
+            NSString* textColor = [item getPropertyWithNSString:FFTMenuButtonItem_kItemPropertyTextColor_];
+            [button setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys: [self colorFromHexString:textColor],  UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+        }
     }
 
     if ([array count] > 0) {
@@ -243,6 +263,8 @@
     self.viewNeedsRefreshOnAppear = NO;
     
     [self createOrUpdateBaseView];
+    
+
 }
 
 - (void)refreshMenuButtons {
@@ -260,6 +282,7 @@
             button = [self.navigationController.topViewController.navigationItem.rightBarButtonItems objectAtIndex:index];
             index++;
         }
+        
         button.enabled = [item isEnabled];
     }
 }
@@ -280,6 +303,8 @@
         } else {
             self.navigationController.navigationBar.tintColor = color;
         }
+        
+        self.navigationController.navigationBar.translucent = NO;
     }
     
     if (self.partOfRootView && [self.screen isShowTabBar]) {
@@ -300,7 +325,7 @@
         [UIApplication sharedApplication].statusBarHidden = YES;
     }
 
-    if (self.viewNeedsRefreshOnAppear) {
+    if (self.viewNeedsRefreshOnAppear && self.baseView) {
         // Setting the baseView frame triggers viewWillLayoutSubviews, which will call createOrUpdateView
         CGRect bounds = [self computeSizeOfView];
         self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
@@ -348,8 +373,10 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     self.viewWillRotate = NO;
     // Setting the baseView frame triggers viewWillLayoutSubviews, which will call createOrUpdateView
-    CGRect bounds = [self computeSizeOfView];
-    self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
+    if (self.baseView) {
+        CGRect bounds = [self computeSizeOfView];
+        self.baseView.frame = CGRectMake(0, bounds.origin.y, bounds.size.width, bounds.size.height);
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -393,7 +420,7 @@
         }
     }
     
-    return CGRectMake(0, yStart, size.width, size.height);
+    return CGRectMake(0, 0, size.width, size.height);
 }
 
 - (CGRect)statusBarFrameViewRect:(UIView*)view {

@@ -17,6 +17,8 @@ public class Tab {
 	
 	String image;
 	
+	String selectedImage;
+	
 	String screenId;
 	
 }

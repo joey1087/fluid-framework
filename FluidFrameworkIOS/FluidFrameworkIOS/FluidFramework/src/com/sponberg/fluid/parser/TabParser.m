@@ -25,6 +25,9 @@
     if ([tabProps containsWithNSString:@"ios-icon"]) {
       [tab setImageWithNSString:[tabProps getValueWithNSString:@"ios-icon"]];
     }
+    if ([tabProps containsWithNSString:@"ios-selected-icon"]) {
+      [tab setSelectedImageWithNSString:[tabProps getValueWithNSString:@"ios-selected-icon"]];
+    }
     [((FFTViewManager *) nil_chk([app getViewManager])) addTabWithFFTTab:tab];
   }
 }
