@@ -437,6 +437,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			}
 		} catch (ClassCastException e) {
 			e.printStackTrace();
+			return;
 		}
 
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
@@ -472,6 +473,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			}
 		} catch (ClassCastException e) {
 			e.printStackTrace();
+			return;
 		}
 		
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
