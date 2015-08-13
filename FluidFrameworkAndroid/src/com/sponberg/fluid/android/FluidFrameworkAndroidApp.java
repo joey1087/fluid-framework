@@ -421,47 +421,40 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			return;
 		}
 		
-		// GlobalState.fluidApp occasionally turns out to be null
-		try {
-			if (launcherActivity != null) {
-				GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (launcherActivity != null) {
-							((LauncherActivity) launcherActivity).showModalView(modalView);
-						} else {
-							showModalView(modalView);
-						}
-					}
-				});
-				return;
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		try {
-			if ((FluidActivity) getCurrentActivity() == null) {
-				return;
-			}
-		} catch (ClassCastException e) {
-			e.printStackTrace();
-			return;
-		}
-
-		// GlobalState.fluidApp occasionally turns out to be null
-		try {
+		if (launcherActivity != null) {
 			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					((FluidActivity) getCurrentActivity()).showModalView(modalView);
+					try {
+						((LauncherActivity) launcherActivity).showModalView(modalView);
+					} catch (ClassCastException e) {
+						e.printStackTrace();
+						showModalView(modalView);
+					} catch (NullPointerException e) {
+						e.printStackTrace();
+						showModalView(modalView);
+					}
 				}
 			});
-		} catch (NullPointerException e) {
-			e.printStackTrace();
 			return;
 		}
+		
+		if (getCurrentActivity() == null) {
+			return;
+		}
+		
+		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					((FluidActivity) getCurrentActivity()).showModalView(modalView);
+				} catch (ClassCastException e) {
+					e.printStackTrace();
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public void dismissModalView(final ModalView modalView) {
@@ -474,6 +467,10 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			return;
 		}
 		
+		if ((FluidActivity) getCurrentActivity() == null) {
+			return;
+		}
+		
 		/*
 		 * The app might be put in the background from user 
 		 * pressing back button which means there will be 
@@ -483,24 +480,18 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		 * activities for the app, this is just a patch for 
 		 * now.
 		 */
-		try {
-			final FluidActivity currentFluidActivity = (FluidActivity) getCurrentActivity();
-			
-			if (currentFluidActivity == null) {
-				return;
-			}
-			
-			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					currentFluidActivity.dismissModalView(modalView); 
+		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					((FluidActivity) getCurrentActivity()).dismissModalView(modalView); 
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				} catch (ClassCastException e) {
+					e.printStackTrace();
 				}
-			});
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (ClassCastException e) {
-			e.printStackTrace();
-		}
+			}
+		});
 	}
 
 	public void closeCurrentLayout() {
