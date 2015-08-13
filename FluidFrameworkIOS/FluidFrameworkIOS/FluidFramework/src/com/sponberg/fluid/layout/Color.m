@@ -50,6 +50,9 @@
 }
 
 + (int)getAlphaWithNSStringArray:(IOSObjectArray *)rgb {
+  if (rgb == nil) {
+    return 255;
+  }
   if ((int) [((IOSObjectArray *) nil_chk(rgb)) count] == 4) {
     return [JavaLangInteger parseIntWithNSString:[((NSString *) IOSObjectArray_Get(rgb, 3)) trim]];
   }

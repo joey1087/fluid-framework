@@ -14,6 +14,7 @@ public class Color {
 	final double red, green, blue, alpha;
 			
 	public Color(double red, double green, double blue, double alpha) {
+		
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
@@ -21,6 +22,7 @@ public class Color {
 	}
 	
 	public Color(int red, int green, int blue, int alpha) {
+		
 		this.red = red * 1.0 / 255;
 		this.green = green * 1.0 / 255;
 		this.blue = blue * 1.0 / 255;
@@ -28,11 +30,17 @@ public class Color {
 	}
 	
 	protected Color(String[] rgb) {
+		
 		this(Integer.parseInt(rgb[0].trim()), Integer
 				.parseInt(rgb[1].trim()), Integer.parseInt(rgb[2].trim()), getAlpha(rgb));
 	}
 	
 	public static int getAlpha(String[] rgb) {
+		
+		if (rgb == null) {
+			return 255;
+		}
+		
 		if (rgb.length == 4) {
 			return Integer.parseInt(rgb[3].trim());
 		} else {
@@ -105,6 +113,7 @@ public class Color {
 	}
 	
 	public String getHtml() {
+		
 		return String.format("#%02x%02x%02x", (int) (red * 255), (int) (green * 255), (int) (blue * 255));
 	}
 	
