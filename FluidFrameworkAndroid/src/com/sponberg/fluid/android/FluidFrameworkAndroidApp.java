@@ -263,12 +263,16 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 
 	protected void disableUserActivityForCurrentView() {
 
-		if (currentActivity != null) {
-
-			currentActivity.disableUserActivityForCurrentView();
-		} else {
-
-			currentRootActivity.disableUserActivityForCurrentView();
+		try {
+			if (currentActivity != null) {
+	
+				currentActivity.disableUserActivityForCurrentView();
+			} else {
+	
+				currentRootActivity.disableUserActivityForCurrentView();
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 	}
 
