@@ -492,12 +492,17 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			return;
 		}
 		
-		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				((FluidActivity) getCurrentActivity()).dismissModalView(modalView); //TODO : it crashes here
-			}
-		});
+		try {
+			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					((FluidActivity) getCurrentActivity()).dismissModalView(modalView); //TODO : it crashes here
+				}
+			});
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	public void closeCurrentLayout() {
