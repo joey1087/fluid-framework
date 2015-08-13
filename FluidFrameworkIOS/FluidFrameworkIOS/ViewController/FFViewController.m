@@ -347,6 +347,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
     self.viewNeedsRefreshOnAppear = YES;
     
@@ -358,7 +359,7 @@
 
     [super viewDidDisappear:animated];
     
-    [super viewWillDisappear:animated];
+    //[super viewWillDisappear:animated];
     
     [self.screen screenDidDisappear];
     //[self.baseView cleanup]; hstdbc can't do this because the view isn't gone

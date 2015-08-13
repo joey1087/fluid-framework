@@ -126,13 +126,28 @@ typedef enum {
         [self.theRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     }
     
+//    NSURLResponse* response = nil;
+//    NSData* data = [NSURLConnection sendSynchronousRequest:self.theRequest returningResponse:&response error:nil];
+//    
+//    if (data) {
+//        self.webData = [data mutableCopy];
+//        if (self.isBinaryData) {
+//            [self processBinary];
+//        } else {
+//            [self processNonBinary];
+//        }
+//    }
+    
     while (self.attempt <= self.maxAttempts) {
         if(![self initConnection]) {
             if (self.attempt == self.maxAttempts) {
+                
                 //self.failReason = CONNECTION;
                 if (self.failCallback) {
                     self.failCallback(self);
                 }
+                
+                finished = true;
             } else {
                 self.attempt++;
             }
@@ -142,6 +157,8 @@ typedef enum {
     }
     
     //IMPORTANT - this keeps the thread alive for the delegate to be called
+    //or use this http://cocoaintheshell.com/2011/04/nsurlconnection-synchronous-asynchronous/
+    //http://cocoa.ninja/posts/NSURLConnection-in-own-thread/
     while(!finished) {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
     }
@@ -149,7 +166,7 @@ typedef enum {
 
 - (BOOL)initConnection {
     
-    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:YES];
+    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:NO];
     
     if (theConnection) {
         self.webData = [NSMutableData data];
