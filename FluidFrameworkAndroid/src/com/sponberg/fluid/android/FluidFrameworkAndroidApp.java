@@ -484,24 +484,22 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		 * now.
 		 */
 		try {
-			if ((FluidActivity) getCurrentActivity() == null) {
+			final FluidActivity currentFluidActivity = (FluidActivity) getCurrentActivity();
+			
+			if (currentFluidActivity == null) {
 				return;
 			}
-		} catch (ClassCastException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		try {
+			
 			GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					((FluidActivity) getCurrentActivity()).dismissModalView(modalView); //TODO : it crashes here
+					currentFluidActivity.dismissModalView(modalView); 
 				}
 			});
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			return;
+		} catch (ClassCastException e) {
+			e.printStackTrace();
 		}
 	}
 
