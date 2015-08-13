@@ -421,11 +421,11 @@
 
 - (BOOL)isRecoverFromExceptions {
   NSString *setting = [self getSettingWithNSStringArray:[IOSObjectArray arrayWithObjects:(id[]){ @"recover-from-exceptions" } count:1 type:[IOSClass classWithClass:[NSString class]]]];
-  if (settings_ == nil) {
+  if (setting == nil) {
     return NO;
   }
   else {
-    return [((NSString *) nil_chk(setting)) equalsIgnoreCase:@"true"];
+    return [setting equalsIgnoreCase:@"true"];
   }
 }
 
