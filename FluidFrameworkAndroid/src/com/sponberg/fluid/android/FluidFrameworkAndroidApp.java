@@ -410,7 +410,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		
 		if (currentActivity != null) {
 			currentActivity.setLayout(screenId, stack);
-		} else {
+		} else if (currentRootActivity != null) {
 			currentRootActivity.setLayout(screenId, stack);
 		}
 	}
