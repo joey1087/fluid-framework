@@ -196,12 +196,12 @@ typedef enum {
         if (self.failCallback) {
             self.failCallback(self);
         }
+        
+        finished = YES;
     } else {
         self.attempt++;
         [self initConnection];
     }
-    
-    finished = YES;
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {

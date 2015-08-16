@@ -40,7 +40,7 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 
 - (void)getWithNSString:(NSString *)URL withJavaUtilHashMap:(JavaUtilHashMap *)parameters withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback isBinary:(BOOL)isBinary {
     
-    //TODO : PREVIOUS CODE, CHECK WHY DO WE DO THIS ON THE MAIN THREAD
+//    //TODO : PREVIOUS CODE, CHECK WHY DO WE DO THIS ON THE MAIN THREAD
 //    if (![NSThread isMainThread]) {
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 //            dispatch_sync(dispatch_get_main_queue(), ^{
@@ -50,7 +50,12 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 //        return;
 //    }
     
-
+    if ([NSThread isMainThread]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self getWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback isBinary:isBinary];
+        });
+        return;
+    }
     
     FFHttpRequest *request = [FFHttpRequest requestWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
     request.isBinaryData = isBinary;
@@ -102,6 +107,13 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 //        });
 //        return;
 //    }
+    
+    if ([NSThread isMainThread]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
+        });
+        return;
+    }
     
     FFHttpRequest *request = [FFHttpRequest requestPostWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
     
