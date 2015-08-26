@@ -467,7 +467,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			return;
 		}
 		
-		if ((FluidActivity) getCurrentActivity() == null) {
+		if (getCurrentActivity() == null) {
 			return;
 		}
 		
