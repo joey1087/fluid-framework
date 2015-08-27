@@ -151,10 +151,15 @@ public class DefaultUIService implements UIService {
 
 	@Override
 	public void refreshMenuButtons() {
+		
 		GlobalState.fluidApp.getSystemService().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				app.getCurrentActivity().invalidateOptionsMenu();
+				try {
+					app.getCurrentActivity().invalidateOptionsMenu();
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

@@ -464,7 +464,7 @@ public abstract class FluidApp {
 	public boolean isRecoverFromExceptions() {
 
 		String setting = getSetting("recover-from-exceptions");
-		if (settings == null) {
+		if (setting == null) {
 			return false;
 		} else {
 			return setting.equalsIgnoreCase("true");
