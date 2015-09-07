@@ -149,6 +149,13 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   }
 }
 
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
+}
+
 - (id<FFTHttpService>)getHttpService {
   return self->httpService_;
 }
@@ -211,6 +218,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
     { "jsonifyMapsHelperWithJavaUtilMap:", "jsonifyMapsHelper", "Ljava.lang.String;", 0xc, NULL },
     { "bracketifyMapsWithJavaUtilMap:", "bracketifyMaps", "Ljava.util.HashMap;", 0xc, NULL },
     { "bracketifyMapsHelperWithJavaUtilHashMap:withNSString:withJavaUtilMap:", "bracketifyMapsHelper", "V", 0xc, NULL },
+    { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x1, NULL },
     { "getHttpService", NULL, "Lcom.sponberg.fluid.HttpService;", 0x1, NULL },
     { "getMapMode", NULL, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", 0x1, NULL },
     { "setMapModeWithFFTHttpServiceWrapper_MapModeEnum:", "setMapMode", "V", 0x1, NULL },
@@ -223,7 +231,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
     { "httpService_", NULL, 0x10, "Lcom.sponberg.fluid.HttpService;", NULL,  },
     { "mapMode_", NULL, 0x2, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTHttpServiceWrapper = { "HttpServiceWrapper", "com.sponberg.fluid", NULL, 0x1, 17, methods, 2, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTHttpServiceWrapper = { "HttpServiceWrapper", "com.sponberg.fluid", NULL, 0x1, 18, methods, 2, fields, 0, NULL};
   return &_FFTHttpServiceWrapper;
 }
 

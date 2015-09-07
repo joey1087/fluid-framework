@@ -148,6 +148,13 @@ public class SecurityServiceWrapper implements HttpService {
 				map.put(prefix + "[" + entry.getKey() + "]", value);
 			}
 		}
+	}
+
+	@Override
+	public void post(String URL, HashMap<String, Object> parameters,
+			PostBodyType postBodyType, HttpAuthorization auth,
+			HttpServiceCallback callback) {
+		// TODO Auto-generated method stub
+		
 	}	
-	
 }

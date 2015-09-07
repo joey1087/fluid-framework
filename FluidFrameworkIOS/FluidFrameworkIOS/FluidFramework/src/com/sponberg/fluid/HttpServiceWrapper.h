@@ -8,6 +8,7 @@
 
 @class FFTHttpServiceWrapper_MapModeEnum;
 @class FFTHttpService_HttpAuthorization;
+@class FFTHttpService_PostBodyTypeEnum;
 @class JavaUtilHashMap;
 @protocol FFTHttpServiceCallback;
 @protocol JavaUtilMap;
@@ -58,6 +59,12 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 + (void)bracketifyMapsHelperWithJavaUtilHashMap:(JavaUtilHashMap *)map
                                    withNSString:(NSString *)prefix
                                 withJavaUtilMap:(id<JavaUtilMap>)parameters;
+
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 
 - (id<FFTHttpService>)getHttpService;
 

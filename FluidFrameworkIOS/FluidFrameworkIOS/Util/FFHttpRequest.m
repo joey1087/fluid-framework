@@ -10,6 +10,8 @@
 #import "SBJSON.h"
 #import "GTMBase64.h"
 
+#import <UIKit/UIKit.h>
+
 #define API_TIMEOUT 10
 
 typedef enum {
@@ -36,6 +38,8 @@ typedef enum {
 @property(nonatomic, assign) int maxAttempts;
 @property(nonatomic, assign) HttpRequestMethod requestMethod;
 
+@property(nonatomic, assign) BOOL postBodyTypeIsMultipart;
+
 @end
 
 @implementation FFHttpRequest
@@ -45,7 +49,15 @@ typedef enum {
 }
 
 + (FFHttpRequest *)requestPostWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback {
-    return [[self alloc] initWithUrl:url successCallback:successCallback failCallback:failCallback requestMethod:Post];
+    FFHttpRequest* request =[[self alloc] initWithUrl:url successCallback:successCallback failCallback:failCallback requestMethod:Post];
+    request.postBodyTypeIsMultipart = NO;
+    return request;
+}
+
++ (FFHttpRequest *)requestPostWithMutipartFormBodyTypeWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback {
+    FFHttpRequest* request =[[self alloc] initWithUrl:url successCallback:successCallback failCallback:failCallback requestMethod:Post];
+    request.postBodyTypeIsMultipart = YES;
+    return request;
 }
 
 + (FFHttpRequest *)requestPutWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback {
@@ -74,48 +86,120 @@ typedef enum {
     [self.map setObject:value forKey:key];
 }
 
+- (NSString *)generateBoundaryString {
+    return [NSString stringWithFormat:@"Boundary-%@", [[NSUUID UUID] UUIDString]];
+    
+    // if supporting iOS versions prior to 6.0, you do something like:
+    //
+    // // generate boundary string
+    // //
+    // adapted from http://developer.apple.com/library/ios/#samplecode/SimpleURLConnections
+    //
+    // CFUUIDRef  uuid;
+    // NSString  *uuidStr;
+    //
+    // uuid = CFUUIDCreate(NULL);
+    // assert(uuid != NULL);
+    //
+    // uuidStr = CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+    // assert(uuidStr != NULL);
+    //
+    // CFRelease(uuid);
+    //
+    // return uuidStr;
+}
+
 - (void)sendMessageToServer {
     
     NSMutableString *urlString = [NSMutableString stringWithString:self.url];
     
-    NSData *postData = [@"" dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    if ([self.map count] > 0 || (self.requestMethod == Post && self.rawPost)) {
-        if (self.requestMethod == Get) {
-            [urlString appendString:@"?"];
-            for (NSString *key in [self.map allKeys]) {
-                [urlString appendString:[NSString stringWithFormat:@"%@=%@&", key, [self.map objectForKey:key]]];
-            }
-        } else {
-            NSString *post;
-            if (self.rawPost) {
-                post = self.rawPost;
-            } else {
-                SBJSON *parser = [[SBJSON alloc] init];
-                post = [parser stringWithObject:self.map];
-            }
-            postData = [post dataUsingEncoding:NSUTF8StringEncoding];
-        }
-    }
-    
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    self.theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
-    
-    if (self.requestMethod == Post) {
+
+    if (self.postBodyTypeIsMultipart) {
+        
+        //Create the request
+        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        
+        NSString* boundaryString = [self generateBoundaryString];
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryString];
+        
+        //Set params
         [self.theRequest setHTTPMethod:@"POST"];
-        [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    } else if (self.requestMethod == Put) {
-        [self.theRequest setHTTPMethod:@"PUT"];
-        [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [self.theRequest setValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        //Post body
+        NSMutableData *body = [NSMutableData data];
+        
+        for (NSString *key in [self.map allKeys]) {
+            id object = [self.map objectForKey:key];
+            
+            if ([object isKindOfClass:[UIImage class]]) {
+                UIImage* imageObject = (UIImage*)object;
+                
+                NSData *imageData = UIImageJPEGRepresentation(imageObject, 1);
+                
+                NSString *FileParamConstant = @"attachments";
+                
+                [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[@"Content-Type:image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:imageData];
+                [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                continue;
+            }
+            
+            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"%@\r\n", object] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        //Close off the request with the boundary
+        [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [self.theRequest setHTTPBody:body];
+        
     } else {
-        [self.theRequest setHTTPMethod:@"GET"];
+        NSData *postData = [@"" dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        if ([self.map count] > 0 || (self.requestMethod == Post && self.rawPost)) {
+            if (self.requestMethod == Get) {
+                [urlString appendString:@"?"];
+                for (NSString *key in [self.map allKeys]) {
+                    [urlString appendString:[NSString stringWithFormat:@"%@=%@&", key, [self.map objectForKey:key]]];
+                }
+            } else {
+                NSString *post;
+                if (self.rawPost) {
+                    post = self.rawPost;
+                } else {
+                    SBJSON *parser = [[SBJSON alloc] init];
+                    post = [parser stringWithObject:self.map];
+                }
+                postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+            }
+        }
+        
+        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+        
+        if (self.requestMethod == Post) {
+            [self.theRequest setHTTPMethod:@"POST"];
+            [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        } else if (self.requestMethod == Put) {
+            [self.theRequest setHTTPMethod:@"PUT"];
+            [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [self.theRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        } else {
+            [self.theRequest setHTTPMethod:@"GET"];
+        }
+        
+        [self.theRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [self.theRequest setHTTPBody:postData];
     }
     
-    [self.theRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [self.theRequest setHTTPBody:postData];
     [self.theRequest setTimeoutInterval:API_TIMEOUT];
     
     if (self.httpAuthUsername) {
@@ -125,19 +209,7 @@ typedef enum {
         NSString *authValue = [NSString stringWithFormat:@"Basic %@", authDataStr];
         [self.theRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     }
-    
-//    NSURLResponse* response = nil;
-//    NSData* data = [NSURLConnection sendSynchronousRequest:self.theRequest returningResponse:&response error:nil];
-//    
-//    if (data) {
-//        self.webData = [data mutableCopy];
-//        if (self.isBinaryData) {
-//            [self processBinary];
-//        } else {
-//            [self processNonBinary];
-//        }
-//    }
-    
+        
     while (self.attempt <= self.maxAttempts) {
         if(![self initConnection]) {
             if (self.attempt == self.maxAttempts) {

@@ -3,8 +3,10 @@
 //  source: src-delomboked/com/sponberg/fluid/HttpService.java
 //
 
+#include "IOSClass.h"
 #include "com/sponberg/fluid/HttpService.h"
 #include "com/sponberg/fluid/HttpServiceCallback.h"
+#include "java/lang/IllegalArgumentException.h"
 #include "java/util/HashMap.h"
 
 @interface FFTHttpService : NSObject
@@ -17,11 +19,64 @@
     { "getWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "get", "V", 0x401, NULL },
     { "getBinaryWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "getBinary", "V", 0x401, NULL },
     { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x401, NULL },
+    { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x401, NULL },
     { "putWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "put", "V", 0x401, NULL },
     { "postRawWithNSString:withNSString:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "postRaw", "V", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTHttpService = { "HttpService", "com.sponberg.fluid", NULL, 0x201, 5, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTHttpService = { "HttpService", "com.sponberg.fluid", NULL, 0x201, 6, methods, 0, NULL, 0, NULL};
   return &_FFTHttpService;
+}
+
+@end
+
+BOOL FFTHttpService_PostBodyTypeEnum_initialized = NO;
+
+FFTHttpService_PostBodyTypeEnum *FFTHttpService_PostBodyTypeEnum_values[2];
+
+@implementation FFTHttpService_PostBodyTypeEnum
+
+- (id)copyWithZone:(NSZone *)zone {
+  return self;
+}
+
+- (id)initWithNSString:(NSString *)__name withInt:(int)__ordinal {
+  return [super initWithNSString:__name withInt:__ordinal];
+}
+
++ (void)initialize {
+  if (self == [FFTHttpService_PostBodyTypeEnum class]) {
+    FFTHttpService_PostBodyTypeEnum_JsonString = [[FFTHttpService_PostBodyTypeEnum alloc] initWithNSString:@"JsonString" withInt:0];
+    FFTHttpService_PostBodyTypeEnum_FormData = [[FFTHttpService_PostBodyTypeEnum alloc] initWithNSString:@"FormData" withInt:1];
+    FFTHttpService_PostBodyTypeEnum_initialized = YES;
+  }
+}
+
++ (IOSObjectArray *)values {
+  return [IOSObjectArray arrayWithObjects:FFTHttpService_PostBodyTypeEnum_values count:2 type:[IOSClass classWithClass:[FFTHttpService_PostBodyTypeEnum class]]];
+}
+
++ (FFTHttpService_PostBodyTypeEnum *)valueOfWithNSString:(NSString *)name {
+  for (int i = 0; i < 2; i++) {
+    FFTHttpService_PostBodyTypeEnum *e = FFTHttpService_PostBodyTypeEnum_values[i];
+    if ([name isEqual:[e name]]) {
+      return e;
+    }
+  }
+  @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:name];
+  return nil;
+}
+
++ (J2ObjcClassInfo *)__metadata {
+  static J2ObjcMethodInfo methods[] = {
+    { "init", NULL, NULL, 0x1, NULL },
+  };
+  static J2ObjcFieldInfo fields[] = {
+    { "JsonString", "JsonString", 0x4019, "Lcom.sponberg.fluid.HttpService$PostBodyType;", &FFTHttpService_PostBodyTypeEnum_JsonString,  },
+    { "FormData", "FormData", 0x4019, "Lcom.sponberg.fluid.HttpService$PostBodyType;", &FFTHttpService_PostBodyTypeEnum_FormData,  },
+  };
+  static const char *superclass_type_args[] = {"Lcom.sponberg.fluid.HttpService$PostBodyType;"};
+  static J2ObjcClassInfo _FFTHttpService_PostBodyTypeEnum = { "PostBodyType", "com.sponberg.fluid", "HttpService", 0x4019, 1, methods, 2, fields, 1, superclass_type_args};
+  return &_FFTHttpService_PostBodyTypeEnum;
 }
 
 @end

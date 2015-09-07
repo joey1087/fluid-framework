@@ -120,6 +120,24 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
     [self sendRequest:request withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth];
 }
 
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
+    
+    if ([NSThread isMainThread]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
+        });
+        return;
+    }
+    
+    FFHttpRequest *request = [FFHttpRequest requestPostWithMutipartFormBodyTypeWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
+    
+    [self sendRequest:request withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth];
+}
+
 - (void)postRawWithNSString:(NSString *)URL withNSString:(NSString *)rawMessage withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
 
 //    if (![NSThread isMainThread]) {

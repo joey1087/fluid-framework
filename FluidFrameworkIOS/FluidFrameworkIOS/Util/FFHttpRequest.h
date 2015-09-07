@@ -27,6 +27,7 @@ typedef void (^ CallbackBlock)(id userInfo);
 
 + (FFHttpRequest *)requestWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback;
 + (FFHttpRequest *)requestPostWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback;
++ (FFHttpRequest *)requestPostWithMutipartFormBodyTypeWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback;
 + (FFHttpRequest *)requestPutWithUrl:(NSString *)url successCallback:(CallbackBlock)successCallback failCallback:(CallbackBlock)failCallback;
 
 #pragma mark populating request
