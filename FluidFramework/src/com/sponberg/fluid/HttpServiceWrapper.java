@@ -74,7 +74,22 @@ public class HttpServiceWrapper implements HttpService {
 		
 		httpService.post(URL, parameters, auth, callback);
 	}
+	
+	@Override
+	public void post(String URL, HashMap<String, Object> parameters,
+			PostBodyType postBodyType, HttpAuthorization auth,
+			HttpServiceCallback callback) {
+		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
 
+		if (mapMode == MapMode.Jsonify) {
+			parameters = jsonifyMaps(parameters);
+		} else if (mapMode == MapMode.Bracketify) {
+			parameters = bracketifyMaps(parameters);
+		}
+		
+		httpService.post(URL, parameters, postBodyType, auth, callback);
+	}
+	
 	@Override
 	public void postRaw(String URL, String rawPost, HttpAuthorization auth,
 			HttpServiceCallback callback) {
@@ -152,11 +167,5 @@ public class HttpServiceWrapper implements HttpService {
 		}
 	}
 
-	@Override
-	public void post(String URL, HashMap<String, Object> parameters,
-			PostBodyType postBodyType, HttpAuthorization auth,
-			HttpServiceCallback callback) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

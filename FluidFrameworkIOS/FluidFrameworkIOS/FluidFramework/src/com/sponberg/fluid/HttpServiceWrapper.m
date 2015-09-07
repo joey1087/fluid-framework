@@ -72,6 +72,21 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   [((id<FFTHttpService>) nil_chk(httpService_)) postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
 
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
+  [FFTLogger debugWithId:self withNSString:@"Http Post {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
+  if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
+    parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
+  }
+  else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Bracketify()) {
+    parameters = [FFTHttpServiceWrapper bracketifyMapsWithJavaUtilMap:parameters];
+  }
+  [((id<FFTHttpService>) nil_chk(httpService_)) postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_PostBodyTypeEnum:postBodyType withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
+}
+
 - (void)postRawWithNSString:(NSString *)URL
                withNSString:(NSString *)rawPost
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
@@ -149,13 +164,6 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   }
 }
 
-- (void)postWithNSString:(NSString *)URL
-     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
-withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
-withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
-withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-}
-
 - (id<FFTHttpService>)getHttpService {
   return self->httpService_;
 }
@@ -212,13 +220,13 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
     { "getWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "get", "V", 0x1, NULL },
     { "getBinaryWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "getBinary", "V", 0x1, NULL },
     { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x1, NULL },
+    { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x1, NULL },
     { "postRawWithNSString:withNSString:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "postRaw", "V", 0x1, NULL },
     { "putWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "put", "V", 0x1, NULL },
     { "jsonifyMapsWithJavaUtilMap:", "jsonifyMaps", "Ljava.util.HashMap;", 0xc, NULL },
     { "jsonifyMapsHelperWithJavaUtilMap:", "jsonifyMapsHelper", "Ljava.lang.String;", 0xc, NULL },
     { "bracketifyMapsWithJavaUtilMap:", "bracketifyMaps", "Ljava.util.HashMap;", 0xc, NULL },
     { "bracketifyMapsHelperWithJavaUtilHashMap:withNSString:withJavaUtilMap:", "bracketifyMapsHelper", "V", 0xc, NULL },
-    { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x1, NULL },
     { "getHttpService", NULL, "Lcom.sponberg.fluid.HttpService;", 0x1, NULL },
     { "getMapMode", NULL, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", 0x1, NULL },
     { "setMapModeWithFFTHttpServiceWrapper_MapModeEnum:", "setMapMode", "V", 0x1, NULL },

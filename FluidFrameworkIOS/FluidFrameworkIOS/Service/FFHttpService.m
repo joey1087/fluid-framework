@@ -21,6 +21,9 @@
 @property (nonatomic, strong) FFHttpRequest *request;
 @end
 
+
+
+//========================================================================================== * FFHttpService
 @implementation HttpServiceTask
 
 - (void)getWithNSString:(NSString *)URL withJavaUtilHashMap:(JavaUtilHashMap *)parameters withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
@@ -194,6 +197,12 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
 
 @end
 
+
+
+
+
+
+//========================================================================================== * FFHttpService
 @implementation FFHttpService
 
 - (void)getWithNSString:(NSString *)URL withJavaUtilHashMap:(JavaUtilHashMap *)parameters withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
@@ -218,6 +227,16 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
     HttpServiceTask *task = [[HttpServiceTask alloc] init];
     task.callback = callback;
     [task postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
+}
+
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
+    HttpServiceTask *task = [[HttpServiceTask alloc] init];
+    task.callback = callback;
+    [task postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_PostBodyTypeEnum:postBodyType withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
 
 - (void)putWithNSString:(NSString *)URL withJavaUtilHashMap:(JavaUtilHashMap *)parameters withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
