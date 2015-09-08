@@ -18,7 +18,7 @@
                        withId:(id)object
                   withBoolean:(BOOL)excludeFromBackup {
     
-    if (object || ![object isKindOfClass:[UIImage class]]) {
+    if (!object || ![object isKindOfClass:[UIImage class]]) {
         return;
     }
     
