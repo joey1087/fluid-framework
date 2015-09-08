@@ -34,6 +34,14 @@
 - (BOOL)resourceExistsWithNSString:(NSString *)dir
                       withNSString:(NSString *)name;
 
+- (void)saveImageWithNSString:(NSString *)dir
+                 withNSString:(NSString *)name
+                       withId:(id)object
+                  withBoolean:(BOOL)excludeFromBackup;
+
+- (id)getImageWithNSString:(NSString *)dir
+              withNSString:(NSString *)name;
+
 - (id)init;
 
 - (void)copyAllFieldsTo:(FFTFileResourceService *)other;

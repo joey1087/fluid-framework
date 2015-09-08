@@ -55,5 +55,16 @@ public class FileResourceService implements ResourceService {
 
 		throw new RuntimeException("Not implemented");
 	}
-	
+
+	@Override
+	public void saveImage(String dir, String name, Object object,
+			boolean excludeFromBackup) throws IOException {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Object getImage(String dir, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

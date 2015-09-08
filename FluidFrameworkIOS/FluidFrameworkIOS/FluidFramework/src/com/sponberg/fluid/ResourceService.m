@@ -18,9 +18,11 @@
     { "getResourceAsStringWithNSString:withNSString:", "getResourceAsString", "Ljava.lang.String;", 0x401, NULL },
     { "getResourceAsBytesWithNSString:withNSString:", "getResourceAsBytes", "[B", 0x401, NULL },
     { "saveResourceWithNSString:withNSString:withByteArray:withBoolean:", "saveResource", "V", 0x401, "Ljava.io.IOException;" },
+    { "saveImageWithNSString:withNSString:withId:withBoolean:", "saveImage", "V", 0x401, "Ljava.io.IOException;" },
+    { "getImageWithNSString:withNSString:", "getImage", "Ljava.lang.Object;", 0x401, NULL },
     { "resourceExistsWithNSString:withNSString:", "resourceExists", "Z", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTResourceService = { "ResourceService", "com.sponberg.fluid", NULL, 0x201, 4, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTResourceService = { "ResourceService", "com.sponberg.fluid", NULL, 0x201, 6, methods, 0, NULL, 0, NULL};
   return &_FFTResourceService;
 }
 

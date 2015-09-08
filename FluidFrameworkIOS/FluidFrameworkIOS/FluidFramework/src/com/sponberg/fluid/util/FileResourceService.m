@@ -60,6 +60,17 @@ NSString * FFTFileResourceService_kRoot_ = @"resources";
   @throw [[JavaLangRuntimeException alloc] initWithNSString:@"Not implemented"];
 }
 
+- (void)saveImageWithNSString:(NSString *)dir
+                 withNSString:(NSString *)name
+                       withId:(id)object
+                  withBoolean:(BOOL)excludeFromBackup {
+}
+
+- (id)getImageWithNSString:(NSString *)dir
+              withNSString:(NSString *)name {
+  return nil;
+}
+
 - (id)init {
   if (self = [super init]) {
     workingDir_ = nil;
@@ -80,13 +91,15 @@ NSString * FFTFileResourceService_kRoot_ = @"resources";
     { "setWorkingDirWithNSString:", "setWorkingDir", "V", 0x1, NULL },
     { "saveResourceWithNSString:withNSString:withByteArray:withBoolean:", "saveResource", "V", 0x1, "Ljava.io.IOException;" },
     { "resourceExistsWithNSString:withNSString:", "resourceExists", "Z", 0x1, NULL },
+    { "saveImageWithNSString:withNSString:withId:withBoolean:", "saveImage", "V", 0x1, "Ljava.io.IOException;" },
+    { "getImageWithNSString:withNSString:", "getImage", "Ljava.lang.Object;", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "kRoot_", NULL, 0x1a, "Ljava.lang.String;", &FFTFileResourceService_kRoot_,  },
     { "workingDir_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTFileResourceService = { "FileResourceService", "com.sponberg.fluid.util", NULL, 0x1, 7, methods, 2, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTFileResourceService = { "FileResourceService", "com.sponberg.fluid.util", NULL, 0x1, 9, methods, 2, fields, 0, NULL};
   return &_FFTFileResourceService;
 }
 

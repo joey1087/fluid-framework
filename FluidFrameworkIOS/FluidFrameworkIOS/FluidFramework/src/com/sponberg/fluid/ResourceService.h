@@ -23,6 +23,14 @@
                    withByteArray:(IOSByteArray *)bytes
                      withBoolean:(BOOL)excludeFromBackup;
 
+- (void)saveImageWithNSString:(NSString *)dir
+                 withNSString:(NSString *)name
+                       withId:(id)object
+                  withBoolean:(BOOL)excludeFromBackup;
+
+- (id)getImageWithNSString:(NSString *)dir
+              withNSString:(NSString *)name;
+
 - (BOOL)resourceExistsWithNSString:(NSString *)dir
                       withNSString:(NSString *)name;
 

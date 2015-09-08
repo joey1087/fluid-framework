@@ -8,8 +8,61 @@
 
 #import "FFResourceService.h"
 #include "java/io/IOException.h"
+#import <UIKit/UIKit.h>
+
 
 @implementation FFResourceService
+
+- (void)saveImageWithNSString:(NSString *)dir
+                 withNSString:(NSString *)name
+                       withId:(id)object
+                  withBoolean:(BOOL)excludeFromBackup {
+    
+    if (object || ![object isKindOfClass:[UIImage class]]) {
+        return;
+    }
+    
+    UIImage* image = (UIImage*)object;
+    
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    path = [path stringByAppendingPathComponent:dir];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+    }
+    
+    path = [path stringByAppendingPathComponent:name];
+    
+    NSData *data = UIImagePNGRepresentation(image);
+    
+    NSError *error;
+    [data writeToFile:path options:NSDataWritingAtomic error:&error];
+    
+    if (error != nil) {
+        @throw [[JavaIoIOException alloc] initWithNSString:[NSString stringWithFormat:@"Unable to save resource %@ %@", name, error.description]];
+    }
+    
+    if (excludeFromBackup) {
+        NSURL *url = [NSURL fileURLWithPath:path];
+        [url setResourceValue:[NSNumber numberWithBool: YES]
+                       forKey:NSURLIsExcludedFromBackupKey error: &error];
+    }
+}
+
+- (id)getImageWithNSString:(NSString *)dir
+              withNSString:(NSString *)name {
+    
+    NSString *path = [self pathFor:dir name:name];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    
+    if (data == nil) {
+        return nil;
+    }
+    
+    UIImage* image = [UIImage imageWithData:data];
+    
+    return image;
+}
 
 - (NSString *)getResourceAsStringWithNSString:(NSString *)dir withNSString:(NSString *)name {
 
