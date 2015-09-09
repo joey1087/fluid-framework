@@ -11,6 +11,9 @@ import java.io.UnsupportedEncodingException;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import com.sponberg.fluid.ResourceService;
 import com.sponberg.fluid.util.StreamUtil;
@@ -126,14 +129,83 @@ public class DefaultResourceService implements ResourceService {
 
 	@Override
 	public Object getImage(String dir, String name) {
-		// TODO Auto-generated method stub
+		
+		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.hipages/photos";
+		
+		if (dir != null && !dir.equals("") && name != null && !name.equals("")) {
+			File imageDir = null;
+			try {
+				imageDir = new File(dir);
+			} catch (Exception e) {
+				// set default dir in case we have an error
+				imageDir = new File(defaultDir);
+				e.printStackTrace();
+			}
+			
+			try {
+				// create directory if does not exist
+				if (!imageDir.exists()) {
+					imageDir.mkdirs();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+				
+			try {
+				Bitmap bitmap = BitmapFactory.decodeFile(dir + "/" + name);
+				// COMPRESS HERE
+				return bitmap;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
-	public void saveImage(String dir, String name, Object object, boolean excludeFromBackup)
-			throws IOException {
-		// TODO Auto-generated method stub
+	public void saveImage(String dir, String name, Object object, boolean excludeFromBackup) throws IOException {
 		
+		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.hipages/photos";
+		
+		if (object == null || !(object instanceof Bitmap)) {
+			return;
+		}
+			
+		if (dir != null && !dir.equals("") && name != null && !name.equals("")) {
+			File imageDir = null;
+			try {
+				imageDir = new File(dir);
+			} catch (Exception e) {
+				// set default dir in case we have an error
+				imageDir = new File(defaultDir);
+				e.printStackTrace();
+			}
+			
+			try {
+				// create directory if does not exist
+				if (!imageDir.exists()) {
+					imageDir.mkdirs();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				FileOutputStream fOut = null;
+				File file = new File(dir, name); // the File to save to
+				fOut = new FileOutputStream(file);
+	
+				Bitmap pictureBitmap = (Bitmap)object; // obtaining the Bitmap
+				pictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+				// COMPRESS HERE
+				fOut.flush();
+				fOut.close(); // do not forget to close the stream
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
