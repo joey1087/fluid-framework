@@ -206,4 +206,11 @@ public class DefaultHttpService implements HttpService {
 		}
 	}
 
+	@Override
+	public void post(String arg0, HashMap<String, Object> arg1,
+			PostBodyType arg2, HttpAuthorization arg3, HttpServiceCallback arg4) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -123,4 +123,17 @@ public class DefaultResourceService implements ResourceService {
 		
 		StreamUtil.copyInputStream(new ByteArrayInputStream(bytes), new FileOutputStream(file));
 	}
+
+	@Override
+	public Object getImage(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveImage(String arg0, String arg1, Object arg2, boolean arg3)
+			throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 }
