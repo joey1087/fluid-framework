@@ -33,7 +33,8 @@
     
     path = [path stringByAppendingPathComponent:name];
     
-    NSData *data = UIImagePNGRepresentation(image);
+    // Use JPEG instead of PNG, so that orientation infomation is maintained
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
     
     NSError *error;
     [data writeToFile:path options:NSDataWritingAtomic error:&error];
