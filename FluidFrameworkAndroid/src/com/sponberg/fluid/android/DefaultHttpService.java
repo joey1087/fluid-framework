@@ -163,7 +163,6 @@ public class DefaultHttpService implements HttpService {
 							HttpPost post = new HttpPost(uri[0]);
 							MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
 							entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-							HttpEntity entity = entityBuilder.build();
 		
 							if (properties != null) {
 								for (String key : properties.keySet()) {
@@ -177,6 +176,7 @@ public class DefaultHttpService implements HttpService {
 										entityBuilder.addBinaryBody(key, imageBytes, ContentType.create("image/jpeg"), null);
 									}
 								}
+								HttpEntity entity = entityBuilder.build();
 								post.setEntity(entity);
 							}
 							
