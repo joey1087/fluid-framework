@@ -19,6 +19,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -171,9 +172,10 @@ public class DefaultHttpService implements HttpService {
 										entityBuilder.addTextBody(key, String.valueOf(value));
 									} else if (value instanceof Bitmap) {
 										ByteArrayOutputStream baos = new ByteArrayOutputStream();
-							            ((Bitmap)value).compress(Bitmap.CompressFormat.PNG, 100, baos);
+							            ((Bitmap)value).compress(Bitmap.CompressFormat.JPEG, 100, baos);
 							            byte[] imageBytes = baos.toByteArray();
-										entityBuilder.addBinaryBody(key, imageBytes, ContentType.create("image/jpeg"), null);
+										entityBuilder.addBinaryBody(key, imageBytes, ContentType.create("image/jpeg"), "temp");
+										//entityBuilder.addBinaryBody(name, file, contentType, filename)
 									}
 								}
 								HttpEntity entity = entityBuilder.build();
