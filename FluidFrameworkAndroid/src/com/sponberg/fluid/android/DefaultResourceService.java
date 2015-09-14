@@ -130,12 +130,12 @@ public class DefaultResourceService implements ResourceService {
 	@Override
 	public Object getImage(String dir, String name) {
 		
-		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.hipages/photos";
+		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.hip.tradie.android/assets";
 		
 		if (dir != null && !dir.equals("") && name != null && !name.equals("")) {
 			File imageDir = null;
 			try {
-				imageDir = new File(dir);
+				imageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + dir);
 			} catch (Exception e) {
 				// set default dir in case we have an error
 				imageDir = new File(defaultDir);
@@ -152,13 +152,16 @@ public class DefaultResourceService implements ResourceService {
 				return null;
 			}
 				
-			try {
-				Bitmap bitmap = BitmapFactory.decodeFile(dir + "/" + name);
-				// COMPRESS HERE
-				return bitmap;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
+			File temp = new File(imageDir.getAbsolutePath().toString(), name+".jpg");
+			if (temp.exists()) {
+				try {
+					Bitmap bitmap = BitmapFactory.decodeFile(temp.getAbsolutePath());
+					// COMPRESS HERE
+					return bitmap;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}
 		
@@ -168,7 +171,7 @@ public class DefaultResourceService implements ResourceService {
 	@Override
 	public void saveImage(String dir, String name, Object object, boolean excludeFromBackup) throws IOException {
 		
-		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.hipages/photos";
+		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.hip.tradie.android/assets";
 		
 		if (object == null || !(object instanceof Bitmap)) {
 			return;
@@ -177,7 +180,7 @@ public class DefaultResourceService implements ResourceService {
 		if (dir != null && !dir.equals("") && name != null && !name.equals("")) {
 			File imageDir = null;
 			try {
-				imageDir = new File(dir);
+				imageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + dir);
 			} catch (Exception e) {
 				// set default dir in case we have an error
 				imageDir = new File(defaultDir);
@@ -195,11 +198,11 @@ public class DefaultResourceService implements ResourceService {
 			
 			try {
 				FileOutputStream fOut = null;
-				File file = new File(dir, name); // the File to save to
+				File file = new File(imageDir.getAbsolutePath().toString(), name + ".jpg"); // the File to save to
 				fOut = new FileOutputStream(file);
 	
 				Bitmap pictureBitmap = (Bitmap)object; // obtaining the Bitmap
-				pictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+				pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 				// COMPRESS HERE
 				fOut.flush();
 				fOut.close(); // do not forget to close the stream
