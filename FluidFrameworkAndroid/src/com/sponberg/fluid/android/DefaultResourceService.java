@@ -12,8 +12,8 @@ import java.io.UnsupportedEncodingException;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 
 import com.sponberg.fluid.ResourceService;
 import com.sponberg.fluid.util.StreamUtil;
@@ -157,74 +157,27 @@ public class DefaultResourceService implements ResourceService {
 	@Override
 	public void saveImage(String dir, String name, Object object, boolean excludeFromBackup) throws IOException {
 		
-		File imageFile;
-		
-		if (!dir.equals("")) {
-			dir = dir + "/";
-			File dirFile = context.getDir(kRoot, 0);
-			dirFile = new File(dirFile, dir);
-			if (!dirFile.exists()) {
-				dirFile.mkdirs();
-			}
-			imageFile = getFile(dirFile, name);
-		} else {
-			imageFile = getFile(context.getFilesDir(), name);
-		}
-		
-		try {
-			FileOutputStream fOut = null;
-			fOut = new FileOutputStream(imageFile);
-
-			Bitmap pictureBitmap = (Bitmap)object; // obtaining the Bitmap
-			pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-			// COMPRESS HERE
-			fOut.flush();
-			fOut.close(); // do not forget to close the stream
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		/*
-		String defaultDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.hip.tradie.android/assets";
-		
-		if (object == null || !(object instanceof Bitmap)) {
-			return;
-		}
+		if (object instanceof Bitmap) {
+			File imageFile;
 			
-		if (dir != null && !dir.equals("") && name != null && !name.equals("")) {
-			name = name.replace(".dcon", "");
-			File imageDir = null;
-			try {
-				imageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + dir);
-			} catch (Exception e) {
-				// set default dir in case we have an error
-				imageDir = new File(defaultDir);
-				e.printStackTrace();
-			}
-			
-			try {
-				// create directory if does not exist
-				if (!imageDir.exists()) {
-					imageDir.mkdirs();
+			if (!dir.equals("")) {
+				dir = dir + "/";
+				File dirFile = context.getDir(kRoot, 0);
+				dirFile = new File(dirFile, dir);
+				if (!dirFile.exists()) {
+					dirFile.mkdirs();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+				imageFile = getFile(dirFile, name);
+			} else {
+				imageFile = getFile(context.getFilesDir(), name);
 			}
+			Bitmap bitmap = (Bitmap) object;
 			
-			try {
-				FileOutputStream fOut = null;
-				File file = new File(imageDir.toString(), name + ".jpg"); // the File to save to
-				fOut = new FileOutputStream(file);
-	
-				Bitmap pictureBitmap = (Bitmap)object; // obtaining the Bitmap
-				pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-				// COMPRESS HERE
-				fOut.flush();
-				fOut.close(); // do not forget to close the stream
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream(bitmap.getWidth() * bitmap.getHeight());
+		    bitmap.compress(CompressFormat.JPEG, 100, buffer);
+		    byte[] byteArray = buffer.toByteArray();
+		    
+			StreamUtil.copyInputStream(new ByteArrayInputStream(byteArray), new FileOutputStream(imageFile));
 		}
-		*/
 	}
 }
