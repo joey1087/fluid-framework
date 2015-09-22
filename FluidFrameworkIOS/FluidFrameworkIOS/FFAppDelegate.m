@@ -378,7 +378,11 @@
 
 - (NSString *)currentScreenId {
     FFViewController *fvc = [[[self currentNavigationController] viewControllers] lastObject];
-    return [fvc.screen getScreenId];
+    NSString* screenId = nil;
+    if ([fvc isKindOfClass:[FFViewController class]]) {
+        screenId = [fvc.screen getScreenId];
+    }
+    return screenId;
 }
 
 - (void)popLayout {
