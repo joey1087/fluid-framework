@@ -277,7 +277,7 @@
     [self.window addSubview:appContainerViewController.view];
     [self.window makeKeyAndVisible];
     
-    if (showScreenId != [self currentScreenId]) {
+    if (showScreenId != [self getCurrentScreenId]) {
         //[self pushLayoutWithNSString:showScreenId];
         [self setLayoutWithNSString:showScreenId withBoolean:NO];
     }
@@ -376,14 +376,14 @@
     }
 }
 
-- (NSString *)currentScreenId {
-    FFViewController *fvc = [[[self currentNavigationController] viewControllers] lastObject];
-    NSString* screenId = nil;
-    if ([fvc isKindOfClass:[FFViewController class]]) {
-        screenId = [fvc.screen getScreenId];
-    }
-    return screenId;
-}
+//- (NSString *)currentScreenId {
+//    FFViewController *fvc = [[[self currentNavigationController] viewControllers] lastObject];
+//    NSString* screenId = nil;
+//    if ([fvc isKindOfClass:[FFViewController class]]) {
+//        screenId = [fvc.screen getScreenId];
+//    }
+//    return screenId;
+//}
 
 - (void)popLayout {
     if ([NSThread isMainThread]) {
@@ -818,7 +818,7 @@
 - (void)removeSplashScreenWithNSString:(NSString *)firstScreenId
                            withBoolean:(BOOL)insteadShowCurrentScreenIfAny {
     
-    NSString *screenId = [self currentScreenId];
+    NSString *screenId = [self getCurrentScreenId];
     
     NSString *showScreenId = (insteadShowCurrentScreenIfAny && screenId != nil) ? screenId : firstScreenId;
     
