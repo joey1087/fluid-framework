@@ -361,6 +361,10 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 			@Override
 			public void run() {
 
+				if (launcherActivity == null) {
+					return;
+				}
+				
 				Intent i = new Intent(FluidFrameworkAndroidApp.this, FluidFrameworkAndroidApp.fluidAndroidApp.fluidActivityClass);
 				//i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				Bundle b = new Bundle();
