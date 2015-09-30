@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.sponberg.fluid.GlobalState;
@@ -365,19 +366,7 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
             	addSubview((android.view.View) fluidView, view);
 
             	if (fluidView instanceof ViewGroup) {
-            		final android.view.ViewGroup androidViewGroup = (android.view.ViewGroup) fluidView;
-
-            		for (int i = 0; i < androidViewGroup.getChildCount(); i++) {
-            			final android.view.View child = androidViewGroup.getChildAt(i);
-            			child.setOnFocusChangeListener(new OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                            	if (hasFocus) {
-                                	currentViewFocused = child;
-                                }
-                            }
-                        });
-            		}
+            		addFocusListenerForChildViewInViewGroup((ViewGroup)fluidView);
             	} else {
             		final android.view.View androidViewFinal = (android.view.View) fluidView;
                 	androidViewFinal.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -399,6 +388,29 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
     	created = true;
 	}
 
+	private void addFocusListenerForChildViewInViewGroup(ViewGroup viewGroup) {
+		
+		for (int i = 0; i < viewGroup.getChildCount(); i++) {
+			System.out.println("count : " + viewGroup.getChildCount());
+			final android.view.View subView = viewGroup.getChildAt(i);
+			System.out.println("subView : " + subView);
+			
+			if (subView instanceof ViewGroup) {
+				addFocusListenerForChildViewInViewGroup((ViewGroup)subView);
+			} else {
+				subView.setOnFocusChangeListener(new OnFocusChangeListener() {
+	                @Override
+	                public void onFocusChange(android.view.View v, boolean hasFocus) {
+	                	if (hasFocus) {
+	                    	currentViewFocused = subView;
+	                    }
+	                }
+	            });
+			}
+		}
+	}
+	
+	
 	private void checkAndCreateScrollView(Bounds parentBounds) {
 		if (this.scrollViewView == null && wrapInScrollView) {
 			scrollView = new ScrollViewBounded(getContext());
@@ -575,9 +587,14 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 
 		if (dispatchTap) {
 			userTappedEvent();
-
+			System.out.println("----> Dispatching Tap");
+			System.out.println("----> con 1 : " + keyboardShowing);
+			System.out.println("----> con 2 : " + view);
+			System.out.println("----> con 3 : " + currentViewFocused);
+			
+			
 			if ((!ret || override) && view != null && view == currentViewFocused) {
-
+		
 				int[] location = {0,0};
 				currentViewFocused.getLocationOnScreen(location);
 
