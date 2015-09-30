@@ -239,6 +239,9 @@ public class DefaultHttpService implements HttpService {
 			} catch (IOException e) {
 				Logger.error(this, e);
 				responseString = "Error getting data from server";
+			} catch (NullPointerException e) {
+				Logger.error(this, e);
+				responseString = "Error getting data from server";
 			}
 			return responseString;
 		}
