@@ -391,10 +391,7 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 	private void addFocusListenerForChildViewInViewGroup(ViewGroup viewGroup) {
 		
 		for (int i = 0; i < viewGroup.getChildCount(); i++) {
-			System.out.println("count : " + viewGroup.getChildCount());
 			final android.view.View subView = viewGroup.getChildAt(i);
-			System.out.println("subView : " + subView);
-			
 			if (subView instanceof ViewGroup) {
 				addFocusListenerForChildViewInViewGroup((ViewGroup)subView);
 			} else {
