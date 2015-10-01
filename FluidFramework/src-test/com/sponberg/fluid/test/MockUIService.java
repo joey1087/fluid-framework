@@ -202,5 +202,11 @@ public class MockUIService implements UIService {
 	public boolean isOrientationLandscape() {
 		return false;
 	}
+
+	@Override
+	public void pushLayout(String screenId, boolean animated) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

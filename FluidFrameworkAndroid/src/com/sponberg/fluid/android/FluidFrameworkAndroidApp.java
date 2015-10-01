@@ -295,9 +295,7 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 		});
 	}
 
-
-
-	public void pushLayout(final String screenId) {
+	public void pushLayout(final String screenId, final boolean animated) {
 
 		disableUserActivityForCurrentView();
 
@@ -307,13 +305,18 @@ public abstract class FluidFrameworkAndroidApp extends Application {
 
 				if (currentActivity != null) {
 
-					currentActivity.pushLayout(screenId);
+					currentActivity.pushLayout(screenId, animated);
 				} else {
 
-					currentRootActivity.pushLayout(screenId);
+					currentRootActivity.pushLayout(screenId, animated);
 				}
 			}
 		});
+	}
+
+	public void pushLayout(final String screenId) {
+
+		pushLayout(screenId, true);
 	}
 
 	public void setLayoutStack(final String... screenIds) {

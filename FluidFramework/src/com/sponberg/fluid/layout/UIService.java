@@ -8,6 +8,8 @@ public interface UIService {
 	
 	public void pushLayout(String screenId);
 	
+	public void pushLayout(String screenId, boolean animated);
+	
 	public void popLayout();
 
 	public void setLayout(String screenId, boolean stack);

@@ -22,27 +22,38 @@ public class DefaultUIService implements UIService {
 	private final FluidFrameworkAndroidApp app;
 	
 	public String getCurrentScreenId() {
+		
 		return app.getCurrentScreenId();
 	}
 	
 	public DefaultUIService(FluidFrameworkAndroidApp app) {
+		
 		this.app = app;
 	}
 	
 	private Context getCurrentActivityContext() {
+		
 		return app.getCurrentActivity();
 	}
 	
 	@Override
 	public void popLayout() {
+		
 		app.popLayout();
 	}
 
 	@Override
 	public void pushLayout(String screenId) {
-		app.pushLayout(screenId);
+		
+		pushLayout(screenId, true);
 	}
 
+	@Override
+	public void pushLayout(String screenId, boolean animated) {
+		
+		app.pushLayout(screenId, animated);
+	}
+	
 	@Override
 	public void showAlert(final String title, final String message) {
 		
@@ -99,26 +110,31 @@ public class DefaultUIService implements UIService {
 	
 	@Override
 	public void setLayout(String screenId, boolean stack) {
+		
 		app.setLayout(screenId, stack);
 	}
 
 	@Override
 	public void closeCurrentLayout() {
+		
 		app.closeCurrentLayout();
 	}
 
 	@Override
 	public void showModalView(ModalView modalView) {
+		
 		app.showModalView(modalView);
 	}
 
 	@Override
 	public void dismissModalView(ModalView modalView) {
+		
 		app.dismissModalView(modalView);
 	}
 	
 	@Override
 	public float computeHeightOfText(String text, float width, String fontName, float fontSizeInUnits) {
+		
 		if (getCurrentActivityContext() == null) {
 			return 0; //TODO : this shouldnt be called when there's no activity 
 		}
@@ -132,11 +148,13 @@ public class DefaultUIService implements UIService {
 
 	@Override
 	public void removeSplashScreen(String firstScreenId, boolean insteadShowCurrentScreenIfAny) {
+		
 		app.removeSplashScreen(firstScreenId, insteadShowCurrentScreenIfAny);
 	}
 
 	@Override
 	public int getScreenWidthInPixels() {
+		
 		WindowManager wm = (WindowManager) app.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		return display.getWidth();
@@ -144,6 +162,7 @@ public class DefaultUIService implements UIService {
 
 	@Override
 	public int getScreenHeightInPixels() {
+		
 		WindowManager wm = (WindowManager) app.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		return display.getHeight();
@@ -166,27 +185,31 @@ public class DefaultUIService implements UIService {
 
 	@Override
 	public void grabFocusForView(String viewId) {
+		
 		app.grabFocusForView(viewId);
 	}
 
 	@Override
 	public void hideKeyboard() {
+		
 		app.hideKeyboard();
 	}
 
 	@Override
 	public void setLayoutStack(String... screenIds) {
+		
 		app.setLayoutStack(screenIds);
 	}
 
 	@Override
 	public void scrollToBottom(final String viewPath, final String viewId) {
+		
 		app.scrollToBottom(viewPath, viewId);
 	}
 
 	@Override
 	public boolean isOrientationLandscape() {
+		
 		return app.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
-	
 }

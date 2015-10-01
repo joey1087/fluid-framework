@@ -19,6 +19,9 @@
 
 - (void)pushLayoutWithNSString:(NSString *)screenId;
 
+- (void)pushLayoutWithNSString:(NSString *)screenId
+                   withBoolean:(BOOL)animated;
+
 - (void)popLayout;
 
 - (void)setLayoutWithNSString:(NSString *)screenId

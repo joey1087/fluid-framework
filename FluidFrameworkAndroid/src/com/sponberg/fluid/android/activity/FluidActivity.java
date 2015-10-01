@@ -313,7 +313,7 @@ public class FluidActivity extends ActionBarActivity  {
 	
 	
 	protected void setFluidScreen(String screenId, boolean removeCurrentView, boolean saveCurrentScreen) {
-		
+
 		String saveScreenId = screenId;
 
 		Screen screen = GlobalState.fluidApp.getScreen(screenId);
@@ -351,11 +351,6 @@ public class FluidActivity extends ActionBarActivity  {
 
 		view.addView(layout);
 		
-//		//---TESTING CODE
-//		AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-//		anim.setDuration(300);
-//		layout.startAnimation(anim);
-
 		layout.viewDidAppear();
 
 		currentContentView = layout;
@@ -739,8 +734,8 @@ public class FluidActivity extends ActionBarActivity  {
 		this.currentContentView.setUserActivityEnabled(false);
 	}
 	
-	public void pushLayout(String screenId) {
-
+	public void pushLayout(String screenId, boolean animated) {
+		
 		InputMethodManager imm = (InputMethodManager)getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(currentContentView.getWindowToken(), 0);
@@ -752,13 +747,22 @@ public class FluidActivity extends ActionBarActivity  {
 			nonTabScreenStack.push(screenId);
 		}
 
-		Animation anim = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
-		anim.setAnimationListener(new RemoveViewListener(this.currentContentView));
-		this.currentContentView.startAnimation(anim);
-
-		setFluidScreen(screenId, true, false); //hstdbc
+		if (animated) {
+			Animation anim = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+			anim.setAnimationListener(new RemoveViewListener(this.currentContentView));
+			this.currentContentView.startAnimation(anim);
+			
+			setFluidScreen(screenId, true, false); //hstdbc
+			
+			this.currentContentView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
+		} else {
+			setFluidScreen(screenId, true, false);
+		}
+	}
+	
+	public void pushLayout(String screenId) {
 		
-		this.currentContentView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left));
+		pushLayout(screenId, true);
 	}
 
 	private boolean shouldShowUpButton() {
@@ -813,7 +817,7 @@ public class FluidActivity extends ActionBarActivity  {
 
 		Screen screen = GlobalState.fluidApp.getScreen(screenIds[0]);
 		initScreenWithTab(screen, false);
-
+				
 		setFluidScreen(screenIds[screenIds.length - 1], true, false);
 
 		if (rootActivity) {

@@ -17,6 +17,7 @@
   static J2ObjcMethodInfo methods[] = {
     { "removeSplashScreenWithNSString:withBoolean:", "removeSplashScreen", "V", 0x401, NULL },
     { "pushLayoutWithNSString:", "pushLayout", "V", 0x401, NULL },
+    { "pushLayoutWithNSString:withBoolean:", "pushLayout", "V", 0x401, NULL },
     { "popLayout", NULL, "V", 0x401, NULL },
     { "setLayoutWithNSString:withBoolean:", "setLayout", "V", 0x401, NULL },
     { "showModalViewWithFFTModalView:", "showModalView", "V", 0x401, NULL },
@@ -35,7 +36,7 @@
     { "isOrientationLandscape", NULL, "Z", 0x401, NULL },
     { "getCurrentScreenId", NULL, "Ljava.lang.String;", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 19, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 20, methods, 0, NULL, 0, NULL};
   return &_FFTUIService;
 }
 
