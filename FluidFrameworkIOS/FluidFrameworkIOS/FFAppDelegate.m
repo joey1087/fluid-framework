@@ -198,7 +198,8 @@
         }
         
         if ([nav.tabBarItem respondsToSelector:@selector(initWithTitle:image:selectedImage:)]) {
-            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAutomatic] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAutomatic]];
+//            nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         } else {
             nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:tab->label_ image:[UIImage imageNamed:imageName] tag:0];
         }
