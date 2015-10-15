@@ -12,7 +12,10 @@
 
 #import <UIKit/UIKit.h>
 
-#define API_TIMEOUT 10
+#import "java/util/ArrayList.h"
+
+
+#define API_TIMEOUT 20
 
 typedef enum {
     Get,
@@ -149,9 +152,20 @@ typedef enum {
                 continue;
             }
             
-            [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"%@\r\n", object] dataUsingEncoding:NSUTF8StringEncoding]];
+            //TODO : this will introduce the coupling to the J2Objc runtime lib
+            if ([object isKindOfClass:[JavaUtilArrayList class]]) {
+                JavaUtilArrayList* javaArrayList = (JavaUtilArrayList*)object;
+                
+                for (id obj in javaArrayList) {
+                    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
+                    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+                    [body appendData:[[NSString stringWithFormat:@"%@\r\n", obj] dataUsingEncoding:NSUTF8StringEncoding]];
+                }
+            } else {
+                [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:@"%@\r\n", object] dataUsingEncoding:NSUTF8StringEncoding]];
+            }
         }
         
         //Close off the request with the boundary
