@@ -621,7 +621,9 @@
         
         FFNavigationViewController *navigationController = [[FFNavigationViewController alloc] initWithRootViewController:fvc];
         navigationController.navigationBar.tintColor = [self currentNavigationController].navigationBar.tintColor;
-
+        
+        self.modalView = navigationController.view;
+        
         if ([screen isShowStatusBar]) {
             [UIApplication sharedApplication].statusBarHidden = NO;
         } else {
@@ -651,6 +653,8 @@
         
         alert.modalView = modalView;
         [alert show];
+        
+        self.modalView = alert;
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_WaitingDialog_]) {
         
@@ -683,6 +687,8 @@
             actionSheet.tag = ACTION_SHEET_PHOTO_OR_LIBRARY;
         
             [actionSheet showInView:[self currentNavigationController].view];
+            
+            self.modalView = actionSheet;
         } else {
             
             // Pop up gallery
@@ -691,6 +697,8 @@
             picker.delegate = [self currentNavigationController];
             
             [[self currentNavigationController] presentViewController:picker animated:YES completion:^{}];
+            
+            self.modalView = picker.view;
         }
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_Custom_]){
         [self showCustomModalView:modalView];
@@ -730,7 +738,22 @@
                 UIAlertView *alert = (UIAlertView *) self.modalView;
                 [alert dismissWithClickedButtonIndex:0 animated:YES];
             } else {
-                [self.modalView removeFromSuperview];
+                
+                /*
+                 * TODO 4/11/2015 : This whole modalView has a flaw where
+                 * if you display more than one modals at a same time, you no
+                 * longer have the reference to the previous ones. There's 
+                 * a new project being build to refactor this UI system in 
+                 * the framework
+                 */
+                
+                UIViewController *controller = [self currentNavigationController];
+                
+                if ([controller presentedViewController]) {
+                    [[controller presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    [self.modalView removeFromSuperview];
+                }
             }
             self.modalView = nil;
         });

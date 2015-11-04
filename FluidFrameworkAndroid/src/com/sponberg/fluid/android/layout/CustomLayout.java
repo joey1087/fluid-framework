@@ -584,11 +584,6 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 
 		if (dispatchTap) {
 			userTappedEvent();
-			System.out.println("----> Dispatching Tap");
-			System.out.println("----> con 1 : " + keyboardShowing);
-			System.out.println("----> con 2 : " + view);
-			System.out.println("----> con 3 : " + currentViewFocused);
-			
 			
 			if ((!ret || override) && view != null && view == currentViewFocused) {
 		
