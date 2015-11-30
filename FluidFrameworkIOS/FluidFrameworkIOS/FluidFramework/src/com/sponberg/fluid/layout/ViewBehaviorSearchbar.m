@@ -33,8 +33,7 @@
 }
 
 - (NSString *)description {
-
-  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, fontFamilyName=%@, fontStyle=%@, fontSize=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@)", [self getText], [self getTextColor], [self getFontFamilyName], [self getFontStyle], [self getFontSize], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor]];
+  return [NSString stringWithFormat:@"ViewBehaviorSearchbar(text=%@, textColor=%@, fontFamilyName=%@, fontStyle=%@, fontSize=%@, showCancelButton=%@, placeholderText=%@, searchBarBackgroundColor=%@, shouldBecomeFirstResponderWhenViewLoaded=%@)", [self getText], [self getTextColor], [self getFontFamilyName], [self getFontStyle], [self getFontSize], [JavaLangBoolean toStringWithBoolean:[self isShowCancelButton]], [self getPlaceholderText], [self getSearchBarBackgroundColor], [JavaLangBoolean toStringWithBoolean:[self isShouldBecomeFirstResponderWhenViewLoaded]]];
 }
 
 - (NSString *)getText {
@@ -156,8 +155,7 @@
     { "searchBarBackgroundColor_", NULL, 0x2, "Lcom.sponberg.fluid.layout.Color;", NULL,  },
     { "shouldBecomeFirstResponderWhenViewLoaded_", NULL, 0x2, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 18, methods, 8, fields, 0, NULL};
-
+  static J2ObjcClassInfo _FFTViewBehaviorSearchbar = { "ViewBehaviorSearchbar", "com.sponberg.fluid.layout", NULL, 0x1, 20, methods, 9, fields, 0, NULL};
   return &_FFTViewBehaviorSearchbar;
 }
 

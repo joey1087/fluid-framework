@@ -29,12 +29,20 @@
 #include "java/lang/Integer.h"
 #include "java/lang/RuntimeException.h"
 #include "java/lang/StringBuilder.h"
+#include "java/text/Collator.h"
 #include "java/util/ArrayList.h"
+#include "java/util/Arrays.h"
 #include "java/util/Collection.h"
 #include "java/util/HashMap.h"
 #include "java/util/List.h"
+#include "java/util/Locale.h"
+
+BOOL FFTDatastoreManager_initialized = NO;
 
 @implementation FFTDatastoreManager
+
+IOSObjectArray * FFTDatastoreManager_sqlKeywords_;
+JavaTextCollator * FFTDatastoreManager_englishCollator_;
 
 - (void)load__WithFFTFluidApp:(FFTFluidApp *)app {
   settings_ = [((id<JavaUtilList>) nil_chk([((FFTKVLReader *) nil_chk([((FFTFluidApp *) nil_chk(app)) getSettings])) getWithNSString:@"datastore"])) getWithInt:0];
@@ -347,6 +355,11 @@
   (void) [map putWithId:toVersion withId:listener];
 }
 
++ (BOOL)isSQLKeywordWithNSString:(NSString *)str {
+  NSString *stringToCompare = [((NSString *) nil_chk(str)) uppercaseString];
+  return ([JavaUtilArrays binarySearchWithNSObjectArray:FFTDatastoreManager_sqlKeywords_ withId:stringToCompare withJavaUtilComparator:FFTDatastoreManager_englishCollator_] >= 0);
+}
+
 - (IOSObjectArray *)getSupportedPlatforms {
   return nil;
 }
@@ -366,6 +379,14 @@
     upgradeListeners_ = [[JavaUtilHashMap alloc] init];
   }
   return self;
+}
+
++ (void)initialize {
+  if (self == [FFTDatastoreManager class]) {
+    FFTDatastoreManager_sqlKeywords_ = [IOSObjectArray arrayWithObjects:(id[]){ @"ADD", @"TRANSACTION" } count:2 type:[IOSClass classWithClass:[NSString class]]];
+    FFTDatastoreManager_englishCollator_ = [JavaTextCollator getInstanceWithJavaUtilLocale:JavaUtilLocale_get_ENGLISH_()];
+    FFTDatastoreManager_initialized = YES;
+  }
 }
 
 - (void)copyAllFieldsTo:(FFTDatastoreManager *)other {
@@ -400,6 +421,7 @@
     { "getDatabaseWithNSString:", "getDatabase", "Lcom.sponberg.fluid.datastore.DatastoreManager$Database;", 0x1, NULL },
     { "getDatabases", NULL, "Ljava.util.Collection;", 0x1, NULL },
     { "setUpgradeListenerWithFFTDatastoreVersion:withFFTUpgradeListener:", "setUpgradeListener", "V", 0x1, NULL },
+    { "isSQLKeywordWithNSString:", "isSQLKeyword", "Z", 0x9, NULL },
     { "getSupportedPlatforms", NULL, "[Ljava.lang.String;", 0x1, NULL },
     { "isEnabled", NULL, "Z", 0x1, NULL },
     { "getDefaultDatabaseName", NULL, "Ljava.lang.String;", 0x1, NULL },
@@ -411,8 +433,10 @@
     { "defaultDatabaseName_", NULL, 0x4, "Ljava.lang.String;", NULL,  },
     { "databases_", NULL, 0x4, "Ljava.util.HashMap;", NULL,  },
     { "upgradeListeners_", NULL, 0x4, "Ljava.util.HashMap;", NULL,  },
+    { "sqlKeywords_", NULL, 0x18, "[Ljava.lang.String;", &FFTDatastoreManager_sqlKeywords_,  },
+    { "englishCollator_", NULL, 0x18, "Ljava.text.Collator;", &FFTDatastoreManager_englishCollator_,  },
   };
-  static J2ObjcClassInfo _FFTDatastoreManager = { "DatastoreManager", "com.sponberg.fluid.datastore", NULL, 0x1, 25, methods, 5, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDatastoreManager = { "DatastoreManager", "com.sponberg.fluid.datastore", NULL, 0x1, 26, methods, 7, fields, 0, NULL};
   return &_FFTDatastoreManager;
 }
 
