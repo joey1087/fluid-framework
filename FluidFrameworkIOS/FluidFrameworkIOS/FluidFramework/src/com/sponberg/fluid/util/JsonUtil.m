@@ -303,7 +303,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
       return [JavaLangInteger valueOfWithInt:[value asInt]];
     }
     else {
-      return [[JavaLangInteger alloc] initWithNSString:[value asString]];
+      @try {
+        return [JavaLangInteger valueOfWithInt:[JavaLangInteger parseIntWithNSString:[value asString]]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
+      }
+      return nil;
     }
   }
   else if (type == JavaLangLong_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangLong class]]]) {
@@ -311,7 +317,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
       return [JavaLangLong valueOfWithLong:[value asLong]];
     }
     else {
-      return [[JavaLangLong alloc] initWithNSString:[value asString]];
+      @try {
+        return [JavaLangLong valueOfWithLong:[JavaLangLong parseLongWithNSString:[value asString]]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
+      }
+      return nil;
     }
   }
   else if (type == JavaLangDouble_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangDouble class]]]) {
@@ -319,7 +331,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
       return [JavaLangDouble valueOfWithDouble:[value asDouble]];
     }
     else {
-      return [[JavaLangDouble alloc] initWithNSString:[value asString]];
+      @try {
+        return [JavaLangDouble valueOfWithDouble:[JavaLangDouble parseDoubleWithNSString:[value asString]]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
+      }
+      return nil;
     }
   }
   else if (type == JavaLangFloat_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangFloat class]]]) {
@@ -327,7 +345,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
       return [JavaLangFloat valueOfWithFloat:[value asFloat]];
     }
     else {
-      return [[JavaLangFloat alloc] initWithNSString:[value asString]];
+      @try {
+        return [JavaLangFloat valueOfWithFloat:[JavaLangFloat parseFloatWithNSString:[value asString]]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
+      }
+      return nil;
     }
   }
   else if ([type isArray]) {
@@ -474,6 +498,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
         returnValue = [JavaLangInteger parseIntWithNSString:[value asString]];
       }
       @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
       }
     }
     return returnValue;

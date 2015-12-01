@@ -300,25 +300,48 @@ public class JsonUtil {
 			if (value.isNumber()) {
 				return value.asInt();
 			} else {
-				return new Integer(value.asString());
+				try {
+					return Integer.parseInt(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
+				return null;
 			}
 		} else if (type == Long.TYPE || type.equals(Long.class)) {
 			if (value.isNumber()) {
 				return value.asLong();
 			} else {
-				return new Long(value.asString());
+				try {
+					return Long.parseLong(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
+				return null;
 			}
 		} else if (type == Double.TYPE || type.equals(Double.class)) {
 			if (value.isNumber()) {
 				return value.asDouble();
 			} else {
-				return new Double(value.asString());
+				try {
+					return Double.parseDouble(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
+				return null;
 			}
 		} else if (type == Float.TYPE || type.equals(Float.class)) {
 			if (value.isNumber()) {
 				return value.asFloat();
 			} else {
-				return new Float(value.asString());
+				try {
+					return Float.parseFloat(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				return null;
 			}
 		} else if (type.isArray()) {
 			return createArrayFromJsonObject(value, type.getComponentType());
@@ -467,7 +490,9 @@ public class JsonUtil {
 			if (value != null && value.isString()) {
 				try {
 					returnValue = Integer.parseInt(value.asString());
-				} catch (NumberFormatException e) {}
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			return returnValue;
