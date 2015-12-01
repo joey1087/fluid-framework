@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import lombok.Getter;
 
@@ -32,6 +35,12 @@ public class DatastoreManager implements ApplicationLoader {
 	
 	// Can have 1 listener per toVersion, per database
 	protected HashMap<String, HashMap<DatastoreVersion, UpgradeListener>> upgradeListeners = new HashMap<>();
+		
+	static final String sqlKeywords[] = {
+        "ADD",  "TRANSACTION",
+    };
+	
+	final static Collator englishCollator = Collator.getInstance(Locale.ENGLISH);
 	
 	@Override
 	public void load(FluidApp app) {
@@ -61,7 +70,7 @@ public class DatastoreManager implements ApplicationLoader {
 		
 		upgradeListeners = null; // Don't need these anymore
 	}
-
+	
 	protected void createOrUpdateDatabase(Database database, FluidApp app) throws DatastoreException {
 		
 		DatastoreService ds = app.getDatastoreService();
@@ -431,6 +440,18 @@ public class DatastoreManager implements ApplicationLoader {
 		map.put(toVersion, listener);
 	}
 	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isSQLKeyword(final String str) {
+		
+		String stringToCompare = str.toUpperCase();
+		
+		return (Arrays.binarySearch(sqlKeywords, stringToCompare, englishCollator) >= 0);
+	}
+	
 	public static class Database {
 		
 		ArrayList<DatastoreVersion> versions = new ArrayList<>();
@@ -440,6 +461,7 @@ public class DatastoreManager implements ApplicationLoader {
 		private final String name;
 		
 		public Database(String name) {
+			
 			this.name = name;
 		}
 		

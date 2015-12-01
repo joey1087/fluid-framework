@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.Arrays;
 
 import com.sponberg.fluid.FluidApp;
+import com.sponberg.fluid.datastore.DatastoreManager;
 import com.sponberg.fluid.datastore.DatastoreManager.Database;
 import com.sponberg.fluid.datastore.DatastoreTransaction;
 import com.sponberg.fluid.datastore.SQLQueryDefault;
@@ -39,6 +40,10 @@ public class MakeDatastoreClasses {
 		
 		this.workingDir = workingDir;
 		
+		/*
+		 * TODO _28/11/2015 by Joey : why create another mockApp here, there's already one 
+		 * created above
+		 */
 		MockApp app = new MockApp();
 		app.setSecurityService(new MockSecurityService());
 
@@ -50,13 +55,17 @@ public class MakeDatastoreClasses {
 		writeDatabaseClass(app);
 		
 		for (Database database: app.getDatastoreManager().getDatabases()) {
-
+			//Set up datastore service 
 			JavaDatastoreService ds = new JavaDatastoreService();
 			ds.setInMemory(true);
 			app.setDatastoreService(ds);
 
+			//Create or update databases 
 			manager.createOrUpdateDatabase(database, app);
 			
+			//Make constant classes from database schema, this only affects 
+			//This is the func that actually creates the database classes for use 
+			//in the app
 			readSchemaAndMakeConstantsSourceCode(database);			
 		}
 		
@@ -114,7 +123,7 @@ public class MakeDatastoreClasses {
 			String tableName = result.getString("name");
 			if (Arrays.binarySearch(ignorelist, tableName) >= 0)
 				continue;
-
+			
 			String tableNameFormatted = StringUtil.underscoreToCamelCase(tableName);
 			addFields(database, tableNameFormatted, tableName, txn);
 		}
@@ -124,7 +133,13 @@ public class MakeDatastoreClasses {
 
 	public void addFields(Database database, String tableNameFormatted,
 			String tableName, DatastoreTransaction txn) throws Exception {
-
+		
+		System.out.println("===> table : " + tableName);
+		String _table = tableName;
+		if (DatastoreManager.isSQLKeyword(tableName)) {
+			_table = "[" + tableName + "]";
+		}
+		
 		String packageName = rootPackageName + "." + database.getSimpleName().toLowerCase();
 		
 		String className = "DS" + tableNameFormatted;
@@ -152,7 +167,7 @@ public class MakeDatastoreClasses {
 		objectBuilderConstants.append("\tpublic static final String ");
 		objectBuilderConstants.append("_table");
 		objectBuilderConstants.append(" = \"");
-		objectBuilderConstants.append(tableName);
+		objectBuilderConstants.append(_table);
 		objectBuilderConstants.append("\";\n\n");
 		
 		objectBuilderConstants.append("\t// Table fields\n\n");

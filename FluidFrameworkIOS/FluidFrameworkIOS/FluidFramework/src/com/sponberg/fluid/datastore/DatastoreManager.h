@@ -10,6 +10,7 @@
 @class FFTDatastoreVersion;
 @class FFTFluidApp;
 @class IOSObjectArray;
+@class JavaTextCollator;
 @class JavaUtilArrayList;
 @class JavaUtilHashMap;
 @protocol FFTDatastoreService;
@@ -83,6 +84,8 @@
 - (void)setUpgradeListenerWithFFTDatastoreVersion:(FFTDatastoreVersion *)toVersion
                            withFFTUpgradeListener:(id<FFTUpgradeListener>)listener;
 
++ (BOOL)isSQLKeywordWithNSString:(NSString *)str;
+
 - (IOSObjectArray *)getSupportedPlatforms;
 
 - (BOOL)isEnabled;
@@ -95,12 +98,19 @@
 
 @end
 
-__attribute__((always_inline)) inline void FFTDatastoreManager_init() {}
+FOUNDATION_EXPORT BOOL FFTDatastoreManager_initialized;
+J2OBJC_STATIC_INIT(FFTDatastoreManager)
 
 J2OBJC_FIELD_SETTER(FFTDatastoreManager, settings_, id<FFTKeyValueList>)
 J2OBJC_FIELD_SETTER(FFTDatastoreManager, defaultDatabaseName_, NSString *)
 J2OBJC_FIELD_SETTER(FFTDatastoreManager, databases_, JavaUtilHashMap *)
 J2OBJC_FIELD_SETTER(FFTDatastoreManager, upgradeListeners_, JavaUtilHashMap *)
+
+FOUNDATION_EXPORT IOSObjectArray *FFTDatastoreManager_sqlKeywords_;
+J2OBJC_STATIC_FIELD_GETTER(FFTDatastoreManager, sqlKeywords_, IOSObjectArray *)
+
+FOUNDATION_EXPORT JavaTextCollator *FFTDatastoreManager_englishCollator_;
+J2OBJC_STATIC_FIELD_GETTER(FFTDatastoreManager, englishCollator_, JavaTextCollator *)
 
 typedef FFTDatastoreManager ComSponbergFluidDatastoreDatastoreManager;
 
