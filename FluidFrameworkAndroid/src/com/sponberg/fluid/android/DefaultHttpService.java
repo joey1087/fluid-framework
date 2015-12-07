@@ -216,6 +216,11 @@ public class DefaultHttpService implements HttpService {
 						for (String key : properties.keySet())
 							pairs.add(new BasicNameValuePair(key, properties.get(key).toString()));
 						paramString += "?" + URLEncodedUtils.format(pairs, "utf-8");
+						// when creating request url and encode it
+						// & and = signs are replaced with %26 and %3D respectively
+						// so we convert it back to what they were here to ensure we receive correct response
+						paramString = paramString.replaceAll("%26", "&");
+						paramString = paramString.replaceAll("%3D", "=");
 					}
 					
 					response = httpclient.execute(new HttpGet(paramString));					
