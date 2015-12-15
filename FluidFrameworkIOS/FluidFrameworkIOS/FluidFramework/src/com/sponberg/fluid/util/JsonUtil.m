@@ -491,7 +491,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
                   withNSString:(NSString *)key
                        withInt:(int)defaultValue {
   FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
-  if (value == nil || ![value isNumber]) {
+  if (value == nil || [value isNull] || ![value isNumber]) {
     int returnValue = defaultValue;
     if (value != nil && [value isString]) {
       @try {

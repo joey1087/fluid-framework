@@ -485,7 +485,7 @@ public class JsonUtil {
 		
 		JsonValue value = object.get(key);
 		
-		if (value == null || !value.isNumber()) {
+		if (value == null || value.isNull() || !value.isNumber()) {
 			int returnValue = defaultValue;
 			if (value != null && value.isString()) {
 				try {
