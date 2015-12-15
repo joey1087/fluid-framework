@@ -412,6 +412,10 @@
     
         if ([self.screen isShowNavigationBar]) {
             CGRect frame = self.navigationController.navigationBar.frame;
+            
+            // Converts the frame from the receiver’s coordinate system to the target view's
+            frame = [self rect:self.navigationController.navigationBar.frame toView:self.view];
+            
             size.height -= frame.size.height;
             yStart += frame.size.height;
         }
