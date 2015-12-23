@@ -44,6 +44,8 @@ public class DefaultSystemService implements SystemService {
 		Intent intent = new Intent(Intent.ACTION_CALL);
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setData(Uri.parse("tel:" + phoneNumber));
+		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		//getCurrentActivityContext().startActivity(intent);
 		app.getCurrentActivity().startActivity(intent);
 	}
@@ -150,6 +152,8 @@ public class DefaultSystemService implements SystemService {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/rfc822");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
+		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (subject != null) {
 			intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		}
@@ -208,6 +212,8 @@ public class DefaultSystemService implements SystemService {
 	@Override
 	public void openBrowserWith(String url) {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
+		browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getCurrentActivityContext().startActivity(browserIntent);
 	}
 
@@ -215,6 +221,8 @@ public class DefaultSystemService implements SystemService {
 	public void openAppStorePageForRating() {
 		Uri uri = Uri.parse("market://details?id=" + getCurrentActivityContext().getPackageName());
 		Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
+		goToMarket.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		try {
 			getCurrentActivityContext().startActivity(goToMarket);
 		} catch (ActivityNotFoundException e) {
