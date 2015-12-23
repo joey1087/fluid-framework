@@ -45,7 +45,7 @@ public class DefaultSystemService implements SystemService {
 		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setData(Uri.parse("tel:" + phoneNumber));
 		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		//getCurrentActivityContext().startActivity(intent);
 		app.getCurrentActivity().startActivity(intent);
 	}
@@ -153,7 +153,7 @@ public class DefaultSystemService implements SystemService {
 		intent.setType("text/rfc822");
 		intent.putExtra(Intent.EXTRA_EMAIL, emails);
 		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (subject != null) {
 			intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		}
@@ -213,7 +213,7 @@ public class DefaultSystemService implements SystemService {
 	public void openBrowserWith(String url) {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception
-		browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getCurrentActivityContext().startActivity(browserIntent);
 	}
 
