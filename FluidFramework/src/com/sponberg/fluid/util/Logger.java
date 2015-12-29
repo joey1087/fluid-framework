@@ -93,7 +93,9 @@ public class Logger {
 		if (level >= LEVEL_ERROR) {
 			GlobalState.fluidApp.getLoggingService().logError(formattedMsg);	
 		} else {
-			GlobalState.fluidApp.getLoggingService().logMessage(formattedMsg);				
+			
+			// TODO: Should we disable log for LEVEL_NONE???
+//			GlobalState.fluidApp.getLoggingService().logMessage(formattedMsg);				
 		}
 	}
 	
