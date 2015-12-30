@@ -762,22 +762,22 @@
                 if (presentingController) {
                     [presentingController dismissViewControllerAnimated:NO completion:^{
                     }];
-                }
-                
-                /*
-                 * TODO 4/11/2015 : This whole modalView has a flaw where
-                 * if you display more than one modals at a same time, you no
-                 * longer have the reference to the previous ones. There's 
-                 * a new project being build to refactor this UI system in 
-                 * the framework
-                 */
-                
-                UIViewController *controller = [self currentNavigationController];
-                
-                if ([controller presentedViewController]) {
-                    [[controller presentedViewController] dismissViewControllerAnimated:YES completion:nil];
                 } else {
-                    [self.modalView removeFromSuperview];
+                    /*
+                     * TODO 4/11/2015 : This whole modalView has a flaw where
+                     * if you display more than one modals at a same time, you no
+                     * longer have the reference to the previous ones. There's
+                     * a new project being build to refactor this UI system in
+                     * the framework
+                     */
+                    
+                    UIViewController *controller = [self currentNavigationController];
+                    
+                    if ([controller presentedViewController]) {
+                        [[controller presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [self.modalView removeFromSuperview];
+                    }
                 }
             }
             self.modalView = nil;
