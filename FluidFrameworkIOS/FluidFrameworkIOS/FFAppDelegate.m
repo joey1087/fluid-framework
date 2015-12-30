@@ -658,19 +658,36 @@
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_WaitingDialog_]) {
         
-        FFTModalView_ModalViewWaitingDialog *userData = [modalView getUserData];
+         FFTModalView_ModalViewWaitingDialog *userData = [modalView getUserData];
         
-        FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
-                                                        message:[userData getMessage]
-                                                       delegate:nil
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:nil];
-        
-        alert.modalView = modalView;
-        
-        self.modalView = alert;
-        
-        [alert show];
+        // From iOS8 on, we use UIAlertController so that keyboard will not be dismissed after showing alert
+        if (objc_getClass("UIAlertController") != nil) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[userData getTitle]
+                                                                                     message:[userData getMessage]
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            self.modalView = alertController.view;
+            
+            // Seems like we have to use the rootViewController of the second window to present, otherwise, it will dismiss keyboard
+            // Refer to http://stackoverflow.com/questions/28564710/keep-keyboard-on-when-uialertcontroller-is-presented-in-swift
+            UIViewController* presentingController = [[[[UIApplication sharedApplication] windows] objectAtIndex:1] rootViewController];
+
+            [presentingController presentViewController:alertController animated:YES completion:^{
+            }];
+            
+        } else {
+            FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
+                                                            message:[userData getMessage]
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:nil];
+            
+            alert.modalView = modalView;
+            
+            self.modalView = alert;
+            
+            [alert show];
+
+        }
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_ImagePicker_]) {
         
@@ -738,6 +755,14 @@
                 UIAlertView *alert = (UIAlertView *) self.modalView;
                 [alert dismissWithClickedButtonIndex:0 animated:YES];
             } else {
+                
+                // dismiss the controller presented by [[[[UIApplication sharedApplication] windows] objectAtIndex:1] rootViewController]
+                // refer to the handling for FFTModalView_WaitingDialog_ in function showModalViewWithFFTModalViewHelper:(FFTModalView *)modalView
+                UIViewController* presentingController = [[[[UIApplication sharedApplication] windows] objectAtIndex:1] rootViewController];
+                if (presentingController) {
+                    [presentingController dismissViewControllerAnimated:NO completion:^{
+                    }];
+                }
                 
                 /*
                  * TODO 4/11/2015 : This whole modalView has a flaw where
