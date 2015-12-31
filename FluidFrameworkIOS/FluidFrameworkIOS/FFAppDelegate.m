@@ -660,8 +660,8 @@
         
          FFTModalView_ModalViewWaitingDialog *userData = [modalView getUserData];
         
-        // From iOS8 on, we use UIAlertController so that keyboard will not be dismissed after showing alert
-        if (objc_getClass("UIAlertController") != nil) {
+        // From iOS9 on, we use UIAlertController so that keyboard will not be dismissed after showing alert
+        if (([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[userData getTitle]
                                                                                      message:[userData getMessage]
                                                                               preferredStyle:UIAlertControllerStyleAlert];
