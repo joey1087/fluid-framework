@@ -105,7 +105,6 @@ withJavaLangThrowable:(JavaLangThrowable *)t {
     [((id<FFTLoggingService>) nil_chk([FFTGlobalState_get_fluidApp__() getLoggingService])) logErrorWithNSString:formattedMsg];
   }
   else {
-    [((id<FFTLoggingService>) nil_chk([FFTGlobalState_get_fluidApp__() getLoggingService])) logMessageWithNSString:formattedMsg];
   }
 }
 

@@ -21,6 +21,9 @@
 
 @property (nonatomic, readwrite, strong) UITabBarController *tabController;
 
+//contains pairs of modal - presenting view controller
+@property (nonatomic) NSMutableDictionary* modalControllers;
+
 - (void)setupApp:(NSDictionary *)launchOptions;
 
 - (NSString*)hexString:(NSData *)str;
