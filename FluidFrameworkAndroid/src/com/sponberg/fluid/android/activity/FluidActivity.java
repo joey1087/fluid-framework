@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
@@ -345,8 +346,8 @@ public class FluidActivity extends ActionBarActivity  {
 
 		if (currentContentView != null) {
 			//currentContentView.viewDidDisappear(); //TODO : this could be the reason for new tags not being removed
-		}
-
+		}		
+		
 		layout.viewWillAppear();
 
 		view.addView(layout);
@@ -404,7 +405,7 @@ public class FluidActivity extends ActionBarActivity  {
 	}
 
 	UpButtonEventHandler currentUpButtonPressedHandler = null;
-	boolean overridingUpButton = false;
+	protected boolean overridingUpButton = false;
 
 	public void showUpButton(boolean shouldShow, UpButtonEventHandler handler) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(shouldShow);
@@ -765,7 +766,7 @@ public class FluidActivity extends ActionBarActivity  {
 		pushLayout(screenId, true);
 	}
 
-	private boolean shouldShowUpButton() {
+	protected boolean shouldShowUpButton() {
 		if (isUsingTabbedNavigation() && selectedTab != null) {
 			Stack<String> stack = tabScreenStack.get(selectedTab);
 			if (stack != null && stack.size() > 0) {
