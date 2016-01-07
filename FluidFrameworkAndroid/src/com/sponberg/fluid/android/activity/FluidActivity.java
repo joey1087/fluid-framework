@@ -27,7 +27,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
@@ -345,7 +344,7 @@ public class FluidActivity extends ActionBarActivity  {
 		}
 
 		if (currentContentView != null) {
-			//currentContentView.viewDidDisappear(); //TODO : this could be the reason for new tags not being removed
+			//currentContentView.viewDidDisappear(); //TODO : Check why this is commented out
 		}		
 		
 		layout.viewWillAppear();
