@@ -403,7 +403,7 @@ public class FluidActivity extends ActionBarActivity  {
 		public void onUpButtonPressed();
 	}
 
-	UpButtonEventHandler currentUpButtonPressedHandler = null;
+	protected UpButtonEventHandler currentUpButtonPressedHandler = null;
 	protected boolean overridingUpButton = false;
 
 	public void showUpButton(boolean shouldShow, UpButtonEventHandler handler) {
