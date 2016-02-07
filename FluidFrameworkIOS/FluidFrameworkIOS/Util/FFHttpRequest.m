@@ -73,7 +73,7 @@ typedef enum {
         self.url = url;
         self.map = [NSMutableDictionary dictionary];
         self.attempt = 1;
-        self.maxAttempts = 3;
+        self.maxAttempts = 1;
         self.userInfo = [NSMutableDictionary dictionary];
         self.file = nil;
         self.requestMethod = requestMethod;
@@ -141,7 +141,8 @@ typedef enum {
                 
                 NSData *imageData = UIImageJPEGRepresentation(imageObject, 1);
                 
-                NSString *FileParamConstant = @"attachments";
+                //TODO: Remove this when Siyang has time to replace attachment with attachments
+                NSString *FileParamConstant = [key isEqualToString:@"attachment"] ? @"attachment" : @"attachments";
                 
                 [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
