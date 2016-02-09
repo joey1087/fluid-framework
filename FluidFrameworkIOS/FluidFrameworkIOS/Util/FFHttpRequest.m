@@ -15,7 +15,7 @@
 #import "java/util/ArrayList.h"
 
 
-#define API_TIMEOUT 20
+#define API_TIMEOUT 10
 
 typedef enum {
     Get,
@@ -40,6 +40,8 @@ typedef enum {
 @property(nonatomic, assign) int attempt;
 @property(nonatomic, assign) int maxAttempts;
 @property(nonatomic, assign) HttpRequestMethod requestMethod;
+@property(nonatomic, strong) NSTimer *timer;
+@property(nonatomic, strong) NSURLConnection *theConnection;
 
 @property(nonatomic, assign) BOOL postBodyTypeIsMultipart;
 
@@ -122,6 +124,7 @@ typedef enum {
         //Create the request
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        [self.theRequest setTimeoutInterval:API_TIMEOUT];
         
         NSString* boundaryString = [self generateBoundaryString];
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryString];
@@ -196,6 +199,7 @@ typedef enum {
         
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        self.theRequest.timeoutInterval = 10;
         
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         
@@ -253,14 +257,19 @@ typedef enum {
 
 - (BOOL)initConnection {
     
-    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:NO];
+    self.theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:NO];
     
-    if (theConnection) {
+    if (self.theConnection) {
         self.webData = [NSMutableData data];
         
         //[theConnection setDelegateQueue:self.queue];
-        [theConnection start];
-    
+        [self.theConnection start];
+        
+        //start timer
+        if (self.requestMethod == Post) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(timeout) userInfo:nil repeats:NO];
+        }
+        
         return YES;
     } else {
         return NO;
@@ -296,6 +305,17 @@ typedef enum {
         [self processBinary];
     } else {
         [self processNonBinary];
+    }
+    
+    finished = YES;
+}
+
+- (void)timeout {
+    [self.theConnection cancel];
+    self.theConnection = nil;
+    
+    if (self.failCallback) {
+        self.failCallback(self);
     }
     
     finished = YES;
