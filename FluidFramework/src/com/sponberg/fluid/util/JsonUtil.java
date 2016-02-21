@@ -501,6 +501,26 @@ public class JsonUtil {
 		}
 	}
 	
+	public static float getFloat(JsonObject object, String key, float defaultValue) {
+		
+		JsonValue value = object.get(key);
+		
+		if (value == null || value.isNull() || !value.isNumber()) {
+			float returnValue = defaultValue;
+			if (value != null && value.isString()) {
+				try {
+					returnValue = Float.parseFloat(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return returnValue;
+		} else {
+			return  value.asFloat();
+		}
+	}
+	
 	public static interface TypeMapper {
 		public Class<?> getTypeForField(String field);
 	}
