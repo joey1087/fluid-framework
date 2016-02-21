@@ -640,7 +640,11 @@ public class CustomLayout extends ViewGroup implements FluidViewAndroid {
 	public void grabFocusForView(final String viewId) {
 
 		final android.view.View view = viewsById.get(viewId);
-
+		
+		if (view == null) {
+			return;
+		}
+		
 		// Without the delay, the keyboard won't show
 		view.postDelayed(new Runnable()
 		{
