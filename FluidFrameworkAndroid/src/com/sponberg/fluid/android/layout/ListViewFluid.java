@@ -1,6 +1,7 @@
 package com.sponberg.fluid.android.layout;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.widget.ListView;
 
 import com.sponberg.fluid.GlobalState;
@@ -22,6 +23,8 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 	final ViewBehaviorTable viewBehavior;
 	
 	private boolean shouldScrollToBottom = false;
+	
+	private Parcelable mListState = null;
 
 	public ListViewFluid(Context context,
 			com.sponberg.fluid.layout.ViewPosition view, Bounds bounds,
@@ -83,7 +86,7 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 	}
 
 	public void checkAndScrollToBottom() {
-
+		
 		if (shouldScrollToBottom) {
 			if (this.viewBehavior != null && this.viewBehavior.isScrollToBottomOnLoad()) {
 				scrollToBottom();
@@ -151,6 +154,10 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 		}
 		
 		shouldScrollToBottom = true;
+		
+		if (mListState != null) {
+			onRestoreInstanceState(mListState);
+		}
 	}
 
 	@Override
@@ -162,6 +169,8 @@ public class ListViewFluid extends ListView implements FluidViewAndroid {
 		}
 		
 		shouldScrollToBottom = true;
+		
+		mListState = onSaveInstanceState();
 		
 		super.onDetachedFromWindow();
 	}

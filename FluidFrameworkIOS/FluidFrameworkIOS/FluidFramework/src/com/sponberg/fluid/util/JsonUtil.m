@@ -508,6 +508,27 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
   }
 }
 
++ (float)getFloatWithFFTJsonObject:(FFTJsonObject *)object
+                      withNSString:(NSString *)key
+                         withFloat:(float)defaultValue {
+  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
+  if (value == nil || [value isNull] || ![value isNumber]) {
+    float returnValue = defaultValue;
+    if (value != nil && [value isString]) {
+      @try {
+        returnValue = [JavaLangFloat parseFloatWithNSString:[value asString]];
+      }
+      @catch (JavaLangNumberFormatException *e) {
+        [((JavaLangNumberFormatException *) nil_chk(e)) printStackTrace];
+      }
+    }
+    return returnValue;
+  }
+  else {
+    return [value asFloat];
+  }
+}
+
 - (id)init {
   return [super init];
 }
@@ -544,12 +565,13 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     { "getStringWithFFTJsonObject:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
     { "getStringWithFFTJsonObject:withNSString:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
     { "getIntWithFFTJsonObject:withNSString:withInt:", "getInt", "I", 0x9, NULL },
+    { "getFloatWithFFTJsonObject:withNSString:withFloat:", "getFloat", "F", 0x9, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "underscoreSeparatesWords_", NULL, 0x8, "Z", &FFTJsonUtil_underscoreSeparatesWords_,  },
   };
-  static J2ObjcClassInfo _FFTJsonUtil = { "JsonUtil", "com.sponberg.fluid.util", NULL, 0x1, 31, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTJsonUtil = { "JsonUtil", "com.sponberg.fluid.util", NULL, 0x1, 32, methods, 1, fields, 0, NULL};
   return &_FFTJsonUtil;
 }
 

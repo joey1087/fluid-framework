@@ -116,6 +116,10 @@
                   withNSString:(NSString *)key
                        withInt:(int)defaultValue;
 
++ (float)getFloatWithFFTJsonObject:(FFTJsonObject *)object
+                      withNSString:(NSString *)key
+                         withFloat:(float)defaultValue;
+
 - (id)init;
 
 @end

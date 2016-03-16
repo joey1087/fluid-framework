@@ -102,6 +102,8 @@ public class FluidActivity extends ActionBarActivity  {
 
 	protected CustomLayout currentContentView = null;
 	
+	protected ArrayList<Tab> tabs = new ArrayList<Tab>();
+	
 	public String getCurrentScreenId() {
 		if (currentContentView == null) {
 			return null;
@@ -191,6 +193,8 @@ public class FluidActivity extends ActionBarActivity  {
 					tabScreenStack.put(tabView.getText().toString(),
 							new Stack<String>());
 					actionBar.addTab(tabView);
+					
+					tabs.add(tabView);
 				}
 
 				if (screenId == null) {
@@ -344,9 +348,9 @@ public class FluidActivity extends ActionBarActivity  {
 		}
 
 		if (currentContentView != null) {
-			//currentContentView.viewDidDisappear(); //TODO : this could be the reason for new tags not being removed
-		}
-
+			//currentContentView.viewDidDisappear(); //TODO : Check why this is commented out
+		}		
+		
 		layout.viewWillAppear();
 
 		view.addView(layout);
@@ -403,8 +407,8 @@ public class FluidActivity extends ActionBarActivity  {
 		public void onUpButtonPressed();
 	}
 
-	UpButtonEventHandler currentUpButtonPressedHandler = null;
-	boolean overridingUpButton = false;
+	protected UpButtonEventHandler currentUpButtonPressedHandler = null;
+	protected boolean overridingUpButton = false;
 
 	public void showUpButton(boolean shouldShow, UpButtonEventHandler handler) {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(shouldShow);
@@ -430,6 +434,7 @@ public class FluidActivity extends ActionBarActivity  {
 				if (tab != null) {
 					tab.select();
 					selectedTab = tab.getText().toString();
+										
 					screenId = getScreenIdForTab(selectedTab);
 					saveCurrentScreen = true;
 				}
@@ -721,7 +726,7 @@ public class FluidActivity extends ActionBarActivity  {
 					currentUpButtonPressedHandler.onUpButtonPressed();
 				}
 			} else {
-				popLayout(true);
+				popLayout(true); //TODO : do we want to pop all the way to the root here?
 			}
 
 			return true;
@@ -765,7 +770,7 @@ public class FluidActivity extends ActionBarActivity  {
 		pushLayout(screenId, true);
 	}
 
-	private boolean shouldShowUpButton() {
+	protected boolean shouldShowUpButton() {
 		if (isUsingTabbedNavigation() && selectedTab != null) {
 			Stack<String> stack = tabScreenStack.get(selectedTab);
 			if (stack != null && stack.size() > 0) {
@@ -1103,7 +1108,7 @@ public class FluidActivity extends ActionBarActivity  {
 		} else {
 			stack = nonTabScreenStack;
 		}
-
+		
 		ArrayList<String> previousScreenIds = new ArrayList<>();
 
 		if (stack != null && stack.size() > 0) {
@@ -1121,7 +1126,7 @@ public class FluidActivity extends ActionBarActivity  {
 			} else {
 				nextScreenId = getScreenIdForNonTab();
 			}
-
+		
 			Animation anim = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
 			anim.setAnimationListener(new RemoveViewListener(this.currentContentView));
 			this.currentContentView.startAnimation(anim);
@@ -1283,7 +1288,7 @@ public class FluidActivity extends ActionBarActivity  {
 			Stack<String> stack = tabScreenStack.get(tab.getText().toString());
 			stack.clear();
 			selectedTab = tab.getText().toString();
-
+			
 			Runnable r = new Runnable() {
 				@Override
 				public void run() {
@@ -1304,7 +1309,6 @@ public class FluidActivity extends ActionBarActivity  {
 				return;
 			}
 			selectedTab = tab.getText().toString();
-
 			Runnable r = new Runnable() {
 				@Override
 				public void run() {
