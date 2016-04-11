@@ -277,6 +277,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     limit_ = nil;
     allowRefresh_ = YES;
     orderBy_ = nil;
+    groupBy_ = nil;
   }
   return self;
 }
@@ -284,6 +285,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
 - (void)copyAllFieldsTo:(FFTDatastoreTransaction_QueryBuilderBase *)other {
   [super copyAllFieldsTo:other];
   other->allowRefresh_ = allowRefresh_;
+  other->groupBy_ = groupBy_;
   other->limit_ = limit_;
   other->offset_ = offset_;
   other->orderBy_ = orderBy_;
@@ -304,8 +306,9 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     { "limit_", NULL, 0x0, "Ljava.lang.Integer;", NULL,  },
     { "allowRefresh_", NULL, 0x0, "Z", NULL,  },
     { "orderBy_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "groupBy_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilderBase = { "QueryBuilderBase", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 1, methods, 7, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilderBase = { "QueryBuilderBase", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 1, methods, 8, fields, 0, NULL};
   return &_FFTDatastoreTransaction_QueryBuilderBase;
 }
 
@@ -373,6 +376,11 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
   return self;
 }
 
+- (FFTDatastoreTransaction_QueryBuilder *)groupByWithNSString:(NSString *)groupBy {
+  self->groupBy_ = groupBy;
+  return self;
+}
+
 - (FFTSQLResultList *)execute {
   if (where_ == nil && [((JavaUtilArrayList *) nil_chk(paramNames_)) size] > 0) {
     @throw [[JavaLangRuntimeException alloc] initWithNSString:@"Can't set params without a where clause"];
@@ -385,6 +393,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
   [query setLimitWithJavaLangInteger:limit_];
   [query setAllowRefreshWithBoolean:allowRefresh_];
   [query setOrderByWithNSString:orderBy_];
+  [query setGroupByWithNSString:groupBy_];
   return [((id<FFTDatastoreService>) nil_chk(this$1_->ds_)) queryWithFFTSQLQuery:query];
 }
 
@@ -404,6 +413,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     { "limitWithInt:", "limit", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "allowRefreshWithBoolean:", "allowRefresh", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "orderByWithNSString:", "orderBy", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
+    { "groupByWithNSString:", "groupBy", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "execute", NULL, "Lcom.sponberg.fluid.datastore.SQLResultList;", 0x1, "Lcom.sponberg.fluid.datastore.DatastoreException;" },
   };
   static J2ObjcFieldInfo fields[] = {
@@ -411,7 +421,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     { "queryResultClass_", NULL, 0x0, "Ljava.lang.Class;", NULL,  },
     { "columns_", NULL, 0x0, "[Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 9, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 10, methods, 3, fields, 0, NULL};
   return &_FFTDatastoreTransaction_QueryBuilder;
 }
 

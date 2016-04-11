@@ -32,6 +32,7 @@
   IOSClass *queryResultClass_;
   FFTSQLResultList *results_;
   NSString *orderBy_;
+  NSString *groupBy_;
   id<FFTSQLQueryResult> result_;
 }
 
@@ -93,6 +94,8 @@
 
 - (NSString *)getOrderBy;
 
+- (NSString *)getGroupBy;
+
 - (id)getResult;
 
 - (void)setTableNameWithNSString:(NSString *)tableName;
@@ -108,6 +111,8 @@
 - (void)setResultsWithFFTSQLResultList:(FFTSQLResultList *)results;
 
 - (void)setOrderByWithNSString:(NSString *)orderBy;
+
+- (void)setGroupByWithNSString:(NSString *)groupBy;
 
 - (void)setResultWithId:(id<FFTSQLQueryResult>)result;
 
@@ -127,6 +132,7 @@ J2OBJC_FIELD_SETTER(FFTSQLQuery, limit_, JavaLangInteger *)
 J2OBJC_FIELD_SETTER(FFTSQLQuery, queryResultClass_, IOSClass *)
 J2OBJC_FIELD_SETTER(FFTSQLQuery, results_, FFTSQLResultList *)
 J2OBJC_FIELD_SETTER(FFTSQLQuery, orderBy_, NSString *)
+J2OBJC_FIELD_SETTER(FFTSQLQuery, groupBy_, NSString *)
 J2OBJC_FIELD_SETTER(FFTSQLQuery, result_, id)
 
 typedef FFTSQLQuery ComSponbergFluidDatastoreSQLQuery;

@@ -36,6 +36,8 @@ public class SQLQuery<T extends SQLQueryResult> implements SQLStatement, SQLExec
 	
 	String orderBy;
 	
+	String groupBy;
+	
 	public <Z extends SQLQueryResult & SQLTable> SQLQuery(Class<Z> queryResultClass, String... selectColumns) {
 		this.tableName = SQLUtil.getTableName(queryResultClass);
 		this.selectColumns = selectColumns;
@@ -100,6 +102,11 @@ public class SQLQuery<T extends SQLQueryResult> implements SQLStatement, SQLExec
 			builder.append(" where ");
 			builder.append(whereClause.getWhere());
 			whereParams = whereClause.getParameters();
+		}
+		
+		if (groupBy != null) {
+			builder.append(" ");
+			builder.append(groupBy);
 		}
 		
 		if (orderBy != null) {
