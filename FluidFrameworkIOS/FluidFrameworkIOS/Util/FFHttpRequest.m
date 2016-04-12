@@ -15,8 +15,8 @@
 #import "java/util/ArrayList.h"
 
 
-#define API_TIMEOUT 10
-
+#define API_TIMEOUT 30
+    
 typedef enum {
     Get,
     Post,
