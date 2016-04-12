@@ -19,6 +19,8 @@
 
 - (void)userCancelled;
 
+- (void)userScrolledToBottomWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
+
 @end
 
 __attribute__((always_inline)) inline void FFTActionListener_init() {}

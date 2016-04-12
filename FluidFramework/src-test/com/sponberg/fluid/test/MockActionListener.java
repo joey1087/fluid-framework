@@ -4,7 +4,7 @@ import com.sponberg.fluid.layout.ActionListener;
 
 public class MockActionListener implements ActionListener {
 
-	int userTapped, userChangedValueTo, userCancelled;
+	int userTapped, userChangedValueTo, userCancelled, userScrolledToBottom;
 	
 	@Override
 	public void userTapped(EventInfo eventInfo) {
@@ -21,4 +21,8 @@ public class MockActionListener implements ActionListener {
 		userCancelled++;
 	}
 
+	@Override
+	public void userScrolledToBottom(EventInfo eventInfo) {
+		userScrolledToBottom++;
+	}
 }
