@@ -120,6 +120,10 @@
                       withNSString:(NSString *)key
                          withFloat:(float)defaultValue;
 
++ (BOOL)getBooleanWithFFTJsonObject:(FFTJsonObject *)object
+                       withNSString:(NSString *)key
+                        withBoolean:(BOOL)defaultValue;
+
 - (id)init;
 
 @end

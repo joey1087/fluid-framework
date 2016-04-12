@@ -521,6 +521,26 @@ public class JsonUtil {
 		}
 	}
 	
+	public static boolean getBoolean(JsonObject object, String key, boolean defaultValue) {
+		
+		JsonValue value = object.get(key);
+		
+		if (value == null || value.isNull() || !value.isBoolean()) {
+			boolean returnValue = defaultValue;
+			if (value != null && value.isString()) {
+				try {
+					returnValue = Boolean.parseBoolean(value.asString());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return returnValue;
+		} else {
+			return  value.asBoolean();
+		}
+	}
+	
 	public static interface TypeMapper {
 		public Class<?> getTypeForField(String field);
 	}
