@@ -15,8 +15,8 @@
 #import "java/util/ArrayList.h"
 
 
-#define API_TIMEOUT 20
-
+#define API_TIMEOUT 30
+    
 typedef enum {
     Get,
     Post,
@@ -40,6 +40,8 @@ typedef enum {
 @property(nonatomic, assign) int attempt;
 @property(nonatomic, assign) int maxAttempts;
 @property(nonatomic, assign) HttpRequestMethod requestMethod;
+@property(nonatomic, strong) NSTimer *timer;
+@property(nonatomic, strong) NSURLConnection *theConnection;
 
 @property(nonatomic, assign) BOOL postBodyTypeIsMultipart;
 
@@ -73,7 +75,7 @@ typedef enum {
         self.url = url;
         self.map = [NSMutableDictionary dictionary];
         self.attempt = 1;
-        self.maxAttempts = 3;
+        self.maxAttempts = 1;
         self.userInfo = [NSMutableDictionary dictionary];
         self.file = nil;
         self.requestMethod = requestMethod;
@@ -122,6 +124,7 @@ typedef enum {
         //Create the request
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        [self.theRequest setTimeoutInterval:API_TIMEOUT];
         
         NSString* boundaryString = [self generateBoundaryString];
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryString];
@@ -141,7 +144,8 @@ typedef enum {
                 
                 NSData *imageData = UIImageJPEGRepresentation(imageObject, 1);
                 
-                NSString *FileParamConstant = @"attachments";
+                //TODO: Remove this when Siyang has time to replace attachment with attachments
+                NSString *FileParamConstant = [key isEqualToString:@"attachment"] ? @"attachment" : @"attachments";
                 
                 [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -195,6 +199,7 @@ typedef enum {
         
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
+        self.theRequest.timeoutInterval = 10;
         
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         
@@ -252,14 +257,19 @@ typedef enum {
 
 - (BOOL)initConnection {
     
-    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:NO];
+    self.theConnection = [[NSURLConnection alloc] initWithRequest:self.theRequest delegate:self startImmediately:NO];
     
-    if (theConnection) {
+    if (self.theConnection) {
         self.webData = [NSMutableData data];
         
         //[theConnection setDelegateQueue:self.queue];
-        [theConnection start];
-    
+        [self.theConnection start];
+        
+        //start timer
+        if (self.requestMethod == Post) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(timeout) userInfo:nil repeats:NO];
+        }
+        
         return YES;
     } else {
         return NO;
@@ -295,6 +305,17 @@ typedef enum {
         [self processBinary];
     } else {
         [self processNonBinary];
+    }
+    
+    finished = YES;
+}
+
+- (void)timeout {
+    [self.theConnection cancel];
+    self.theConnection = nil;
+    
+    if (self.failCallback) {
+        self.failCallback(self);
     }
     
     finished = YES;
