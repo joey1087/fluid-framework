@@ -274,6 +274,8 @@
 //        tabController.tabBar.layer.borderColor = color.CGColor;
 //    }
     
+    self.tabArray = tabArray;
+    
     UIViewController* appContainerViewController = [self createAppContainerViewController:tabArray];
     
     self.window.backgroundColor = [UIColor whiteColor];
