@@ -1250,8 +1250,11 @@
             url = [view getValueWithNSString:info.dataModelKeyPrefix withNSString:urlKey withNSString:url];
         }
         
+        /*
+         * TODO : extend the ViewBehavior for the url-webview to allow specification of the caching policy
+         */
         dispatch_sync(dispatch_get_main_queue(), ^{
-            NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+            NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:0];
             [webView loadRequest:req];
         });
     });

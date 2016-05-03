@@ -3,8 +3,6 @@
 
 package com.sponberg.fluid.datastore;
 
-import com.sponberg.fluid.datastore.DSBase;
-import com.sponberg.fluid.datastore.SQLTable;
 
 public class DSPhoto extends DSBase implements SQLTable {
 
