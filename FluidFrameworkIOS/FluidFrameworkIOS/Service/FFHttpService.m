@@ -136,7 +136,14 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
         return;
     }
     
-    FFHttpRequest *request = [FFHttpRequest requestPostWithMutipartFormBodyTypeWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
+    FFHttpRequest *request;
+    
+    if ([postBodyType isEqual:FFTHttpService_PostBodyTypeEnum_get_FormData()]) {
+    
+        request = [FFHttpRequest requestPostWithMutipartFormBodyTypeWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
+    } else {
+        request = [FFHttpRequest requestPostWithUrl:URL successCallback:MakeCallback(requestSuccess) failCallback:MakeCallback(requestFailed)];
+    }
     
     [self sendRequest:request withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth];
 }
