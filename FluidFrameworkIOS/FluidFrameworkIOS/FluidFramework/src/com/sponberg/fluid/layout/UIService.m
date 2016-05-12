@@ -23,6 +23,8 @@
     { "showModalViewWithFFTModalView:", "showModalView", "V", 0x401, NULL },
     { "dismissModalViewWithFFTModalView:", "dismissModalView", "V", 0x401, NULL },
     { "closeCurrentLayout", NULL, "V", 0x401, NULL },
+    { "showAlertWithNSString:withNSString:", "showAlert", "V", 0x401, NULL },
+    { "showAlertWithNSString:withNSString:withFFTCallback:", "showAlert", "V", 0x401, NULL },
     { "showAlertWithNSString:withNSString:withNSString:", "showAlert", "V", 0x401, NULL },
     { "showAlertWithNSString:withNSString:withNSString:withFFTCallback:", "showAlert", "V", 0x401, NULL },
     { "computeHeightOfTextWithNSString:withFloat:withNSString:withFloat:", "computeHeightOfText", "F", 0x401, NULL },
@@ -36,7 +38,7 @@
     { "isOrientationLandscape", NULL, "Z", 0x401, NULL },
     { "getCurrentScreenId", NULL, "Ljava.lang.String;", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 20, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTUIService = { "UIService", "com.sponberg.fluid.layout", NULL, 0x201, 22, methods, 0, NULL, 0, NULL};
   return &_FFTUIService;
 }
 

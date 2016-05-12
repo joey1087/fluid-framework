@@ -34,6 +34,13 @@
 - (void)closeCurrentLayout;
 
 - (void)showAlertWithNSString:(NSString *)title
+                 withNSString:(NSString *)message;
+
+- (void)showAlertWithNSString:(NSString *)title
+                 withNSString:(NSString *)message
+              withFFTCallback:(id<FFTCallback>)callback;
+
+- (void)showAlertWithNSString:(NSString *)title
                  withNSString:(NSString *)message
                  withNSString:(NSString *)buttonText;
 

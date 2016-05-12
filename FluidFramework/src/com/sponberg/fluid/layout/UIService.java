@@ -20,6 +20,10 @@ public interface UIService {
 	
 	public void closeCurrentLayout();
 	
+	public void showAlert(String title, String message);
+
+	public void showAlert(String title, String message, Callback callback);
+	
 	public void showAlert(String title, String message, String buttonText);
 
 	public void showAlert(String title, String message, String buttonText, Callback callback);
