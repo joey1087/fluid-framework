@@ -20,9 +20,9 @@ public interface UIService {
 	
 	public void closeCurrentLayout();
 	
-	public void showAlert(String title, String message);
+	public void showAlert(String title, String message, String buttonText);
 
-	public void showAlert(String title, String message, Callback callback);
+	public void showAlert(String title, String message, String buttonText, Callback callback);
 
 	public float computeHeightOfText(String text, float width, String fontName, float fontSizeInUnits);
 

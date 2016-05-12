@@ -55,14 +55,14 @@ public class DefaultUIService implements UIService {
 	}
 	
 	@Override
-	public void showAlert(final String title, final String message) {
+	public void showAlert(final String title, final String message, final String buttonText) {
 		
 		if (!GlobalState.fluidApp.getSystemService().isOnUiThread()) {
 			
 			Runnable r = new Runnable() {
 				@Override
 				public void run() {
-					showAlert(title, message);
+					showAlert(title, message, buttonText);
 				}
 			};
 			GlobalState.fluidApp.getSystemService().runOnUiThread(r);
@@ -72,19 +72,19 @@ public class DefaultUIService implements UIService {
 		new AlertDialog.Builder(getCurrentActivityContext())
 	    .setTitle(title)
 	    .setMessage(message)
-	    .setPositiveButton(android.R.string.ok, null)
+	    .setPositiveButton(buttonText, null)
 	    .show();
 	}
 
 	@Override
-	public void showAlert(final String title, final String message, final Callback callback) {
+	public void showAlert(final String title, final String message, final String buttonText, final Callback callback) {
 		
 		if (!GlobalState.fluidApp.getSystemService().isOnUiThread()) {
 			
 			Runnable r = new Runnable() {
 				@Override
 				public void run() {
-					showAlert(title, message, callback);
+					showAlert(title, message, buttonText, callback);
 				}
 			};
 			GlobalState.fluidApp.getSystemService().runOnUiThread(r);
@@ -95,7 +95,7 @@ public class DefaultUIService implements UIService {
 			new AlertDialog.Builder(getCurrentActivityContext())
 		    .setTitle(title)
 		    .setMessage(message)
-		    .setPositiveButton(android.R.string.ok, null)
+		    .setPositiveButton(buttonText, null)
 		    .show();
 		
 		dialog.setOnDismissListener(new OnDismissListener() {

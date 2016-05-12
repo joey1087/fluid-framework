@@ -34,10 +34,12 @@
 - (void)closeCurrentLayout;
 
 - (void)showAlertWithNSString:(NSString *)title
-                 withNSString:(NSString *)message;
+                 withNSString:(NSString *)message
+                 withNSString:(NSString *)buttonText;
 
 - (void)showAlertWithNSString:(NSString *)title
                  withNSString:(NSString *)message
+                 withNSString:(NSString *)buttonText
               withFFTCallback:(id<FFTCallback>)callback;
 
 - (float)computeHeightOfTextWithNSString:(NSString *)text
