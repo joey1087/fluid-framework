@@ -53,6 +53,18 @@ public class DefaultUIService implements UIService {
 		
 		app.pushLayout(screenId, animated);
 	}
+
+	@Override
+	public void showAlert(String title, String message) {
+
+		showAlert(title, message, "OK");
+	}
+
+	@Override
+	public void showAlert(String title, String message, Callback callback) {
+
+		showAlert(title, message, "OK", callback);
+	}
 	
 	@Override
 	public void showAlert(final String title, final String message, final String buttonText) {
