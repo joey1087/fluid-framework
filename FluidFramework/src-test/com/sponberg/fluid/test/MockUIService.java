@@ -24,6 +24,7 @@ public class MockUIService implements UIService {
 	
 	String alertTitle;
 	String alertMessage;
+	String alertButtonTitle;
 	
 	Stack<String> screenIds = new Stack<>();
 	
@@ -70,8 +71,14 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void showAlert(String title, String message) {
+		showAlert(title, message, "");
+	}
+	
+	@Override
+	public void showAlert(String title, String message, String buttonTitle) {
 		alertTitle = title;
 		alertMessage = message;
+		alertButtonTitle = buttonTitle;
 		alertSemaphore.release();
 	}
 
@@ -160,8 +167,14 @@ public class MockUIService implements UIService {
 
 	@Override
 	public void showAlert(String title, String message, Callback callback) {
+		showAlert(title, message, "", callback);
+	}
+	
+	@Override
+	public void showAlert(String title, String message, String buttonTitle, Callback callback) {
 		alertTitle = title;
 		alertMessage = message;
+		alertButtonTitle = buttonTitle;
 		alertSemaphore.release();
 	}
 

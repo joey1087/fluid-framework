@@ -40,6 +40,15 @@
                  withNSString:(NSString *)message
               withFFTCallback:(id<FFTCallback>)callback;
 
+- (void)showAlertWithNSString:(NSString *)title
+                 withNSString:(NSString *)message
+                 withNSString:(NSString *)buttonText;
+
+- (void)showAlertWithNSString:(NSString *)title
+                 withNSString:(NSString *)message
+                 withNSString:(NSString *)buttonText
+              withFFTCallback:(id<FFTCallback>)callback;
+
 - (float)computeHeightOfTextWithNSString:(NSString *)text
                                withFloat:(float)width
                             withNSString:(NSString *)fontName

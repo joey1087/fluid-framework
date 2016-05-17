@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +20,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -176,6 +176,11 @@ public class DefaultHttpService implements HttpService {
 							            byte[] imageBytes = baos.toByteArray();
 										entityBuilder.addBinaryBody(key, imageBytes, ContentType.create("image/jpeg"), "temp");
 										//entityBuilder.addBinaryBody(name, file, contentType, filename)
+									} else if (value instanceof List) {
+										ArrayList<String> list = castToAnArray(value);
+										for (String s : list) {
+											entityBuilder.addTextBody(key, String.valueOf(s));
+										}
 									}
 								}
 								HttpEntity entity = entityBuilder.build();
@@ -259,6 +264,12 @@ public class DefaultHttpService implements HttpService {
 			else
 				callback.fail(new HttpServiceCallback.HttpResponse(result, statusCode));
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T extends List<?>> T castToAnArray(Object obj) {
+		
+	    return (T) obj;
 	}
 	
 	private class HttpRequestConfiguration {
