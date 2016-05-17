@@ -338,6 +338,11 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
   return self;
 }
 
+- (FFTDatastoreTransaction_QueryBuilder *)selectColumnsWithNSStringArray:(IOSObjectArray *)columns {
+  self->columns_ = columns;
+  return self;
+}
+
 - (FFTDatastoreTransaction_QueryBuilder *)whereWithNSString:(NSString *)where {
   self->where_ = where;
   return self;
@@ -398,6 +403,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
   static J2ObjcMethodInfo methods[] = {
     { "initWithFFTDatastoreTransaction:withIOSClass:", "QueryBuilder", NULL, 0x1, NULL },
     { "selectWithNSStringArray:", "select", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x81, NULL },
+    { "selectColumnsWithNSStringArray:", "selectColumns", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "whereWithNSString:", "where", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "paramWithNSString:withId:", "param", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
     { "offsetWithInt:", "offset", "Lcom.sponberg.fluid.datastore.DatastoreTransaction$QueryBuilder;", 0x1, NULL },
@@ -411,7 +417,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     { "queryResultClass_", NULL, 0x0, "Ljava.lang.Class;", NULL,  },
     { "columns_", NULL, 0x0, "[Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 9, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 10, methods, 3, fields, 0, NULL};
   return &_FFTDatastoreTransaction_QueryBuilder;
 }
 
