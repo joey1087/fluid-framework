@@ -214,6 +214,12 @@ public class DatastoreTransaction {
 			return this;
 		}
 		
+		public QueryBuilder<T> selectColumns(String[] columns) {
+			this.columns = columns;
+			
+			return this;
+		}
+		
 		public QueryBuilder<T> where(String where) {
 			this.where = where;
 			return this;

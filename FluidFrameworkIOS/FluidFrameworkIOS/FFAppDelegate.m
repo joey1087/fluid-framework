@@ -274,6 +274,8 @@
 //        tabController.tabBar.layer.borderColor = color.CGColor;
 //    }
     
+    self.tabArray = tabArray;
+    
     UIViewController* appContainerViewController = [self createAppContainerViewController:tabArray];
     
     self.window.backgroundColor = [UIColor whiteColor];
@@ -813,13 +815,24 @@
 }
 
 - (void)showAlertWithNSString:(NSString *)title withNSString:(NSString *)message {
+    
     [self showAlertWithNSString:title withNSString:message withFFTCallback:nil];
+}
+
+- (void)showAlertWithNSString:(NSString *)title withNSString:(NSString *)message withNSString:(NSString *)buttonText {
+    
+    [self showAlertWithNSString:title withNSString:message withNSString:buttonText withFFTCallback:nil];
 }
 
 - (void)showAlertWithNSString:(NSString *)title
                  withNSString:(NSString *)message
               withFFTCallback:(id<FFTCallback>)callback {
 
+    [self showAlertWithNSString:title withNSString:message withNSString:@"OK" withFFTCallback:callback];
+}
+
+- (void)showAlertWithNSString:(NSString *)title withNSString:(NSString *)message withNSString:(NSString *)buttonText withFFTCallback:(id<FFTCallback>)callback {
+    
     if (![NSThread isMainThread]) {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -832,7 +845,7 @@
     FFAlertView *alert = [[FFAlertView alloc] initWithTitle:title
                                                     message:message
                                                    delegate:nil
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:buttonText
                                           otherButtonTitles:nil];
     alert.callback = callback;
     [alert show];

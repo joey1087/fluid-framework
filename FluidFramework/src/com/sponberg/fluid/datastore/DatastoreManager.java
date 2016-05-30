@@ -12,14 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import lombok.Getter;
-
 import com.sponberg.fluid.ApplicationLoader;
 import com.sponberg.fluid.FluidApp;
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.SecurityService;
 import com.sponberg.fluid.util.KeyValueList;
 import com.sponberg.fluid.util.Logger;
+
+import lombok.Getter;
 
 public class DatastoreManager implements ApplicationLoader {
 

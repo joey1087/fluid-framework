@@ -41,7 +41,7 @@ public class DefaultSystemService implements SystemService {
 	
 	@Override
 	public void initiatePhoneCall(String phoneNumber) {
-		Intent intent = new Intent(Intent.ACTION_CALL);
+		Intent intent = new Intent(Intent.ACTION_DIAL);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 		intent.setData(Uri.parse("tel:" + phoneNumber));
 		// set this flag to avoid "Calling startActivity() from outside of an Activity context" exception

@@ -21,6 +21,8 @@
 
 @property (nonatomic, readwrite, strong) UITabBarController *tabController;
 
+@property (nonatomic) NSArray* tabArray;
+
 //contains pairs of modal - presenting view controller
 @property (nonatomic) NSMutableDictionary* modalControllers;
 

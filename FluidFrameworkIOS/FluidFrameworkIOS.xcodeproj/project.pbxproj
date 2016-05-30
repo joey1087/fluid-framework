@@ -223,7 +223,7 @@
 		23D9B9781A676FFA00AECE7F /* FFNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B89E1A676FFA00AECE7F /* FFNavigationViewController.m */; };
 		23D9B9791A676FFA00AECE7F /* FFTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A01A676FFA00AECE7F /* FFTabBarViewController.m */; };
 		23D9B97A1A676FFA00AECE7F /* FFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A21A676FFA00AECE7F /* FFViewController.m */; };
-		3AFF559319061070006C3273 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AFF559219061070006C3273 /* libsqlite3.dylib */; };
+		D45ACE341CEB07C100E42055 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D45ACE331CEB07C100E42055 /* libsqlite3.dylib */; };
 		D4A4782D1ABBDBED00D3DAA0 /* cycle_finder in Resources */ = {isa = PBXBuildFile; fileRef = D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */; };
 		D4A4782E1ABBDBED00D3DAA0 /* j2objc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780D1ABBDBED00D3DAA0 /* j2objc */; };
 		D4A4782F1ABBDBED00D3DAA0 /* j2objcc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780E1ABBDBED00D3DAA0 /* j2objcc */; };
@@ -682,6 +682,7 @@
 		23D9B8A11A676FFA00AECE7F /* FFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFViewController.h; sourceTree = "<group>"; };
 		23D9B8A21A676FFA00AECE7F /* FFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFViewController.m; sourceTree = "<group>"; };
 		3AFF559219061070006C3273 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D45ACE331CEB07C100E42055 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = cycle_finder; sourceTree = "<group>"; };
 		D4A470A01ABBDBEA00D3DAA0 /* SystemClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemClock.h; sourceTree = "<group>"; };
 		D4A470A41ABBDBEA00D3DAA0 /* LargeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeTest.h; sourceTree = "<group>"; };
@@ -2447,7 +2448,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AFF559319061070006C3273 /* libsqlite3.dylib in Frameworks */,
+				D45ACE341CEB07C100E42055 /* libsqlite3.dylib in Frameworks */,
 				2393F85A18F82DA600D7659D /* UIKit.framework in Frameworks */,
 				2393F85818F82D9500D7659D /* CoreGraphics.framework in Frameworks */,
 				237F09F018F7DAFC003B3031 /* Foundation.framework in Frameworks */,
@@ -2514,6 +2515,7 @@
 		237F09EE18F7DAFC003B3031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D45ACE331CEB07C100E42055 /* libsqlite3.dylib */,
 				3AFF559219061070006C3273 /* libsqlite3.dylib */,
 				2393F85918F82DA600D7659D /* UIKit.framework */,
 				2393F85718F82D9500D7659D /* CoreGraphics.framework */,
@@ -6692,6 +6694,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -6729,6 +6732,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -6748,6 +6752,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/FluidFrameworkIOS.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -6778,6 +6783,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/FluidFrameworkIOS.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",

@@ -151,6 +151,8 @@ J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, groupBy_, NSString
 
 - (FFTDatastoreTransaction_QueryBuilder *)selectWithNSStringArray:(IOSObjectArray *)columns;
 
+- (FFTDatastoreTransaction_QueryBuilder *)selectColumnsWithNSStringArray:(IOSObjectArray *)columns;
+
 - (FFTDatastoreTransaction_QueryBuilder *)whereWithNSString:(NSString *)where;
 
 - (FFTDatastoreTransaction_QueryBuilder *)paramWithNSString:(NSString *)name
