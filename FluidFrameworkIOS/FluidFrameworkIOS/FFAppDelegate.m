@@ -41,6 +41,7 @@
 
 #import "Callback.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ArrayList.h"
 
 @interface AppLoadedCallback : NSObject<FFTCallback>
 
@@ -72,13 +73,13 @@
 
 
 
-@interface FFAppDelegate ()
+@interface FFAppDelegate ()<UIActionSheetDelegate>
 
 @property (nonatomic, readwrite, strong) FFTFluidApp *fluidApp;
 @property (nonatomic, readwrite, strong) UIView *modalView;
 @property (nonatomic, readwrite, assign) BOOL started;
 
-
+@property (nonatomic) UIActionSheet* overflowMenu;
 
 
 @end
@@ -1176,6 +1177,59 @@
     }
     
     return returnStr;
+}
+
+- (BOOL)showOverflowMenuWithFFTUIService_OverflowMenuDescriptor:(FFTUIService_OverflowMenuDescriptor *)menuDescriptor
+                          withFFTUIService_IOverflowMenuHandler:(id<FFTUIService_IOverflowMenuHandler>)handler {
+    
+    if (self.overflowMenu) {
+        return NO;
+    }
+    
+    if (![self validateOverflowMenuDescriptor:menuDescriptor]) {
+        return NO;
+    }
+    
+    self.overflowMenu = [[UIActionSheet alloc] init];
+    self.overflowMenu.delegate = self;
+
+    for (FFTUIService_OverflowMenuDescriptor_OverflowMenuButton* button in [menuDescriptor getButtons]) {
+        [self.overflowMenu addButtonWithTitle:[button getButtonTitle]];
+    }
+    
+    if ([menuDescriptor isShowDismissButton]) {
+        [self.overflowMenu addButtonWithTitle:@"Cancel"];
+        [self.overflowMenu setCancelButtonIndex: self.overflowMenu.numberOfButtons - 1];
+    }
+    
+    [self.overflowMenu showInView:[self currentNavigationController].view];
+    
+    return YES;
+}
+
+-(BOOL)validateOverflowMenuDescriptor:(FFTUIService_OverflowMenuDescriptor *)menuDescriptor {
+    
+    if (menuDescriptor == nil) {
+        return NO;
+    }
+    
+    if ([menuDescriptor getButtons] == nil) {
+        return NO;
+    }
+    
+    if ([[menuDescriptor getButtons] size] <= 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma - mark UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    
+    self.overflowMenu = nil;
 }
 
 @end
