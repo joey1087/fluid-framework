@@ -140,7 +140,7 @@ J2OBJC_FIELD_SETTER(FFTUIService_OverflowMenuDescriptor_OverflowMenuButton, butt
 
 - (void)handleUserSelectOverflowMenuButtonWithInt:(int)index;
 
-- (void)hanldeUserSelectDismissOverflowMenu;
+- (void)handleUserSelectDismissOverflowMenu;
 
 @end
 

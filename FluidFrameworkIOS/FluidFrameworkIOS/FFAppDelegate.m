@@ -80,6 +80,7 @@
 @property (nonatomic, readwrite, assign) BOOL started;
 
 @property (nonatomic) UIActionSheet* overflowMenu;
+@property (nonatomic) id<FFTUIService_IOverflowMenuHandler> currentOverflowMenuHandler;
 
 
 @end
@@ -1182,6 +1183,7 @@
 - (BOOL)showOverflowMenuWithFFTUIService_OverflowMenuDescriptor:(FFTUIService_OverflowMenuDescriptor *)menuDescriptor
                           withFFTUIService_IOverflowMenuHandler:(id<FFTUIService_IOverflowMenuHandler>)handler {
     
+    //We only show one at any moment
     if (self.overflowMenu) {
         return NO;
     }
@@ -1190,6 +1192,7 @@
         return NO;
     }
     
+    self.currentOverflowMenuHandler = handler;
     self.overflowMenu = [[UIActionSheet alloc] init];
     self.overflowMenu.delegate = self;
 
@@ -1202,7 +1205,7 @@
         [self.overflowMenu setCancelButtonIndex: self.overflowMenu.numberOfButtons - 1];
     }
     
-    [self.overflowMenu showInView:[self currentNavigationController].view];
+    [self.overflowMenu showInView:[self currentNavigationController].view]; //TODO : double check the user of currentNavigationController
     
     return YES;
 }
@@ -1227,7 +1230,16 @@
 #pragma - mark UIActionSheetDelegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-
+    
+    if (self.currentOverflowMenuHandler) {
+        
+        //If this is the cancel button
+        if (buttonIndex == self.overflowMenu.numberOfButtons - 1) {
+            [self.currentOverflowMenuHandler handleUserSelectDismissOverflowMenu];
+        } else {
+            [self.currentOverflowMenuHandler handleUserSelectOverflowMenuButtonWithInt:(int)buttonIndex];
+        }
+    }
     
     self.overflowMenu = nil;
 }

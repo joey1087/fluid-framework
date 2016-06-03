@@ -151,7 +151,7 @@ public interface UIService {
 		
 		public void handleUserSelectOverflowMenuButton(int index);
 		
-		public void hanldeUserSelectDismissOverflowMenu();
+		public void handleUserSelectDismissOverflowMenu();
 		
 		/*
 		 * we might want to add one for when user taps outside of the menu ?

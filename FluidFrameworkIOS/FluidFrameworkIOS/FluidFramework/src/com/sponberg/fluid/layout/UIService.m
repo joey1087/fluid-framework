@@ -159,7 +159,7 @@
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "handleUserSelectOverflowMenuButtonWithInt:", "handleUserSelectOverflowMenuButton", "V", 0x401, NULL },
-    { "hanldeUserSelectDismissOverflowMenu", NULL, "V", 0x401, NULL },
+    { "handleUserSelectDismissOverflowMenu", NULL, "V", 0x401, NULL },
   };
   static J2ObjcClassInfo _FFTUIService_IOverflowMenuHandler = { "IOverflowMenuHandler", "com.sponberg.fluid.layout", "UIService", 0x209, 2, methods, 0, NULL, 0, NULL};
   return &_FFTUIService_IOverflowMenuHandler;
