@@ -7,8 +7,11 @@
 #define _FFTUIService_H_
 
 @class FFTModalView;
+@class FFTUIService_OverflowMenuDescriptor;
 @class IOSObjectArray;
 @protocol FFTCallback;
+@protocol FFTUIService_IOverflowMenuHandler;
+@protocol JavaUtilList;
 
 #import "JreEmulation.h"
 
@@ -73,10 +76,74 @@
 
 - (NSString *)getCurrentScreenId;
 
+- (BOOL)showOverflowMenuWithFFTUIService_OverflowMenuDescriptor:(FFTUIService_OverflowMenuDescriptor *)menuDescriptor
+                          withFFTUIService_IOverflowMenuHandler:(id<FFTUIService_IOverflowMenuHandler>)handler;
+
 @end
 
 __attribute__((always_inline)) inline void FFTUIService_init() {}
 
 #define ComSponbergFluidLayoutUIService FFTUIService
+
+@interface FFTUIService_OverflowMenuDescriptor : NSObject {
+ @public
+  id<JavaUtilList> buttons_;
+  id extra_;
+  BOOL showDismissButton_;
+}
+
+- (id<JavaUtilList>)getButtons;
+
+- (id)getExtra;
+
+- (BOOL)isShowDismissButton;
+
+- (id)initWithJavaUtilList:(id<JavaUtilList>)buttons;
+
+- (id)initWithJavaUtilList:(id<JavaUtilList>)buttons
+               withBoolean:(BOOL)showDismissButton;
+
+- (id)initWithJavaUtilList:(id<JavaUtilList>)buttons
+                    withId:(id)extra;
+
+- (id)initWithJavaUtilList:(id<JavaUtilList>)buttons
+               withBoolean:(BOOL)showDissmissButton
+                    withId:(id)extra;
+
+- (void)copyAllFieldsTo:(FFTUIService_OverflowMenuDescriptor *)other;
+
+@end
+
+__attribute__((always_inline)) inline void FFTUIService_OverflowMenuDescriptor_init() {}
+
+J2OBJC_FIELD_SETTER(FFTUIService_OverflowMenuDescriptor, buttons_, id<JavaUtilList>)
+J2OBJC_FIELD_SETTER(FFTUIService_OverflowMenuDescriptor, extra_, id)
+
+@interface FFTUIService_OverflowMenuDescriptor_OverflowMenuButton : NSObject {
+ @public
+  NSString *buttonTitle_;
+}
+
+- (NSString *)getButtonTitle;
+
+- (id)initWithNSString:(NSString *)buttonTitle;
+
+- (void)copyAllFieldsTo:(FFTUIService_OverflowMenuDescriptor_OverflowMenuButton *)other;
+
+@end
+
+__attribute__((always_inline)) inline void FFTUIService_OverflowMenuDescriptor_OverflowMenuButton_init() {}
+
+J2OBJC_FIELD_SETTER(FFTUIService_OverflowMenuDescriptor_OverflowMenuButton, buttonTitle_, NSString *)
+
+@protocol FFTUIService_IOverflowMenuHandler < NSObject, JavaObject >
+
+- (void)handleUserSelectOverflowMenuButtonWithInt:(int)index;
+
+- (void)handleUserSelectDismissOverflowMenu;
+
+@end
+
+__attribute__((always_inline)) inline void FFTUIService_IOverflowMenuHandler_init() {}
 
 #endif // _FFTUIService_H_

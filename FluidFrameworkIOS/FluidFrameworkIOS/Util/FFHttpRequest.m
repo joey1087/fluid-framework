@@ -15,7 +15,7 @@
 #import "java/util/ArrayList.h"
 
 
-#define API_TIMEOUT 120
+#define API_TIMEOUT 30
     
 typedef enum {
     Get,
@@ -124,7 +124,6 @@ typedef enum {
         //Create the request
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
-        [self.theRequest setTimeoutInterval:API_TIMEOUT];
         
         NSString* boundaryString = [self generateBoundaryString];
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryString];
@@ -199,7 +198,6 @@ typedef enum {
         
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         self.theRequest = [NSMutableURLRequest requestWithURL:url];
-        self.theRequest.timeoutInterval = 10;
         
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         
@@ -265,9 +263,13 @@ typedef enum {
         //[theConnection setDelegateQueue:self.queue];
         [self.theConnection start];
         
-        //start timer
+        /*
+         TODO : We'll come back and fix this issue, it appears that the 
+         post job attachment api doesnt timeout even when the request had
+         been set with a proper timeout.
+         */
         if (self.requestMethod == Post) {
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(timeout) userInfo:nil repeats:NO];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:API_TIMEOUT target:self selector:@selector(timeout) userInfo:nil repeats:NO];
         }
         
         return YES;

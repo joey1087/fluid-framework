@@ -221,5 +221,12 @@ public class MockUIService implements UIService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean showOverflowMenu(OverflowMenuDescriptor menuDescriptor,
+			IOverflowMenuHandler handler) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

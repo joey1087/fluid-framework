@@ -224,4 +224,12 @@ public class DefaultUIService implements UIService {
 		
 		return app.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}
+
+	@Override
+	public boolean showOverflowMenu(OverflowMenuDescriptor menuDescriptor, IOverflowMenuHandler handler) {
+		
+		//TODO : implement 
+		
+		return false;
+	}
 }
