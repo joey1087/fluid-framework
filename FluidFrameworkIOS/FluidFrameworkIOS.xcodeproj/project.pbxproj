@@ -6771,6 +6771,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FluidFrameworkIOS/Externals/j2objc/lib",
 				);
+				OTHER_CFLAGS = "-Wno-implicit-function-declaration";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -6802,6 +6803,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FluidFrameworkIOS/Externals/j2objc/lib",
 				);
+				OTHER_CFLAGS = "-Wno-implicit-function-declaration";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
