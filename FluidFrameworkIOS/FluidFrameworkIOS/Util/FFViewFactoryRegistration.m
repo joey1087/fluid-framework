@@ -738,7 +738,12 @@
     if (info.fluidView.listenToDataModelChanges) {
         
         observerBlock block = ^(NSString *key, NSArray *subkeys) {
-            if ([key isEqualToString:view->key_]) {
+    
+            //If NO we'll only refresh a particular row
+           // NSString *mainComp = [[view->key_ componentsSeparatedByString:@"."] firstObject];
+            BOOL shouldRefreshTheWholeTable = [view->key_ rangeOfString:key].length > 0;//[key isEqualToString:view->key_] || [key isEqualToString:mainComp];
+            
+            if (shouldRefreshTheWholeTable) {
                 [weakRef reloadData];
                 if (scrollToBottomOnLoad) {
                     dispatch_async(dispatch_get_global_queue(0, 0), ^{
