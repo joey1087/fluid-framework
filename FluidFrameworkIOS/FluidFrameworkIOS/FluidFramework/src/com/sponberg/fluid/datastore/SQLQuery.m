@@ -113,6 +113,10 @@
     (void) [builder appendWithNSString:[whereClause_ getWhere]];
     whereParams = [whereClause_ getParameters];
   }
+  if (groupBy_ != nil) {
+    (void) [builder appendWithNSString:@" "];
+    (void) [builder appendWithNSString:groupBy_];
+  }
   if (orderBy_ != nil) {
     (void) [builder appendWithNSString:@" "];
     (void) [builder appendWithNSString:orderBy_];
@@ -200,6 +204,10 @@
   return self->orderBy_;
 }
 
+- (NSString *)getGroupBy {
+  return self->groupBy_;
+}
+
 - (id)getResult {
   return self->result_;
 }
@@ -232,17 +240,22 @@
   self->orderBy_ = orderBy;
 }
 
+- (void)setGroupByWithNSString:(NSString *)groupBy {
+  self->groupBy_ = groupBy;
+}
+
 - (void)setResultWithId:(id<FFTSQLQueryResult>)result {
   self->result_ = result;
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"SQLQuery(tableName=%@, selectColumns=%@, whereClause=%@, selectStatement=%@, offset=%d, allowRefresh=%@, limit=%@, queryResultClass=%@, results=%@, orderBy=%@, result=%@)", [self getTableName], [JavaUtilArrays deepToStringWithNSObjectArray:[self getSelectColumns]], [self getWhereClause], self->selectStatement_, [self getOffset], [JavaLangBoolean toStringWithBoolean:[self isAllowRefresh]], [self getLimit], [self getQueryResultClass], [self getResults], [self getOrderBy], [self getResult]];
+  return [NSString stringWithFormat:@"SQLQuery(tableName=%@, selectColumns=%@, whereClause=%@, selectStatement=%@, offset=%d, allowRefresh=%@, limit=%@, queryResultClass=%@, results=%@, orderBy=%@, groupBy=%@, result=%@)", [self getTableName], [JavaUtilArrays deepToStringWithNSObjectArray:[self getSelectColumns]], [self getWhereClause], self->selectStatement_, [self getOffset], [JavaLangBoolean toStringWithBoolean:[self isAllowRefresh]], [self getLimit], [self getQueryResultClass], [self getResults], [self getOrderBy], [self getGroupBy], [self getResult]];
 }
 
 - (void)copyAllFieldsTo:(FFTSQLQuery *)other {
   [super copyAllFieldsTo:other];
   other->allowRefresh_ = allowRefresh_;
+  other->groupBy_ = groupBy_;
   other->limit_ = limit_;
   other->offset_ = offset_;
   other->orderBy_ = orderBy_;
@@ -280,6 +293,7 @@
     { "getQueryResultClass", NULL, "Ljava.lang.Class;", 0x1, NULL },
     { "getResults", NULL, "Lcom.sponberg.fluid.datastore.SQLResultList;", 0x1, NULL },
     { "getOrderBy", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getGroupBy", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getResult", NULL, "TT;", 0x1, NULL },
     { "setTableNameWithNSString:", "setTableName", "V", 0x1, NULL },
     { "setOffsetWithInt:", "setOffset", "V", 0x1, NULL },
@@ -288,6 +302,7 @@
     { "setQueryResultClassWithIOSClass:", "setQueryResultClass", "V", 0x1, NULL },
     { "setResultsWithFFTSQLResultList:", "setResults", "V", 0x1, NULL },
     { "setOrderByWithNSString:", "setOrderBy", "V", 0x1, NULL },
+    { "setGroupByWithNSString:", "setGroupBy", "V", 0x1, NULL },
     { "setResultWithId:", "setResult", "V", 0x1, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
   };
@@ -302,9 +317,10 @@
     { "queryResultClass_", NULL, 0x0, "Ljava.lang.Class;", NULL,  },
     { "results_", NULL, 0x0, "Lcom.sponberg.fluid.datastore.SQLResultList;", NULL,  },
     { "orderBy_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "groupBy_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
     { "result_", NULL, 0x0, "TT;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTSQLQuery = { "SQLQuery", "com.sponberg.fluid.datastore", NULL, 0x1, 33, methods, 11, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTSQLQuery = { "SQLQuery", "com.sponberg.fluid.datastore", NULL, 0x1, 35, methods, 12, fields, 0, NULL};
   return &_FFTSQLQuery;
 }
 

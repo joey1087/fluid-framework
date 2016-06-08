@@ -121,6 +121,7 @@ J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_UpdateBuilder, paramValues_, JavaUti
   JavaLangInteger *limit_;
   BOOL allowRefresh_;
   NSString *orderBy_;
+  NSString *groupBy_;
 }
 
 - (id)initWithFFTDatastoreTransaction:(FFTDatastoreTransaction *)outer$;
@@ -136,6 +137,7 @@ J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, paramNames_, JavaU
 J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, paramValues_, JavaUtilArrayList *)
 J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, limit_, JavaLangInteger *)
 J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, orderBy_, NSString *)
+J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, groupBy_, NSString *)
 
 @interface FFTDatastoreTransaction_QueryBuilder : FFTDatastoreTransaction_QueryBuilderBase {
  @public
@@ -163,6 +165,8 @@ J2OBJC_FIELD_SETTER(FFTDatastoreTransaction_QueryBuilderBase, orderBy_, NSString
 - (FFTDatastoreTransaction_QueryBuilder *)allowRefreshWithBoolean:(BOOL)allowRefresh;
 
 - (FFTDatastoreTransaction_QueryBuilder *)orderByWithNSString:(NSString *)orderBy;
+
+- (FFTDatastoreTransaction_QueryBuilder *)groupByWithNSString:(NSString *)groupBy;
 
 - (FFTSQLResultList *)execute;
 

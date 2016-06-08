@@ -191,6 +191,7 @@ public class DatastoreTransaction {
 		
 		String orderBy = null;
 		
+		String groupBy = null;
 	}
 	
 	public class QueryBuilder<T extends SQLQueryResult & SQLTable> extends QueryBuilderBase {
@@ -253,6 +254,11 @@ public class DatastoreTransaction {
 			return this;
 		}
 		
+		public QueryBuilder<T> groupBy(String groupBy) {
+			this.groupBy = groupBy;
+			return this;
+		}
+		
 		public SQLResultList<T> execute() throws DatastoreException {
 			
 			if (where == null && paramNames.size() > 0) {
@@ -267,6 +273,7 @@ public class DatastoreTransaction {
 			query.setLimit(limit);
 			query.setAllowRefresh(allowRefresh);
 			query.setOrderBy(orderBy);
+			query.setGroupBy(groupBy);
 			return ds.query(query);
 		}
 		

@@ -18,6 +18,9 @@
 - (void)userCancelled {
 }
 
+- (void)userScrolledToBottomWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo {
+}
+
 - (id)init {
   return [super init];
 }
@@ -27,9 +30,10 @@
     { "userTappedWithFFTActionListener_EventInfo:", "userTapped", "V", 0x1, NULL },
     { "userChangedValueToWithFFTActionListener_EventInfo:withId:", "userChangedValueTo", "V", 0x1, NULL },
     { "userCancelled", NULL, "V", 0x1, NULL },
+    { "userScrolledToBottomWithFFTActionListener_EventInfo:", "userScrolledToBottom", "V", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _FFTActionListenerAdapter = { "ActionListenerAdapter", "com.sponberg.fluid.layout", NULL, 0x1, 4, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTActionListenerAdapter = { "ActionListenerAdapter", "com.sponberg.fluid.layout", NULL, 0x1, 5, methods, 0, NULL, 0, NULL};
   return &_FFTActionListenerAdapter;
 }
 
