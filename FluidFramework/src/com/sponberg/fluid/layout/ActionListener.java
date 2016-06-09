@@ -9,6 +9,8 @@ public interface ActionListener {
 	public void userChangedValueTo(EventInfo eventInfo, Object value);
 
 	public void userCancelled();
+	
+	public void userScrolledToBottom(EventInfo eventInfo);
 
 	@Data
 	public static class EventInfo {

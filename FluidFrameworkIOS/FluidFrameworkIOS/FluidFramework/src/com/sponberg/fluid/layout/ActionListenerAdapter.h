@@ -21,6 +21,8 @@
 
 - (void)userCancelled;
 
+- (void)userScrolledToBottomWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
+
 - (id)init;
 
 @end

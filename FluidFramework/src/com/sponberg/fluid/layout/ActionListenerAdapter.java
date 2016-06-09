@@ -13,5 +13,9 @@ public class ActionListenerAdapter implements ActionListener {
 	@Override
 	public void userCancelled() {
 	}
+
+	@Override
+	public void userScrolledToBottom(EventInfo eventInfo) {
+	}
 	
 }

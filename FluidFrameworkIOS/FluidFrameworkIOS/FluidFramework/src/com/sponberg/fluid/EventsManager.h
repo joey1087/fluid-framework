@@ -26,6 +26,9 @@
 - (void)userTappedWithNSString:(NSString *)keyPath
 withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
 
+- (void)userScrolledToBottomWithNSString:(NSString *)keyPath
+         withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
+
 - (BOOL)isListeningForTapAtWithNSString:(NSString *)viewPath;
 
 - (void)userChangedValueToWithNSString:(NSString *)keyPath
