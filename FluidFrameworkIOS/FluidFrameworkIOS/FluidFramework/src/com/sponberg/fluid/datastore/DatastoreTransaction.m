@@ -427,7 +427,7 @@ JavaUtilConcurrentLocksReentrantLock * FFTDatastoreTransaction_lock_;
     { "queryResultClass_", NULL, 0x0, "Ljava.lang.Class;", NULL,  },
     { "columns_", NULL, 0x0, "[Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 10, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDatastoreTransaction_QueryBuilder = { "QueryBuilder", "com.sponberg.fluid.datastore", "DatastoreTransaction", 0x1, 11, methods, 3, fields, 0, NULL};
   return &_FFTDatastoreTransaction_QueryBuilder;
 }
 
