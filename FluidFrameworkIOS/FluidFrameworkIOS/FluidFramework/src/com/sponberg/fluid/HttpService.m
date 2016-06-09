@@ -6,6 +6,7 @@
 #include "IOSClass.h"
 #include "com/sponberg/fluid/HttpService.h"
 #include "com/sponberg/fluid/HttpServiceCallback.h"
+#include "com/sponberg/fluid/HttpServiceWrapper.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/util/HashMap.h"
 
@@ -20,10 +21,11 @@
     { "getBinaryWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "getBinary", "V", 0x401, NULL },
     { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x401, NULL },
     { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x401, NULL },
+    { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpServiceWrapper_MapModeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x401, NULL },
     { "putWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "put", "V", 0x401, NULL },
     { "postRawWithNSString:withNSString:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "postRaw", "V", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTHttpService = { "HttpService", "com.sponberg.fluid", NULL, 0x201, 6, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTHttpService = { "HttpService", "com.sponberg.fluid", NULL, 0x201, 7, methods, 0, NULL, 0, NULL};
   return &_FFTHttpService;
 }
 

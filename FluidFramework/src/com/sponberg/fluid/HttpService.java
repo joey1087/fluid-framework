@@ -2,6 +2,8 @@ package com.sponberg.fluid;
 
 import java.util.HashMap;
 
+import com.sponberg.fluid.HttpServiceWrapper.MapMode;
+
 import lombok.Getter;
 
 public interface HttpService {
@@ -35,6 +37,8 @@ public interface HttpService {
 	 * @param callback
 	 */
 	public void post(String URL, HashMap<String, Object> parameters, PostBodyType postBodyType, HttpAuthorization auth, HttpServiceCallback callback);
+	
+	public void post(String URL, HashMap<String, Object> parameters, PostBodyType postBodyType, MapMode mapMode, HttpAuthorization auth, HttpServiceCallback callback);
 	
 	public void put(String URL, HashMap<String, Object> parameters, HttpAuthorization auth, HttpServiceCallback callback);
 	

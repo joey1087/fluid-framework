@@ -14,6 +14,7 @@
 #import "GTMBase64.h"
 #include "com/sponberg/fluid/util/Logger.h"
 #include "IOSClass.h"
+#include "com/eclipsesource/json/JsonObject.h"
 
 @interface HttpServiceTask : NSObject
 

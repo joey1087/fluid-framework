@@ -6,6 +6,7 @@
 #ifndef _FFTSecurityServiceWrapper_H_
 #define _FFTSecurityServiceWrapper_H_
 
+@class FFTHttpServiceWrapper_MapModeEnum;
 @class FFTHttpService_HttpAuthorization;
 @class FFTHttpService_PostBodyTypeEnum;
 @class FFTSecurityServiceWrapper_MapModeEnum;
@@ -37,6 +38,13 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 
 - (void)postWithNSString:(NSString *)URL
      withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
+
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpServiceWrapper_MapModeEnum:(FFTHttpServiceWrapper_MapModeEnum *)mapMode
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 

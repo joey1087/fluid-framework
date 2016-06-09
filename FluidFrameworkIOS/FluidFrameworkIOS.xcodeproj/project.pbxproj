@@ -223,6 +223,7 @@
 		23D9B9781A676FFA00AECE7F /* FFNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B89E1A676FFA00AECE7F /* FFNavigationViewController.m */; };
 		23D9B9791A676FFA00AECE7F /* FFTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A01A676FFA00AECE7F /* FFTabBarViewController.m */; };
 		23D9B97A1A676FFA00AECE7F /* FFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A21A676FFA00AECE7F /* FFViewController.m */; };
+		9B4DE59A1D08F7A900449F64 /* JavaUtilHashMap+Json.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4DE5991D08F7A900449F64 /* JavaUtilHashMap+Json.m */; };
 		D45ACE341CEB07C100E42055 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D45ACE331CEB07C100E42055 /* libsqlite3.dylib */; };
 		D4A4782D1ABBDBED00D3DAA0 /* cycle_finder in Resources */ = {isa = PBXBuildFile; fileRef = D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */; };
 		D4A4782E1ABBDBED00D3DAA0 /* j2objc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780D1ABBDBED00D3DAA0 /* j2objc */; };
@@ -682,6 +683,8 @@
 		23D9B8A11A676FFA00AECE7F /* FFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFViewController.h; sourceTree = "<group>"; };
 		23D9B8A21A676FFA00AECE7F /* FFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFViewController.m; sourceTree = "<group>"; };
 		3AFF559219061070006C3273 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		9B4DE5981D08F7A900449F64 /* JavaUtilHashMap+Json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JavaUtilHashMap+Json.h"; sourceTree = "<group>"; };
+		9B4DE5991D08F7A900449F64 /* JavaUtilHashMap+Json.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JavaUtilHashMap+Json.m"; sourceTree = "<group>"; };
 		D45ACE331CEB07C100E42055 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = cycle_finder; sourceTree = "<group>"; };
 		D4A470A01ABBDBEA00D3DAA0 /* SystemClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemClock.h; sourceTree = "<group>"; };
@@ -2528,6 +2531,7 @@
 		237F09F118F7DAFC003B3031 /* FluidFrameworkIOS */ = {
 			isa = PBXGroup;
 			children = (
+				9B4DE5941D08F57D00449F64 /* Categories */,
 				23D9AF781A676FF700AECE7F /* Externals */,
 				23D9B71D1A676FF900AECE7F /* FFAppDelegate.h */,
 				23D9B71E1A676FF900AECE7F /* FFAppDelegate.m */,
@@ -3134,6 +3138,15 @@
 				23D9B8A21A676FFA00AECE7F /* FFViewController.m */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9B4DE5941D08F57D00449F64 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9B4DE5981D08F7A900449F64 /* JavaUtilHashMap+Json.h */,
+				9B4DE5991D08F7A900449F64 /* JavaUtilHashMap+Json.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		D4A4709B1ABBDBEA00D3DAA0 /* j2objc */ = {
@@ -6454,6 +6467,7 @@
 				23D9B9301A676FFA00AECE7F /* ViewBehaviorWebView.m in Sources */,
 				23D9B8CD1A676FFA00AECE7F /* ParseException.m in Sources */,
 				23D9B96B1A676FFA00AECE7F /* FFSearchBar.m in Sources */,
+				9B4DE59A1D08F7A900449F64 /* JavaUtilHashMap+Json.m in Sources */,
 				23D9B8F71A676FFA00AECE7F /* HttpServiceWrapper.m in Sources */,
 				23D9B8C91A676FFA00AECE7F /* JsonParser.m in Sources */,
 				23D9B9211A676FFA00AECE7F /* UIService.m in Sources */,

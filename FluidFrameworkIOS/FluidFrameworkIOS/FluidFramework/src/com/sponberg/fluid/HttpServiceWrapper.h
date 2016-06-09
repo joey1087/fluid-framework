@@ -9,6 +9,7 @@
 @class FFTHttpServiceWrapper_MapModeEnum;
 @class FFTHttpService_HttpAuthorization;
 @class FFTHttpService_PostBodyTypeEnum;
+@class FFTJsonObject;
 @class JavaUtilHashMap;
 @protocol FFTHttpServiceCallback;
 @protocol JavaUtilMap;
@@ -46,6 +47,13 @@ withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyT
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 
+- (void)postWithNSString:(NSString *)URL
+     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
+withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
+withFFTHttpServiceWrapper_MapModeEnum:(FFTHttpServiceWrapper_MapModeEnum *)mapMode
+withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
+withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
+
 - (void)postRawWithNSString:(NSString *)URL
                withNSString:(NSString *)rawPost
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
@@ -58,7 +66,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 
 + (JavaUtilHashMap *)jsonifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
-+ (NSString *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters;
++ (FFTJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
 + (JavaUtilHashMap *)bracketifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
