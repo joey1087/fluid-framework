@@ -83,6 +83,12 @@ public class MockRealHttpService implements HttpService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void post(String URL, java.util.HashMap<String,Object> parameters, com.sponberg.fluid.HttpService.PostBodyType postBodyType, 
+			com.sponberg.fluid.HttpServiceWrapper.MapMode mapMode, com.sponberg.fluid.HttpService.HttpAuthorization auth, HttpServiceCallback callback) {
+		
+	};
 
 	@Override
 	public void put(String URL, HashMap<String, Object> parameters,

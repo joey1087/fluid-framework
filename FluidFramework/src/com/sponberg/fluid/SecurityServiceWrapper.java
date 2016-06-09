@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import lombok.Data;
 
 import com.eclipsesource.json.JsonObject;
+import com.sponberg.fluid.HttpService.HttpAuthorization;
+import com.sponberg.fluid.HttpService.PostBodyType;
 import com.sponberg.fluid.util.Logger;
 import com.sponberg.fluid.util.PrettyPrint;
 
@@ -71,7 +73,16 @@ public class SecurityServiceWrapper implements HttpService {
 		}
 		
 		httpService.post(URL, parameters, auth, callback);
-	}
+	}	
+	
+	@Override
+	public void post(String URL, java.util.HashMap<String,Object> parameters, PostBodyType postBodyType, com.sponberg.fluid.HttpServiceWrapper.MapMode mapMode, HttpAuthorization auth, HttpServiceCallback callback) {
+		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
+		if (mapMode == com.sponberg.fluid.HttpServiceWrapper.MapMode.Jsonify) {
+			parameters = jsonifyMaps(parameters);
+		}
+		httpService.post(URL, parameters, postBodyType, auth, callback);		
+	};
 
 	@Override
 	public void postRaw(String URL, String rawPost, HttpAuthorization auth,

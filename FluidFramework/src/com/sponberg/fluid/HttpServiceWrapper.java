@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import lombok.Data;
-
 import com.eclipsesource.json.JsonObject;
 import com.sponberg.fluid.util.Logger;
 import com.sponberg.fluid.util.PrettyPrint;
+
+import lombok.Data;
 
 @Data
 public class HttpServiceWrapper implements HttpService {
@@ -91,6 +91,16 @@ public class HttpServiceWrapper implements HttpService {
 	}
 	
 	@Override
+	public void post(String URL, HashMap<String, Object> parameters, PostBodyType postBodyType, 
+			MapMode mapMode, HttpAuthorization auth, HttpServiceCallback callback) {
+		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
+		if (mapMode == MapMode.Jsonify) {
+			parameters = jsonifyMaps(parameters);
+		}
+		httpService.post(URL, parameters, postBodyType, auth, callback);		
+	}	
+	
+	@Override
 	public void postRaw(String URL, String rawPost, HttpAuthorization auth,
 			HttpServiceCallback callback) {
 
@@ -119,8 +129,8 @@ public class HttpServiceWrapper implements HttpService {
 		HashMap<String, Object> map = new HashMap<>();
 		for (Entry<String, Object> entry : parameters.entrySet()) {
 			Object value = entry.getValue();
-			if (value instanceof Map) {
-				map.put(entry.getKey(), jsonifyMapsHelper((Map<String, Object>) value));
+			if (value instanceof Map) {				
+				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
 			} else {
 				map.put(entry.getKey(), value);
 			}
@@ -129,7 +139,7 @@ public class HttpServiceWrapper implements HttpService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected static String jsonifyMapsHelper(Map<String, Object> parameters) {
+	protected static JsonObject jsonifyMapsHelper(Map<String, Object> parameters) {
 		JsonObject json = new JsonObject();
 		for (Entry<String, Object> entry : parameters.entrySet()) {
 			if (entry.getValue() instanceof Map) {
@@ -138,7 +148,7 @@ public class HttpServiceWrapper implements HttpService {
 				json.add(entry.getKey(), entry.getValue().toString());
 			}
 		}
-		return json.toString();
+		return json;	
 	}
 	
 	@SuppressWarnings("unchecked")
