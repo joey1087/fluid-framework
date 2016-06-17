@@ -29,6 +29,8 @@
 
 #import "SBJsonWriter.h"
 
+#import "JavaUtilHashMap+Json.h"
+
 @interface SBJsonWriter ()
 
 - (BOOL)appendValue:(id)fragment into:(NSMutableString*)json;

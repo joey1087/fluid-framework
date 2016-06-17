@@ -25,7 +25,7 @@
         } else if ([object isKindOfClass:[NSString class]] && ((NSString *)object).length > 0) {
                 [dictionary setObject:object forKey:key];
         } else if ([object isKindOfClass:[JavaLangBoolean class]]) {
-            [dictionary setObject:(((JavaLangBoolean*)object).booleanValue ? @1 : @2) forKey:key];
+            [dictionary setObject:(((JavaLangBoolean*)object).booleanValue ? @1 : @0) forKey:key];
         }
     }
     
