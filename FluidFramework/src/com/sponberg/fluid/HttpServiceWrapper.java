@@ -129,11 +129,12 @@ public class HttpServiceWrapper implements HttpService {
 		HashMap<String, Object> map = new HashMap<>();
 		for (Entry<String, Object> entry : parameters.entrySet()) {
 			Object value = entry.getValue();
-			if (value instanceof Map) {				
-				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
-			} else {
-				map.put(entry.getKey(), value);
-			}
+			map.put(entry.getKey(), value);
+//			if (value instanceof Map) {				
+//				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
+//			} else {
+//				map.put(entry.getKey(), value);
+//			}
 		}
 		return map;
 	}

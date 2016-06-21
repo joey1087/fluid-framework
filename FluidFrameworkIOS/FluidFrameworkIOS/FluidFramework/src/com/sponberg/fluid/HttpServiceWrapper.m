@@ -126,12 +126,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   JavaUtilHashMap *map = [[JavaUtilHashMap alloc] init];
   for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((id<JavaUtilMap>) nil_chk(parameters)) entrySet])) {
     id value = [((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue];
-    if ([value conformsToProtocol: @protocol(JavaUtilMap)]) {
-      (void) [map putWithId:[entry_ getKey] withId:value];
-    }
-    else {
-      (void) [map putWithId:[entry_ getKey] withId:value];
-    }
+    (void) [map putWithId:[entry_ getKey] withId:value];
   }
   return map;
 }

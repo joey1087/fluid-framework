@@ -223,7 +223,6 @@
 		23D9B9781A676FFA00AECE7F /* FFNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B89E1A676FFA00AECE7F /* FFNavigationViewController.m */; };
 		23D9B9791A676FFA00AECE7F /* FFTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A01A676FFA00AECE7F /* FFTabBarViewController.m */; };
 		23D9B97A1A676FFA00AECE7F /* FFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A21A676FFA00AECE7F /* FFViewController.m */; };
-		9B4DE59E1D0A53CC00449F64 /* JavaUtilHashMap+Json.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4DE59D1D0A53CC00449F64 /* JavaUtilHashMap+Json.m */; };
 		D4A4782D1ABBDBED00D3DAA0 /* cycle_finder in Resources */ = {isa = PBXBuildFile; fileRef = D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */; };
 		D4A4782E1ABBDBED00D3DAA0 /* j2objc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780D1ABBDBED00D3DAA0 /* j2objc */; };
 		D4A4782F1ABBDBED00D3DAA0 /* j2objcc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780E1ABBDBED00D3DAA0 /* j2objcc */; };
@@ -255,6 +254,7 @@
 		D4A478491ABBDBED00D3DAA0 /* j2objc.1 in Resources */ = {isa = PBXBuildFile; fileRef = D4A4782B1ABBDBED00D3DAA0 /* j2objc.1 */; };
 		D4A4784A1ABBDBED00D3DAA0 /* j2objcc.1 in Resources */ = {isa = PBXBuildFile; fileRef = D4A4782C1ABBDBED00D3DAA0 /* j2objcc.1 */; };
 		D6803A441D08EA45003CE5BB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6803A431D08EA45003CE5BB /* libsqlite3.dylib */; };
+		D6803A601D0A5F5D003CE5BB /* JavaUtilHashMap+Json.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4DE59D1D0A53CC00449F64 /* JavaUtilHashMap+Json.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -6469,6 +6469,7 @@
 				23D9B9301A676FFA00AECE7F /* ViewBehaviorWebView.m in Sources */,
 				23D9B8CD1A676FFA00AECE7F /* ParseException.m in Sources */,
 				23D9B96B1A676FFA00AECE7F /* FFSearchBar.m in Sources */,
+				D6803A601D0A5F5D003CE5BB /* JavaUtilHashMap+Json.m in Sources */,
 				23D9B8F71A676FFA00AECE7F /* HttpServiceWrapper.m in Sources */,
 				23D9B8C91A676FFA00AECE7F /* JsonParser.m in Sources */,
 				23D9B9211A676FFA00AECE7F /* UIService.m in Sources */,
@@ -6652,7 +6653,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B4DE59E1D0A53CC00449F64 /* JavaUtilHashMap+Json.m in Sources */,
 				237F0A0C18F7DAFC003B3031 /* FluidFrameworkIOSTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
