@@ -33,6 +33,9 @@ import android.os.AsyncTask;
 import com.sponberg.fluid.GlobalState;
 import com.sponberg.fluid.HttpService;
 import com.sponberg.fluid.HttpServiceCallback;
+import com.sponberg.fluid.HttpService.HttpAuthorization;
+import com.sponberg.fluid.HttpService.PostBodyType;
+import com.sponberg.fluid.HttpServiceWrapper.MapMode;
 import com.sponberg.fluid.util.Base64;
 import com.sponberg.fluid.util.Logger;
 
@@ -290,5 +293,11 @@ public class DefaultHttpService implements HttpService {
 			this.httpMethod = httpMethod;
 			this.url = url;
 		}
+	}
+
+	@Override
+	public void post(String URL, HashMap<String, Object> parameters, PostBodyType postBodyType, MapMode mapMode, HttpAuthorization auth, HttpServiceCallback callback) {
+
+		// TODO Auto-generated method stub
 	}
 }
