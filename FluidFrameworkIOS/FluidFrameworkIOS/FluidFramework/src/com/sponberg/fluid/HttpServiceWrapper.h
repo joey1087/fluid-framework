@@ -64,6 +64,8 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 
++ (JavaUtilHashMap *)jsonifyNativeMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
+
 + (JavaUtilHashMap *)jsonifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
 + (FFTJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters;
@@ -102,6 +104,7 @@ typedef FFTHttpServiceWrapper ComSponbergFluidHttpServiceWrapper;
 typedef enum {
   FFTHttpServiceWrapper_MapMode_Jsonify = 0,
   FFTHttpServiceWrapper_MapMode_Bracketify = 1,
+  FFTHttpServiceWrapper_MapMode_JsonifyNative = 2,
 } FFTHttpServiceWrapper_MapMode;
 
 @interface FFTHttpServiceWrapper_MapModeEnum : JavaLangEnum < NSCopying > {
@@ -123,5 +126,8 @@ J2OBJC_STATIC_FIELD_GETTER(FFTHttpServiceWrapper_MapModeEnum, Jsonify, FFTHttpSe
 
 #define FFTHttpServiceWrapper_MapModeEnum_Bracketify FFTHttpServiceWrapper_MapModeEnum_values[FFTHttpServiceWrapper_MapMode_Bracketify]
 J2OBJC_STATIC_FIELD_GETTER(FFTHttpServiceWrapper_MapModeEnum, Bracketify, FFTHttpServiceWrapper_MapModeEnum *)
+
+#define FFTHttpServiceWrapper_MapModeEnum_JsonifyNative FFTHttpServiceWrapper_MapModeEnum_values[FFTHttpServiceWrapper_MapMode_JsonifyNative]
+J2OBJC_STATIC_FIELD_GETTER(FFTHttpServiceWrapper_MapModeEnum, JsonifyNative, FFTHttpServiceWrapper_MapModeEnum *)
 
 #endif // _FFTHttpServiceWrapper_H_

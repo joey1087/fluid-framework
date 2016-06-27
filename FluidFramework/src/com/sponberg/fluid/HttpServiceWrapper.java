@@ -17,7 +17,8 @@ public class HttpServiceWrapper implements HttpService {
 
 	public enum MapMode {
 		Jsonify,
-		Bracketify
+		Bracketify,
+		JsonifyNative,
 	}
 	
 	private MapMode mapMode = MapMode.Jsonify;
@@ -54,6 +55,8 @@ public class HttpServiceWrapper implements HttpService {
 				parameters = jsonifyMaps(parameters);
 			} else if (mapMode == MapMode.Bracketify) {
 				parameters = bracketifyMaps(parameters);
+			} else if (mapMode == MapMode.JsonifyNative) {
+				parameters = jsonifyNativeMaps(parameters);
 			}
 		}
 
@@ -70,6 +73,8 @@ public class HttpServiceWrapper implements HttpService {
 			parameters = jsonifyMaps(parameters);
 		} else if (mapMode == MapMode.Bracketify) {
 			parameters = bracketifyMaps(parameters);
+		} else if (mapMode == MapMode.JsonifyNative) {
+			parameters = jsonifyNativeMaps(parameters);
 		}
 		
 		httpService.post(URL, parameters, auth, callback);
@@ -85,6 +90,8 @@ public class HttpServiceWrapper implements HttpService {
 			parameters = jsonifyMaps(parameters);
 		} else if (mapMode == MapMode.Bracketify) {
 			parameters = bracketifyMaps(parameters);
+		} else if (mapMode == MapMode.JsonifyNative) {
+			parameters = jsonifyNativeMaps(parameters);
 		}
 		
 		httpService.post(URL, parameters, postBodyType, auth, callback);
@@ -125,19 +132,29 @@ public class HttpServiceWrapper implements HttpService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected static HashMap<String, Object> jsonifyMaps(Map<String, Object> parameters) {
+	protected static HashMap<String, Object> jsonifyNativeMaps(Map<String, Object> parameters) {
 		HashMap<String, Object> map = new HashMap<>();
 		for (Entry<String, Object> entry : parameters.entrySet()) {
 			Object value = entry.getValue();
 			map.put(entry.getKey(), value);
-//			if (value instanceof Map) {				
-//				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
-//			} else {
-//				map.put(entry.getKey(), value);
-//			}
 		}
 		return map;
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected static HashMap<String, Object> jsonifyMaps(Map<String, Object> parameters) {
+		HashMap<String, Object> map = new HashMap<>();
+		for (Entry<String, Object> entry : parameters.entrySet()) {
+			Object value = entry.getValue();
+			
+			if (value instanceof Map) {				
+				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
+			} else {
+				map.put(entry.getKey(), value);
+			}
+		}
+		return map;
+	}	
 	
 	@SuppressWarnings("unchecked")
 	protected static JsonObject jsonifyMapsHelper(Map<String, Object> parameters) {

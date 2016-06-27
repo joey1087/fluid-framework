@@ -54,6 +54,9 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
     else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Bracketify()) {
       parameters = [FFTHttpServiceWrapper bracketifyMapsWithJavaUtilMap:parameters];
     }
+    else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_JsonifyNative()) {
+      parameters = [FFTHttpServiceWrapper jsonifyNativeMapsWithJavaUtilMap:parameters];
+    }
   }
   [((id<FFTHttpService>) nil_chk(httpService_)) getBinaryWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
@@ -69,6 +72,9 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Bracketify()) {
     parameters = [FFTHttpServiceWrapper bracketifyMapsWithJavaUtilMap:parameters];
   }
+  else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_JsonifyNative()) {
+    parameters = [FFTHttpServiceWrapper jsonifyNativeMapsWithJavaUtilMap:parameters];
+  }
   [((id<FFTHttpService>) nil_chk(httpService_)) postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
 
@@ -83,6 +89,9 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   }
   else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Bracketify()) {
     parameters = [FFTHttpServiceWrapper bracketifyMapsWithJavaUtilMap:parameters];
+  }
+  else if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_JsonifyNative()) {
+    parameters = [FFTHttpServiceWrapper jsonifyNativeMapsWithJavaUtilMap:parameters];
   }
   [((id<FFTHttpService>) nil_chk(httpService_)) postWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_PostBodyTypeEnum:postBodyType withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
@@ -122,11 +131,25 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   [((id<FFTHttpService>) nil_chk(httpService_)) putWithNSString:URL withJavaUtilHashMap:parameters withFFTHttpService_HttpAuthorization:auth withFFTHttpServiceCallback:callback];
 }
 
-+ (JavaUtilHashMap *)jsonifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters {
++ (JavaUtilHashMap *)jsonifyNativeMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters {
   JavaUtilHashMap *map = [[JavaUtilHashMap alloc] init];
   for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((id<JavaUtilMap>) nil_chk(parameters)) entrySet])) {
     id value = [((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue];
     (void) [map putWithId:[entry_ getKey] withId:value];
+  }
+  return map;
+}
+
++ (JavaUtilHashMap *)jsonifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters {
+  JavaUtilHashMap *map = [[JavaUtilHashMap alloc] init];
+  for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((id<JavaUtilMap>) nil_chk(parameters)) entrySet])) {
+    id value = [((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue];
+    if ([value conformsToProtocol: @protocol(JavaUtilMap)]) {
+      (void) [map putWithId:[entry_ getKey] withId:value];
+    }
+    else {
+      (void) [map putWithId:[entry_ getKey] withId:value];
+    }
   }
   return map;
 }
@@ -232,6 +255,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
     { "postWithNSString:withJavaUtilHashMap:withFFTHttpService_PostBodyTypeEnum:withFFTHttpServiceWrapper_MapModeEnum:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "post", "V", 0x1, NULL },
     { "postRawWithNSString:withNSString:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "postRaw", "V", 0x1, NULL },
     { "putWithNSString:withJavaUtilHashMap:withFFTHttpService_HttpAuthorization:withFFTHttpServiceCallback:", "put", "V", 0x1, NULL },
+    { "jsonifyNativeMapsWithJavaUtilMap:", "jsonifyNativeMaps", "Ljava.util.HashMap;", 0xc, NULL },
     { "jsonifyMapsWithJavaUtilMap:", "jsonifyMaps", "Ljava.util.HashMap;", 0xc, NULL },
     { "jsonifyMapsHelperWithJavaUtilMap:", "jsonifyMapsHelper", "Lcom.eclipsesource.json.JsonObject;", 0xc, NULL },
     { "bracketifyMapsWithJavaUtilMap:", "bracketifyMaps", "Ljava.util.HashMap;", 0xc, NULL },
@@ -248,7 +272,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
     { "httpService_", NULL, 0x10, "Lcom.sponberg.fluid.HttpService;", NULL,  },
     { "mapMode_", NULL, 0x2, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTHttpServiceWrapper = { "HttpServiceWrapper", "com.sponberg.fluid", NULL, 0x1, 19, methods, 2, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTHttpServiceWrapper = { "HttpServiceWrapper", "com.sponberg.fluid", NULL, 0x1, 20, methods, 2, fields, 0, NULL};
   return &_FFTHttpServiceWrapper;
 }
 
@@ -256,7 +280,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
 
 BOOL FFTHttpServiceWrapper_MapModeEnum_initialized = NO;
 
-FFTHttpServiceWrapper_MapModeEnum *FFTHttpServiceWrapper_MapModeEnum_values[2];
+FFTHttpServiceWrapper_MapModeEnum *FFTHttpServiceWrapper_MapModeEnum_values[3];
 
 @implementation FFTHttpServiceWrapper_MapModeEnum
 
@@ -272,16 +296,17 @@ FFTHttpServiceWrapper_MapModeEnum *FFTHttpServiceWrapper_MapModeEnum_values[2];
   if (self == [FFTHttpServiceWrapper_MapModeEnum class]) {
     FFTHttpServiceWrapper_MapModeEnum_Jsonify = [[FFTHttpServiceWrapper_MapModeEnum alloc] initWithNSString:@"Jsonify" withInt:0];
     FFTHttpServiceWrapper_MapModeEnum_Bracketify = [[FFTHttpServiceWrapper_MapModeEnum alloc] initWithNSString:@"Bracketify" withInt:1];
+    FFTHttpServiceWrapper_MapModeEnum_JsonifyNative = [[FFTHttpServiceWrapper_MapModeEnum alloc] initWithNSString:@"JsonifyNative" withInt:2];
     FFTHttpServiceWrapper_MapModeEnum_initialized = YES;
   }
 }
 
 + (IOSObjectArray *)values {
-  return [IOSObjectArray arrayWithObjects:FFTHttpServiceWrapper_MapModeEnum_values count:2 type:[IOSClass classWithClass:[FFTHttpServiceWrapper_MapModeEnum class]]];
+  return [IOSObjectArray arrayWithObjects:FFTHttpServiceWrapper_MapModeEnum_values count:3 type:[IOSClass classWithClass:[FFTHttpServiceWrapper_MapModeEnum class]]];
 }
 
 + (FFTHttpServiceWrapper_MapModeEnum *)valueOfWithNSString:(NSString *)name {
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 3; i++) {
     FFTHttpServiceWrapper_MapModeEnum *e = FFTHttpServiceWrapper_MapModeEnum_values[i];
     if ([name isEqual:[e name]]) {
       return e;
@@ -298,9 +323,10 @@ FFTHttpServiceWrapper_MapModeEnum *FFTHttpServiceWrapper_MapModeEnum_values[2];
   static J2ObjcFieldInfo fields[] = {
     { "Jsonify", "Jsonify", 0x4019, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", &FFTHttpServiceWrapper_MapModeEnum_Jsonify,  },
     { "Bracketify", "Bracketify", 0x4019, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", &FFTHttpServiceWrapper_MapModeEnum_Bracketify,  },
+    { "JsonifyNative", "JsonifyNative", 0x4019, "Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;", &FFTHttpServiceWrapper_MapModeEnum_JsonifyNative,  },
   };
   static const char *superclass_type_args[] = {"Lcom.sponberg.fluid.HttpServiceWrapper$MapMode;"};
-  static J2ObjcClassInfo _FFTHttpServiceWrapper_MapModeEnum = { "MapMode", "com.sponberg.fluid", "HttpServiceWrapper", 0x4019, 1, methods, 2, fields, 1, superclass_type_args};
+  static J2ObjcClassInfo _FFTHttpServiceWrapper_MapModeEnum = { "MapMode", "com.sponberg.fluid", "HttpServiceWrapper", 0x4019, 1, methods, 3, fields, 1, superclass_type_args};
   return &_FFTHttpServiceWrapper_MapModeEnum;
 }
 
