@@ -145,7 +145,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((id<JavaUtilMap>) nil_chk(parameters)) entrySet])) {
     id value = [((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue];
     if ([value conformsToProtocol: @protocol(JavaUtilMap)]) {
-      (void) [map putWithId:[entry_ getKey] withId:value];
+      (void) [map putWithId:[entry_ getKey] withId:[FFTHttpServiceWrapper jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>) check_protocol_cast(value, @protocol(JavaUtilMap))]];
     }
     else {
       (void) [map putWithId:[entry_ getKey] withId:value];

@@ -148,7 +148,7 @@ public class HttpServiceWrapper implements HttpService {
 			Object value = entry.getValue();
 			
 			if (value instanceof Map) {				
-				map.put(entry.getKey(), value/*jsonifyMapsHelper((Map<String, Object>) value)*/);
+				map.put(entry.getKey(), jsonifyMapsHelper((Map<String, Object>) value));
 			} else {
 				map.put(entry.getKey(), value);
 			}
