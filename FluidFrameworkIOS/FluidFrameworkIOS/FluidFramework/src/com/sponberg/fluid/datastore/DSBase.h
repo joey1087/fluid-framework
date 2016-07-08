@@ -36,6 +36,10 @@
 
 - (JavaUtilHashMap *)_getData;
 
+- (void)_setDataWithJavaUtilHashMap:(JavaUtilHashMap *)data;
+
+- (JavaUtilHashMap *)cloneData;
+
 - (BOOL)isEqual:(id)o;
 
 - (BOOL)canEqualWithId:(id)other;

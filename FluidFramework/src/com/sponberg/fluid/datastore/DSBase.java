@@ -1,6 +1,7 @@
 package com.sponberg.fluid.datastore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,4 +42,44 @@ public abstract class DSBase implements SQLQueryResult, SQLDataInput {
 		return _data;
 	}
 	
+	public void _setData(HashMap<String, Object> data) {
+		this._data = data;
+	}
+	
+	public HashMap<String, Object> cloneData() {
+		
+		HashMap<String, Object> clonedData = new HashMap<>();
+		
+		for(Map.Entry<String, Object> entry : _data.entrySet()) {
+			
+			Object copiedObject = null;
+			
+			if(entry.getValue() instanceof String) {
+				copiedObject = (String)entry.getValue(); 
+			} else if (entry.getValue() instanceof Integer) {
+				Integer in = (Integer)entry.getValue();
+				copiedObject = new Integer(in.intValue());
+			} else if (entry.getValue() instanceof Double) {
+				Double number = (Double)entry.getValue();
+				copiedObject = new Double(number.doubleValue());
+			} else if (entry.getValue() instanceof byte[]) {
+				byte[] array = (byte[])entry.getValue();
+				copiedObject = array.clone();
+			}
+			
+			clonedData.put(entry.getKey(), copiedObject);
+		}
+		
+		return clonedData;
+	}
 }
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,8 @@
 #include "java/lang/Double.h"
 #include "java/lang/Integer.h"
 #include "java/util/HashMap.h"
+#include "java/util/Map.h"
+#include "java/util/Set.h"
 
 @implementation FFTDSBase
 
@@ -38,6 +40,34 @@
 
 - (JavaUtilHashMap *)_getData {
   return _data_;
+}
+
+- (void)_setDataWithJavaUtilHashMap:(JavaUtilHashMap *)data {
+  self->_data_ = data;
+}
+
+- (JavaUtilHashMap *)cloneData {
+  JavaUtilHashMap *clonedData = [[JavaUtilHashMap alloc] init];
+  for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((JavaUtilHashMap *) nil_chk(_data_)) entrySet])) {
+    id copiedObject = nil;
+    if ([[((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue] isKindOfClass:[NSString class]]) {
+      copiedObject = (NSString *) check_class_cast([entry_ getValue], [NSString class]);
+    }
+    else if ([[entry_ getValue] isKindOfClass:[JavaLangInteger class]]) {
+      JavaLangInteger *in = (JavaLangInteger *) check_class_cast([entry_ getValue], [JavaLangInteger class]);
+      copiedObject = [[JavaLangInteger alloc] initWithInt:[((JavaLangInteger *) nil_chk(in)) intValue]];
+    }
+    else if ([[entry_ getValue] isKindOfClass:[JavaLangDouble class]]) {
+      JavaLangDouble *number = (JavaLangDouble *) check_class_cast([entry_ getValue], [JavaLangDouble class]);
+      copiedObject = [[JavaLangDouble alloc] initWithDouble:[((JavaLangDouble *) nil_chk(number)) doubleValue]];
+    }
+    else if ([[entry_ getValue] isKindOfClass:[IOSByteArray class]]) {
+      IOSByteArray *array = (IOSByteArray *) check_class_cast([entry_ getValue], [IOSByteArray class]);
+      copiedObject = [((IOSByteArray *) nil_chk(array)) clone];
+    }
+    (void) [clonedData putWithId:[entry_ getKey] withId:copiedObject];
+  }
+  return clonedData;
 }
 
 - (BOOL)isEqual:(id)o {
@@ -87,6 +117,8 @@
     { "_setNullWithNSString:", "_setNull", "V", 0x1, NULL },
     { "_setBlobWithNSString:withByteArray:", "_setBlob", "V", 0x1, NULL },
     { "_getData", NULL, "Ljava.util.HashMap;", 0x1, NULL },
+    { "_setDataWithJavaUtilHashMap:", "_setData", "V", 0x1, NULL },
+    { "cloneData", NULL, "Ljava.util.HashMap;", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
     { "canEqualWithId:", "canEqual", "Z", 0x4, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
@@ -96,7 +128,7 @@
   static J2ObjcFieldInfo fields[] = {
     { "_data_", NULL, 0x4, "Ljava.util.HashMap;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTDSBase = { "DSBase", "com.sponberg.fluid.datastore", NULL, 0x401, 11, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTDSBase = { "DSBase", "com.sponberg.fluid.datastore", NULL, 0x401, 13, methods, 1, fields, 0, NULL};
   return &_FFTDSBase;
 }
 
