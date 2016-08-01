@@ -29,6 +29,9 @@ withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
 - (void)userScrolledToBottomWithNSString:(NSString *)keyPath
          withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
 
+- (void)userScrolledWithNSString:(NSString *)keyPath
+                       withFloat:(float)percentage;
+
 - (BOOL)isListeningForTapAtWithNSString:(NSString *)viewPath;
 
 - (void)userChangedValueToWithNSString:(NSString *)keyPath

@@ -35,6 +35,16 @@ public class EventsManager {
 		}
 	}
 	
+	public void userScrolled(String keyPath, float percentage) {
+		String[] tokens = getTokensFromPath(keyPath);
+		EventListenerGroup group = getEventListenerGroup(rootEventListenerGroup, tokens, 0);
+		if (group != null) {
+			for (ActionListener listener : group.getListener()) {
+				listener.userScrolled(percentage);
+			}
+		}
+	}
+	
 	public boolean isListeningForTapAt(String viewPath) {
 		
 		String[] tokens = getTokensFromPath(viewPath);

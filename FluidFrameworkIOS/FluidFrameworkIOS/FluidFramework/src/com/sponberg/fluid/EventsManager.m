@@ -38,6 +38,17 @@ withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo {
   }
 }
 
+- (void)userScrolledWithNSString:(NSString *)keyPath
+                       withFloat:(float)percentage {
+  IOSObjectArray *tokens = [self getTokensFromPathWithNSString:keyPath];
+  FFTEventsManager_EventListenerGroup *group = [self getEventListenerGroupWithFFTEventsManager_EventListenerGroup:rootEventListenerGroup_ withNSStringArray:tokens withInt:0];
+  if (group != nil) {
+    for (id<FFTActionListener> __strong listener in nil_chk([group getListener])) {
+      [((id<FFTActionListener>) nil_chk(listener)) userScrolledWithFloat:percentage];
+    }
+  }
+}
+
 - (BOOL)isListeningForTapAtWithNSString:(NSString *)viewPath {
   IOSObjectArray *tokens = [self getTokensFromPathWithNSString:viewPath];
   FFTEventsManager_EventListenerGroup *group = [self getEventListenerGroupWithFFTEventsManager_EventListenerGroup:rootEventListenerGroup_ withNSStringArray:tokens withInt:0];
@@ -128,6 +139,7 @@ withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo {
     { "addEventListenerWithFFTActionListener:withNSStringArray:", "addEventListener", "V", 0x81, NULL },
     { "userTappedWithNSString:withFFTActionListener_EventInfo:", "userTapped", "V", 0x1, NULL },
     { "userScrolledToBottomWithNSString:withFFTActionListener_EventInfo:", "userScrolledToBottom", "V", 0x1, NULL },
+    { "userScrolledWithNSString:withFloat:", "userScrolled", "V", 0x1, NULL },
     { "isListeningForTapAtWithNSString:", "isListeningForTapAt", "Z", 0x1, NULL },
     { "userChangedValueToWithNSString:withFFTActionListener_EventInfo:withId:", "userChangedValueTo", "V", 0x1, NULL },
     { "userCancelledWithNSString:", "userCancelled", "V", 0x1, NULL },
@@ -139,7 +151,7 @@ withFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo {
   static J2ObjcFieldInfo fields[] = {
     { "rootEventListenerGroup_", NULL, 0x0, "Lcom.sponberg.fluid.EventsManager$EventListenerGroup;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTEventsManager = { "EventsManager", "com.sponberg.fluid", NULL, 0x1, 10, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTEventsManager = { "EventsManager", "com.sponberg.fluid", NULL, 0x1, 11, methods, 1, fields, 0, NULL};
   return &_FFTEventsManager;
 }
 

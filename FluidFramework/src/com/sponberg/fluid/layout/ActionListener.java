@@ -11,6 +11,8 @@ public interface ActionListener {
 	public void userCancelled();
 	
 	public void userScrolledToBottom(EventInfo eventInfo);
+	
+	public void userScrolled(float percentage);
 
 	@Data
 	public static class EventInfo {

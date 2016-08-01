@@ -21,6 +21,8 @@
 
 - (void)userScrolledToBottomWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
 
+- (void)userScrolledWithFloat:(float)percentage;
+
 @end
 
 __attribute__((always_inline)) inline void FFTActionListener_init() {}

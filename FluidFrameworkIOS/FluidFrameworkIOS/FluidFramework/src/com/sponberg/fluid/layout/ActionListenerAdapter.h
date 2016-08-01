@@ -23,6 +23,8 @@
 
 - (void)userScrolledToBottomWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
 
+- (void)userScrolledWithFloat:(float)percentage;
+
 - (id)init;
 
 @end
