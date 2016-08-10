@@ -130,6 +130,12 @@ public class TableList<E extends TableRowWithId> { //implements Iterable<E> {
 		}
 	}
 	
+	public void addElements(List<E> elements) {
+		for (E e : elements) {
+			add(e);
+		}
+	}
+	
 	public void sort(Comparator<E> comparator) {
 		synchronized (rows) {
 			Collections.sort(rows, comparator);

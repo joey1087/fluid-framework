@@ -124,6 +124,12 @@
   }
 }
 
+- (void)addElementsWithJavaUtilList:(id<JavaUtilList>)elements {
+  for (id<FFTTableRowWithId> __strong e in nil_chk(elements)) {
+    [self addWithId:e];
+  }
+}
+
 - (void)sortWithJavaUtilComparator:(id<JavaUtilComparator>)comparator {
   @synchronized (rows_) {
     [JavaUtilCollections sortWithJavaUtilList:rows_ withJavaUtilComparator:comparator];
@@ -163,6 +169,7 @@
     { "removeByIndexAndReturnChangeIdWithInt:", "removeByIndexAndReturnChangeId", "I", 0x4, NULL },
     { "getRows", NULL, "Ljava.util.List;", 0x1, NULL },
     { "addAllWithFFTTableList:", "addAll", "V", 0x1, NULL },
+    { "addElementsWithJavaUtilList:", "addElements", "V", 0x1, NULL },
     { "sortWithJavaUtilComparator:", "sort", "V", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
@@ -172,7 +179,7 @@
     { "recentlyDeletedRowById_", NULL, 0x12, "Ljava.util.HashMap;", NULL,  },
     { "changeId_", NULL, 0x2, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTTableList = { "TableList", "com.sponberg.fluid.layout", NULL, 0x1, 14, methods, 4, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTTableList = { "TableList", "com.sponberg.fluid.layout", NULL, 0x1, 15, methods, 4, fields, 0, NULL};
   return &_FFTTableList;
 }
 

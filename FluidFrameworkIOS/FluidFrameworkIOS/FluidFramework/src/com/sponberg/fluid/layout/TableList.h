@@ -50,6 +50,8 @@
 
 - (void)addAllWithFFTTableList:(FFTTableList *)list;
 
+- (void)addElementsWithJavaUtilList:(id<JavaUtilList>)elements;
+
 - (void)sortWithJavaUtilComparator:(id<JavaUtilComparator>)comparator;
 
 - (id)init;
