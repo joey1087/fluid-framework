@@ -30,7 +30,7 @@
 }
 
 - (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeWithNSString:string_];
+  [((FFTJsonWriter *) nil_chk(writer)) writeNumberWithNSString:string_];
 }
 
 - (BOOL)isNumber {
@@ -80,7 +80,7 @@
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonNumber", NULL, 0x0, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isNumber", NULL, "Z", 0x1, NULL },
     { "asInt", NULL, "I", 0x1, NULL },
     { "asLong", NULL, "J", 0x1, NULL },

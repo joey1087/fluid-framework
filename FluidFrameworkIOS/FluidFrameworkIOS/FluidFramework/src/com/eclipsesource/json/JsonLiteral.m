@@ -5,7 +5,6 @@
 
 #include "IOSClass.h"
 #include "com/eclipsesource/json/JsonLiteral.h"
-#include "com/eclipsesource/json/JsonValue.h"
 #include "com/eclipsesource/json/JsonWriter.h"
 #include "java/io/IOException.h"
 
@@ -14,40 +13,43 @@
 - (id)initWithNSString:(NSString *)value {
   if (self = [super init]) {
     self->value_ = value;
+    isNull__ = [@"null" isEqual:value];
+    isTrue__ = [@"true" isEqual:value];
+    isFalse__ = [@"false" isEqual:value];
   }
   return self;
 }
 
 - (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeWithNSString:value_];
+  [((FFTJsonWriter *) nil_chk(writer)) writeLiteralWithNSString:value_];
 }
 
 - (NSString *)description {
   return value_;
 }
 
-- (BOOL)asBoolean {
-  return [self isBoolean] ? [self isTrue] : [super asBoolean];
+- (NSUInteger)hash {
+  return ((int) [((NSString *) nil_chk(value_)) hash]);
 }
 
 - (BOOL)isNull {
-  return self == FFTJsonValue_get_NULL__();
-}
-
-- (BOOL)isBoolean {
-  return self == FFTJsonValue_get_TRUE__() || self == FFTJsonValue_get_FALSE__();
+  return isNull__;
 }
 
 - (BOOL)isTrue {
-  return self == FFTJsonValue_get_TRUE__();
+  return isTrue__;
 }
 
 - (BOOL)isFalse {
-  return self == FFTJsonValue_get_FALSE__();
+  return isFalse__;
 }
 
-- (NSUInteger)hash {
-  return ((int) [((NSString *) nil_chk(value_)) hash]);
+- (BOOL)isBoolean {
+  return isTrue__ || isFalse__;
+}
+
+- (BOOL)asBoolean {
+  return isNull__ ? [super asBoolean] : isTrue__;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -66,26 +68,32 @@
 
 - (void)copyAllFieldsTo:(FFTJsonLiteral *)other {
   [super copyAllFieldsTo:other];
+  other->isFalse__ = isFalse__;
+  other->isNull__ = isNull__;
+  other->isTrue__ = isTrue__;
   other->value_ = value_;
 }
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonLiteral", NULL, 0x0, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
-    { "asBoolean", NULL, "Z", 0x1, NULL },
+    { "hash", "hashCode", "I", 0x1, NULL },
     { "isNull", NULL, "Z", 0x1, NULL },
-    { "isBoolean", NULL, "Z", 0x1, NULL },
     { "isTrue", NULL, "Z", 0x1, NULL },
     { "isFalse", NULL, "Z", 0x1, NULL },
-    { "hash", "hashCode", "I", 0x1, NULL },
+    { "isBoolean", NULL, "Z", 0x1, NULL },
+    { "asBoolean", NULL, "Z", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
     { "value_", NULL, 0x12, "Ljava.lang.String;", NULL,  },
+    { "isNull__", "isNull", 0x12, "Z", NULL,  },
+    { "isTrue__", "isTrue", 0x12, "Z", NULL,  },
+    { "isFalse__", "isFalse", 0x12, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonLiteral = { "JsonLiteral", "com.eclipsesource.json", NULL, 0x0, 10, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTJsonLiteral = { "JsonLiteral", "com.eclipsesource.json", NULL, 0x0, 10, methods, 4, fields, 0, NULL};
   return &_FFTJsonLiteral;
 }
 

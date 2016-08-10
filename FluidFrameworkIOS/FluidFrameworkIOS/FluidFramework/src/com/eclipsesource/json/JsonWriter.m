@@ -5,9 +5,6 @@
 
 #include "IOSClass.h"
 #include "IOSPrimitiveArray.h"
-#include "com/eclipsesource/json/JsonArray.h"
-#include "com/eclipsesource/json/JsonObject.h"
-#include "com/eclipsesource/json/JsonValue.h"
 #include "com/eclipsesource/json/JsonWriter.h"
 #include "java/io/IOException.h"
 #include "java/io/Writer.h"
@@ -32,113 +29,97 @@ IOSCharArray * FFTJsonWriter_HEX_DIGITS_;
   return self;
 }
 
-- (void)writeWithNSString:(NSString *)string {
+- (void)writeLiteralWithNSString:(NSString *)value {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithNSString:value];
+}
+
+- (void)writeNumberWithNSString:(NSString *)string {
   [((JavaIoWriter *) nil_chk(writer_)) writeWithNSString:string];
 }
 
 - (void)writeStringWithNSString:(NSString *)string {
   [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'"'];
+  [self writeJsonStringWithNSString:string];
+  [writer_ writeWithInt:'"'];
+}
+
+- (void)writeArrayOpen {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'['];
+}
+
+- (void)writeArrayClose {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:']'];
+}
+
+- (void)writeArraySeparator {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:','];
+}
+
+- (void)writeObjectOpen {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'{'];
+}
+
+- (void)writeObjectClose {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'}'];
+}
+
+- (void)writeMemberNameWithNSString:(NSString *)name {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'"'];
+  [self writeJsonStringWithNSString:name];
+  [writer_ writeWithInt:'"'];
+}
+
+- (void)writeMemberSeparator {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:':'];
+}
+
+- (void)writeObjectSeparator {
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:','];
+}
+
+- (void)writeJsonStringWithNSString:(NSString *)string {
   int length = ((int) [((NSString *) nil_chk(string)) length]);
   int start = 0;
-  IOSCharArray *chars = [IOSCharArray arrayWithLength:length];
-  [string getChars:0 sourceEnd:length destination:chars destinationBegin:0];
   for (int index = 0; index < length; index++) {
-    IOSCharArray *replacement = [FFTJsonWriter getReplacementCharsWithChar:IOSCharArray_Get(chars, index)];
+    IOSCharArray *replacement = [FFTJsonWriter getReplacementCharsWithChar:[string charAtWithInt:index]];
     if (replacement != nil) {
-      [writer_ writeWithCharArray:chars withInt:start withInt:index - start];
+      [((JavaIoWriter *) nil_chk(writer_)) writeWithNSString:string withInt:start withInt:index - start];
       [writer_ writeWithCharArray:replacement];
       start = index + 1;
     }
   }
-  [writer_ writeWithCharArray:chars withInt:start withInt:length - start];
-  [writer_ writeWithInt:'"'];
+  [((JavaIoWriter *) nil_chk(writer_)) writeWithNSString:string withInt:start withInt:length - start];
 }
 
 + (IOSCharArray *)getReplacementCharsWithChar:(unichar)ch {
-  IOSCharArray *replacement = nil;
+  if (ch > '\\') {
+    if (ch < 0x2028 || ch > 0x2029) {
+      return nil;
+    }
+    return ch == 0x2028 ? FFTJsonWriter_UNICODE_2028_CHARS_ : FFTJsonWriter_UNICODE_2029_CHARS_;
+  }
+  if (ch == '\\') {
+    return FFTJsonWriter_BS_CHARS_;
+  }
+  if (ch > '"') {
+    return nil;
+  }
   if (ch == '"') {
-    replacement = FFTJsonWriter_QUOT_CHARS_;
+    return FFTJsonWriter_QUOT_CHARS_;
   }
-  else if (ch == '\\') {
-    replacement = FFTJsonWriter_BS_CHARS_;
+  if (ch > FFTJsonWriter_CONTROL_CHARACTERS_END) {
+    return nil;
   }
-  else if (ch == 0x000a) {
-    replacement = FFTJsonWriter_LF_CHARS_;
+  if (ch == 0x000a) {
+    return FFTJsonWriter_LF_CHARS_;
   }
-  else if (ch == 0x000d) {
-    replacement = FFTJsonWriter_CR_CHARS_;
+  if (ch == 0x000d) {
+    return FFTJsonWriter_CR_CHARS_;
   }
-  else if (ch == 0x0009) {
-    replacement = FFTJsonWriter_TAB_CHARS_;
+  if (ch == 0x0009) {
+    return FFTJsonWriter_TAB_CHARS_;
   }
-  else if (ch == 0x2028) {
-    replacement = FFTJsonWriter_UNICODE_2028_CHARS_;
-  }
-  else if (ch == 0x2029) {
-    replacement = FFTJsonWriter_UNICODE_2029_CHARS_;
-  }
-  else if (ch >= FFTJsonWriter_CONTROL_CHARACTERS_START && ch <= FFTJsonWriter_CONTROL_CHARACTERS_END) {
-    replacement = [IOSCharArray arrayWithChars:(unichar[]){ '\\', 'u', '0', '0', '0', '0' } count:6];
-    (*IOSCharArray_GetRef(replacement, 4)) = IOSCharArray_Get(nil_chk(FFTJsonWriter_HEX_DIGITS_), (ch >> 4) & (int) 0x000f);
-    (*IOSCharArray_GetRef(replacement, 5)) = IOSCharArray_Get(FFTJsonWriter_HEX_DIGITS_, ch & (int) 0x000f);
-  }
-  return replacement;
-}
-
-- (void)writeObjectWithFFTJsonObject:(FFTJsonObject *)object {
-  [self writeBeginObject];
-  BOOL first = YES;
-  for (FFTJsonObject_Member * __strong member in nil_chk(object)) {
-    if (!first) {
-      [self writeObjectValueSeparator];
-    }
-    [self writeStringWithNSString:[((FFTJsonObject_Member *) nil_chk(member)) getName]];
-    [self writeNameValueSeparator];
-    [((FFTJsonValue *) nil_chk([member getValue])) writeWithFFTJsonWriter:self];
-    first = NO;
-  }
-  [self writeEndObject];
-}
-
-- (void)writeBeginObject {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'{'];
-}
-
-- (void)writeEndObject {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'}'];
-}
-
-- (void)writeNameValueSeparator {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:':'];
-}
-
-- (void)writeObjectValueSeparator {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:','];
-}
-
-- (void)writeArrayWithFFTJsonArray:(FFTJsonArray *)array {
-  [self writeBeginArray];
-  BOOL first = YES;
-  for (FFTJsonValue * __strong value in nil_chk(array)) {
-    if (!first) {
-      [self writeArrayValueSeparator];
-    }
-    [((FFTJsonValue *) nil_chk(value)) writeWithFFTJsonWriter:self];
-    first = NO;
-  }
-  [self writeEndArray];
-}
-
-- (void)writeBeginArray {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:'['];
-}
-
-- (void)writeEndArray {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:']'];
-}
-
-- (void)writeArrayValueSeparator {
-  [((JavaIoWriter *) nil_chk(writer_)) writeWithInt:','];
+  return [IOSCharArray arrayWithChars:(unichar[]){ '\\', 'u', '0', '0', IOSCharArray_Get(nil_chk(FFTJsonWriter_HEX_DIGITS_), (ch >> 4) & (int) 0x000f), IOSCharArray_Get(FFTJsonWriter_HEX_DIGITS_, ch & (int) 0x000f) } count:6];
 }
 
 + (void)initialize {
@@ -163,21 +144,21 @@ IOSCharArray * FFTJsonWriter_HEX_DIGITS_;
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "initWithJavaIoWriter:", "JsonWriter", NULL, 0x0, NULL },
-    { "writeWithNSString:", "write", "V", 0x0, "Ljava.io.IOException;" },
-    { "writeStringWithNSString:", "writeString", "V", 0x0, "Ljava.io.IOException;" },
+    { "writeLiteralWithNSString:", "writeLiteral", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeNumberWithNSString:", "writeNumber", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeStringWithNSString:", "writeString", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeArrayOpen", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeArrayClose", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeArraySeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeObjectOpen", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeObjectClose", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeMemberNameWithNSString:", "writeMemberName", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeMemberSeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeObjectSeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
+    { "writeJsonStringWithNSString:", "writeJsonString", "V", 0x4, "Ljava.io.IOException;" },
     { "getReplacementCharsWithChar:", "getReplacementChars", "[C", 0xa, NULL },
-    { "writeObjectWithFFTJsonObject:", "writeObject", "V", 0x4, "Ljava.io.IOException;" },
-    { "writeBeginObject", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeEndObject", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeNameValueSeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeObjectValueSeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeArrayWithFFTJsonArray:", "writeArray", "V", 0x4, "Ljava.io.IOException;" },
-    { "writeBeginArray", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeEndArray", NULL, "V", 0x4, "Ljava.io.IOException;" },
-    { "writeArrayValueSeparator", NULL, "V", 0x4, "Ljava.io.IOException;" },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "CONTROL_CHARACTERS_START_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJsonWriter_CONTROL_CHARACTERS_START },
     { "CONTROL_CHARACTERS_END_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJsonWriter_CONTROL_CHARACTERS_END },
     { "QUOT_CHARS_", NULL, 0x1a, "[C", &FFTJsonWriter_QUOT_CHARS_,  },
     { "BS_CHARS_", NULL, 0x1a, "[C", &FFTJsonWriter_BS_CHARS_,  },
@@ -189,7 +170,7 @@ IOSCharArray * FFTJsonWriter_HEX_DIGITS_;
     { "HEX_DIGITS_", NULL, 0x1a, "[C", &FFTJsonWriter_HEX_DIGITS_,  },
     { "writer_", NULL, 0x14, "Ljava.io.Writer;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonWriter = { "JsonWriter", "com.eclipsesource.json", NULL, 0x0, 13, methods, 11, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTJsonWriter = { "JsonWriter", "com.eclipsesource.json", NULL, 0x0, 14, methods, 10, fields, 0, NULL};
   return &_FFTJsonWriter;
 }
 

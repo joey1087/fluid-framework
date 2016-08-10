@@ -4,11 +4,13 @@
 //
 
 #include "IOSClass.h"
+#include "com/eclipsesource/json/Json.h"
 #include "com/eclipsesource/json/JsonArray.h"
 #include "com/eclipsesource/json/JsonValue.h"
 #include "com/eclipsesource/json/JsonWriter.h"
 #include "java/io/IOException.h"
 #include "java/io/Reader.h"
+#include "java/lang/Deprecated.h"
 #include "java/lang/NullPointerException.h"
 #include "java/lang/UnsupportedOperationException.h"
 #include "java/util/ArrayList.h"
@@ -63,32 +65,32 @@
 }
 
 - (FFTJsonArray *)addWithInt:(int)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithInt:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithInt:value]];
   return self;
 }
 
 - (FFTJsonArray *)addWithLong:(long long int)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithLong:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithLong:value]];
   return self;
 }
 
 - (FFTJsonArray *)addWithFloat:(float)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithFloat:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithFloat:value]];
   return self;
 }
 
 - (FFTJsonArray *)addWithDouble:(double)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithDouble:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithDouble:value]];
   return self;
 }
 
 - (FFTJsonArray *)addWithBoolean:(BOOL)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithBoolean:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithBoolean:value]];
   return self;
 }
 
 - (FFTJsonArray *)addWithNSString:(NSString *)value {
-  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJsonValue valueOfWithNSString:value]];
+  [((id<JavaUtilList>) nil_chk(values__)) addWithId:[FFTJson valueWithNSString:value]];
   return self;
 }
 
@@ -102,37 +104,37 @@
 
 - (FFTJsonArray *)setWithInt:(int)index
                      withInt:(int)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithInt:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithInt:value]];
   return self;
 }
 
 - (FFTJsonArray *)setWithInt:(int)index
                     withLong:(long long int)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithLong:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithLong:value]];
   return self;
 }
 
 - (FFTJsonArray *)setWithInt:(int)index
                    withFloat:(float)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithFloat:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithFloat:value]];
   return self;
 }
 
 - (FFTJsonArray *)setWithInt:(int)index
                   withDouble:(double)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithDouble:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithDouble:value]];
   return self;
 }
 
 - (FFTJsonArray *)setWithInt:(int)index
                  withBoolean:(BOOL)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithBoolean:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithBoolean:value]];
   return self;
 }
 
 - (FFTJsonArray *)setWithInt:(int)index
                 withNSString:(NSString *)value {
-  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJsonValue valueOfWithNSString:value]];
+  (void) [((id<JavaUtilList>) nil_chk(values__)) setWithInt:index withId:[FFTJson valueWithNSString:value]];
   return self;
 }
 
@@ -172,7 +174,17 @@
 }
 
 - (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeArrayWithFFTJsonArray:self];
+  [((FFTJsonWriter *) nil_chk(writer)) writeArrayOpen];
+  id<JavaUtilIterator> iterator = [self iterator];
+  BOOL first = YES;
+  while ([((id<JavaUtilIterator>) nil_chk(iterator)) hasNext]) {
+    if (!first) {
+      [writer writeArraySeparator];
+    }
+    [((FFTJsonValue *) nil_chk([iterator next])) writeWithFFTJsonWriter:writer];
+    first = NO;
+  }
+  [writer writeArrayClose];
 }
 
 - (BOOL)isArray {
@@ -209,6 +221,14 @@
   return JreDefaultFastEnumeration(self, state, stackbuf, len);
 }
 
++ (IOSObjectArray *)__annotations_readFromWithJavaIoReader_ {
+  return [IOSObjectArray arrayWithObjects:(id[]) { [[JavaLangDeprecated alloc] init] } count:1 type:[IOSClass classWithProtocol:@protocol(JavaLangAnnotationAnnotation)]];
+}
+
++ (IOSObjectArray *)__annotations_readFromWithNSString_ {
+  return [IOSObjectArray arrayWithObjects:(id[]) { [[JavaLangDeprecated alloc] init] } count:1 type:[IOSClass classWithProtocol:@protocol(JavaLangAnnotationAnnotation)]];
+}
+
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
@@ -238,7 +258,7 @@
     { "getWithInt:", "get", "Lcom.eclipsesource.json.JsonValue;", 0x1, NULL },
     { "values", NULL, "Ljava.util.List;", 0x1, NULL },
     { "iterator", NULL, "Ljava.util.Iterator;", 0x1, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isArray", NULL, "Z", 0x1, NULL },
     { "asArray", NULL, "Lcom.eclipsesource.json.JsonArray;", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },

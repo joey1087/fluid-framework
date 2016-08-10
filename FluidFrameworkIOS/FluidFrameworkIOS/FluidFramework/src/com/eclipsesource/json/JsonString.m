@@ -59,7 +59,7 @@
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonString", NULL, 0x0, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isString", NULL, "Z", 0x1, NULL },
     { "asString", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },

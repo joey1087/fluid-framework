@@ -223,6 +223,10 @@
 		23D9B9781A676FFA00AECE7F /* FFNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B89E1A676FFA00AECE7F /* FFNavigationViewController.m */; };
 		23D9B9791A676FFA00AECE7F /* FFTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A01A676FFA00AECE7F /* FFTabBarViewController.m */; };
 		23D9B97A1A676FFA00AECE7F /* FFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9B8A21A676FFA00AECE7F /* FFViewController.m */; };
+		D45565491D5AE74F00211A0F /* Json.m in Sources */ = {isa = PBXBuildFile; fileRef = D45565481D5AE74F00211A0F /* Json.m */; };
+		D455654C1D5AE75C00211A0F /* PrettyPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = D455654B1D5AE75C00211A0F /* PrettyPrint.m */; };
+		D455654F1D5AE76500211A0F /* WriterConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D455654E1D5AE76500211A0F /* WriterConfig.m */; };
+		D45565521D5AE76C00211A0F /* WritingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = D45565511D5AE76C00211A0F /* WritingBuffer.m */; };
 		D4A4782D1ABBDBED00D3DAA0 /* cycle_finder in Resources */ = {isa = PBXBuildFile; fileRef = D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */; };
 		D4A4782E1ABBDBED00D3DAA0 /* j2objc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780D1ABBDBED00D3DAA0 /* j2objc */; };
 		D4A4782F1ABBDBED00D3DAA0 /* j2objcc in Resources */ = {isa = PBXBuildFile; fileRef = D4A4780E1ABBDBED00D3DAA0 /* j2objcc */; };
@@ -685,6 +689,14 @@
 		3AFF559219061070006C3273 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		9B4DE59C1D0A53CC00449F64 /* JavaUtilHashMap+Json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JavaUtilHashMap+Json.h"; sourceTree = "<group>"; };
 		9B4DE59D1D0A53CC00449F64 /* JavaUtilHashMap+Json.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JavaUtilHashMap+Json.m"; sourceTree = "<group>"; };
+		D45565471D5AE74F00211A0F /* Json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Json.h; sourceTree = "<group>"; };
+		D45565481D5AE74F00211A0F /* Json.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Json.m; sourceTree = "<group>"; };
+		D455654A1D5AE75C00211A0F /* PrettyPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyPrint.h; sourceTree = "<group>"; };
+		D455654B1D5AE75C00211A0F /* PrettyPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyPrint.m; sourceTree = "<group>"; };
+		D455654D1D5AE76500211A0F /* WriterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WriterConfig.h; sourceTree = "<group>"; };
+		D455654E1D5AE76500211A0F /* WriterConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriterConfig.m; sourceTree = "<group>"; };
+		D45565501D5AE76C00211A0F /* WritingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WritingBuffer.h; sourceTree = "<group>"; };
+		D45565511D5AE76C00211A0F /* WritingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WritingBuffer.m; sourceTree = "<group>"; };
 		D45ACE331CEB07C100E42055 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		D4A4709C1ABBDBEA00D3DAA0 /* cycle_finder */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = cycle_finder; sourceTree = "<group>"; };
 		D4A470A01ABBDBEA00D3DAA0 /* SystemClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemClock.h; sourceTree = "<group>"; };
@@ -2646,6 +2658,14 @@
 		23D9B7261A676FFA00AECE7F /* json */ = {
 			isa = PBXGroup;
 			children = (
+				D45565501D5AE76C00211A0F /* WritingBuffer.h */,
+				D45565511D5AE76C00211A0F /* WritingBuffer.m */,
+				D455654D1D5AE76500211A0F /* WriterConfig.h */,
+				D455654E1D5AE76500211A0F /* WriterConfig.m */,
+				D455654A1D5AE75C00211A0F /* PrettyPrint.h */,
+				D455654B1D5AE75C00211A0F /* PrettyPrint.m */,
+				D45565471D5AE74F00211A0F /* Json.h */,
+				D45565481D5AE74F00211A0F /* Json.m */,
 				23D9B7271A676FFA00AECE7F /* JsonArray.h */,
 				23D9B7281A676FFA00AECE7F /* JsonArray.m */,
 				23D9B7291A676FFA00AECE7F /* JsonLiteral.h */,
@@ -6463,6 +6483,7 @@
 				23D9B90E1A676FFA00AECE7F /* LengthFixed.m in Sources */,
 				23D9B9701A676FFA00AECE7F /* FFTableViewDelegate.m in Sources */,
 				23D9B94F1A676FFA00AECE7F /* KeyValueListModifyable.m in Sources */,
+				D455654C1D5AE75C00211A0F /* PrettyPrint.m in Sources */,
 				23D9B8D11A676FFA00AECE7F /* Callback.m in Sources */,
 				23D9B96E1A676FFA00AECE7F /* FFSubviewRepeat.m in Sources */,
 				23D9B9101A676FFA00AECE7F /* LengthRelativeToParent.m in Sources */,
@@ -6558,8 +6579,10 @@
 				23D9B8EF1A676FFA00AECE7F /* SQLUtil.m in Sources */,
 				23D9B9221A676FFA00AECE7F /* View.m in Sources */,
 				23D9B9071A676FFA00AECE7F /* Layout.m in Sources */,
+				D45565491D5AE74F00211A0F /* Json.m in Sources */,
 				23D9B9321A676FFA00AECE7F /* ViewManager.m in Sources */,
 				23D9B91E1A676FFA00AECE7F /* TableRow.m in Sources */,
+				D45565521D5AE76C00211A0F /* WritingBuffer.m in Sources */,
 				23D9B8D71A676FFA00AECE7F /* DatastoreVersion.m in Sources */,
 				23D9B9381A676FFA00AECE7F /* RowProviderRowLayout.m in Sources */,
 				23D9B9691A676FFA00AECE7F /* FFImageView.m in Sources */,
@@ -6575,6 +6598,7 @@
 				23D9B8FA1A676FFA00AECE7F /* ActionListenerAdapter.m in Sources */,
 				23D9B9651A676FFA00AECE7F /* FFViewFactoryRegistration.m in Sources */,
 				23D9B95B1A676FFA00AECE7F /* FFDataNotificationService.m in Sources */,
+				D455654F1D5AE76500211A0F /* WriterConfig.m in Sources */,
 				23D9B94A1A676FFA00AECE7F /* FileResourceService.m in Sources */,
 				23D9B96A1A676FFA00AECE7F /* FFLabel.m in Sources */,
 				23D9B9781A676FFA00AECE7F /* FFNavigationViewController.m in Sources */,
@@ -6805,6 +6829,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FluidFrameworkIOS/FluidFrameworkIOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

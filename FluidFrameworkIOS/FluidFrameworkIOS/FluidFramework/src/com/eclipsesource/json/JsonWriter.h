@@ -6,15 +6,12 @@
 #ifndef _FFTJsonWriter_H_
 #define _FFTJsonWriter_H_
 
-@class FFTJsonArray;
-@class FFTJsonObject;
 @class IOSCharArray;
 @class JavaIoWriter;
 
 #import "JreEmulation.h"
 
 #define FFTJsonWriter_CONTROL_CHARACTERS_END 31
-#define FFTJsonWriter_CONTROL_CHARACTERS_START 0
 
 @interface FFTJsonWriter : NSObject {
  @public
@@ -23,29 +20,31 @@
 
 - (id)initWithJavaIoWriter:(JavaIoWriter *)writer;
 
-- (void)writeWithNSString:(NSString *)string;
+- (void)writeLiteralWithNSString:(NSString *)value;
+
+- (void)writeNumberWithNSString:(NSString *)string;
 
 - (void)writeStringWithNSString:(NSString *)string;
 
+- (void)writeArrayOpen;
+
+- (void)writeArrayClose;
+
+- (void)writeArraySeparator;
+
+- (void)writeObjectOpen;
+
+- (void)writeObjectClose;
+
+- (void)writeMemberNameWithNSString:(NSString *)name;
+
+- (void)writeMemberSeparator;
+
+- (void)writeObjectSeparator;
+
+- (void)writeJsonStringWithNSString:(NSString *)string;
+
 + (IOSCharArray *)getReplacementCharsWithChar:(unichar)ch;
-
-- (void)writeObjectWithFFTJsonObject:(FFTJsonObject *)object;
-
-- (void)writeBeginObject;
-
-- (void)writeEndObject;
-
-- (void)writeNameValueSeparator;
-
-- (void)writeObjectValueSeparator;
-
-- (void)writeArrayWithFFTJsonArray:(FFTJsonArray *)array;
-
-- (void)writeBeginArray;
-
-- (void)writeEndArray;
-
-- (void)writeArrayValueSeparator;
 
 - (void)copyAllFieldsTo:(FFTJsonWriter *)other;
 
@@ -55,8 +54,6 @@ FOUNDATION_EXPORT BOOL FFTJsonWriter_initialized;
 J2OBJC_STATIC_INIT(FFTJsonWriter)
 
 J2OBJC_FIELD_SETTER(FFTJsonWriter, writer_, JavaIoWriter *)
-
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonWriter, CONTROL_CHARACTERS_START, int)
 
 J2OBJC_STATIC_FIELD_GETTER(FFTJsonWriter, CONTROL_CHARACTERS_END, int)
 

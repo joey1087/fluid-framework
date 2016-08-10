@@ -14,6 +14,9 @@
 @interface FFTJsonLiteral : FFTJsonValue {
  @public
   NSString *value_;
+  BOOL isNull__;
+  BOOL isTrue__;
+  BOOL isFalse__;
 }
 
 - (id)initWithNSString:(NSString *)value;
@@ -22,17 +25,17 @@
 
 - (NSString *)description;
 
-- (BOOL)asBoolean;
+- (NSUInteger)hash;
 
 - (BOOL)isNull;
-
-- (BOOL)isBoolean;
 
 - (BOOL)isTrue;
 
 - (BOOL)isFalse;
 
-- (NSUInteger)hash;
+- (BOOL)isBoolean;
+
+- (BOOL)asBoolean;
 
 - (BOOL)isEqual:(id)object;
 

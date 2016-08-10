@@ -9,6 +9,7 @@
 @class FFTJsonArray;
 @class FFTJsonObject;
 @class FFTJsonWriter;
+@class FFTWriterConfig;
 @class JavaIoReader;
 @class JavaIoWriter;
 
@@ -70,15 +71,18 @@
 
 - (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer;
 
+- (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer
+            withFFTWriterConfig:(FFTWriterConfig *)config;
+
 - (NSString *)description;
+
+- (NSString *)toStringWithFFTWriterConfig:(FFTWriterConfig *)config;
 
 - (BOOL)isEqual:(id)object;
 
 - (NSUInteger)hash;
 
 - (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer;
-
-+ (NSString *)cutOffPointZeroWithNSString:(NSString *)string;
 
 @end
 

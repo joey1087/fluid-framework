@@ -31,7 +31,7 @@ public class HttpServiceWrapper implements HttpService {
 	public void get(String URL, HashMap<String, Object> parameters,
 			HttpAuthorization auth, HttpServiceCallback callback) {
 		
-		Logger.debug(this, "Http Get {} {}", URL, PrettyPrint.toString(parameters));
+		//Logger.debug(this, "Http Get {} {}", URL, PrettyPrint.toString(parameters));
 
 		if (parameters != null) {
 			if (mapMode == MapMode.Jsonify) {
@@ -48,7 +48,7 @@ public class HttpServiceWrapper implements HttpService {
 	public void getBinary(String URL, HashMap<String, Object> parameters,
 			HttpAuthorization auth, HttpServiceCallback callback) {
 		
-		Logger.debug(this, "Http Get Binary {} {}", URL, PrettyPrint.toString(parameters));
+		//Logger.debug(this, "Http Get Binary {} {}", URL, PrettyPrint.toString(parameters));
 
 		if (parameters != null) {
 			if (mapMode == MapMode.Jsonify) {
@@ -67,7 +67,7 @@ public class HttpServiceWrapper implements HttpService {
 	public void post(String URL, HashMap<String, Object> parameters, HttpAuthorization auth,
 			HttpServiceCallback callback) {
 
-		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
+		//Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
 
 		if (mapMode == MapMode.Jsonify) {
 			parameters = jsonifyMaps(parameters);
@@ -84,7 +84,7 @@ public class HttpServiceWrapper implements HttpService {
 	public void post(String URL, HashMap<String, Object> parameters,
 			PostBodyType postBodyType, HttpAuthorization auth,
 			HttpServiceCallback callback) {
-		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
+	//Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
 
 		if (mapMode == MapMode.Jsonify) {
 			parameters = jsonifyMaps(parameters);
@@ -100,7 +100,7 @@ public class HttpServiceWrapper implements HttpService {
 	@Override
 	public void post(String URL, HashMap<String, Object> parameters, PostBodyType postBodyType, 
 			MapMode mapMode, HttpAuthorization auth, HttpServiceCallback callback) {
-		Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
+		//Logger.debug(this, "Http Post {} {}", URL, PrettyPrint.toString(parameters));
 		if (mapMode == MapMode.Jsonify) {
 			parameters = jsonifyMaps(parameters);
 		}
@@ -120,7 +120,7 @@ public class HttpServiceWrapper implements HttpService {
 	public void put(String URL, HashMap<String, Object> parameters, HttpAuthorization auth,
 			HttpServiceCallback callback) {
 		
-		Logger.debug(this, "Http Put {} {}", URL, PrettyPrint.toString(parameters));
+		//Logger.debug(this, "Http Put {} {}", URL, PrettyPrint.toString(parameters));
 
 		if (mapMode == MapMode.Jsonify) {
 			parameters = jsonifyMaps(parameters);

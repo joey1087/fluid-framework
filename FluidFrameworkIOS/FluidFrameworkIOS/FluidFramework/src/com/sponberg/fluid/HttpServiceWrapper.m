@@ -10,7 +10,6 @@
 #include "com/sponberg/fluid/HttpServiceCallback.h"
 #include "com/sponberg/fluid/HttpServiceWrapper.h"
 #include "com/sponberg/fluid/util/Logger.h"
-#include "com/sponberg/fluid/util/PrettyPrint.h"
 #include "java/lang/IllegalArgumentException.h"
 #include "java/util/HashMap.h"
 #include "java/util/Map.h"
@@ -30,7 +29,6 @@
     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Get {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (parameters != nil) {
     if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
       parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
@@ -46,7 +44,6 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
           withJavaUtilHashMap:(JavaUtilHashMap *)parameters
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
    withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Get Binary {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (parameters != nil) {
     if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
       parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
@@ -65,7 +62,6 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
      withJavaUtilHashMap:(JavaUtilHashMap *)parameters
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Post {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
     parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
   }
@@ -83,7 +79,6 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
 withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyType
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Post {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
     parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
   }
@@ -102,7 +97,6 @@ withFFTHttpService_PostBodyTypeEnum:(FFTHttpService_PostBodyTypeEnum *)postBodyT
 withFFTHttpServiceWrapper_MapModeEnum:(FFTHttpServiceWrapper_MapModeEnum *)mapMode
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Post {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (mapMode == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
     parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
   }
@@ -121,7 +115,6 @@ withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
     withJavaUtilHashMap:(JavaUtilHashMap *)parameters
 withFFTHttpService_HttpAuthorization:(FFTHttpService_HttpAuthorization *)auth
 withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
-  [FFTLogger debugWithId:self withNSString:@"Http Put {} {}" withNSObjectArray:[IOSObjectArray arrayWithObjects:(id[]){ URL, [FFTPrettyPrint toStringWithJavaUtilMap:parameters] } count:2 type:[IOSClass classWithClass:[NSObject class]]]];
   if (mapMode_ == FFTHttpServiceWrapper_MapModeEnum_get_Jsonify()) {
     parameters = [FFTHttpServiceWrapper jsonifyMapsWithJavaUtilMap:parameters];
   }

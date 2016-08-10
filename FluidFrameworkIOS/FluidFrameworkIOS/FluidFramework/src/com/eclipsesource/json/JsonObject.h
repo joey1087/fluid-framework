@@ -82,7 +82,27 @@
 
 - (FFTJsonObject *)removeWithNSString:(NSString *)name;
 
+- (FFTJsonObject *)mergeWithFFTJsonObject:(FFTJsonObject *)object;
+
 - (FFTJsonValue *)getWithNSString:(NSString *)name;
+
+- (int)getIntWithNSString:(NSString *)name
+                  withInt:(int)defaultValue;
+
+- (long long int)getLongWithNSString:(NSString *)name
+                            withLong:(long long int)defaultValue;
+
+- (float)getFloatWithNSString:(NSString *)name
+                    withFloat:(float)defaultValue;
+
+- (double)getDoubleWithNSString:(NSString *)name
+                     withDouble:(double)defaultValue;
+
+- (BOOL)getBooleanWithNSString:(NSString *)name
+                   withBoolean:(BOOL)defaultValue;
+
+- (NSString *)getStringWithNSString:(NSString *)name
+                       withNSString:(NSString *)defaultValue;
 
 - (int)size;
 

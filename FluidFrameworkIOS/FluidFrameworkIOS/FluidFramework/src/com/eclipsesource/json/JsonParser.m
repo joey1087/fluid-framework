@@ -5,6 +5,7 @@
 
 #include "IOSClass.h"
 #include "IOSPrimitiveArray.h"
+#include "com/eclipsesource/json/Json.h"
 #include "com/eclipsesource/json/JsonArray.h"
 #include "com/eclipsesource/json/JsonNumber.h"
 #include "com/eclipsesource/json/JsonObject.h"
@@ -143,7 +144,7 @@
   [self readRequiredCharWithChar:'u'];
   [self readRequiredCharWithChar:'l'];
   [self readRequiredCharWithChar:'l'];
-  return FFTJsonValue_get_NULL__();
+  return FFTJson_get_NULL__();
 }
 
 - (FFTJsonValue *)readTrue {
@@ -151,7 +152,7 @@
   [self readRequiredCharWithChar:'r'];
   [self readRequiredCharWithChar:'u'];
   [self readRequiredCharWithChar:'e'];
-  return FFTJsonValue_get_TRUE__();
+  return FFTJson_get_TRUE__();
 }
 
 - (FFTJsonValue *)readFalse {
@@ -160,7 +161,7 @@
   [self readRequiredCharWithChar:'l'];
   [self readRequiredCharWithChar:'s'];
   [self readRequiredCharWithChar:'e'];
-  return FFTJsonValue_get_FALSE__();
+  return FFTJson_get_FALSE__();
 }
 
 - (void)readRequiredCharWithChar:(unichar)ch {
@@ -228,7 +229,7 @@
         }
         (*IOSCharArray_GetRef(hexChars, i)) = (unichar) current_;
       }
-      (void) [((JavaLangStringBuilder *) nil_chk(captureBuffer_)) appendWithChar:(unichar) [JavaLangInteger parseIntWithNSString:[NSString valueOfChars:hexChars] withInt:16]];
+      (void) [((JavaLangStringBuilder *) nil_chk(captureBuffer_)) appendWithChar:(unichar) [JavaLangInteger parseIntWithNSString:[NSString stringWithCharacters:hexChars] withInt:16]];
       break;
       default:
       @throw [self expectedWithNSString:@"valid escape sequence"];
@@ -303,9 +304,6 @@
 }
 
 - (void)read {
-  if ([self isEndOfText]) {
-    @throw [self errorWithNSString:@"Unexpected end of input"];
-  }
   if (index_ == fill_) {
     if (captureStart_ != -1) {
       (void) [((JavaLangStringBuilder *) nil_chk(captureBuffer_)) appendWithCharArray:buffer_ withInt:captureStart_ withInt:fill_ - captureStart_];

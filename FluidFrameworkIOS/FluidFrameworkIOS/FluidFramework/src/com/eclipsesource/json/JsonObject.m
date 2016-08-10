@@ -5,6 +5,7 @@
 
 #include "IOSClass.h"
 #include "IOSPrimitiveArray.h"
+#include "com/eclipsesource/json/Json.h"
 #include "com/eclipsesource/json/JsonObject.h"
 #include "com/eclipsesource/json/JsonValue.h"
 #include "com/eclipsesource/json/JsonWriter.h"
@@ -12,6 +13,7 @@
 #include "java/io/ObjectInputStream.h"
 #include "java/io/Reader.h"
 #include "java/lang/ClassNotFoundException.h"
+#include "java/lang/Deprecated.h"
 #include "java/lang/NullPointerException.h"
 #include "java/lang/System.h"
 #include "java/lang/UnsupportedOperationException.h"
@@ -74,37 +76,37 @@
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                            withInt:(int)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithInt:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithInt:value]];
   return self;
 }
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                           withLong:(long long int)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithLong:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithLong:value]];
   return self;
 }
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                          withFloat:(float)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithFloat:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithFloat:value]];
   return self;
 }
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                         withDouble:(double)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithDouble:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithDouble:value]];
   return self;
 }
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                        withBoolean:(BOOL)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithBoolean:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithBoolean:value]];
   return self;
 }
 
 - (FFTJsonObject *)addWithNSString:(NSString *)name
                       withNSString:(NSString *)value {
-  (void) [self addWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithNSString:value]];
+  (void) [self addWithNSString:name withFFTJsonValue:[FFTJson valueWithNSString:value]];
   return self;
 }
 
@@ -124,37 +126,37 @@
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                            withInt:(int)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithInt:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithInt:value]];
   return self;
 }
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                           withLong:(long long int)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithLong:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithLong:value]];
   return self;
 }
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                          withFloat:(float)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithFloat:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithFloat:value]];
   return self;
 }
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                         withDouble:(double)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithDouble:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithDouble:value]];
   return self;
 }
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                        withBoolean:(BOOL)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithBoolean:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithBoolean:value]];
   return self;
 }
 
 - (FFTJsonObject *)setWithNSString:(NSString *)name
                       withNSString:(NSString *)value {
-  (void) [self setWithNSString:name withFFTJsonValue:[FFTJsonValue valueOfWithNSString:value]];
+  (void) [self setWithNSString:name withFFTJsonValue:[FFTJson valueWithNSString:value]];
   return self;
 }
 
@@ -191,12 +193,58 @@
   return self;
 }
 
+- (FFTJsonObject *)mergeWithFFTJsonObject:(FFTJsonObject *)object {
+  if (object == nil) {
+    @throw [[JavaLangNullPointerException alloc] initWithNSString:@"object is null"];
+  }
+  for (FFTJsonObject_Member * __strong member in nil_chk(object)) {
+    (void) [self setWithNSString:((FFTJsonObject_Member *) nil_chk(member))->name_ withFFTJsonValue:member->value_];
+  }
+  return self;
+}
+
 - (FFTJsonValue *)getWithNSString:(NSString *)name {
   if (name == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"name is null"];
   }
   int index = [self indexOfWithNSString:name];
   return index != -1 ? [((id<JavaUtilList>) nil_chk(values_)) getWithInt:index] : nil;
+}
+
+- (int)getIntWithNSString:(NSString *)name
+                  withInt:(int)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asInt] : defaultValue;
+}
+
+- (long long int)getLongWithNSString:(NSString *)name
+                            withLong:(long long int)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asLong] : defaultValue;
+}
+
+- (float)getFloatWithNSString:(NSString *)name
+                    withFloat:(float)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asFloat] : defaultValue;
+}
+
+- (double)getDoubleWithNSString:(NSString *)name
+                     withDouble:(double)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asDouble] : defaultValue;
+}
+
+- (BOOL)getBooleanWithNSString:(NSString *)name
+                   withBoolean:(BOOL)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asBoolean] : defaultValue;
+}
+
+- (NSString *)getStringWithNSString:(NSString *)name
+                       withNSString:(NSString *)defaultValue {
+  FFTJsonValue *value = [self getWithNSString:name];
+  return value != nil ? [value asString] : defaultValue;
 }
 
 - (int)size {
@@ -218,7 +266,20 @@
 }
 
 - (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeObjectWithFFTJsonObject:self];
+  [((FFTJsonWriter *) nil_chk(writer)) writeObjectOpen];
+  id<JavaUtilIterator> namesIterator = [((id<JavaUtilList>) nil_chk(names__)) iterator];
+  id<JavaUtilIterator> valuesIterator = [((id<JavaUtilList>) nil_chk(values_)) iterator];
+  BOOL first = YES;
+  while ([((id<JavaUtilIterator>) nil_chk(namesIterator)) hasNext]) {
+    if (!first) {
+      [writer writeObjectSeparator];
+    }
+    [writer writeMemberNameWithNSString:[namesIterator next]];
+    [writer writeMemberSeparator];
+    [((FFTJsonValue *) nil_chk([((id<JavaUtilIterator>) nil_chk(valuesIterator)) next])) writeWithFFTJsonWriter:writer];
+    first = NO;
+  }
+  [writer writeObjectClose];
 }
 
 - (BOOL)isObject {
@@ -285,6 +346,14 @@
   return JreDefaultFastEnumeration(self, state, stackbuf, len);
 }
 
++ (IOSObjectArray *)__annotations_readFromWithJavaIoReader_ {
+  return [IOSObjectArray arrayWithObjects:(id[]) { [[JavaLangDeprecated alloc] init] } count:1 type:[IOSClass classWithProtocol:@protocol(JavaLangAnnotationAnnotation)]];
+}
+
++ (IOSObjectArray *)__annotations_readFromWithNSString_ {
+  return [IOSObjectArray arrayWithObjects:(id[]) { [[JavaLangDeprecated alloc] init] } count:1 type:[IOSClass classWithProtocol:@protocol(JavaLangAnnotationAnnotation)]];
+}
+
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
@@ -309,12 +378,19 @@
     { "setWithNSString:withNSString:", "set", "Lcom.eclipsesource.json.JsonObject;", 0x1, NULL },
     { "setWithNSString:withFFTJsonValue:", "set", "Lcom.eclipsesource.json.JsonObject;", 0x1, NULL },
     { "removeWithNSString:", "remove", "Lcom.eclipsesource.json.JsonObject;", 0x1, NULL },
+    { "mergeWithFFTJsonObject:", "merge", "Lcom.eclipsesource.json.JsonObject;", 0x1, NULL },
     { "getWithNSString:", "get", "Lcom.eclipsesource.json.JsonValue;", 0x1, NULL },
+    { "getIntWithNSString:withInt:", "getInt", "I", 0x1, NULL },
+    { "getLongWithNSString:withLong:", "getLong", "J", 0x1, NULL },
+    { "getFloatWithNSString:withFloat:", "getFloat", "F", 0x1, NULL },
+    { "getDoubleWithNSString:withDouble:", "getDouble", "D", 0x1, NULL },
+    { "getBooleanWithNSString:withBoolean:", "getBoolean", "Z", 0x1, NULL },
+    { "getStringWithNSString:withNSString:", "getString", "Ljava.lang.String;", 0x1, NULL },
     { "size", NULL, "I", 0x1, NULL },
     { "isEmpty", NULL, "Z", 0x1, NULL },
     { "names", NULL, "Ljava.util.List;", 0x1, NULL },
     { "iterator", NULL, "Ljava.util.Iterator;", 0x1, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x4, "Ljava.io.IOException;" },
+    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isObject", NULL, "Z", 0x1, NULL },
     { "asObject", NULL, "Lcom.eclipsesource.json.JsonObject;", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
@@ -328,7 +404,7 @@
     { "values_", NULL, 0x12, "Ljava.util.List;", NULL,  },
     { "table_", NULL, 0x82, "Lcom.eclipsesource.json.JsonObject$HashIndexTable;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonObject = { "JsonObject", "com.eclipsesource.json", NULL, 0x1, 34, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTJsonObject = { "JsonObject", "com.eclipsesource.json", NULL, 0x1, 41, methods, 3, fields, 0, NULL};
   return &_FFTJsonObject;
 }
 
