@@ -12,7 +12,7 @@
 #include "java/lang/IllegalArgumentException.h"
 #include "java/util/Arrays.h"
 
-@implementation FFTPrettyPrint
+@implementation FFTJSONPrettyPrint
 
 - (id)initWithCharArray:(IOSCharArray *)indentChars {
   if (self = [super init]) {
@@ -21,28 +21,28 @@
   return self;
 }
 
-+ (FFTPrettyPrint *)singleLine {
-  return [[FFTPrettyPrint alloc] initWithCharArray:nil];
++ (FFTJSONPrettyPrint *)singleLine {
+  return [[FFTJSONPrettyPrint alloc] initWithCharArray:nil];
 }
 
-+ (FFTPrettyPrint *)indentWithSpacesWithInt:(int)number {
++ (FFTJSONPrettyPrint *)indentWithSpacesWithInt:(int)number {
   if (number < 0) {
     @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:@"number is negative"];
   }
   IOSCharArray *chars = [IOSCharArray arrayWithLength:number];
   [JavaUtilArrays fillWithCharArray:chars withChar:' '];
-  return [[FFTPrettyPrint alloc] initWithCharArray:chars];
+  return [[FFTJSONPrettyPrint alloc] initWithCharArray:chars];
 }
 
-+ (FFTPrettyPrint *)indentWithTabs {
-  return [[FFTPrettyPrint alloc] initWithCharArray:[IOSCharArray arrayWithChars:(unichar[]){ 0x0009 } count:1]];
++ (FFTJSONPrettyPrint *)indentWithTabs {
+  return [[FFTJSONPrettyPrint alloc] initWithCharArray:[IOSCharArray arrayWithChars:(unichar[]){ 0x0009 } count:1]];
 }
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
-  return [[FFTPrettyPrint_PrettyPrintWriter alloc] initWithJavaIoWriter:writer withCharArray:indentChars_];
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
+  return [[FFTJSONPrettyPrint_PrettyPrintWriter alloc] initWithJavaIoWriter:writer withCharArray:indentChars_];
 }
 
-- (void)copyAllFieldsTo:(FFTPrettyPrint *)other {
+- (void)copyAllFieldsTo:(FFTJSONPrettyPrint *)other {
   [super copyAllFieldsTo:other];
   other->indentChars_ = indentChars_;
 }
@@ -58,13 +58,13 @@
   static J2ObjcFieldInfo fields[] = {
     { "indentChars_", NULL, 0x12, "[C", NULL,  },
   };
-  static J2ObjcClassInfo _FFTPrettyPrint = { "PrettyPrint", "com.eclipsesource.json", NULL, 0x1, 5, methods, 1, fields, 0, NULL};
-  return &_FFTPrettyPrint;
+  static J2ObjcClassInfo _FFTJSONPrettyPrint = { "PrettyPrint", "com.eclipsesource.json", NULL, 0x1, 5, methods, 1, fields, 0, NULL};
+  return &_FFTJSONPrettyPrint;
 }
 
 @end
 
-@implementation FFTPrettyPrint_PrettyPrintWriter
+@implementation FFTJSONPrettyPrint_PrettyPrintWriter
 
 - (id)initWithJavaIoWriter:(JavaIoWriter *)writer
              withCharArray:(IOSCharArray *)indentChars {
@@ -128,7 +128,7 @@
   return YES;
 }
 
-- (void)copyAllFieldsTo:(FFTPrettyPrint_PrettyPrintWriter *)other {
+- (void)copyAllFieldsTo:(FFTJSONPrettyPrint_PrettyPrintWriter *)other {
   [super copyAllFieldsTo:other];
   other->indent_ = indent_;
   other->indentChars_ = indentChars_;
@@ -150,8 +150,8 @@
     { "indentChars_", NULL, 0x12, "[C", NULL,  },
     { "indent_", NULL, 0x2, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTPrettyPrint_PrettyPrintWriter = { "PrettyPrintWriter", "com.eclipsesource.json", "PrettyPrint", 0xa, 9, methods, 2, fields, 0, NULL};
-  return &_FFTPrettyPrint_PrettyPrintWriter;
+  static J2ObjcClassInfo _FFTJSONPrettyPrint_PrettyPrintWriter = { "PrettyPrintWriter", "com.eclipsesource.json", "PrettyPrint", 0xa, 9, methods, 2, fields, 0, NULL};
+  return &_FFTJSONPrettyPrint_PrettyPrintWriter;
 }
 
 @end

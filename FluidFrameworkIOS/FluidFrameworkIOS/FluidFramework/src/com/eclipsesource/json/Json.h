@@ -3,12 +3,12 @@
 //  source: src-external/com/eclipsesource/json/Json.java
 //
 
-#ifndef _FFTJson_H_
-#define _FFTJson_H_
+#ifndef _FFTJSONJson_H_
+#define _FFTJSONJson_H_
 
-@class FFTJsonArray;
-@class FFTJsonObject;
-@class FFTJsonValue;
+@class FFTJSONJsonArray;
+@class FFTJSONJsonObject;
+@class FFTJSONJsonValue;
 @class IOSBooleanArray;
 @class IOSDoubleArray;
 @class IOSFloatArray;
@@ -19,59 +19,59 @@
 
 #import "JreEmulation.h"
 
-@interface FFTJson : NSObject {
+@interface FFTJSONJson : NSObject {
 }
 
 - (id)init;
 
-+ (FFTJsonValue *)valueWithInt:(int)value;
++ (FFTJSONJsonValue *)valueWithInt:(int)value;
 
-+ (FFTJsonValue *)valueWithLong:(long long int)value;
++ (FFTJSONJsonValue *)valueWithLong:(long long int)value;
 
-+ (FFTJsonValue *)valueWithFloat:(float)value;
++ (FFTJSONJsonValue *)valueWithFloat:(float)value;
 
-+ (FFTJsonValue *)valueWithDouble:(double)value;
++ (FFTJSONJsonValue *)valueWithDouble:(double)value;
 
-+ (FFTJsonValue *)valueWithNSString:(NSString *)string;
++ (FFTJSONJsonValue *)valueWithNSString:(NSString *)string;
 
-+ (FFTJsonValue *)valueWithBoolean:(BOOL)value;
++ (FFTJSONJsonValue *)valueWithBoolean:(BOOL)value;
 
-+ (FFTJsonValue *)array;
++ (FFTJSONJsonValue *)array;
 
-+ (FFTJsonArray *)arrayWithIntArray:(IOSIntArray *)values;
++ (FFTJSONJsonArray *)arrayWithIntArray:(IOSIntArray *)values;
 
-+ (FFTJsonArray *)arrayWithLongArray:(IOSLongArray *)values;
++ (FFTJSONJsonArray *)arrayWithLongArray:(IOSLongArray *)values;
 
-+ (FFTJsonArray *)arrayWithFloatArray:(IOSFloatArray *)values;
++ (FFTJSONJsonArray *)arrayWithFloatArray:(IOSFloatArray *)values;
 
-+ (FFTJsonArray *)arrayWithDoubleArray:(IOSDoubleArray *)values;
++ (FFTJSONJsonArray *)arrayWithDoubleArray:(IOSDoubleArray *)values;
 
-+ (FFTJsonArray *)arrayWithBooleanArray:(IOSBooleanArray *)values;
++ (FFTJSONJsonArray *)arrayWithBooleanArray:(IOSBooleanArray *)values;
 
-+ (FFTJsonArray *)arrayWithNSStringArray:(IOSObjectArray *)strings;
++ (FFTJSONJsonArray *)arrayWithNSStringArray:(IOSObjectArray *)strings;
 
-+ (FFTJsonObject *)object;
++ (FFTJSONJsonObject *)object;
 
-+ (FFTJsonValue *)parseWithNSString:(NSString *)string;
++ (FFTJSONJsonValue *)parseWithNSString:(NSString *)string;
 
-+ (FFTJsonValue *)parseWithJavaIoReader:(JavaIoReader *)reader;
++ (FFTJSONJsonValue *)parseWithJavaIoReader:(JavaIoReader *)reader;
 
 + (NSString *)cutOffPointZeroWithNSString:(NSString *)string;
 
 @end
 
-FOUNDATION_EXPORT BOOL FFTJson_initialized;
-J2OBJC_STATIC_INIT(FFTJson)
+FOUNDATION_EXPORT BOOL FFTJSONJson_initialized;
+J2OBJC_STATIC_INIT(FFTJSONJson)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJson_NULL__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJson, NULL__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJson_NULL__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJson, NULL__, FFTJSONJsonValue *)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJson_TRUE__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJson, TRUE__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJson_TRUE__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJson, TRUE__, FFTJSONJsonValue *)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJson_FALSE__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJson, FALSE__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJson_FALSE__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJson, FALSE__, FFTJSONJsonValue *)
 
-typedef FFTJson ComEclipsesourceJsonJson;
+typedef FFTJSONJson ComEclipsesourceJsonJson;
 
-#endif // _FFTJson_H_
+#endif // _FFTJSONJson_H_

@@ -20,18 +20,18 @@
 #include "java/lang/Math.h"
 #include "java/lang/StringBuilder.h"
 
-@implementation FFTJsonParser
+@implementation FFTJSONJsonParser
 
 - (id)initWithNSString:(NSString *)string {
-  return [self initFFTJsonParserWithJavaIoReader:[[JavaIoStringReader alloc] initWithNSString:string] withInt:[JavaLangMath maxWithInt:FFTJsonParser_MIN_BUFFER_SIZE withInt:[JavaLangMath minWithInt:FFTJsonParser_DEFAULT_BUFFER_SIZE withInt:((int) [((NSString *) nil_chk(string)) length])]]];
+  return [self initFFTJSONJsonParserWithJavaIoReader:[[JavaIoStringReader alloc] initWithNSString:string] withInt:[JavaLangMath maxWithInt:FFTJSONJsonParser_MIN_BUFFER_SIZE withInt:[JavaLangMath minWithInt:FFTJSONJsonParser_DEFAULT_BUFFER_SIZE withInt:((int) [((NSString *) nil_chk(string)) length])]]];
 }
 
 - (id)initWithJavaIoReader:(JavaIoReader *)reader {
-  return [self initFFTJsonParserWithJavaIoReader:reader withInt:FFTJsonParser_DEFAULT_BUFFER_SIZE];
+  return [self initFFTJSONJsonParserWithJavaIoReader:reader withInt:FFTJSONJsonParser_DEFAULT_BUFFER_SIZE];
 }
 
-- (id)initFFTJsonParserWithJavaIoReader:(JavaIoReader *)reader
-                                withInt:(int)buffersize {
+- (id)initFFTJSONJsonParserWithJavaIoReader:(JavaIoReader *)reader
+                                    withInt:(int)buffersize {
   if (self = [super init]) {
     self->reader_ = reader;
     buffer_ = [IOSCharArray arrayWithLength:buffersize];
@@ -43,13 +43,13 @@
 
 - (id)initWithJavaIoReader:(JavaIoReader *)reader
                    withInt:(int)buffersize {
-  return [self initFFTJsonParserWithJavaIoReader:reader withInt:buffersize];
+  return [self initFFTJSONJsonParserWithJavaIoReader:reader withInt:buffersize];
 }
 
-- (FFTJsonValue *)parse {
+- (FFTJSONJsonValue *)parse {
   [self read];
   [self skipWhiteSpace];
-  FFTJsonValue *result = [self readValue];
+  FFTJSONJsonValue *result = [self readValue];
   [self skipWhiteSpace];
   if (![self isEndOfText]) {
     @throw [self errorWithNSString:@"Unexpected character"];
@@ -57,7 +57,7 @@
   return result;
 }
 
-- (FFTJsonValue *)readValue {
+- (FFTJSONJsonValue *)readValue {
   switch (current_) {
     case 'n':
     return [self readNull];
@@ -88,16 +88,16 @@
   }
 }
 
-- (FFTJsonArray *)readArray {
+- (FFTJSONJsonArray *)readArray {
   [self read];
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   [self skipWhiteSpace];
   if ([self readCharWithChar:']']) {
     return array;
   }
   do {
     [self skipWhiteSpace];
-    (void) [array addWithFFTJsonValue:[self readValue]];
+    (void) [array addWithFFTJSONJsonValue:[self readValue]];
     [self skipWhiteSpace];
   }
   while ([self readCharWithChar:',']);
@@ -107,9 +107,9 @@
   return array;
 }
 
-- (FFTJsonObject *)readObject {
+- (FFTJSONJsonObject *)readObject {
   [self read];
-  FFTJsonObject *object = [[FFTJsonObject alloc] init];
+  FFTJSONJsonObject *object = [[FFTJSONJsonObject alloc] init];
   [self skipWhiteSpace];
   if ([self readCharWithChar:'}']) {
     return object;
@@ -122,7 +122,7 @@
       @throw [self expectedWithNSString:@"':'"];
     }
     [self skipWhiteSpace];
-    (void) [object addWithNSString:name withFFTJsonValue:[self readValue]];
+    (void) [object addWithNSString:name withFFTJSONJsonValue:[self readValue]];
     [self skipWhiteSpace];
   }
   while ([self readCharWithChar:',']);
@@ -139,29 +139,29 @@
   return [self readStringInternal];
 }
 
-- (FFTJsonValue *)readNull {
+- (FFTJSONJsonValue *)readNull {
   [self read];
   [self readRequiredCharWithChar:'u'];
   [self readRequiredCharWithChar:'l'];
   [self readRequiredCharWithChar:'l'];
-  return FFTJson_get_NULL__();
+  return FFTJSONJson_get_NULL__();
 }
 
-- (FFTJsonValue *)readTrue {
+- (FFTJSONJsonValue *)readTrue {
   [self read];
   [self readRequiredCharWithChar:'r'];
   [self readRequiredCharWithChar:'u'];
   [self readRequiredCharWithChar:'e'];
-  return FFTJson_get_TRUE__();
+  return FFTJSONJson_get_TRUE__();
 }
 
-- (FFTJsonValue *)readFalse {
+- (FFTJSONJsonValue *)readFalse {
   [self read];
   [self readRequiredCharWithChar:'a'];
   [self readRequiredCharWithChar:'l'];
   [self readRequiredCharWithChar:'s'];
   [self readRequiredCharWithChar:'e'];
-  return FFTJson_get_FALSE__();
+  return FFTJSONJson_get_FALSE__();
 }
 
 - (void)readRequiredCharWithChar:(unichar)ch {
@@ -170,8 +170,8 @@
   }
 }
 
-- (FFTJsonValue *)readString {
-  return [[FFTJsonString alloc] initWithNSString:[self readStringInternal]];
+- (FFTJSONJsonValue *)readString {
+  return [[FFTJSONJsonString alloc] initWithNSString:[self readStringInternal]];
 }
 
 - (NSString *)readStringInternal {
@@ -238,7 +238,7 @@
   [self read];
 }
 
-- (FFTJsonValue *)readNumber {
+- (FFTJSONJsonValue *)readNumber {
   [self startCapture];
   [self readCharWithChar:'-'];
   int firstDigit = current_;
@@ -251,7 +251,7 @@
   }
   [self readFraction];
   [self readExponent];
-  return [[FFTJsonNumber alloc] initWithNSString:[self endCapture]];
+  return [[FFTJSONJsonNumber alloc] initWithNSString:[self endCapture]];
 }
 
 - (BOOL)readFraction {
@@ -352,18 +352,18 @@
   return captured;
 }
 
-- (FFTParseException *)expectedWithNSString:(NSString *)expected {
+- (FFTJSONParseException *)expectedWithNSString:(NSString *)expected {
   if ([self isEndOfText]) {
     return [self errorWithNSString:@"Unexpected end of input"];
   }
   return [self errorWithNSString:[NSString stringWithFormat:@"Expected %@", expected]];
 }
 
-- (FFTParseException *)errorWithNSString:(NSString *)message {
+- (FFTJSONParseException *)errorWithNSString:(NSString *)message {
   int absIndex = bufferOffset_ + index_;
   int column = absIndex - lineOffset_;
   int offset = [self isEndOfText] ? absIndex : absIndex - 1;
-  return [[FFTParseException alloc] initWithNSString:message withInt:offset withInt:line_ withInt:column - 1];
+  return [[FFTJSONParseException alloc] initWithNSString:message withInt:offset withInt:line_ withInt:column - 1];
 }
 
 - (BOOL)isWhiteSpace {
@@ -382,7 +382,7 @@
   return current_ == -1;
 }
 
-- (void)copyAllFieldsTo:(FFTJsonParser *)other {
+- (void)copyAllFieldsTo:(FFTJSONJsonParser *)other {
   [super copyAllFieldsTo:other];
   other->buffer_ = buffer_;
   other->bufferOffset_ = bufferOffset_;
@@ -431,8 +431,8 @@
     { "isEndOfText", NULL, "Z", 0x2, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "MIN_BUFFER_SIZE_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJsonParser_MIN_BUFFER_SIZE },
-    { "DEFAULT_BUFFER_SIZE_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJsonParser_DEFAULT_BUFFER_SIZE },
+    { "MIN_BUFFER_SIZE_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJSONJsonParser_MIN_BUFFER_SIZE },
+    { "DEFAULT_BUFFER_SIZE_", NULL, 0x1a, "I", NULL, .constantValue.asInt = FFTJSONJsonParser_DEFAULT_BUFFER_SIZE },
     { "reader_", NULL, 0x12, "Ljava.io.Reader;", NULL,  },
     { "buffer_", NULL, 0x12, "[C", NULL,  },
     { "bufferOffset_", NULL, 0x2, "I", NULL,  },
@@ -444,8 +444,8 @@
     { "captureBuffer_", NULL, 0x2, "Ljava.lang.StringBuilder;", NULL,  },
     { "captureStart_", NULL, 0x2, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonParser = { "JsonParser", "com.eclipsesource.json", NULL, 0x0, 31, methods, 12, fields, 0, NULL};
-  return &_FFTJsonParser;
+  static J2ObjcClassInfo _FFTJSONJsonParser = { "JsonParser", "com.eclipsesource.json", NULL, 0x0, 31, methods, 12, fields, 0, NULL};
+  return &_FFTJSONJsonParser;
 }
 
 @end

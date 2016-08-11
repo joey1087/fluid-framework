@@ -8,14 +8,14 @@
 #include "com/eclipsesource/json/WriterConfig.h"
 #include "java/io/Writer.h"
 
-BOOL FFTWriterConfig_initialized = NO;
+BOOL FFTJSONWriterConfig_initialized = NO;
 
-@implementation FFTWriterConfig
+@implementation FFTJSONWriterConfig
 
-FFTWriterConfig * FFTWriterConfig_MINIMAL_;
-FFTWriterConfig * FFTWriterConfig_PRETTY_PRINT_;
+FFTJSONWriterConfig * FFTJSONWriterConfig_MINIMAL_;
+FFTJSONWriterConfig * FFTJSONWriterConfig_PRETTY_PRINT_;
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
   return 0;
@@ -26,10 +26,10 @@ FFTWriterConfig * FFTWriterConfig_PRETTY_PRINT_;
 }
 
 + (void)initialize {
-  if (self == [FFTWriterConfig class]) {
-    FFTWriterConfig_MINIMAL_ = [[FFTWriterConfig_$1 alloc] init];
-    FFTWriterConfig_PRETTY_PRINT_ = [FFTPrettyPrint indentWithSpacesWithInt:2];
-    FFTWriterConfig_initialized = YES;
+  if (self == [FFTJSONWriterConfig class]) {
+    FFTJSONWriterConfig_MINIMAL_ = [[FFTJSONWriterConfig_$1 alloc] init];
+    FFTJSONWriterConfig_PRETTY_PRINT_ = [FFTJSONPrettyPrint indentWithSpacesWithInt:2];
+    FFTJSONWriterConfig_initialized = YES;
   }
 }
 
@@ -39,19 +39,19 @@ FFTWriterConfig * FFTWriterConfig_PRETTY_PRINT_;
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "MINIMAL_", NULL, 0x9, "Lcom.eclipsesource.json.WriterConfig;", &FFTWriterConfig_MINIMAL_,  },
-    { "PRETTY_PRINT_", NULL, 0x9, "Lcom.eclipsesource.json.WriterConfig;", &FFTWriterConfig_PRETTY_PRINT_,  },
+    { "MINIMAL_", NULL, 0x9, "Lcom.eclipsesource.json.WriterConfig;", &FFTJSONWriterConfig_MINIMAL_,  },
+    { "PRETTY_PRINT_", NULL, 0x9, "Lcom.eclipsesource.json.WriterConfig;", &FFTJSONWriterConfig_PRETTY_PRINT_,  },
   };
-  static J2ObjcClassInfo _FFTWriterConfig = { "WriterConfig", "com.eclipsesource.json", NULL, 0x401, 2, methods, 2, fields, 0, NULL};
-  return &_FFTWriterConfig;
+  static J2ObjcClassInfo _FFTJSONWriterConfig = { "WriterConfig", "com.eclipsesource.json", NULL, 0x401, 2, methods, 2, fields, 0, NULL};
+  return &_FFTJSONWriterConfig;
 }
 
 @end
 
-@implementation FFTWriterConfig_$1
+@implementation FFTJSONWriterConfig_$1
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
-  return [[FFTJsonWriter alloc] initWithJavaIoWriter:writer];
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer {
+  return [[FFTJSONJsonWriter alloc] initWithJavaIoWriter:writer];
 }
 
 - (id)init {
@@ -63,8 +63,8 @@ FFTWriterConfig * FFTWriterConfig_PRETTY_PRINT_;
     { "createWriterWithJavaIoWriter:", "createWriter", "Lcom.eclipsesource.json.JsonWriter;", 0x0, NULL },
     { "init", NULL, NULL, 0x0, NULL },
   };
-  static J2ObjcClassInfo _FFTWriterConfig_$1 = { "$1", "com.eclipsesource.json", "WriterConfig", 0x8000, 2, methods, 0, NULL, 0, NULL};
-  return &_FFTWriterConfig_$1;
+  static J2ObjcClassInfo _FFTJSONWriterConfig_$1 = { "$1", "com.eclipsesource.json", "WriterConfig", 0x8000, 2, methods, 0, NULL, 0, NULL};
+  return &_FFTJSONWriterConfig_$1;
 }
 
 @end

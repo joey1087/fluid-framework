@@ -3,45 +3,45 @@
 //  source: src-external/com/eclipsesource/json/WriterConfig.java
 //
 
-#ifndef _FFTWriterConfig_H_
-#define _FFTWriterConfig_H_
+#ifndef _FFTJSONWriterConfig_H_
+#define _FFTJSONWriterConfig_H_
 
-@class FFTJsonWriter;
+@class FFTJSONJsonWriter;
 @class JavaIoWriter;
 
 #import "JreEmulation.h"
 
-@interface FFTWriterConfig : NSObject {
+@interface FFTJSONWriterConfig : NSObject {
 }
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
 
 - (id)init;
 
 @end
 
-FOUNDATION_EXPORT BOOL FFTWriterConfig_initialized;
-J2OBJC_STATIC_INIT(FFTWriterConfig)
+FOUNDATION_EXPORT BOOL FFTJSONWriterConfig_initialized;
+J2OBJC_STATIC_INIT(FFTJSONWriterConfig)
 
-FOUNDATION_EXPORT FFTWriterConfig *FFTWriterConfig_MINIMAL_;
-J2OBJC_STATIC_FIELD_GETTER(FFTWriterConfig, MINIMAL_, FFTWriterConfig *)
-J2OBJC_STATIC_FIELD_SETTER(FFTWriterConfig, MINIMAL_, FFTWriterConfig *)
+FOUNDATION_EXPORT FFTJSONWriterConfig *FFTJSONWriterConfig_MINIMAL_;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONWriterConfig, MINIMAL_, FFTJSONWriterConfig *)
+J2OBJC_STATIC_FIELD_SETTER(FFTJSONWriterConfig, MINIMAL_, FFTJSONWriterConfig *)
 
-FOUNDATION_EXPORT FFTWriterConfig *FFTWriterConfig_PRETTY_PRINT_;
-J2OBJC_STATIC_FIELD_GETTER(FFTWriterConfig, PRETTY_PRINT_, FFTWriterConfig *)
-J2OBJC_STATIC_FIELD_SETTER(FFTWriterConfig, PRETTY_PRINT_, FFTWriterConfig *)
+FOUNDATION_EXPORT FFTJSONWriterConfig *FFTJSONWriterConfig_PRETTY_PRINT_;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONWriterConfig, PRETTY_PRINT_, FFTJSONWriterConfig *)
+J2OBJC_STATIC_FIELD_SETTER(FFTJSONWriterConfig, PRETTY_PRINT_, FFTJSONWriterConfig *)
 
-typedef FFTWriterConfig ComEclipsesourceJsonWriterConfig;
+typedef FFTJSONWriterConfig ComEclipsesourceJsonWriterConfig;
 
-@interface FFTWriterConfig_$1 : FFTWriterConfig {
+@interface FFTJSONWriterConfig_$1 : FFTJSONWriterConfig {
 }
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
 
 - (id)init;
 
 @end
 
-__attribute__((always_inline)) inline void FFTWriterConfig_$1_init() {}
+__attribute__((always_inline)) inline void FFTJSONWriterConfig_$1_init() {}
 
-#endif // _FFTWriterConfig_H_
+#endif // _FFTJSONWriterConfig_H_

@@ -13,7 +13,7 @@
 #include "java/lang/Long.h"
 #include "java/lang/NullPointerException.h"
 
-@implementation FFTJsonNumber
+@implementation FFTJSONJsonNumber
 
 - (id)initWithNSString:(NSString *)string {
   if (self = [super init]) {
@@ -29,8 +29,8 @@
   return string_;
 }
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeNumberWithNSString:string_];
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer {
+  [((FFTJSONJsonWriter *) nil_chk(writer)) writeNumberWithNSString:string_];
 }
 
 - (BOOL)isNumber {
@@ -67,11 +67,11 @@
   if ([self getClass] != [nil_chk(object) getClass]) {
     return NO;
   }
-  FFTJsonNumber *other = (FFTJsonNumber *) check_class_cast(object, [FFTJsonNumber class]);
+  FFTJSONJsonNumber *other = (FFTJSONJsonNumber *) check_class_cast(object, [FFTJSONJsonNumber class]);
   return [((NSString *) nil_chk(string_)) isEqual:other->string_];
 }
 
-- (void)copyAllFieldsTo:(FFTJsonNumber *)other {
+- (void)copyAllFieldsTo:(FFTJSONJsonNumber *)other {
   [super copyAllFieldsTo:other];
   other->string_ = string_;
 }
@@ -80,7 +80,7 @@
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonNumber", NULL, 0x0, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
+    { "writeWithFFTJSONJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isNumber", NULL, "Z", 0x1, NULL },
     { "asInt", NULL, "I", 0x1, NULL },
     { "asLong", NULL, "J", 0x1, NULL },
@@ -92,8 +92,8 @@
   static J2ObjcFieldInfo fields[] = {
     { "string_", NULL, 0x12, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonNumber = { "JsonNumber", "com.eclipsesource.json", NULL, 0x0, 10, methods, 1, fields, 0, NULL};
-  return &_FFTJsonNumber;
+  static J2ObjcClassInfo _FFTJSONJsonNumber = { "JsonNumber", "com.eclipsesource.json", NULL, 0x0, 10, methods, 1, fields, 0, NULL};
+  return &_FFTJSONJsonNumber;
 }
 
 @end

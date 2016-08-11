@@ -68,7 +68,7 @@
                 
                 BOOL success = YES;
                 
-                FFTJsonObject *json = [[FFTJsonObject alloc] init];
+                FFTJSONJsonObject *json = [[FFTJSONJsonObject alloc] init];
                 
                 NSString *data;
                 if (![callbackTokens[0] isEqualToString:@"callback"]) {

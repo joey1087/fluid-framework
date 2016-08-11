@@ -10,14 +10,14 @@
 #include "java/io/Writer.h"
 #include "java/lang/System.h"
 
-@implementation FFTWritingBuffer
+@implementation FFTJSONWritingBuffer
 
 - (id)initWithJavaIoWriter:(JavaIoWriter *)writer {
-  return [self initFFTWritingBufferWithJavaIoWriter:writer withInt:16];
+  return [self initFFTJSONWritingBufferWithJavaIoWriter:writer withInt:16];
 }
 
-- (id)initFFTWritingBufferWithJavaIoWriter:(JavaIoWriter *)writer
-                                   withInt:(int)bufferSize {
+- (id)initFFTJSONWritingBufferWithJavaIoWriter:(JavaIoWriter *)writer
+                                       withInt:(int)bufferSize {
   if (self = [super init]) {
     fill_ = 0;
     self->writer_ = writer;
@@ -28,7 +28,7 @@
 
 - (id)initWithJavaIoWriter:(JavaIoWriter *)writer
                    withInt:(int)bufferSize {
-  return [self initFFTWritingBufferWithJavaIoWriter:writer withInt:bufferSize];
+  return [self initFFTJSONWritingBufferWithJavaIoWriter:writer withInt:bufferSize];
 }
 
 - (void)writeWithInt:(int)c {
@@ -74,7 +74,7 @@
 - (void)close {
 }
 
-- (void)copyAllFieldsTo:(FFTWritingBuffer *)other {
+- (void)copyAllFieldsTo:(FFTJSONWritingBuffer *)other {
   [super copyAllFieldsTo:other];
   other->buffer_ = buffer_;
   other->fill_ = fill_;
@@ -96,8 +96,8 @@
     { "buffer_", NULL, 0x12, "[C", NULL,  },
     { "fill_", NULL, 0x2, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTWritingBuffer = { "WritingBuffer", "com.eclipsesource.json", NULL, 0x0, 7, methods, 3, fields, 0, NULL};
-  return &_FFTWritingBuffer;
+  static J2ObjcClassInfo _FFTJSONWritingBuffer = { "WritingBuffer", "com.eclipsesource.json", NULL, 0x0, 7, methods, 3, fields, 0, NULL};
+  return &_FFTJSONWritingBuffer;
 }
 
 @end

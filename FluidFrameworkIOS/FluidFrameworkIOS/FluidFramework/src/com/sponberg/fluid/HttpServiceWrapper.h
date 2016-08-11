@@ -9,7 +9,7 @@
 @class FFTHttpServiceWrapper_MapModeEnum;
 @class FFTHttpService_HttpAuthorization;
 @class FFTHttpService_PostBodyTypeEnum;
-@class FFTJsonObject;
+@class FFTJSONJsonObject;
 @class JavaUtilHashMap;
 @protocol FFTHttpServiceCallback;
 @protocol JavaUtilMap;
@@ -68,7 +68,7 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback;
 
 + (JavaUtilHashMap *)jsonifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
-+ (FFTJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters;
++ (FFTJSONJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 
 + (JavaUtilHashMap *)bracketifyMapsWithJavaUtilMap:(id<JavaUtilMap>)parameters;
 

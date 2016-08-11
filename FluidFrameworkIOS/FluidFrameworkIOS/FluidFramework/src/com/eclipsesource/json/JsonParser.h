@@ -3,23 +3,23 @@
 //  source: src-external/com/eclipsesource/json/JsonParser.java
 //
 
-#ifndef _FFTJsonParser_H_
-#define _FFTJsonParser_H_
+#ifndef _FFTJSONJsonParser_H_
+#define _FFTJSONJsonParser_H_
 
-@class FFTJsonArray;
-@class FFTJsonObject;
-@class FFTJsonValue;
-@class FFTParseException;
+@class FFTJSONJsonArray;
+@class FFTJSONJsonObject;
+@class FFTJSONJsonValue;
+@class FFTJSONParseException;
 @class IOSCharArray;
 @class JavaIoReader;
 @class JavaLangStringBuilder;
 
 #import "JreEmulation.h"
 
-#define FFTJsonParser_DEFAULT_BUFFER_SIZE 1024
-#define FFTJsonParser_MIN_BUFFER_SIZE 10
+#define FFTJSONJsonParser_DEFAULT_BUFFER_SIZE 1024
+#define FFTJSONJsonParser_MIN_BUFFER_SIZE 10
 
-@interface FFTJsonParser : NSObject {
+@interface FFTJSONJsonParser : NSObject {
  @public
   JavaIoReader *reader_;
   IOSCharArray *buffer_;
@@ -40,31 +40,31 @@
 - (id)initWithJavaIoReader:(JavaIoReader *)reader
                    withInt:(int)buffersize;
 
-- (FFTJsonValue *)parse;
+- (FFTJSONJsonValue *)parse;
 
-- (FFTJsonValue *)readValue;
+- (FFTJSONJsonValue *)readValue;
 
-- (FFTJsonArray *)readArray;
+- (FFTJSONJsonArray *)readArray;
 
-- (FFTJsonObject *)readObject;
+- (FFTJSONJsonObject *)readObject;
 
 - (NSString *)readName;
 
-- (FFTJsonValue *)readNull;
+- (FFTJSONJsonValue *)readNull;
 
-- (FFTJsonValue *)readTrue;
+- (FFTJSONJsonValue *)readTrue;
 
-- (FFTJsonValue *)readFalse;
+- (FFTJSONJsonValue *)readFalse;
 
 - (void)readRequiredCharWithChar:(unichar)ch;
 
-- (FFTJsonValue *)readString;
+- (FFTJSONJsonValue *)readString;
 
 - (NSString *)readStringInternal;
 
 - (void)readEscape;
 
-- (FFTJsonValue *)readNumber;
+- (FFTJSONJsonValue *)readNumber;
 
 - (BOOL)readFraction;
 
@@ -84,9 +84,9 @@
 
 - (NSString *)endCapture;
 
-- (FFTParseException *)expectedWithNSString:(NSString *)expected;
+- (FFTJSONParseException *)expectedWithNSString:(NSString *)expected;
 
-- (FFTParseException *)errorWithNSString:(NSString *)message;
+- (FFTJSONParseException *)errorWithNSString:(NSString *)message;
 
 - (BOOL)isWhiteSpace;
 
@@ -96,20 +96,20 @@
 
 - (BOOL)isEndOfText;
 
-- (void)copyAllFieldsTo:(FFTJsonParser *)other;
+- (void)copyAllFieldsTo:(FFTJSONJsonParser *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTJsonParser_init() {}
+__attribute__((always_inline)) inline void FFTJSONJsonParser_init() {}
 
-J2OBJC_FIELD_SETTER(FFTJsonParser, reader_, JavaIoReader *)
-J2OBJC_FIELD_SETTER(FFTJsonParser, buffer_, IOSCharArray *)
-J2OBJC_FIELD_SETTER(FFTJsonParser, captureBuffer_, JavaLangStringBuilder *)
+J2OBJC_FIELD_SETTER(FFTJSONJsonParser, reader_, JavaIoReader *)
+J2OBJC_FIELD_SETTER(FFTJSONJsonParser, buffer_, IOSCharArray *)
+J2OBJC_FIELD_SETTER(FFTJSONJsonParser, captureBuffer_, JavaLangStringBuilder *)
 
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonParser, MIN_BUFFER_SIZE, int)
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJsonParser, MIN_BUFFER_SIZE, int)
 
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonParser, DEFAULT_BUFFER_SIZE, int)
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJsonParser, DEFAULT_BUFFER_SIZE, int)
 
-typedef FFTJsonParser ComEclipsesourceJsonJsonParser;
+typedef FFTJSONJsonParser ComEclipsesourceJsonJsonParser;
 
-#endif // _FFTJsonParser_H_
+#endif // _FFTJSONJsonParser_H_

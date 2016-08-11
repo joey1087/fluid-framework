@@ -147,11 +147,11 @@ withFFTHttpServiceCallback:(id<FFTHttpServiceCallback>)callback {
   return map;
 }
 
-+ (FFTJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters {
-  FFTJsonObject *json = [[FFTJsonObject alloc] init];
++ (FFTJSONJsonObject *)jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>)parameters {
+  FFTJSONJsonObject *json = [[FFTJSONJsonObject alloc] init];
   for (id<JavaUtilMap_Entry> __strong entry_ in nil_chk([((id<JavaUtilMap>) nil_chk(parameters)) entrySet])) {
     if ([[((id<JavaUtilMap_Entry>) nil_chk(entry_)) getValue] conformsToProtocol: @protocol(JavaUtilMap)]) {
-      (void) [json addWithNSString:[entry_ getKey] withFFTJsonValue:[FFTHttpServiceWrapper jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>) check_protocol_cast([entry_ getValue], @protocol(JavaUtilMap))]];
+      (void) [json addWithNSString:[entry_ getKey] withFFTJSONJsonValue:[FFTHttpServiceWrapper jsonifyMapsHelperWithJavaUtilMap:(id<JavaUtilMap>) check_protocol_cast([entry_ getValue], @protocol(JavaUtilMap))]];
     }
     else {
       (void) [json addWithNSString:[entry_ getKey] withNSString:[nil_chk([entry_ getValue]) description]];

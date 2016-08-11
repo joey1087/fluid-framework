@@ -5,7 +5,7 @@
 
 #include "com/eclipsesource/json/ParseException.h"
 
-@implementation FFTParseException
+@implementation FFTJSONParseException
 
 - (id)initWithNSString:(NSString *)message
                withInt:(int)offset
@@ -31,7 +31,7 @@
   return column_;
 }
 
-- (void)copyAllFieldsTo:(FFTParseException *)other {
+- (void)copyAllFieldsTo:(FFTJSONParseException *)other {
   [super copyAllFieldsTo:other];
   other->column_ = column_;
   other->line_ = line_;
@@ -50,8 +50,8 @@
     { "line_", NULL, 0x12, "I", NULL,  },
     { "column_", NULL, 0x12, "I", NULL,  },
   };
-  static J2ObjcClassInfo _FFTParseException = { "ParseException", "com.eclipsesource.json", NULL, 0x1, 4, methods, 3, fields, 0, NULL};
-  return &_FFTParseException;
+  static J2ObjcClassInfo _FFTJSONParseException = { "ParseException", "com.eclipsesource.json", NULL, 0x1, 4, methods, 3, fields, 0, NULL};
+  return &_FFTJSONParseException;
 }
 
 @end

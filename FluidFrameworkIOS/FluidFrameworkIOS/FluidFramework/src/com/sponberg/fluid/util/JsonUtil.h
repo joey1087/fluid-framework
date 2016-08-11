@@ -6,9 +6,9 @@
 #ifndef _FFTJsonUtil_H_
 #define _FFTJsonUtil_H_
 
-@class FFTJsonArray;
-@class FFTJsonObject;
-@class FFTJsonValue;
+@class FFTJSONJsonArray;
+@class FFTJSONJsonObject;
+@class FFTJSONJsonValue;
 @class IOSClass;
 @class IOSObjectArray;
 @class JavaLangReflectMethod;
@@ -27,10 +27,10 @@
 + (void)setUnderscoreSeparatesWordsWithBoolean:(BOOL)underscoreSeparatesWords;
 
 + (void)setValuesToWithId:(id)object
-        withFFTJsonObject:(FFTJsonObject *)json;
+    withFFTJSONJsonObject:(FFTJSONJsonObject *)json;
 
 + (void)setValuesToHelperWithId:(id)object
-              withFFTJsonObject:(FFTJsonObject *)json;
+          withFFTJSONJsonObject:(FFTJSONJsonObject *)json;
 
 + (NSString *)iOSGetJsonNameWithId:(id)object
                       withNSString:(NSString *)name;
@@ -43,13 +43,13 @@
                        withNSString:(NSString *)name
                              withId:(id)object
           withJavaLangReflectMethod:(JavaLangReflectMethod *)setter
-                  withFFTJsonObject:(FFTJsonObject *)json;
+              withFFTJSONJsonObject:(FFTJSONJsonObject *)json;
 
 + (NSString *)objectToJsonStringWithId:(id)object;
 
 + (NSString *)listToJsonStringWithJavaUtilList:(id<JavaUtilList>)list;
 
-+ (FFTJsonArray *)listToJsonArrayWithJavaUtilList:(id<JavaUtilList>)list;
++ (FFTJSONJsonArray *)listToJsonArrayWithJavaUtilList:(id<JavaUtilList>)list;
 
 + (id)jsonArrayToObjectArrayWithNSString:(NSString *)jsonArrayString
                             withIOSClass:(IOSClass *)type;
@@ -61,68 +61,68 @@
                                   withIOSClass:(IOSClass *)mapType
                                   withIOSClass:(IOSClass *)type;
 
-+ (FFTJsonArray *)arrayToJsonArrayWithNSObjectArray:(IOSObjectArray *)list;
++ (FFTJSONJsonArray *)arrayToJsonArrayWithNSObjectArray:(IOSObjectArray *)list;
 
-+ (FFTJsonObject *)mapToJsonObjectWithJavaUtilMap:(id<JavaUtilMap>)map;
++ (FFTJSONJsonObject *)mapToJsonObjectWithJavaUtilMap:(id<JavaUtilMap>)map;
 
-+ (FFTJsonObject *)toJsonObjectWithId:(id)object;
++ (FFTJSONJsonObject *)toJsonObjectWithId:(id)object;
 
 + (NSString *)getJsonNameWithNSString:(NSString *)name;
 
 + (id)getJsonValueWithNSString:(NSString *)name
                   withIOSClass:(IOSClass *)type
-             withFFTJsonObject:(FFTJsonObject *)json
+         withFFTJSONJsonObject:(FFTJSONJsonObject *)json
                         withId:(id)rootObject;
 
 + (id)getJsonValueWithNSStringArray:(IOSObjectArray *)names
                        withIOSClass:(IOSClass *)type
-                  withFFTJsonObject:(FFTJsonObject *)json
+              withFFTJSONJsonObject:(FFTJSONJsonObject *)json
                             withInt:(int)i
                              withId:(id)rootObject;
 
-+ (id)createArrayFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                   withIOSClass:(IOSClass *)type;
++ (id)createArrayFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                       withIOSClass:(IOSClass *)type;
 
-+ (id<JavaUtilMap>)createMapFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                              withIOSClass:(IOSClass *)mapType
-                                              withIOSClass:(IOSClass *)objectType;
++ (id<JavaUtilMap>)createMapFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                                  withIOSClass:(IOSClass *)mapType
+                                                  withIOSClass:(IOSClass *)objectType;
 
-+ (id)createListFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                  withIOSClass:(IOSClass *)listType
-                                  withIOSClass:(IOSClass *)objectType;
++ (id)createListFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                      withIOSClass:(IOSClass *)listType
+                                      withIOSClass:(IOSClass *)objectType;
 
-+ (id)createObjectFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                    withIOSClass:(IOSClass *)type;
++ (id)createObjectFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                        withIOSClass:(IOSClass *)type;
 
 + (void)setJsonValueWithNSString:(NSString *)jsonName
                           withId:(id)value
-               withFFTJsonObject:(FFTJsonObject *)json;
+           withFFTJSONJsonObject:(FFTJSONJsonObject *)json;
 
 + (JavaLangReflectMethod *)getSetterMethodWithIOSClass:(IOSClass *)object
                                           withNSString:(NSString *)name
                                           withIOSClass:(IOSClass *)type;
 
-+ (FFTJsonObject *)getJsonObjectWithFFTJsonObject:(FFTJsonObject *)object
-                                     withNSString:(NSString *)key;
++ (FFTJSONJsonObject *)getJsonObjectWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                             withNSString:(NSString *)key;
 
-+ (NSString *)getStringWithFFTJsonObject:(FFTJsonObject *)object
-                            withNSString:(NSString *)key;
++ (NSString *)getStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                withNSString:(NSString *)key;
 
-+ (NSString *)getStringWithFFTJsonObject:(FFTJsonObject *)object
-                            withNSString:(NSString *)key
-                            withNSString:(NSString *)defaultValue;
++ (NSString *)getStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                withNSString:(NSString *)key
+                                withNSString:(NSString *)defaultValue;
 
-+ (int)getIntWithFFTJsonObject:(FFTJsonObject *)object
-                  withNSString:(NSString *)key
-                       withInt:(int)defaultValue;
-
-+ (float)getFloatWithFFTJsonObject:(FFTJsonObject *)object
++ (int)getIntWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
                       withNSString:(NSString *)key
-                         withFloat:(float)defaultValue;
+                           withInt:(int)defaultValue;
 
-+ (BOOL)getBooleanWithFFTJsonObject:(FFTJsonObject *)object
-                       withNSString:(NSString *)key
-                        withBoolean:(BOOL)defaultValue;
++ (float)getFloatWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                          withNSString:(NSString *)key
+                             withFloat:(float)defaultValue;
+
++ (BOOL)getBooleanWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                           withNSString:(NSString *)key
+                            withBoolean:(BOOL)defaultValue;
 
 - (id)init;
 

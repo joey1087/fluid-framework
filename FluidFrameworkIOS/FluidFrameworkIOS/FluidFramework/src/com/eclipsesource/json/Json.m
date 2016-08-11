@@ -24,57 +24,57 @@
 #include "java/lang/NullPointerException.h"
 #include "java/lang/RuntimeException.h"
 
-BOOL FFTJson_initialized = NO;
+BOOL FFTJSONJson_initialized = NO;
 
-@implementation FFTJson
+@implementation FFTJSONJson
 
-FFTJsonValue * FFTJson_NULL__;
-FFTJsonValue * FFTJson_TRUE__;
-FFTJsonValue * FFTJson_FALSE__;
+FFTJSONJsonValue * FFTJSONJson_NULL__;
+FFTJSONJsonValue * FFTJSONJson_TRUE__;
+FFTJSONJsonValue * FFTJSONJson_FALSE__;
 
 - (id)init {
   return [super init];
 }
 
-+ (FFTJsonValue *)valueWithInt:(int)value {
-  return [[FFTJsonNumber alloc] initWithNSString:[JavaLangInteger toStringWithInt:value withInt:10]];
++ (FFTJSONJsonValue *)valueWithInt:(int)value {
+  return [[FFTJSONJsonNumber alloc] initWithNSString:[JavaLangInteger toStringWithInt:value withInt:10]];
 }
 
-+ (FFTJsonValue *)valueWithLong:(long long int)value {
-  return [[FFTJsonNumber alloc] initWithNSString:[JavaLangLong toStringWithLong:value withInt:10]];
++ (FFTJSONJsonValue *)valueWithLong:(long long int)value {
+  return [[FFTJSONJsonNumber alloc] initWithNSString:[JavaLangLong toStringWithLong:value withInt:10]];
 }
 
-+ (FFTJsonValue *)valueWithFloat:(float)value {
++ (FFTJSONJsonValue *)valueWithFloat:(float)value {
   if ([JavaLangFloat isInfiniteWithFloat:value] || [JavaLangFloat isNaNWithFloat:value]) {
     @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:@"Infinite and NaN values not permitted in JSON"];
   }
-  return [[FFTJsonNumber alloc] initWithNSString:[FFTJson cutOffPointZeroWithNSString:[JavaLangFloat toStringWithFloat:value]]];
+  return [[FFTJSONJsonNumber alloc] initWithNSString:[FFTJSONJson cutOffPointZeroWithNSString:[JavaLangFloat toStringWithFloat:value]]];
 }
 
-+ (FFTJsonValue *)valueWithDouble:(double)value {
++ (FFTJSONJsonValue *)valueWithDouble:(double)value {
   if ([JavaLangDouble isInfiniteWithDouble:value] || [JavaLangDouble isNaNWithDouble:value]) {
     @throw [[JavaLangIllegalArgumentException alloc] initWithNSString:@"Infinite and NaN values not permitted in JSON"];
   }
-  return [[FFTJsonNumber alloc] initWithNSString:[FFTJson cutOffPointZeroWithNSString:[JavaLangDouble toStringWithDouble:value]]];
+  return [[FFTJSONJsonNumber alloc] initWithNSString:[FFTJSONJson cutOffPointZeroWithNSString:[JavaLangDouble toStringWithDouble:value]]];
 }
 
-+ (FFTJsonValue *)valueWithNSString:(NSString *)string {
-  return string == nil ? FFTJson_NULL__ : [[FFTJsonString alloc] initWithNSString:string];
++ (FFTJSONJsonValue *)valueWithNSString:(NSString *)string {
+  return string == nil ? FFTJSONJson_NULL__ : [[FFTJSONJsonString alloc] initWithNSString:string];
 }
 
-+ (FFTJsonValue *)valueWithBoolean:(BOOL)value {
-  return value ? FFTJson_TRUE__ : FFTJson_FALSE__;
++ (FFTJSONJsonValue *)valueWithBoolean:(BOOL)value {
+  return value ? FFTJSONJson_TRUE__ : FFTJSONJson_FALSE__;
 }
 
-+ (FFTJsonValue *)array {
-  return [[FFTJsonArray alloc] init];
++ (FFTJSONJsonValue *)array {
+  return [[FFTJSONJsonArray alloc] init];
 }
 
-+ (FFTJsonArray *)arrayWithIntArray:(IOSIntArray *)values {
++ (FFTJSONJsonArray *)arrayWithIntArray:(IOSIntArray *)values {
   if (values == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSIntArray *a__ = values;
     int const *b__ = ((IOSIntArray *) nil_chk(a__))->buffer_;
@@ -87,11 +87,11 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonArray *)arrayWithLongArray:(IOSLongArray *)values {
++ (FFTJSONJsonArray *)arrayWithLongArray:(IOSLongArray *)values {
   if (values == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSLongArray *a__ = values;
     long long int const *b__ = ((IOSLongArray *) nil_chk(a__))->buffer_;
@@ -104,11 +104,11 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonArray *)arrayWithFloatArray:(IOSFloatArray *)values {
++ (FFTJSONJsonArray *)arrayWithFloatArray:(IOSFloatArray *)values {
   if (values == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSFloatArray *a__ = values;
     float const *b__ = ((IOSFloatArray *) nil_chk(a__))->buffer_;
@@ -121,11 +121,11 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonArray *)arrayWithDoubleArray:(IOSDoubleArray *)values {
++ (FFTJSONJsonArray *)arrayWithDoubleArray:(IOSDoubleArray *)values {
   if (values == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSDoubleArray *a__ = values;
     double const *b__ = ((IOSDoubleArray *) nil_chk(a__))->buffer_;
@@ -138,11 +138,11 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonArray *)arrayWithBooleanArray:(IOSBooleanArray *)values {
++ (FFTJSONJsonArray *)arrayWithBooleanArray:(IOSBooleanArray *)values {
   if (values == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSBooleanArray *a__ = values;
     BOOL const *b__ = ((IOSBooleanArray *) nil_chk(a__))->buffer_;
@@ -155,11 +155,11 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonArray *)arrayWithNSStringArray:(IOSObjectArray *)strings {
++ (FFTJSONJsonArray *)arrayWithNSStringArray:(IOSObjectArray *)strings {
   if (strings == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"values is null"];
   }
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSObjectArray *a__ = strings;
     NSString * const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
@@ -172,27 +172,27 @@ FFTJsonValue * FFTJson_FALSE__;
   return array;
 }
 
-+ (FFTJsonObject *)object {
-  return [[FFTJsonObject alloc] init];
++ (FFTJSONJsonObject *)object {
+  return [[FFTJSONJsonObject alloc] init];
 }
 
-+ (FFTJsonValue *)parseWithNSString:(NSString *)string {
++ (FFTJSONJsonValue *)parseWithNSString:(NSString *)string {
   if (string == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"string is null"];
   }
   @try {
-    return [((FFTJsonParser *) [[FFTJsonParser alloc] initWithNSString:string]) parse];
+    return [((FFTJSONJsonParser *) [[FFTJSONJsonParser alloc] initWithNSString:string]) parse];
   }
   @catch (JavaIoIOException *exception) {
     @throw [[JavaLangRuntimeException alloc] initWithJavaLangThrowable:exception];
   }
 }
 
-+ (FFTJsonValue *)parseWithJavaIoReader:(JavaIoReader *)reader {
++ (FFTJSONJsonValue *)parseWithJavaIoReader:(JavaIoReader *)reader {
   if (reader == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"reader is null"];
   }
-  return [((FFTJsonParser *) [[FFTJsonParser alloc] initWithJavaIoReader:reader]) parse];
+  return [((FFTJSONJsonParser *) [[FFTJSONJsonParser alloc] initWithJavaIoReader:reader]) parse];
 }
 
 + (NSString *)cutOffPointZeroWithNSString:(NSString *)string {
@@ -203,11 +203,11 @@ FFTJsonValue * FFTJson_FALSE__;
 }
 
 + (void)initialize {
-  if (self == [FFTJson class]) {
-    FFTJson_NULL__ = [[FFTJsonLiteral alloc] initWithNSString:@"null"];
-    FFTJson_TRUE__ = [[FFTJsonLiteral alloc] initWithNSString:@"true"];
-    FFTJson_FALSE__ = [[FFTJsonLiteral alloc] initWithNSString:@"false"];
-    FFTJson_initialized = YES;
+  if (self == [FFTJSONJson class]) {
+    FFTJSONJson_NULL__ = [[FFTJSONJsonLiteral alloc] initWithNSString:@"null"];
+    FFTJSONJson_TRUE__ = [[FFTJSONJsonLiteral alloc] initWithNSString:@"true"];
+    FFTJSONJson_FALSE__ = [[FFTJSONJsonLiteral alloc] initWithNSString:@"false"];
+    FFTJSONJson_initialized = YES;
   }
 }
 
@@ -233,12 +233,12 @@ FFTJsonValue * FFTJson_FALSE__;
     { "cutOffPointZeroWithNSString:", "cutOffPointZero", "Ljava.lang.String;", 0xa, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "NULL__", "NULL", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJson_NULL__,  },
-    { "TRUE__", "TRUE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJson_TRUE__,  },
-    { "FALSE__", "FALSE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJson_FALSE__,  },
+    { "NULL__", "NULL", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJson_NULL__,  },
+    { "TRUE__", "TRUE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJson_TRUE__,  },
+    { "FALSE__", "FALSE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJson_FALSE__,  },
   };
-  static J2ObjcClassInfo _FFTJson = { "Json", "com.eclipsesource.json", NULL, 0x11, 18, methods, 3, fields, 0, NULL};
-  return &_FFTJson;
+  static J2ObjcClassInfo _FFTJSONJson = { "Json", "com.eclipsesource.json", NULL, 0x11, 18, methods, 3, fields, 0, NULL};
+  return &_FFTJSONJson;
 }
 
 @end

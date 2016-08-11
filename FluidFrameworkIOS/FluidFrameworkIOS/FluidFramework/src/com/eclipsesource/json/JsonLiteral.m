@@ -8,7 +8,7 @@
 #include "com/eclipsesource/json/JsonWriter.h"
 #include "java/io/IOException.h"
 
-@implementation FFTJsonLiteral
+@implementation FFTJSONJsonLiteral
 
 - (id)initWithNSString:(NSString *)value {
   if (self = [super init]) {
@@ -20,8 +20,8 @@
   return self;
 }
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeLiteralWithNSString:value_];
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer {
+  [((FFTJSONJsonWriter *) nil_chk(writer)) writeLiteralWithNSString:value_];
 }
 
 - (NSString *)description {
@@ -62,11 +62,11 @@
   if ([self getClass] != [nil_chk(object) getClass]) {
     return NO;
   }
-  FFTJsonLiteral *other = (FFTJsonLiteral *) check_class_cast(object, [FFTJsonLiteral class]);
+  FFTJSONJsonLiteral *other = (FFTJSONJsonLiteral *) check_class_cast(object, [FFTJSONJsonLiteral class]);
   return [((NSString *) nil_chk(value_)) isEqual:other->value_];
 }
 
-- (void)copyAllFieldsTo:(FFTJsonLiteral *)other {
+- (void)copyAllFieldsTo:(FFTJSONJsonLiteral *)other {
   [super copyAllFieldsTo:other];
   other->isFalse__ = isFalse__;
   other->isNull__ = isNull__;
@@ -77,7 +77,7 @@
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonLiteral", NULL, 0x0, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
+    { "writeWithFFTJSONJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
     { "isNull", NULL, "Z", 0x1, NULL },
@@ -93,8 +93,8 @@
     { "isTrue__", "isTrue", 0x12, "Z", NULL,  },
     { "isFalse__", "isFalse", 0x12, "Z", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonLiteral = { "JsonLiteral", "com.eclipsesource.json", NULL, 0x0, 10, methods, 4, fields, 0, NULL};
-  return &_FFTJsonLiteral;
+  static J2ObjcClassInfo _FFTJSONJsonLiteral = { "JsonLiteral", "com.eclipsesource.json", NULL, 0x0, 10, methods, 4, fields, 0, NULL};
+  return &_FFTJSONJsonLiteral;
 }
 
 @end

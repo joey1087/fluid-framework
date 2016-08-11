@@ -49,9 +49,9 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 }
 
 + (void)setValuesToWithId:(id)object
-        withFFTJsonObject:(FFTJsonObject *)json {
+    withFFTJSONJsonObject:(FFTJSONJsonObject *)json {
   @try {
-    [FFTJsonUtil setValuesToHelperWithId:object withFFTJsonObject:json];
+    [FFTJsonUtil setValuesToHelperWithId:object withFFTJSONJsonObject:json];
   }
   @catch (JavaLangException *e) {
     @throw [[JavaLangRuntimeException alloc] initWithJavaLangThrowable:e];
@@ -59,7 +59,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 }
 
 + (void)setValuesToHelperWithId:(id)object
-              withFFTJsonObject:(FFTJsonObject *)json {
+          withFFTJSONJsonObject:(FFTJSONJsonObject *)json {
   JavaLangReflectField *keyField = nil;
   IOSClass *clazz = [nil_chk(object) getClass];
   IOSObjectArray *methods = [clazz getMethods];
@@ -77,7 +77,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
         continue;
       }
       NSString *fieldName = [NSString stringWithFormat:@"%@%@", [((NSString *) nil_chk([name substring:3 endIndex:4])) lowercaseString], [name substring:4]];
-      [FFTJsonUtil invokeGetAndSetWithIOSClass:clazz withNSString:fieldName withId:object withJavaLangReflectMethod:method withFFTJsonObject:json];
+      [FFTJsonUtil invokeGetAndSetWithIOSClass:clazz withNSString:fieldName withId:object withJavaLangReflectMethod:method withFFTJSONJsonObject:json];
     }
   }
 }
@@ -112,10 +112,10 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
                        withNSString:(NSString *)name
                              withId:(id)object
           withJavaLangReflectMethod:(JavaLangReflectMethod *)setter
-                  withFFTJsonObject:(FFTJsonObject *)json {
+              withFFTJSONJsonObject:(FFTJSONJsonObject *)json {
   NSString *jsonName = [FFTJsonUtil getJsonNameWithNSString:name];
   IOSClass *type = IOSObjectArray_Get(nil_chk([((JavaLangReflectMethod *) nil_chk(setter)) getParameterTypes]), 0);
-  id value = [FFTJsonUtil getJsonValueWithNSString:jsonName withIOSClass:type withFFTJsonObject:json withId:object];
+  id value = [FFTJsonUtil getJsonValueWithNSString:jsonName withIOSClass:type withFFTJSONJsonObject:json withId:object];
   if (value == nil) {
     return;
   }
@@ -123,24 +123,24 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 }
 
 + (NSString *)objectToJsonStringWithId:(id)object {
-  FFTJsonObject *json = [FFTJsonUtil toJsonObjectWithId:object];
-  return [((FFTJsonObject *) nil_chk(json)) description];
+  FFTJSONJsonObject *json = [FFTJsonUtil toJsonObjectWithId:object];
+  return [((FFTJSONJsonObject *) nil_chk(json)) description];
 }
 
 + (NSString *)listToJsonStringWithJavaUtilList:(id<JavaUtilList>)list {
-  FFTJsonArray *array = [FFTJsonUtil listToJsonArrayWithJavaUtilList:list];
-  return [((FFTJsonArray *) nil_chk(array)) description];
+  FFTJSONJsonArray *array = [FFTJsonUtil listToJsonArrayWithJavaUtilList:list];
+  return [((FFTJSONJsonArray *) nil_chk(array)) description];
 }
 
-+ (FFTJsonArray *)listToJsonArrayWithJavaUtilList:(id<JavaUtilList>)list {
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
++ (FFTJSONJsonArray *)listToJsonArrayWithJavaUtilList:(id<JavaUtilList>)list {
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   for (id __strong o in nil_chk(list)) {
-    FFTJsonObject *json = [FFTJsonUtil toJsonObjectWithId:o];
+    FFTJSONJsonObject *json = [FFTJsonUtil toJsonObjectWithId:o];
     if (json == nil) {
       (void) [array addWithNSString:(NSString *) check_class_cast(nil, [NSString class])];
     }
     else {
-      (void) [array addWithFFTJsonValue:[json asObject]];
+      (void) [array addWithFFTJSONJsonValue:[json asObject]];
     }
   }
   return array;
@@ -148,58 +148,58 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 
 + (id)jsonArrayToObjectArrayWithNSString:(NSString *)jsonArrayString
                             withIOSClass:(IOSClass *)type {
-  FFTJsonArray *jsonArray = [FFTJsonArray readFromWithNSString:jsonArrayString];
-  return [FFTJsonUtil createArrayFromJsonObjectWithFFTJsonValue:jsonArray withIOSClass:type];
+  FFTJSONJsonArray *jsonArray = [FFTJSONJsonArray readFromWithNSString:jsonArrayString];
+  return [FFTJsonUtil createArrayFromJsonObjectWithFFTJSONJsonValue:jsonArray withIOSClass:type];
 }
 
 + (id)jsonObjectToObjectWithNSString:(NSString *)jsonString
                         withIOSClass:(IOSClass *)type {
-  FFTJsonObject *object = [FFTJsonObject readFromWithNSString:jsonString];
-  return [FFTJsonUtil createObjectFromJsonObjectWithFFTJsonValue:object withIOSClass:type];
+  FFTJSONJsonObject *object = [FFTJSONJsonObject readFromWithNSString:jsonString];
+  return [FFTJsonUtil createObjectFromJsonObjectWithFFTJSONJsonValue:object withIOSClass:type];
 }
 
 + (id<JavaUtilMap>)jsonObjectToMapWithNSString:(NSString *)jsonMapString
                                   withIOSClass:(IOSClass *)mapType
                                   withIOSClass:(IOSClass *)type {
-  FFTJsonObject *jsonObject = [FFTJsonObject readFromWithNSString:jsonMapString];
-  return [FFTJsonUtil createMapFromJsonObjectWithFFTJsonValue:jsonObject withIOSClass:mapType withIOSClass:type];
+  FFTJSONJsonObject *jsonObject = [FFTJSONJsonObject readFromWithNSString:jsonMapString];
+  return [FFTJsonUtil createMapFromJsonObjectWithFFTJSONJsonValue:jsonObject withIOSClass:mapType withIOSClass:type];
 }
 
-+ (FFTJsonArray *)arrayToJsonArrayWithNSObjectArray:(IOSObjectArray *)list {
-  FFTJsonArray *array = [[FFTJsonArray alloc] init];
++ (FFTJSONJsonArray *)arrayToJsonArrayWithNSObjectArray:(IOSObjectArray *)list {
+  FFTJSONJsonArray *array = [[FFTJSONJsonArray alloc] init];
   {
     IOSObjectArray *a__ = list;
     id const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
     id const *e__ = b__ + a__->size_;
     while (b__ < e__) {
       id o = (*b__++);
-      FFTJsonObject *json = [FFTJsonUtil toJsonObjectWithId:o];
+      FFTJSONJsonObject *json = [FFTJsonUtil toJsonObjectWithId:o];
       if (json == nil) {
         (void) [array addWithNSString:(NSString *) check_class_cast(nil, [NSString class])];
       }
       else {
-        (void) [array addWithFFTJsonValue:[json asObject]];
+        (void) [array addWithFFTJSONJsonValue:[json asObject]];
       }
     }
   }
   return array;
 }
 
-+ (FFTJsonObject *)mapToJsonObjectWithJavaUtilMap:(id<JavaUtilMap>)map {
-  FFTJsonObject *object = [[FFTJsonObject alloc] init];
++ (FFTJSONJsonObject *)mapToJsonObjectWithJavaUtilMap:(id<JavaUtilMap>)map {
+  FFTJSONJsonObject *object = [[FFTJSONJsonObject alloc] init];
   for (NSString * __strong key in nil_chk([((id<JavaUtilMap>) nil_chk(map)) keySet])) {
     id value = [map getWithId:key];
-    FFTJsonObject *jsonObject = [FFTJsonUtil toJsonObjectWithId:value];
-    (void) [object addWithNSString:key withFFTJsonValue:jsonObject];
+    FFTJSONJsonObject *jsonObject = [FFTJsonUtil toJsonObjectWithId:value];
+    (void) [object addWithNSString:key withFFTJSONJsonValue:jsonObject];
   }
   return object;
 }
 
-+ (FFTJsonObject *)toJsonObjectWithId:(id)object {
++ (FFTJSONJsonObject *)toJsonObjectWithId:(id)object {
   if (object == nil) {
     return nil;
   }
-  FFTJsonObject *json = [[FFTJsonObject alloc] init];
+  FFTJSONJsonObject *json = [[FFTJSONJsonObject alloc] init];
   JavaLangReflectField *keyField = nil;
   IOSClass *clazz = [nil_chk(object) getClass];
   IOSObjectArray *fields = [clazz getDeclaredFields];
@@ -240,7 +240,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
       if (value == nil) {
         continue;
       }
-      [FFTJsonUtil setJsonValueWithNSString:jsonName withId:value withFFTJsonObject:json];
+      [FFTJsonUtil setJsonValueWithNSString:jsonName withId:value withFFTJSONJsonObject:json];
     }
   }
   return json;
@@ -266,29 +266,29 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
 
 + (id)getJsonValueWithNSString:(NSString *)name
                   withIOSClass:(IOSClass *)type
-             withFFTJsonObject:(FFTJsonObject *)json
+         withFFTJSONJsonObject:(FFTJSONJsonObject *)json
                         withId:(id)rootObject {
   IOSObjectArray *names = [((NSString *) nil_chk(name)) split:@":"];
-  return [FFTJsonUtil getJsonValueWithNSStringArray:names withIOSClass:type withFFTJsonObject:json withInt:0 withId:rootObject];
+  return [FFTJsonUtil getJsonValueWithNSStringArray:names withIOSClass:type withFFTJSONJsonObject:json withInt:0 withId:rootObject];
 }
 
 + (id)getJsonValueWithNSStringArray:(IOSObjectArray *)names
                        withIOSClass:(IOSClass *)type
-                  withFFTJsonObject:(FFTJsonObject *)json
+              withFFTJSONJsonObject:(FFTJSONJsonObject *)json
                             withInt:(int)i
                              withId:(id)rootObject {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(json)) getWithNSString:IOSObjectArray_Get(nil_chk(names), i)];
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(json)) getWithNSString:IOSObjectArray_Get(nil_chk(names), i)];
   if (value == nil || [value isNull]) {
     return nil;
   }
   if (i < (int) [names count] - 1) {
-    return [FFTJsonUtil getJsonValueWithNSStringArray:names withIOSClass:type withFFTJsonObject:[((FFTJsonValue *) nil_chk(value)) asObject] withInt:i + 1 withId:rootObject];
+    return [FFTJsonUtil getJsonValueWithNSStringArray:names withIOSClass:type withFFTJSONJsonObject:[((FFTJSONJsonValue *) nil_chk(value)) asObject] withInt:i + 1 withId:rootObject];
   }
   if ([((IOSClass *) nil_chk(type)) isEqual:[IOSClass classWithClass:[NSString class]]]) {
-    return [((FFTJsonValue *) nil_chk(value)) asString];
+    return [((FFTJSONJsonValue *) nil_chk(value)) asString];
   }
   else if (type == JavaLangBoolean_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangBoolean class]]]) {
-    if ([((FFTJsonValue *) nil_chk(value)) isBoolean]) {
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isBoolean]) {
       return [JavaLangBoolean valueOfWithBoolean:[value asBoolean]];
     }
     else if ([value isNumber]) {
@@ -299,7 +299,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     }
   }
   else if (type == JavaLangInteger_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangInteger class]]]) {
-    if ([((FFTJsonValue *) nil_chk(value)) isNumber]) {
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isNumber]) {
       return [JavaLangInteger valueOfWithInt:[value asInt]];
     }
     else {
@@ -313,7 +313,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     }
   }
   else if (type == JavaLangLong_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangLong class]]]) {
-    if ([((FFTJsonValue *) nil_chk(value)) isNumber]) {
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isNumber]) {
       return [JavaLangLong valueOfWithLong:[value asLong]];
     }
     else {
@@ -327,7 +327,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     }
   }
   else if (type == JavaLangDouble_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangDouble class]]]) {
-    if ([((FFTJsonValue *) nil_chk(value)) isNumber]) {
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isNumber]) {
       return [JavaLangDouble valueOfWithDouble:[value asDouble]];
     }
     else {
@@ -341,7 +341,7 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     }
   }
   else if (type == JavaLangFloat_get_TYPE_() || [type isEqual:[IOSClass classWithClass:[JavaLangFloat class]]]) {
-    if ([((FFTJsonValue *) nil_chk(value)) isNumber]) {
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isNumber]) {
       return [JavaLangFloat valueOfWithFloat:[value asFloat]];
     }
     else {
@@ -355,96 +355,96 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     }
   }
   else if ([type isArray]) {
-    return [FFTJsonUtil createArrayFromJsonObjectWithFFTJsonValue:value withIOSClass:[type getComponentType]];
+    return [FFTJsonUtil createArrayFromJsonObjectWithFFTJSONJsonValue:value withIOSClass:[type getComponentType]];
   }
   else if ([[IOSClass classWithProtocol:@protocol(JavaUtilList)] isAssignableFrom:type]) {
     if (!([rootObject conformsToProtocol: @protocol(FFTJsonUtil_TypeMapper)])) {
       @throw [[JavaLangRuntimeException alloc] initWithNSString:@"A class that uses this utility to set Map values must implement TypeMapper"];
     }
-    return [FFTJsonUtil createListFromJsonObjectWithFFTJsonValue:value withIOSClass:type withIOSClass:[((id<FFTJsonUtil_TypeMapper>) nil_chk(((id<FFTJsonUtil_TypeMapper>) check_protocol_cast(rootObject, @protocol(FFTJsonUtil_TypeMapper))))) getTypeForFieldWithNSString:IOSObjectArray_Get(names, i)]];
+    return [FFTJsonUtil createListFromJsonObjectWithFFTJSONJsonValue:value withIOSClass:type withIOSClass:[((id<FFTJsonUtil_TypeMapper>) nil_chk(((id<FFTJsonUtil_TypeMapper>) check_protocol_cast(rootObject, @protocol(FFTJsonUtil_TypeMapper))))) getTypeForFieldWithNSString:IOSObjectArray_Get(names, i)]];
   }
   else if ([[IOSClass classWithProtocol:@protocol(JavaUtilMap)] isAssignableFrom:type]) {
     if (!([rootObject conformsToProtocol: @protocol(FFTJsonUtil_TypeMapper)])) {
       @throw [[JavaLangRuntimeException alloc] initWithNSString:@"A class that uses this utility to set Map values must implement TypeMapper"];
     }
-    return [FFTJsonUtil createMapFromJsonObjectWithFFTJsonValue:value withIOSClass:type withIOSClass:[((id<FFTJsonUtil_TypeMapper>) nil_chk(((id<FFTJsonUtil_TypeMapper>) check_protocol_cast(rootObject, @protocol(FFTJsonUtil_TypeMapper))))) getTypeForFieldWithNSString:IOSObjectArray_Get(names, i)]];
+    return [FFTJsonUtil createMapFromJsonObjectWithFFTJSONJsonValue:value withIOSClass:type withIOSClass:[((id<FFTJsonUtil_TypeMapper>) nil_chk(((id<FFTJsonUtil_TypeMapper>) check_protocol_cast(rootObject, @protocol(FFTJsonUtil_TypeMapper))))) getTypeForFieldWithNSString:IOSObjectArray_Get(names, i)]];
   }
   else {
-    return [FFTJsonUtil createObjectFromJsonObjectWithFFTJsonValue:value withIOSClass:type];
+    return [FFTJsonUtil createObjectFromJsonObjectWithFFTJSONJsonValue:value withIOSClass:type];
   }
 }
 
-+ (id)createArrayFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                   withIOSClass:(IOSClass *)type {
-  FFTJsonArray *jsonArray = [((FFTJsonValue *) nil_chk(object)) asArray];
-  id array = [JavaLangReflectArray newInstanceWithIOSClass:type withInt:[((FFTJsonArray *) nil_chk(jsonArray)) size]];
++ (id)createArrayFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                       withIOSClass:(IOSClass *)type {
+  FFTJSONJsonArray *jsonArray = [((FFTJSONJsonValue *) nil_chk(object)) asArray];
+  id array = [JavaLangReflectArray newInstanceWithIOSClass:type withInt:[((FFTJSONJsonArray *) nil_chk(jsonArray)) size]];
   for (int index = 0; index < [jsonArray size]; index++) {
     id val = [((IOSClass *) nil_chk(type)) newInstance];
     [JavaLangReflectArray setWithId:array withInt:index withId:val];
-    [FFTJsonUtil setValuesToWithId:val withFFTJsonObject:[((FFTJsonValue *) nil_chk([jsonArray getWithInt:index])) asObject]];
+    [FFTJsonUtil setValuesToWithId:val withFFTJSONJsonObject:[((FFTJSONJsonValue *) nil_chk([jsonArray getWithInt:index])) asObject]];
   }
   return array;
 }
 
-+ (id<JavaUtilMap>)createMapFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                              withIOSClass:(IOSClass *)mapType
-                                              withIOSClass:(IOSClass *)objectType {
++ (id<JavaUtilMap>)createMapFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                                  withIOSClass:(IOSClass *)mapType
+                                                  withIOSClass:(IOSClass *)objectType {
   id<JavaUtilMap> map = (id<JavaUtilMap>) check_protocol_cast([((IOSClass *) nil_chk(mapType)) newInstance], @protocol(JavaUtilMap));
-  if ([((FFTJsonValue *) nil_chk(object)) isArray] && [((FFTJsonArray *) nil_chk([object asArray])) size] == 0) {
+  if ([((FFTJSONJsonValue *) nil_chk(object)) isArray] && [((FFTJSONJsonArray *) nil_chk([object asArray])) size] == 0) {
     return map;
   }
-  for (FFTJsonObject_Member * __strong member in nil_chk([object asObject])) {
+  for (FFTJSONJsonObject_Member * __strong member in nil_chk([object asObject])) {
     id val = [((IOSClass *) nil_chk(objectType)) newInstance];
-    (void) [((id<JavaUtilMap>) nil_chk(map)) putWithId:[((FFTJsonObject_Member *) nil_chk(member)) getName] withId:val];
-    [FFTJsonUtil setValuesToWithId:val withFFTJsonObject:[((FFTJsonValue *) nil_chk([member getValue])) asObject]];
+    (void) [((id<JavaUtilMap>) nil_chk(map)) putWithId:[((FFTJSONJsonObject_Member *) nil_chk(member)) getName] withId:val];
+    [FFTJsonUtil setValuesToWithId:val withFFTJSONJsonObject:[((FFTJSONJsonValue *) nil_chk([member getValue])) asObject]];
   }
   return map;
 }
 
-+ (id)createListFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                  withIOSClass:(IOSClass *)listType
-                                  withIOSClass:(IOSClass *)objectType {
++ (id)createListFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                      withIOSClass:(IOSClass *)listType
+                                      withIOSClass:(IOSClass *)objectType {
   id<JavaUtilList> list = (id<JavaUtilList>) check_protocol_cast([((IOSClass *) nil_chk(listType)) newInstance], @protocol(JavaUtilList));
-  FFTJsonArray *jsonArray = [((FFTJsonValue *) nil_chk(object)) asArray];
-  for (int index = 0; index < [((FFTJsonArray *) nil_chk(jsonArray)) size]; index++) {
+  FFTJSONJsonArray *jsonArray = [((FFTJSONJsonValue *) nil_chk(object)) asArray];
+  for (int index = 0; index < [((FFTJSONJsonArray *) nil_chk(jsonArray)) size]; index++) {
     id val = [((IOSClass *) nil_chk(objectType)) newInstance];
     [((id<JavaUtilList>) nil_chk(list)) addWithId:val];
-    [FFTJsonUtil setValuesToWithId:val withFFTJsonObject:[((FFTJsonValue *) nil_chk([jsonArray getWithInt:index])) asObject]];
+    [FFTJsonUtil setValuesToWithId:val withFFTJSONJsonObject:[((FFTJSONJsonValue *) nil_chk([jsonArray getWithInt:index])) asObject]];
   }
   return list;
 }
 
-+ (id)createObjectFromJsonObjectWithFFTJsonValue:(FFTJsonValue *)object
-                                    withIOSClass:(IOSClass *)type {
++ (id)createObjectFromJsonObjectWithFFTJSONJsonValue:(FFTJSONJsonValue *)object
+                                        withIOSClass:(IOSClass *)type {
   id newObject = [((IOSClass *) nil_chk(type)) newInstance];
-  if ([((FFTJsonValue *) nil_chk(object)) isObject]) {
-    [FFTJsonUtil setValuesToWithId:newObject withFFTJsonObject:[object asObject]];
+  if ([((FFTJSONJsonValue *) nil_chk(object)) isObject]) {
+    [FFTJsonUtil setValuesToWithId:newObject withFFTJSONJsonObject:[object asObject]];
   }
   return newObject;
 }
 
 + (void)setJsonValueWithNSString:(NSString *)jsonName
                           withId:(id)value
-               withFFTJsonObject:(FFTJsonObject *)json {
+           withFFTJSONJsonObject:(FFTJSONJsonObject *)json {
   id<JavaLangReflectType> type = [nil_chk(value) getClass];
   if (type == [IOSClass classWithClass:[JavaLangBoolean class]]) {
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withBoolean:[(JavaLangBoolean *) check_class_cast(value, [JavaLangBoolean class]) booleanValue]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withBoolean:[(JavaLangBoolean *) check_class_cast(value, [JavaLangBoolean class]) booleanValue]];
   }
   else if (type == [IOSClass classWithClass:[JavaLangInteger class]]) {
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withInt:[(JavaLangInteger *) check_class_cast(value, [JavaLangInteger class]) intValue]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withInt:[(JavaLangInteger *) check_class_cast(value, [JavaLangInteger class]) intValue]];
   }
   else if (type == [IOSClass classWithClass:[JavaLangLong class]]) {
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withLong:[(JavaLangLong *) check_class_cast(value, [JavaLangLong class]) longLongValue]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withLong:[(JavaLangLong *) check_class_cast(value, [JavaLangLong class]) longLongValue]];
   }
   else if (type == [IOSClass classWithClass:[JavaLangDouble class]]) {
     JavaLangDouble *v = (JavaLangDouble *) check_class_cast(value, [JavaLangDouble class]);
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withFloat:[v floatValue]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withFloat:[v floatValue]];
   }
   else if (type == [IOSClass classWithClass:[JavaLangFloat class]]) {
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withFloat:[(JavaLangFloat *) check_class_cast(value, [JavaLangFloat class]) floatValue]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withFloat:[(JavaLangFloat *) check_class_cast(value, [JavaLangFloat class]) floatValue]];
   }
   else {
-    (void) [((FFTJsonObject *) nil_chk(json)) addWithNSString:jsonName withNSString:[value description]];
+    (void) [((FFTJSONJsonObject *) nil_chk(json)) addWithNSString:jsonName withNSString:[value description]];
   }
 }
 
@@ -459,26 +459,26 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
   return [FFTMethodUtil getMethodWithIOSClass:object withNSString:mName withIOSClassArray:[IOSObjectArray arrayWithObjects:(id[]){ type } count:1 type:[IOSClass classWithClass:[IOSClass class]]]];
 }
 
-+ (FFTJsonObject *)getJsonObjectWithFFTJsonObject:(FFTJsonObject *)object
-                                     withNSString:(NSString *)key {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
-  if (![((FFTJsonValue *) nil_chk(value)) isObject]) {
-    return [[FFTJsonObject alloc] init];
++ (FFTJSONJsonObject *)getJsonObjectWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                             withNSString:(NSString *)key {
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(object)) getWithNSString:key];
+  if (![((FFTJSONJsonValue *) nil_chk(value)) isObject]) {
+    return [[FFTJSONJsonObject alloc] init];
   }
   else {
     return [value asObject];
   }
 }
 
-+ (NSString *)getStringWithFFTJsonObject:(FFTJsonObject *)object
-                            withNSString:(NSString *)key {
-  return [FFTJsonUtil getStringWithFFTJsonObject:object withNSString:key withNSString:nil];
++ (NSString *)getStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                withNSString:(NSString *)key {
+  return [FFTJsonUtil getStringWithFFTJSONJsonObject:object withNSString:key withNSString:nil];
 }
 
-+ (NSString *)getStringWithFFTJsonObject:(FFTJsonObject *)object
-                            withNSString:(NSString *)key
-                            withNSString:(NSString *)defaultValue {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
++ (NSString *)getStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                withNSString:(NSString *)key
+                                withNSString:(NSString *)defaultValue {
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(object)) getWithNSString:key];
   if (value == nil || ![value isString]) {
     return defaultValue;
   }
@@ -487,10 +487,10 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
   }
 }
 
-+ (int)getIntWithFFTJsonObject:(FFTJsonObject *)object
-                  withNSString:(NSString *)key
-                       withInt:(int)defaultValue {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
++ (int)getIntWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                      withNSString:(NSString *)key
+                           withInt:(int)defaultValue {
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(object)) getWithNSString:key];
   if (value == nil || [value isNull] || ![value isNumber]) {
     int returnValue = defaultValue;
     if (value != nil && [value isString]) {
@@ -508,10 +508,10 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
   }
 }
 
-+ (float)getFloatWithFFTJsonObject:(FFTJsonObject *)object
-                      withNSString:(NSString *)key
-                         withFloat:(float)defaultValue {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
++ (float)getFloatWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                          withNSString:(NSString *)key
+                             withFloat:(float)defaultValue {
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(object)) getWithNSString:key];
   if (value == nil || [value isNull] || ![value isNumber]) {
     float returnValue = defaultValue;
     if (value != nil && [value isString]) {
@@ -529,10 +529,10 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
   }
 }
 
-+ (BOOL)getBooleanWithFFTJsonObject:(FFTJsonObject *)object
-                       withNSString:(NSString *)key
-                        withBoolean:(BOOL)defaultValue {
-  FFTJsonValue *value = [((FFTJsonObject *) nil_chk(object)) getWithNSString:key];
++ (BOOL)getBooleanWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                           withNSString:(NSString *)key
+                            withBoolean:(BOOL)defaultValue {
+  FFTJSONJsonValue *value = [((FFTJSONJsonObject *) nil_chk(object)) getWithNSString:key];
   if (value == nil || [value isNull] || ![value isBoolean]) {
     BOOL returnValue = defaultValue;
     if (value != nil && [value isString]) {
@@ -559,11 +559,11 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     { "isUnderscoreSeparatesWords", NULL, "Z", 0x9, NULL },
     { "getRandom", NULL, "V", 0x9, NULL },
     { "setUnderscoreSeparatesWordsWithBoolean:", "setUnderscoreSeparatesWords", "V", 0x9, NULL },
-    { "setValuesToWithId:withFFTJsonObject:", "setValuesTo", "V", 0x9, NULL },
-    { "setValuesToHelperWithId:withFFTJsonObject:", "setValuesToHelper", "V", 0x8, "Ljava.lang.Exception;" },
+    { "setValuesToWithId:withFFTJSONJsonObject:", "setValuesTo", "V", 0x9, NULL },
+    { "setValuesToHelperWithId:withFFTJSONJsonObject:", "setValuesToHelper", "V", 0x8, "Ljava.lang.Exception;" },
     { "iOSGetJsonNameWithId:withNSString:", "iOSGetJsonName", "Ljava.lang.String;", 0x10a, NULL },
     { "invokeIOSNativeSetWithId:withNSString:withId:", "invokeIOSNativeSet", "V", 0x10a, NULL },
-    { "invokeGetAndSetWithIOSClass:withNSString:withId:withJavaLangReflectMethod:withFFTJsonObject:", "invokeGetAndSet", "V", 0x9, "Ljava.lang.Exception;" },
+    { "invokeGetAndSetWithIOSClass:withNSString:withId:withJavaLangReflectMethod:withFFTJSONJsonObject:", "invokeGetAndSet", "V", 0x9, "Ljava.lang.Exception;" },
     { "objectToJsonStringWithId:", "objectToJsonString", "Ljava.lang.String;", 0x9, "Ljava.lang.Exception;" },
     { "listToJsonStringWithJavaUtilList:", "listToJsonString", "Ljava.lang.String;", 0x9, "Ljava.lang.Exception;" },
     { "listToJsonArrayWithJavaUtilList:", "listToJsonArray", "Lcom.eclipsesource.json.JsonArray;", 0x9, "Ljava.lang.Exception;Ljava.lang.IllegalAccessException;Ljava.lang.reflect.InvocationTargetException;" },
@@ -574,20 +574,20 @@ BOOL FFTJsonUtil_underscoreSeparatesWords_ = YES;
     { "mapToJsonObjectWithJavaUtilMap:", "mapToJsonObject", "Lcom.eclipsesource.json.JsonObject;", 0x9, "Ljava.lang.Exception;" },
     { "toJsonObjectWithId:", "toJsonObject", "Lcom.eclipsesource.json.JsonObject;", 0x9, "Ljava.lang.Exception;Ljava.lang.IllegalAccessException;Ljava.lang.reflect.InvocationTargetException;" },
     { "getJsonNameWithNSString:", "getJsonName", "Ljava.lang.String;", 0x9, NULL },
-    { "getJsonValueWithNSString:withIOSClass:withFFTJsonObject:withId:", "getJsonValue", "Ljava.lang.Object;", 0x9, "Ljava.lang.Exception;" },
-    { "getJsonValueWithNSStringArray:withIOSClass:withFFTJsonObject:withInt:withId:", "getJsonValue", "Ljava.lang.Object;", 0x9, "Ljava.lang.Exception;" },
-    { "createArrayFromJsonObjectWithFFTJsonValue:withIOSClass:", "createArrayFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
-    { "createMapFromJsonObjectWithFFTJsonValue:withIOSClass:withIOSClass:", "createMapFromJsonObject", "Ljava.util.Map;", 0xc, "Ljava.lang.Exception;" },
-    { "createListFromJsonObjectWithFFTJsonValue:withIOSClass:withIOSClass:", "createListFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
-    { "createObjectFromJsonObjectWithFFTJsonValue:withIOSClass:", "createObjectFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
-    { "setJsonValueWithNSString:withId:withFFTJsonObject:", "setJsonValue", "V", 0x9, NULL },
+    { "getJsonValueWithNSString:withIOSClass:withFFTJSONJsonObject:withId:", "getJsonValue", "Ljava.lang.Object;", 0x9, "Ljava.lang.Exception;" },
+    { "getJsonValueWithNSStringArray:withIOSClass:withFFTJSONJsonObject:withInt:withId:", "getJsonValue", "Ljava.lang.Object;", 0x9, "Ljava.lang.Exception;" },
+    { "createArrayFromJsonObjectWithFFTJSONJsonValue:withIOSClass:", "createArrayFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
+    { "createMapFromJsonObjectWithFFTJSONJsonValue:withIOSClass:withIOSClass:", "createMapFromJsonObject", "Ljava.util.Map;", 0xc, "Ljava.lang.Exception;" },
+    { "createListFromJsonObjectWithFFTJSONJsonValue:withIOSClass:withIOSClass:", "createListFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
+    { "createObjectFromJsonObjectWithFFTJSONJsonValue:withIOSClass:", "createObjectFromJsonObject", "Ljava.lang.Object;", 0xc, "Ljava.lang.Exception;" },
+    { "setJsonValueWithNSString:withId:withFFTJSONJsonObject:", "setJsonValue", "V", 0x9, NULL },
     { "getSetterMethodWithIOSClass:withNSString:withIOSClass:", "getSetterMethod", "Ljava.lang.reflect.Method;", 0x9, "Ljava.lang.Exception;" },
-    { "getJsonObjectWithFFTJsonObject:withNSString:", "getJsonObject", "Lcom.eclipsesource.json.JsonObject;", 0x9, NULL },
-    { "getStringWithFFTJsonObject:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
-    { "getStringWithFFTJsonObject:withNSString:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
-    { "getIntWithFFTJsonObject:withNSString:withInt:", "getInt", "I", 0x9, NULL },
-    { "getFloatWithFFTJsonObject:withNSString:withFloat:", "getFloat", "F", 0x9, NULL },
-    { "getBooleanWithFFTJsonObject:withNSString:withBoolean:", "getBoolean", "Z", 0x9, NULL },
+    { "getJsonObjectWithFFTJSONJsonObject:withNSString:", "getJsonObject", "Lcom.eclipsesource.json.JsonObject;", 0x9, NULL },
+    { "getStringWithFFTJSONJsonObject:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
+    { "getStringWithFFTJSONJsonObject:withNSString:withNSString:", "getString", "Ljava.lang.String;", 0x9, NULL },
+    { "getIntWithFFTJSONJsonObject:withNSString:withInt:", "getInt", "I", 0x9, NULL },
+    { "getFloatWithFFTJSONJsonObject:withNSString:withFloat:", "getFloat", "F", 0x9, NULL },
+    { "getBooleanWithFFTJSONJsonObject:withNSString:withBoolean:", "getBoolean", "Z", 0x9, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {

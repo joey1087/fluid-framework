@@ -6,7 +6,7 @@
 #ifndef _FFTPrettyPrint_H_
 #define _FFTPrettyPrint_H_
 
-@class FFTJsonObject;
+@class FFTJSONJsonObject;
 @protocol JavaUtilMap;
 
 #import "JreEmulation.h"
@@ -19,10 +19,10 @@
 + (NSString *)toStringWithJavaUtilMap:(id<JavaUtilMap>)map
                               withInt:(int)indent;
 
-+ (NSString *)toStringWithFFTJsonObject:(FFTJsonObject *)object;
++ (NSString *)toStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object;
 
-+ (NSString *)toStringWithFFTJsonObject:(FFTJsonObject *)object
-                                withInt:(int)indent;
++ (NSString *)toStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                    withInt:(int)indent;
 
 - (id)init;
 

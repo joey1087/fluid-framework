@@ -3,15 +3,15 @@
 //  source: src-external/com/eclipsesource/json/JsonNumber.java
 //
 
-#ifndef _FFTJsonNumber_H_
-#define _FFTJsonNumber_H_
+#ifndef _FFTJSONJsonNumber_H_
+#define _FFTJSONJsonNumber_H_
 
-@class FFTJsonWriter;
+@class FFTJSONJsonWriter;
 
 #import "JreEmulation.h"
 #include "com/eclipsesource/json/JsonValue.h"
 
-@interface FFTJsonNumber : FFTJsonValue {
+@interface FFTJSONJsonNumber : FFTJSONJsonValue {
  @public
   NSString *string_;
 }
@@ -20,7 +20,7 @@
 
 - (NSString *)description;
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer;
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer;
 
 - (BOOL)isNumber;
 
@@ -36,14 +36,14 @@
 
 - (BOOL)isEqual:(id)object;
 
-- (void)copyAllFieldsTo:(FFTJsonNumber *)other;
+- (void)copyAllFieldsTo:(FFTJSONJsonNumber *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTJsonNumber_init() {}
+__attribute__((always_inline)) inline void FFTJSONJsonNumber_init() {}
 
-J2OBJC_FIELD_SETTER(FFTJsonNumber, string_, NSString *)
+J2OBJC_FIELD_SETTER(FFTJSONJsonNumber, string_, NSString *)
 
-typedef FFTJsonNumber ComEclipsesourceJsonJsonNumber;
+typedef FFTJSONJsonNumber ComEclipsesourceJsonJsonNumber;
 
-#endif // _FFTJsonNumber_H_
+#endif // _FFTJSONJsonNumber_H_

@@ -3,10 +3,10 @@
 //  source: src-external/com/eclipsesource/json/JsonArray.java
 //
 
-#ifndef _FFTJsonArray_H_
-#define _FFTJsonArray_H_
+#ifndef _FFTJSONJsonArray_H_
+#define _FFTJSONJsonArray_H_
 
-@class FFTJsonWriter;
+@class FFTJSONJsonWriter;
 @class JavaIoReader;
 @protocol JavaUtilList;
 
@@ -15,99 +15,99 @@
 #include "java/lang/Iterable.h"
 #include "java/util/Iterator.h"
 
-@interface FFTJsonArray : FFTJsonValue < JavaLangIterable > {
+@interface FFTJSONJsonArray : FFTJSONJsonValue < JavaLangIterable > {
  @public
   id<JavaUtilList> values__;
 }
 
 - (id)init;
 
-- (id)initWithFFTJsonArray:(FFTJsonArray *)array;
+- (id)initWithFFTJSONJsonArray:(FFTJSONJsonArray *)array;
 
-- (id)initWithFFTJsonArray:(FFTJsonArray *)array
-               withBoolean:(BOOL)unmodifiable;
+- (id)initWithFFTJSONJsonArray:(FFTJSONJsonArray *)array
+                   withBoolean:(BOOL)unmodifiable;
 
-+ (FFTJsonArray *)readFromWithJavaIoReader:(JavaIoReader *)reader;
++ (FFTJSONJsonArray *)readFromWithJavaIoReader:(JavaIoReader *)reader;
 
-+ (FFTJsonArray *)readFromWithNSString:(NSString *)string;
++ (FFTJSONJsonArray *)readFromWithNSString:(NSString *)string;
 
-+ (FFTJsonArray *)unmodifiableArrayWithFFTJsonArray:(FFTJsonArray *)array;
++ (FFTJSONJsonArray *)unmodifiableArrayWithFFTJSONJsonArray:(FFTJSONJsonArray *)array;
 
-- (FFTJsonArray *)addWithInt:(int)value;
+- (FFTJSONJsonArray *)addWithInt:(int)value;
 
-- (FFTJsonArray *)addWithLong:(long long int)value;
+- (FFTJSONJsonArray *)addWithLong:(long long int)value;
 
-- (FFTJsonArray *)addWithFloat:(float)value;
+- (FFTJSONJsonArray *)addWithFloat:(float)value;
 
-- (FFTJsonArray *)addWithDouble:(double)value;
+- (FFTJSONJsonArray *)addWithDouble:(double)value;
 
-- (FFTJsonArray *)addWithBoolean:(BOOL)value;
+- (FFTJSONJsonArray *)addWithBoolean:(BOOL)value;
 
-- (FFTJsonArray *)addWithNSString:(NSString *)value;
+- (FFTJSONJsonArray *)addWithNSString:(NSString *)value;
 
-- (FFTJsonArray *)addWithFFTJsonValue:(FFTJsonValue *)value;
+- (FFTJSONJsonArray *)addWithFFTJSONJsonValue:(FFTJSONJsonValue *)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                     withInt:(int)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                         withInt:(int)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                    withLong:(long long int)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                        withLong:(long long int)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                   withFloat:(float)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                       withFloat:(float)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                  withDouble:(double)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                      withDouble:(double)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                 withBoolean:(BOOL)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                     withBoolean:(BOOL)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-                withNSString:(NSString *)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+                    withNSString:(NSString *)value;
 
-- (FFTJsonArray *)setWithInt:(int)index
-            withFFTJsonValue:(FFTJsonValue *)value;
+- (FFTJSONJsonArray *)setWithInt:(int)index
+            withFFTJSONJsonValue:(FFTJSONJsonValue *)value;
 
-- (FFTJsonArray *)removeWithInt:(int)index;
+- (FFTJSONJsonArray *)removeWithInt:(int)index;
 
 - (int)size;
 
 - (BOOL)isEmpty;
 
-- (FFTJsonValue *)getWithInt:(int)index;
+- (FFTJSONJsonValue *)getWithInt:(int)index;
 
 - (id<JavaUtilList>)values;
 
 - (id<JavaUtilIterator>)iterator;
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer;
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer;
 
 - (BOOL)isArray;
 
-- (FFTJsonArray *)asArray;
+- (FFTJSONJsonArray *)asArray;
 
 - (NSUInteger)hash;
 
 - (BOOL)isEqual:(id)object;
 
-- (void)copyAllFieldsTo:(FFTJsonArray *)other;
+- (void)copyAllFieldsTo:(FFTJSONJsonArray *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTJsonArray_init() {}
+__attribute__((always_inline)) inline void FFTJSONJsonArray_init() {}
 
-J2OBJC_FIELD_SETTER(FFTJsonArray, values__, id<JavaUtilList>)
+J2OBJC_FIELD_SETTER(FFTJSONJsonArray, values__, id<JavaUtilList>)
 
-typedef FFTJsonArray ComEclipsesourceJsonJsonArray;
+typedef FFTJSONJsonArray ComEclipsesourceJsonJsonArray;
 
-@interface FFTJsonArray_$1 : NSObject < JavaUtilIterator > {
+@interface FFTJSONJsonArray_$1 : NSObject < JavaUtilIterator > {
  @public
   id<JavaUtilIterator> val$iterator_;
 }
 
 - (BOOL)hasNext;
 
-- (FFTJsonValue *)next;
+- (FFTJSONJsonValue *)next;
 
 - (void)remove;
 
@@ -115,8 +115,8 @@ typedef FFTJsonArray ComEclipsesourceJsonJsonArray;
 
 @end
 
-__attribute__((always_inline)) inline void FFTJsonArray_$1_init() {}
+__attribute__((always_inline)) inline void FFTJSONJsonArray_$1_init() {}
 
-J2OBJC_FIELD_SETTER(FFTJsonArray_$1, val$iterator_, id<JavaUtilIterator>)
+J2OBJC_FIELD_SETTER(FFTJSONJsonArray_$1, val$iterator_, id<JavaUtilIterator>)
 
-#endif // _FFTJsonArray_H_
+#endif // _FFTJSONJsonArray_H_

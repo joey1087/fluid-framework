@@ -3,13 +3,13 @@
 //  source: src-external/com/eclipsesource/json/ParseException.java
 //
 
-#ifndef _FFTParseException_H_
-#define _FFTParseException_H_
+#ifndef _FFTJSONParseException_H_
+#define _FFTJSONParseException_H_
 
 #import "JreEmulation.h"
 #include "java/lang/RuntimeException.h"
 
-@interface FFTParseException : JavaLangRuntimeException {
+@interface FFTJSONParseException : JavaLangRuntimeException {
  @public
   int offset_;
   int line_;
@@ -27,12 +27,12 @@
 
 - (int)getColumn;
 
-- (void)copyAllFieldsTo:(FFTParseException *)other;
+- (void)copyAllFieldsTo:(FFTJSONParseException *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTParseException_init() {}
+__attribute__((always_inline)) inline void FFTJSONParseException_init() {}
 
-typedef FFTParseException ComEclipsesourceJsonParseException;
+typedef FFTJSONParseException ComEclipsesourceJsonParseException;
 
-#endif // _FFTParseException_H_
+#endif // _FFTJSONParseException_H_

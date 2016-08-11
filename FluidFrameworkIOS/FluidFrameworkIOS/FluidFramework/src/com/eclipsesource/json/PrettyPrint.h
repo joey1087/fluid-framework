@@ -3,8 +3,8 @@
 //  source: src-external/com/eclipsesource/json/PrettyPrint.java
 //
 
-#ifndef _FFTPrettyPrint_H_
-#define _FFTPrettyPrint_H_
+#ifndef _FFTJSONPrettyPrint_H_
+#define _FFTJSONPrettyPrint_H_
 
 @class IOSCharArray;
 @class JavaIoWriter;
@@ -13,32 +13,32 @@
 #include "com/eclipsesource/json/JsonWriter.h"
 #include "com/eclipsesource/json/WriterConfig.h"
 
-@interface FFTPrettyPrint : FFTWriterConfig {
+@interface FFTJSONPrettyPrint : FFTJSONWriterConfig {
  @public
   IOSCharArray *indentChars_;
 }
 
 - (id)initWithCharArray:(IOSCharArray *)indentChars;
 
-+ (FFTPrettyPrint *)singleLine;
++ (FFTJSONPrettyPrint *)singleLine;
 
-+ (FFTPrettyPrint *)indentWithSpacesWithInt:(int)number;
++ (FFTJSONPrettyPrint *)indentWithSpacesWithInt:(int)number;
 
-+ (FFTPrettyPrint *)indentWithTabs;
++ (FFTJSONPrettyPrint *)indentWithTabs;
 
-- (FFTJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
+- (FFTJSONJsonWriter *)createWriterWithJavaIoWriter:(JavaIoWriter *)writer;
 
-- (void)copyAllFieldsTo:(FFTPrettyPrint *)other;
+- (void)copyAllFieldsTo:(FFTJSONPrettyPrint *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTPrettyPrint_init() {}
+__attribute__((always_inline)) inline void FFTJSONPrettyPrint_init() {}
 
-J2OBJC_FIELD_SETTER(FFTPrettyPrint, indentChars_, IOSCharArray *)
+J2OBJC_FIELD_SETTER(FFTJSONPrettyPrint, indentChars_, IOSCharArray *)
 
-typedef FFTPrettyPrint ComEclipsesourceJsonPrettyPrint;
+typedef FFTJSONPrettyPrint ComEclipsesourceJsonPrettyPrint;
 
-@interface FFTPrettyPrint_PrettyPrintWriter : FFTJsonWriter {
+@interface FFTJSONPrettyPrint_PrettyPrintWriter : FFTJSONJsonWriter {
  @public
   IOSCharArray *indentChars_;
   int indent_;
@@ -63,12 +63,12 @@ typedef FFTPrettyPrint ComEclipsesourceJsonPrettyPrint;
 
 - (BOOL)writeNewLine;
 
-- (void)copyAllFieldsTo:(FFTPrettyPrint_PrettyPrintWriter *)other;
+- (void)copyAllFieldsTo:(FFTJSONPrettyPrint_PrettyPrintWriter *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTPrettyPrint_PrettyPrintWriter_init() {}
+__attribute__((always_inline)) inline void FFTJSONPrettyPrint_PrettyPrintWriter_init() {}
 
-J2OBJC_FIELD_SETTER(FFTPrettyPrint_PrettyPrintWriter, indentChars_, IOSCharArray *)
+J2OBJC_FIELD_SETTER(FFTJSONPrettyPrint_PrettyPrintWriter, indentChars_, IOSCharArray *)
 
-#endif // _FFTPrettyPrint_H_
+#endif // _FFTJSONPrettyPrint_H_

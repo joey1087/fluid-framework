@@ -3,15 +3,15 @@
 //  source: src-external/com/eclipsesource/json/JsonLiteral.java
 //
 
-#ifndef _FFTJsonLiteral_H_
-#define _FFTJsonLiteral_H_
+#ifndef _FFTJSONJsonLiteral_H_
+#define _FFTJSONJsonLiteral_H_
 
-@class FFTJsonWriter;
+@class FFTJSONJsonWriter;
 
 #import "JreEmulation.h"
 #include "com/eclipsesource/json/JsonValue.h"
 
-@interface FFTJsonLiteral : FFTJsonValue {
+@interface FFTJSONJsonLiteral : FFTJSONJsonValue {
  @public
   NSString *value_;
   BOOL isNull__;
@@ -21,7 +21,7 @@
 
 - (id)initWithNSString:(NSString *)value;
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer;
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer;
 
 - (NSString *)description;
 
@@ -39,14 +39,14 @@
 
 - (BOOL)isEqual:(id)object;
 
-- (void)copyAllFieldsTo:(FFTJsonLiteral *)other;
+- (void)copyAllFieldsTo:(FFTJSONJsonLiteral *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTJsonLiteral_init() {}
+__attribute__((always_inline)) inline void FFTJSONJsonLiteral_init() {}
 
-J2OBJC_FIELD_SETTER(FFTJsonLiteral, value_, NSString *)
+J2OBJC_FIELD_SETTER(FFTJSONJsonLiteral, value_, NSString *)
 
-typedef FFTJsonLiteral ComEclipsesourceJsonJsonLiteral;
+typedef FFTJSONJsonLiteral ComEclipsesourceJsonJsonLiteral;
 
-#endif // _FFTJsonLiteral_H_
+#endif // _FFTJSONJsonLiteral_H_

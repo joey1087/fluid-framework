@@ -3,15 +3,15 @@
 //  source: src-external/com/eclipsesource/json/WritingBuffer.java
 //
 
-#ifndef _FFTWritingBuffer_H_
-#define _FFTWritingBuffer_H_
+#ifndef _FFTJSONWritingBuffer_H_
+#define _FFTJSONWritingBuffer_H_
 
 @class IOSCharArray;
 
 #import "JreEmulation.h"
 #include "java/io/Writer.h"
 
-@interface FFTWritingBuffer : JavaIoWriter {
+@interface FFTJSONWritingBuffer : JavaIoWriter {
  @public
   JavaIoWriter *writer_;
   IOSCharArray *buffer_;
@@ -37,15 +37,15 @@
 
 - (void)close;
 
-- (void)copyAllFieldsTo:(FFTWritingBuffer *)other;
+- (void)copyAllFieldsTo:(FFTJSONWritingBuffer *)other;
 
 @end
 
-__attribute__((always_inline)) inline void FFTWritingBuffer_init() {}
+__attribute__((always_inline)) inline void FFTJSONWritingBuffer_init() {}
 
-J2OBJC_FIELD_SETTER(FFTWritingBuffer, writer_, JavaIoWriter *)
-J2OBJC_FIELD_SETTER(FFTWritingBuffer, buffer_, IOSCharArray *)
+J2OBJC_FIELD_SETTER(FFTJSONWritingBuffer, writer_, JavaIoWriter *)
+J2OBJC_FIELD_SETTER(FFTJSONWritingBuffer, buffer_, IOSCharArray *)
 
-typedef FFTWritingBuffer ComEclipsesourceJsonWritingBuffer;
+typedef FFTJSONWritingBuffer ComEclipsesourceJsonWritingBuffer;
 
-#endif // _FFTWritingBuffer_H_
+#endif // _FFTJSONWritingBuffer_H_

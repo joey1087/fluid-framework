@@ -9,7 +9,7 @@
 #include "java/io/IOException.h"
 #include "java/lang/NullPointerException.h"
 
-@implementation FFTJsonString
+@implementation FFTJSONJsonString
 
 - (id)initWithNSString:(NSString *)string {
   if (self = [super init]) {
@@ -21,8 +21,8 @@
   return self;
 }
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
-  [((FFTJsonWriter *) nil_chk(writer)) writeStringWithNSString:string_];
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer {
+  [((FFTJSONJsonWriter *) nil_chk(writer)) writeStringWithNSString:string_];
 }
 
 - (BOOL)isString {
@@ -47,11 +47,11 @@
   if ([self getClass] != [nil_chk(object) getClass]) {
     return NO;
   }
-  FFTJsonString *other = (FFTJsonString *) check_class_cast(object, [FFTJsonString class]);
+  FFTJSONJsonString *other = (FFTJSONJsonString *) check_class_cast(object, [FFTJSONJsonString class]);
   return [((NSString *) nil_chk(string_)) isEqual:other->string_];
 }
 
-- (void)copyAllFieldsTo:(FFTJsonString *)other {
+- (void)copyAllFieldsTo:(FFTJSONJsonString *)other {
   [super copyAllFieldsTo:other];
   other->string_ = string_;
 }
@@ -59,7 +59,7 @@
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "initWithNSString:", "JsonString", NULL, 0x0, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
+    { "writeWithFFTJSONJsonWriter:", "write", "V", 0x0, "Ljava.io.IOException;" },
     { "isString", NULL, "Z", 0x1, NULL },
     { "asString", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
@@ -68,8 +68,8 @@
   static J2ObjcFieldInfo fields[] = {
     { "string_", NULL, 0x12, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTJsonString = { "JsonString", "com.eclipsesource.json", NULL, 0x0, 6, methods, 1, fields, 0, NULL};
-  return &_FFTJsonString;
+  static J2ObjcClassInfo _FFTJSONJsonString = { "JsonString", "com.eclipsesource.json", NULL, 0x0, 6, methods, 1, fields, 0, NULL};
+  return &_FFTJSONJsonString;
 }
 
 @end

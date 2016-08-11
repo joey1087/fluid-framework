@@ -51,32 +51,32 @@
   return [sb description];
 }
 
-+ (NSString *)toStringWithFFTJsonObject:(FFTJsonObject *)object {
-  return [FFTPrettyPrint toStringWithFFTJsonObject:object withInt:0];
++ (NSString *)toStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object {
+  return [FFTPrettyPrint toStringWithFFTJSONJsonObject:object withInt:0];
 }
 
-+ (NSString *)toStringWithFFTJsonObject:(FFTJsonObject *)object
-                                withInt:(int)indent {
++ (NSString *)toStringWithFFTJSONJsonObject:(FFTJSONJsonObject *)object
+                                    withInt:(int)indent {
   JavaLangStringBuilder *sb = [[JavaLangStringBuilder alloc] initWithNSString:@"\n"];
-  id<JavaUtilIterator> iter = [((FFTJsonObject *) nil_chk(object)) iterator];
+  id<JavaUtilIterator> iter = [((FFTJSONJsonObject *) nil_chk(object)) iterator];
   NSString *indentString = @"";
   for (int i = 0; i < indent; i++) {
     indentString = [NSString stringWithFormat:@"%@\t", indentString];
   }
   while ([((id<JavaUtilIterator>) nil_chk(iter)) hasNext]) {
-    FFTJsonObject_Member *entry_ = [iter next];
-    (void) [((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([sb appendWithNSString:indentString])) appendWithNSString:@"\""])) appendWithNSString:[((FFTJsonObject_Member *) nil_chk(entry_)) getName]])) appendWithNSString:@"\""];
+    FFTJSONJsonObject_Member *entry_ = [iter next];
+    (void) [((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([sb appendWithNSString:indentString])) appendWithNSString:@"\""])) appendWithNSString:[((FFTJSONJsonObject_Member *) nil_chk(entry_)) getName]])) appendWithNSString:@"\""];
     (void) [sb appendWithNSString:@" = "];
-    FFTJsonValue *value = [entry_ getValue];
-    if ([((FFTJsonValue *) nil_chk(value)) isObject]) {
+    FFTJSONJsonValue *value = [entry_ getValue];
+    if ([((FFTJSONJsonValue *) nil_chk(value)) isObject]) {
       (void) [sb appendWithNSString:@"{"];
-      (void) [sb appendWithNSString:[FFTPrettyPrint toStringWithFFTJsonObject:[value asObject] withInt:indent + 1]];
+      (void) [sb appendWithNSString:[FFTPrettyPrint toStringWithFFTJSONJsonObject:[value asObject] withInt:indent + 1]];
       (void) [((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([sb appendWithNSString:@"\n"])) appendWithNSString:indentString])) appendWithNSString:@"}"];
     }
     else if ([value isArray]) {
-      for (FFTJsonValue * __strong arrValue in nil_chk([value asArray])) {
+      for (FFTJSONJsonValue * __strong arrValue in nil_chk([value asArray])) {
         (void) [sb appendWithNSString:@"["];
-        (void) [sb appendWithNSString:[FFTPrettyPrint toStringWithFFTJsonObject:[((FFTJsonValue *) nil_chk(arrValue)) asObject] withInt:indent + 1]];
+        (void) [sb appendWithNSString:[FFTPrettyPrint toStringWithFFTJSONJsonObject:[((FFTJSONJsonValue *) nil_chk(arrValue)) asObject] withInt:indent + 1]];
         (void) [((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([sb appendWithNSString:@"\n"])) appendWithNSString:indentString])) appendWithNSString:@"]"];
       }
     }
@@ -98,8 +98,8 @@
   static J2ObjcMethodInfo methods[] = {
     { "toStringWithJavaUtilMap:", "toString", "Ljava.lang.String;", 0x9, NULL },
     { "toStringWithJavaUtilMap:withInt:", "toString", "Ljava.lang.String;", 0xc, NULL },
-    { "toStringWithFFTJsonObject:", "toString", "Ljava.lang.String;", 0x9, NULL },
-    { "toStringWithFFTJsonObject:withInt:", "toString", "Ljava.lang.String;", 0xc, NULL },
+    { "toStringWithFFTJSONJsonObject:", "toString", "Ljava.lang.String;", 0x9, NULL },
+    { "toStringWithFFTJSONJsonObject:withInt:", "toString", "Ljava.lang.String;", 0xc, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcClassInfo _FFTPrettyPrint = { "PrettyPrint", "com.sponberg.fluid.util", NULL, 0x1, 5, methods, 0, NULL, 0, NULL};

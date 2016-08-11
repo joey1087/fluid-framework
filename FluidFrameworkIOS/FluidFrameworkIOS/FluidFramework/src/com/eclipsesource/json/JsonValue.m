@@ -21,53 +21,53 @@
 #include "java/lang/RuntimeException.h"
 #include "java/lang/UnsupportedOperationException.h"
 
-BOOL FFTJsonValue_initialized = NO;
+BOOL FFTJSONJsonValue_initialized = NO;
 
-@implementation FFTJsonValue
+@implementation FFTJSONJsonValue
 
-FFTJsonValue * FFTJsonValue_TRUE__;
-FFTJsonValue * FFTJsonValue_FALSE__;
-FFTJsonValue * FFTJsonValue_NULL__;
+FFTJSONJsonValue * FFTJSONJsonValue_TRUE__;
+FFTJSONJsonValue * FFTJSONJsonValue_FALSE__;
+FFTJSONJsonValue * FFTJSONJsonValue_NULL__;
 
 - (id)init {
   return [super init];
 }
 
-+ (FFTJsonValue *)readFromWithJavaIoReader:(JavaIoReader *)reader {
-  return [((FFTJsonParser *) [[FFTJsonParser alloc] initWithJavaIoReader:reader]) parse];
++ (FFTJSONJsonValue *)readFromWithJavaIoReader:(JavaIoReader *)reader {
+  return [((FFTJSONJsonParser *) [[FFTJSONJsonParser alloc] initWithJavaIoReader:reader]) parse];
 }
 
-+ (FFTJsonValue *)readFromWithNSString:(NSString *)text {
++ (FFTJSONJsonValue *)readFromWithNSString:(NSString *)text {
   @try {
-    return [((FFTJsonParser *) [[FFTJsonParser alloc] initWithNSString:text]) parse];
+    return [((FFTJSONJsonParser *) [[FFTJSONJsonParser alloc] initWithNSString:text]) parse];
   }
   @catch (JavaIoIOException *exception) {
     @throw [[JavaLangRuntimeException alloc] initWithJavaLangThrowable:exception];
   }
 }
 
-+ (FFTJsonValue *)valueOfWithInt:(int)value {
-  return [FFTJson valueWithInt:value];
++ (FFTJSONJsonValue *)valueOfWithInt:(int)value {
+  return [FFTJSONJson valueWithInt:value];
 }
 
-+ (FFTJsonValue *)valueOfWithLong:(long long int)value {
-  return [FFTJson valueWithLong:value];
++ (FFTJSONJsonValue *)valueOfWithLong:(long long int)value {
+  return [FFTJSONJson valueWithLong:value];
 }
 
-+ (FFTJsonValue *)valueOfWithFloat:(float)value {
-  return [FFTJson valueWithFloat:value];
++ (FFTJSONJsonValue *)valueOfWithFloat:(float)value {
+  return [FFTJSONJson valueWithFloat:value];
 }
 
-+ (FFTJsonValue *)valueOfWithDouble:(double)value {
-  return [FFTJson valueWithDouble:value];
++ (FFTJSONJsonValue *)valueOfWithDouble:(double)value {
+  return [FFTJSONJson valueWithDouble:value];
 }
 
-+ (FFTJsonValue *)valueOfWithNSString:(NSString *)string {
-  return [FFTJson valueWithNSString:string];
++ (FFTJSONJsonValue *)valueOfWithNSString:(NSString *)string {
+  return [FFTJSONJson valueWithNSString:string];
 }
 
-+ (FFTJsonValue *)valueOfWithBoolean:(BOOL)value {
-  return [FFTJson valueWithBoolean:value];
++ (FFTJSONJsonValue *)valueOfWithBoolean:(BOOL)value {
+  return [FFTJSONJson valueWithBoolean:value];
 }
 
 - (BOOL)isObject {
@@ -102,11 +102,11 @@ FFTJsonValue * FFTJsonValue_NULL__;
   return NO;
 }
 
-- (FFTJsonObject *)asObject {
+- (FFTJSONJsonObject *)asObject {
   @throw [[JavaLangUnsupportedOperationException alloc] initWithNSString:[NSString stringWithFormat:@"Not an object: %@", [self description]]];
 }
 
-- (FFTJsonArray *)asArray {
+- (FFTJSONJsonArray *)asArray {
   @throw [[JavaLangUnsupportedOperationException alloc] initWithNSString:[NSString stringWithFormat:@"Not an array: %@", [self description]]];
 }
 
@@ -135,30 +135,30 @@ FFTJsonValue * FFTJsonValue_NULL__;
 }
 
 - (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer {
-  [self writeToWithJavaIoWriter:writer withFFTWriterConfig:FFTWriterConfig_get_MINIMAL_()];
+  [self writeToWithJavaIoWriter:writer withFFTJSONWriterConfig:FFTJSONWriterConfig_get_MINIMAL_()];
 }
 
 - (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer
-            withFFTWriterConfig:(FFTWriterConfig *)config {
+        withFFTJSONWriterConfig:(FFTJSONWriterConfig *)config {
   if (writer == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"writer is null"];
   }
   if (config == nil) {
     @throw [[JavaLangNullPointerException alloc] initWithNSString:@"config is null"];
   }
-  FFTWritingBuffer *buffer = [[FFTWritingBuffer alloc] initWithJavaIoWriter:writer withInt:128];
-  [self writeWithFFTJsonWriter:[((FFTWriterConfig *) nil_chk(config)) createWriterWithJavaIoWriter:buffer]];
+  FFTJSONWritingBuffer *buffer = [[FFTJSONWritingBuffer alloc] initWithJavaIoWriter:writer withInt:128];
+  [self writeWithFFTJSONJsonWriter:[((FFTJSONWriterConfig *) nil_chk(config)) createWriterWithJavaIoWriter:buffer]];
   [buffer flush];
 }
 
 - (NSString *)description {
-  return [self toStringWithFFTWriterConfig:FFTWriterConfig_get_MINIMAL_()];
+  return [self toStringWithFFTJSONWriterConfig:FFTJSONWriterConfig_get_MINIMAL_()];
 }
 
-- (NSString *)toStringWithFFTWriterConfig:(FFTWriterConfig *)config {
+- (NSString *)toStringWithFFTJSONWriterConfig:(FFTJSONWriterConfig *)config {
   JavaIoStringWriter *writer = [[JavaIoStringWriter alloc] init];
   @try {
-    [self writeToWithJavaIoWriter:writer withFFTWriterConfig:config];
+    [self writeToWithJavaIoWriter:writer withFFTJSONWriterConfig:config];
   }
   @catch (JavaIoIOException *exception) {
     @throw [[JavaLangRuntimeException alloc] initWithJavaLangThrowable:exception];
@@ -174,17 +174,17 @@ FFTJsonValue * FFTJsonValue_NULL__;
   return [super hash];
 }
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer {
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer {
   // can't call an abstract method
   [self doesNotRecognizeSelector:_cmd];
 }
 
 + (void)initialize {
-  if (self == [FFTJsonValue class]) {
-    FFTJsonValue_TRUE__ = FFTJson_get_TRUE__();
-    FFTJsonValue_FALSE__ = FFTJson_get_FALSE__();
-    FFTJsonValue_NULL__ = FFTJson_get_NULL__();
-    FFTJsonValue_initialized = YES;
+  if (self == [FFTJSONJsonValue class]) {
+    FFTJSONJsonValue_TRUE__ = FFTJSONJson_get_TRUE__();
+    FFTJSONJsonValue_FALSE__ = FFTJSONJson_get_FALSE__();
+    FFTJSONJsonValue_NULL__ = FFTJSONJson_get_NULL__();
+    FFTJSONJsonValue_initialized = YES;
   }
 }
 + (IOSObjectArray *)__annotations_readFromWithJavaIoReader_ {
@@ -260,20 +260,20 @@ FFTJsonValue * FFTJsonValue_NULL__;
     { "asString", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "asBoolean", NULL, "Z", 0x1, NULL },
     { "writeToWithJavaIoWriter:", "writeTo", "V", 0x1, "Ljava.io.IOException;" },
-    { "writeToWithJavaIoWriter:withFFTWriterConfig:", "writeTo", "V", 0x1, "Ljava.io.IOException;" },
+    { "writeToWithJavaIoWriter:withFFTJSONWriterConfig:", "writeTo", "V", 0x1, "Ljava.io.IOException;" },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
-    { "toStringWithFFTWriterConfig:", "toString", "Ljava.lang.String;", 0x1, NULL },
+    { "toStringWithFFTJSONWriterConfig:", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "isEqual:", "equals", "Z", 0x1, NULL },
     { "hash", "hashCode", "I", 0x1, NULL },
-    { "writeWithFFTJsonWriter:", "write", "V", 0x400, "Ljava.io.IOException;" },
+    { "writeWithFFTJSONJsonWriter:", "write", "V", 0x400, "Ljava.io.IOException;" },
   };
   static J2ObjcFieldInfo fields[] = {
-    { "TRUE__", "TRUE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJsonValue_TRUE__,  },
-    { "FALSE__", "FALSE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJsonValue_FALSE__,  },
-    { "NULL__", "NULL", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJsonValue_NULL__,  },
+    { "TRUE__", "TRUE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJsonValue_TRUE__,  },
+    { "FALSE__", "FALSE", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJsonValue_FALSE__,  },
+    { "NULL__", "NULL", 0x19, "Lcom.eclipsesource.json.JsonValue;", &FFTJSONJsonValue_NULL__,  },
   };
-  static J2ObjcClassInfo _FFTJsonValue = { "JsonValue", "com.eclipsesource.json", NULL, 0x401, 32, methods, 3, fields, 0, NULL};
-  return &_FFTJsonValue;
+  static J2ObjcClassInfo _FFTJSONJsonValue = { "JsonValue", "com.eclipsesource.json", NULL, 0x401, 32, methods, 3, fields, 0, NULL};
+  return &_FFTJSONJsonValue;
 }
 
 @end

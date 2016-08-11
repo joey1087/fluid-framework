@@ -3,39 +3,39 @@
 //  source: src-external/com/eclipsesource/json/JsonValue.java
 //
 
-#ifndef _FFTJsonValue_H_
-#define _FFTJsonValue_H_
+#ifndef _FFTJSONJsonValue_H_
+#define _FFTJSONJsonValue_H_
 
-@class FFTJsonArray;
-@class FFTJsonObject;
-@class FFTJsonWriter;
-@class FFTWriterConfig;
+@class FFTJSONJsonArray;
+@class FFTJSONJsonObject;
+@class FFTJSONJsonWriter;
+@class FFTJSONWriterConfig;
 @class JavaIoReader;
 @class JavaIoWriter;
 
 #import "JreEmulation.h"
 #include "java/io/Serializable.h"
 
-@interface FFTJsonValue : NSObject < JavaIoSerializable > {
+@interface FFTJSONJsonValue : NSObject < JavaIoSerializable > {
 }
 
 - (id)init;
 
-+ (FFTJsonValue *)readFromWithJavaIoReader:(JavaIoReader *)reader;
++ (FFTJSONJsonValue *)readFromWithJavaIoReader:(JavaIoReader *)reader;
 
-+ (FFTJsonValue *)readFromWithNSString:(NSString *)text;
++ (FFTJSONJsonValue *)readFromWithNSString:(NSString *)text;
 
-+ (FFTJsonValue *)valueOfWithInt:(int)value;
++ (FFTJSONJsonValue *)valueOfWithInt:(int)value;
 
-+ (FFTJsonValue *)valueOfWithLong:(long long int)value;
++ (FFTJSONJsonValue *)valueOfWithLong:(long long int)value;
 
-+ (FFTJsonValue *)valueOfWithFloat:(float)value;
++ (FFTJSONJsonValue *)valueOfWithFloat:(float)value;
 
-+ (FFTJsonValue *)valueOfWithDouble:(double)value;
++ (FFTJSONJsonValue *)valueOfWithDouble:(double)value;
 
-+ (FFTJsonValue *)valueOfWithNSString:(NSString *)string;
++ (FFTJSONJsonValue *)valueOfWithNSString:(NSString *)string;
 
-+ (FFTJsonValue *)valueOfWithBoolean:(BOOL)value;
++ (FFTJSONJsonValue *)valueOfWithBoolean:(BOOL)value;
 
 - (BOOL)isObject;
 
@@ -53,9 +53,9 @@
 
 - (BOOL)isNull;
 
-- (FFTJsonObject *)asObject;
+- (FFTJSONJsonObject *)asObject;
 
-- (FFTJsonArray *)asArray;
+- (FFTJSONJsonArray *)asArray;
 
 - (int)asInt;
 
@@ -72,32 +72,32 @@
 - (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer;
 
 - (void)writeToWithJavaIoWriter:(JavaIoWriter *)writer
-            withFFTWriterConfig:(FFTWriterConfig *)config;
+        withFFTJSONWriterConfig:(FFTJSONWriterConfig *)config;
 
 - (NSString *)description;
 
-- (NSString *)toStringWithFFTWriterConfig:(FFTWriterConfig *)config;
+- (NSString *)toStringWithFFTJSONWriterConfig:(FFTJSONWriterConfig *)config;
 
 - (BOOL)isEqual:(id)object;
 
 - (NSUInteger)hash;
 
-- (void)writeWithFFTJsonWriter:(FFTJsonWriter *)writer;
+- (void)writeWithFFTJSONJsonWriter:(FFTJSONJsonWriter *)writer;
 
 @end
 
-FOUNDATION_EXPORT BOOL FFTJsonValue_initialized;
-J2OBJC_STATIC_INIT(FFTJsonValue)
+FOUNDATION_EXPORT BOOL FFTJSONJsonValue_initialized;
+J2OBJC_STATIC_INIT(FFTJSONJsonValue)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJsonValue_TRUE__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonValue, TRUE__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJsonValue_TRUE__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJsonValue, TRUE__, FFTJSONJsonValue *)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJsonValue_FALSE__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonValue, FALSE__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJsonValue_FALSE__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJsonValue, FALSE__, FFTJSONJsonValue *)
 
-FOUNDATION_EXPORT FFTJsonValue *FFTJsonValue_NULL__;
-J2OBJC_STATIC_FIELD_GETTER(FFTJsonValue, NULL__, FFTJsonValue *)
+FOUNDATION_EXPORT FFTJSONJsonValue *FFTJSONJsonValue_NULL__;
+J2OBJC_STATIC_FIELD_GETTER(FFTJSONJsonValue, NULL__, FFTJSONJsonValue *)
 
-typedef FFTJsonValue ComEclipsesourceJsonJsonValue;
+typedef FFTJSONJsonValue ComEclipsesourceJsonJsonValue;
 
-#endif // _FFTJsonValue_H_
+#endif // _FFTJSONJsonValue_H_
