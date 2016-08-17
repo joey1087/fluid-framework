@@ -652,21 +652,23 @@
         [self.modalControllers setObject:navigationController forKey:[NSString stringWithFormat:@"%lu", (unsigned long)[modalView hash]]];
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_Confirmation_]) {
-        
-        FFTModalView_ModalViewConfirmation *userData = [modalView getUserData];
-        
-        FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
-                                                        message:[userData getMessage]
-                                                       delegate:nil
-                                              cancelButtonTitle:[userData getCancel]
-                                              otherButtonTitles:nil];
 
-        [alert addButtonWithTitle:[userData getOk]];
+        [self showConfirmationModalView:modalView];
         
-        alert.modalView = modalView;
-        [alert show];
-        
-        self.modalView = alert;
+//        FFTModalView_ModalViewConfirmation *userData = [modalView getUserData];
+//        
+//        FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
+//                                                        message:[userData getMessage]
+//                                                       delegate:nil
+//                                              cancelButtonTitle:[userData getCancel]
+//                                              otherButtonTitles:nil];
+//
+//        [alert addButtonWithTitle:[userData getOk]];
+//        
+//        alert.modalView = modalView;
+//        [alert show];
+//        
+//        self.modalView = alert;
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_WaitingDialog_]) {
         
@@ -747,6 +749,24 @@
     
 }
 
+- (void)showConfirmationModalView:(FFTModalView *)modalView  {
+    
+    FFTModalView_ModalViewConfirmation *userData = [modalView getUserData];
+    
+    FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
+                                                    message:[userData getMessage]
+                                                   delegate:nil
+                                          cancelButtonTitle:[userData getCancel]
+                                          otherButtonTitles:nil];
+    
+    [alert addButtonWithTitle:[userData getOk]];
+    
+    alert.modalView = modalView;
+    [alert show];
+    
+    self.modalView = alert;
+}
+
 - (UIView *)createModalView:(CGRect)bounds screenId:(NSString *)screenId layout:(FFTLayout *)layout modalView:(FFTModalView *)fftModalView {
     
     UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -790,8 +810,6 @@
         self.modalView = nil;
     });
 
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//            });
 }
 
 - (void)closeCurrentLayout {
