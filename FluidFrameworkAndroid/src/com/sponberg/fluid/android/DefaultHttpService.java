@@ -83,7 +83,8 @@ public class DefaultHttpService implements HttpService {
 		
 		HttpRequestConfiguration config = new HttpRequestConfiguration(auth, callback, HttpMethod.post, url);
 		config.properties = properties;
-		config.isMultipart = true;
+		config.isMultipart = postBodyType == PostBodyType.FormData;
+
 		startHttpRequest(config);
 	}
 
