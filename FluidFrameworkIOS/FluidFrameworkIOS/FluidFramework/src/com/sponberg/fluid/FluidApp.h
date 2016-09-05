@@ -6,6 +6,7 @@
 #ifndef _FFTFluidApp_H_
 #define _FFTFluidApp_H_
 
+@class ComSponbergFluidTrackingTrackingManager;
 @class FFTDataModelManager;
 @class FFTDatastoreManager;
 @class FFTEventsManager;
@@ -77,6 +78,7 @@
   JavaUtilHashMap *externalSdks_;
   FFTFluidViewFactory *fluidViewFactory_;
   FFTViewBehaviorFactory *viewBehaviorFactory_;
+  ComSponbergFluidTrackingTrackingManager *trackingManager_;
   FFTKVLReader *settings_;
   NSString *platform_;
   id<FFTSecurityService_PasswordProvider> passwordProvider_;
@@ -102,6 +104,8 @@
                 withFFTExternalSDK:(id<FFTExternalSDK>)sdk;
 
 - (id<FFTExternalSDK>)getExternalSDKWithNSString:(NSString *)id_;
+
+- (ComSponbergFluidTrackingTrackingManager *)getTrackingManager;
 
 - (void)initialize__ OBJC_METHOD_FAMILY_NONE;
 
@@ -290,6 +294,8 @@
 
 - (void)setViewBehaviorFactoryWithFFTViewBehaviorFactory:(FFTViewBehaviorFactory *)viewBehaviorFactory;
 
+- (void)setTrackingManagerWithComSponbergFluidTrackingTrackingManager:(ComSponbergFluidTrackingTrackingManager *)trackingManager;
+
 - (void)setSettingsWithFFTKVLReader:(FFTKVLReader *)settings;
 
 - (void)setPlatformWithNSString:(NSString *)platform;
@@ -333,6 +339,7 @@ J2OBJC_FIELD_SETTER(FFTFluidApp, defaultsByCategory_, JavaUtilHashMap *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, externalSdks_, JavaUtilHashMap *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, fluidViewFactory_, FFTFluidViewFactory *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, viewBehaviorFactory_, FFTViewBehaviorFactory *)
+J2OBJC_FIELD_SETTER(FFTFluidApp, trackingManager_, ComSponbergFluidTrackingTrackingManager *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, settings_, FFTKVLReader *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, platform_, NSString *)
 J2OBJC_FIELD_SETTER(FFTFluidApp, passwordProvider_, id<FFTSecurityService_PasswordProvider>)

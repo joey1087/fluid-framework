@@ -41,6 +41,7 @@
 #include "com/sponberg/fluid/parser/ViewBehaviorFactory.h"
 #include "com/sponberg/fluid/parser/ViewsParser.h"
 #include "com/sponberg/fluid/sdk/ExternalSDK.h"
+#include "com/sponberg/fluid/tracking/TrackingManager.h"
 #include "com/sponberg/fluid/util/KVLReader.h"
 #include "com/sponberg/fluid/util/KeyValueList.h"
 #include "com/sponberg/fluid/util/Logger.h"
@@ -70,6 +71,7 @@
     externalSdks_ = [[JavaUtilHashMap alloc] init];
     fluidViewFactory_ = [[FFTFluidViewFactory alloc] init];
     viewBehaviorFactory_ = [[FFTViewBehaviorFactory alloc] init];
+    trackingManager_ = [[ComSponbergFluidTrackingTrackingManager alloc] init];
     platform_ = nil;
     initialized_ = NO;
     loaded_ = NO;
@@ -124,6 +126,10 @@
 
 - (id<FFTExternalSDK>)getExternalSDKWithNSString:(NSString *)id_ {
   return [((JavaUtilHashMap *) nil_chk(self->externalSdks_)) getWithId:id_];
+}
+
+- (ComSponbergFluidTrackingTrackingManager *)getTrackingManager {
+  return self->trackingManager_;
 }
 
 - (void)initialize__ {
@@ -637,6 +643,10 @@
   self->viewBehaviorFactory_ = viewBehaviorFactory;
 }
 
+- (void)setTrackingManagerWithComSponbergFluidTrackingTrackingManager:(ComSponbergFluidTrackingTrackingManager *)trackingManager {
+  self->trackingManager_ = trackingManager;
+}
+
 - (void)setSettingsWithFFTKVLReader:(FFTKVLReader *)settings {
   self->settings_ = settings;
 }
@@ -693,6 +703,7 @@
   other->settingsOverride_ = settingsOverride_;
   other->started_ = started_;
   other->systemService_ = systemService_;
+  other->trackingManager_ = trackingManager_;
   other->uiService_ = uiService_;
   other->viewBehaviorFactory_ = viewBehaviorFactory_;
   other->viewManager_ = viewManager_;
@@ -709,6 +720,7 @@
     { "addInitializerWithFFTApplicationInitializerArray:", "addInitializer", "V", 0x81, NULL },
     { "setExternalSDKWithNSString:withFFTExternalSDK:", "setExternalSDK", "V", 0x1, NULL },
     { "getExternalSDKWithNSString:", "getExternalSDK", "Lcom.sponberg.fluid.sdk.ExternalSDK;", 0x1, NULL },
+    { "getTrackingManager", NULL, "Lcom.sponberg.fluid.tracking.TrackingManager;", 0x1, NULL },
     { "initialize__", "initialize", "V", 0x31, NULL },
     { "loadAsync", NULL, "V", 0x31, NULL },
     { "loadAsyncWithFFTCallback:", "loadAsync", "V", 0x31, NULL },
@@ -800,6 +812,7 @@
     { "setExternalSdksWithJavaUtilHashMap:", "setExternalSdks", "V", 0x1, NULL },
     { "setFluidViewFactoryWithFFTFluidViewFactory:", "setFluidViewFactory", "V", 0x1, NULL },
     { "setViewBehaviorFactoryWithFFTViewBehaviorFactory:", "setViewBehaviorFactory", "V", 0x1, NULL },
+    { "setTrackingManagerWithComSponbergFluidTrackingTrackingManager:", "setTrackingManager", "V", 0x1, NULL },
     { "setSettingsWithFFTKVLReader:", "setSettings", "V", 0x1, NULL },
     { "setPlatformWithNSString:", "setPlatform", "V", 0x1, NULL },
     { "setPasswordProviderWithFFTSecurityService_PasswordProvider:", "setPasswordProvider", "V", 0x1, NULL },
@@ -832,6 +845,7 @@
     { "externalSdks_", NULL, 0x2, "Ljava.util.HashMap;", NULL,  },
     { "fluidViewFactory_", NULL, 0x2, "Lcom.sponberg.fluid.layout.FluidViewFactory;", NULL,  },
     { "viewBehaviorFactory_", NULL, 0x2, "Lcom.sponberg.fluid.parser.ViewBehaviorFactory;", NULL,  },
+    { "trackingManager_", NULL, 0x2, "Lcom.sponberg.fluid.tracking.TrackingManager;", NULL,  },
     { "settings_", NULL, 0x2, "Lcom.sponberg.fluid.util.KVLReader;", NULL,  },
     { "platform_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
     { "passwordProvider_", NULL, 0x2, "Lcom.sponberg.fluid.SecurityService$PasswordProvider;", NULL,  },
@@ -841,7 +855,7 @@
     { "useCaching_", NULL, 0x19, "Z", NULL, .constantValue.asBOOL = FFTFluidApp_useCaching },
     { "settingsOverride_", NULL, 0x2, "Ljava.lang.String;", NULL,  },
   };
-  static J2ObjcClassInfo _FFTFluidApp = { "FluidApp", "com.sponberg.fluid", NULL, 0x401, 106, methods, 31, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTFluidApp = { "FluidApp", "com.sponberg.fluid", NULL, 0x401, 108, methods, 32, fields, 0, NULL};
   return &_FFTFluidApp;
 }
 

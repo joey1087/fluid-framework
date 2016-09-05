@@ -31,6 +31,8 @@ import com.sponberg.fluid.parser.TabParser;
 import com.sponberg.fluid.parser.ViewBehaviorFactory;
 import com.sponberg.fluid.parser.ViewsParser;
 import com.sponberg.fluid.sdk.ExternalSDK;
+import com.sponberg.fluid.tracking.ITrackingUtil;
+import com.sponberg.fluid.tracking.TrackingManager;
 import com.sponberg.fluid.util.KVLReader;
 import com.sponberg.fluid.util.KeyValueList;
 import com.sponberg.fluid.util.Logger;
@@ -85,6 +87,8 @@ public abstract class FluidApp {
 	private FluidViewFactory fluidViewFactory = new FluidViewFactory();
 
 	private ViewBehaviorFactory viewBehaviorFactory = new ViewBehaviorFactory();
+	
+	private TrackingManager trackingManager = new TrackingManager();
 
 	private KVLReader settings;
 
@@ -148,7 +152,11 @@ public abstract class FluidApp {
 	public ExternalSDK getExternalSDK(String id) {
 		return this.externalSdks.get(id);
 	}
-
+	
+	public TrackingManager getTrackingManager() {
+		return this.trackingManager;
+	}
+	
 	public final synchronized void initialize() {
 
 		if (initialized) {

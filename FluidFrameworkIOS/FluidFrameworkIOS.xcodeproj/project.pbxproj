@@ -259,6 +259,8 @@
 		D4A4784A1ABBDBED00D3DAA0 /* j2objcc.1 in Resources */ = {isa = PBXBuildFile; fileRef = D4A4782C1ABBDBED00D3DAA0 /* j2objcc.1 */; };
 		D6803A441D08EA45003CE5BB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6803A431D08EA45003CE5BB /* libsqlite3.dylib */; };
 		D6803A601D0A5F5D003CE5BB /* JavaUtilHashMap+Json.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4DE59D1D0A53CC00449F64 /* JavaUtilHashMap+Json.m */; };
+		F68277811D7D61C50049FECA /* ITrackingUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F682777E1D7D61C50049FECA /* ITrackingUtil.m */; };
+		F68277821D7D61C50049FECA /* TrackingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F68277801D7D61C50049FECA /* TrackingManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2457,6 +2459,11 @@
 		D4A4782B1ABBDBED00D3DAA0 /* j2objc.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = j2objc.1; sourceTree = "<group>"; };
 		D4A4782C1ABBDBED00D3DAA0 /* j2objcc.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = j2objcc.1; sourceTree = "<group>"; };
 		D6803A431D08EA45003CE5BB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		F682777A1D7D61500049FECA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F682777D1D7D61C50049FECA /* ITrackingUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITrackingUtil.h; sourceTree = "<group>"; };
+		F682777E1D7D61C50049FECA /* ITrackingUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITrackingUtil.m; sourceTree = "<group>"; };
+		F682777F1D7D61C50049FECA /* TrackingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingManager.h; sourceTree = "<group>"; };
+		F68277801D7D61C50049FECA /* TrackingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2531,6 +2538,7 @@
 		237F09EE18F7DAFC003B3031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F682777A1D7D61500049FECA /* CoreTelephony.framework */,
 				D6803A431D08EA45003CE5BB /* libsqlite3.dylib */,
 				D45ACE331CEB07C100E42055 /* libsqlite3.dylib */,
 				3AFF559219061070006C3273 /* libsqlite3.dylib */,
@@ -2699,6 +2707,7 @@
 		23D9B73A1A676FFA00AECE7F /* fluid */ = {
 			isa = PBXGroup;
 			children = (
+				F682777C1D7D61C50049FECA /* tracking */,
 				2308C5441A8828BE00D600F8 /* WebviewEventsManager.h */,
 				2308C5451A8828BE00D600F8 /* WebviewEventsManager.m */,
 				23D9B73B1A676FFA00AECE7F /* ApplicationInitializer.h */,
@@ -6368,6 +6377,17 @@
 			path = man1;
 			sourceTree = "<group>";
 		};
+		F682777C1D7D61C50049FECA /* tracking */ = {
+			isa = PBXGroup;
+			children = (
+				F682777D1D7D61C50049FECA /* ITrackingUtil.h */,
+				F682777E1D7D61C50049FECA /* ITrackingUtil.m */,
+				F682777F1D7D61C50049FECA /* TrackingManager.h */,
+				F68277801D7D61C50049FECA /* TrackingManager.m */,
+			);
+			path = tracking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -6523,6 +6543,7 @@
 				23D9B95C1A676FFA00AECE7F /* FFDatastoreService.m in Sources */,
 				23D9B91A1A676FFA00AECE7F /* Subtractor.m in Sources */,
 				23D9B9191A676FFA00AECE7F /* ScreenListenerAdapter.m in Sources */,
+				F68277811D7D61C50049FECA /* ITrackingUtil.m in Sources */,
 				23D9B8D51A676FFA00AECE7F /* DatastoreService.m in Sources */,
 				230D6D811AAE75A2009EF95F /* LengthFromDataModel.m in Sources */,
 				23D9B8D81A676FFA00AECE7F /* DSBase.m in Sources */,
@@ -6580,6 +6601,7 @@
 				23D9B9221A676FFA00AECE7F /* View.m in Sources */,
 				23D9B9071A676FFA00AECE7F /* Layout.m in Sources */,
 				D45565491D5AE74F00211A0F /* Json.m in Sources */,
+				F68277821D7D61C50049FECA /* TrackingManager.m in Sources */,
 				23D9B9321A676FFA00AECE7F /* ViewManager.m in Sources */,
 				23D9B91E1A676FFA00AECE7F /* TableRow.m in Sources */,
 				D45565521D5AE76C00211A0F /* WritingBuffer.m in Sources */,
