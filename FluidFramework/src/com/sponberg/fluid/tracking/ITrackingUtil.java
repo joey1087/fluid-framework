@@ -1,6 +1,8 @@
 package com.sponberg.fluid.tracking;
 
 public interface ITrackingUtil {
+	
+	public void setUserId(String userId);
 
 	public void sendPageView(String page);
 	

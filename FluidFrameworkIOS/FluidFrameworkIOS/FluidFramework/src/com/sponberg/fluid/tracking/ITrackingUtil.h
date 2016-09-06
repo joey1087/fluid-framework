@@ -10,6 +10,8 @@
 
 @protocol ComSponbergFluidTrackingITrackingUtil < NSObject, JavaObject >
 
+- (void)setUserIdWithNSString:(NSString *)userId;
+
 - (void)sendPageViewWithNSString:(NSString *)page;
 
 - (void)sendEventWithNSString:(NSString *)Category

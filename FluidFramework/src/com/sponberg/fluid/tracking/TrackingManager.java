@@ -18,6 +18,14 @@ public class TrackingManager {
 		trackingUtilsMap.put(type, util); 
 	}
 	
+	public void setUserId(String userId) {
+		
+		for (UtilType type : trackingUtilsMap.keySet()) {
+			ITrackingUtil util = trackingUtilsMap.get(type);
+			util.setUserId(userId);
+		}
+	}
+	
 	/**
 	 * Send page view to all util types
 	 * @param page

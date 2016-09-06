@@ -19,6 +19,13 @@
   (void) [((id<JavaUtilMap>) nil_chk(trackingUtilsMap_)) putWithId:type withId:util];
 }
 
+- (void)setUserIdWithNSString:(NSString *)userId {
+  for (ComSponbergFluidTrackingTrackingManager_UtilTypeEnum * __strong type in nil_chk([((id<JavaUtilMap>) nil_chk(trackingUtilsMap_)) keySet])) {
+    id<ComSponbergFluidTrackingITrackingUtil> util = [trackingUtilsMap_ getWithId:type];
+    [((id<ComSponbergFluidTrackingITrackingUtil>) nil_chk(util)) setUserIdWithNSString:userId];
+  }
+}
+
 - (void)sendPageViewWithNSString:(NSString *)page {
   for (ComSponbergFluidTrackingTrackingManager_UtilTypeEnum * __strong type in nil_chk([((id<JavaUtilMap>) nil_chk(trackingUtilsMap_)) keySet])) {
     id<ComSponbergFluidTrackingITrackingUtil> util = [trackingUtilsMap_ getWithId:type];
@@ -70,6 +77,7 @@ withComSponbergFluidTrackingTrackingManager_UtilTypeEnum:(ComSponbergFluidTracki
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
     { "addTrackingUtilWithComSponbergFluidTrackingTrackingManager_UtilTypeEnum:withComSponbergFluidTrackingITrackingUtil:", "addTrackingUtil", "V", 0x1, NULL },
+    { "setUserIdWithNSString:", "setUserId", "V", 0x1, NULL },
     { "sendPageViewWithNSString:", "sendPageView", "V", 0x1, NULL },
     { "sendEventWithNSString:withNSString:withNSString:", "sendEvent", "V", 0x1, NULL },
     { "sendPageViewWithNSString:withComSponbergFluidTrackingTrackingManager_UtilTypeEnum:", "sendPageView", "V", 0x1, NULL },
@@ -81,7 +89,7 @@ withComSponbergFluidTrackingTrackingManager_UtilTypeEnum:(ComSponbergFluidTracki
   static J2ObjcFieldInfo fields[] = {
     { "trackingUtilsMap_", NULL, 0x0, "Ljava.util.Map;", NULL,  },
   };
-  static J2ObjcClassInfo _ComSponbergFluidTrackingTrackingManager = { "TrackingManager", "com.sponberg.fluid.tracking", NULL, 0x1, 8, methods, 1, fields, 0, NULL};
+  static J2ObjcClassInfo _ComSponbergFluidTrackingTrackingManager = { "TrackingManager", "com.sponberg.fluid.tracking", NULL, 0x1, 9, methods, 1, fields, 0, NULL};
   return &_ComSponbergFluidTrackingTrackingManager;
 }
 

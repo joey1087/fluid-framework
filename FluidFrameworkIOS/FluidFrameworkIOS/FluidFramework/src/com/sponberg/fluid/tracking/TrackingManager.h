@@ -22,6 +22,8 @@
 - (void)addTrackingUtilWithComSponbergFluidTrackingTrackingManager_UtilTypeEnum:(ComSponbergFluidTrackingTrackingManager_UtilTypeEnum *)type
                                       withComSponbergFluidTrackingITrackingUtil:(id<ComSponbergFluidTrackingITrackingUtil>)util;
 
+- (void)setUserIdWithNSString:(NSString *)userId;
+
 - (void)sendPageViewWithNSString:(NSString *)page;
 
 - (void)sendEventWithNSString:(NSString *)Category

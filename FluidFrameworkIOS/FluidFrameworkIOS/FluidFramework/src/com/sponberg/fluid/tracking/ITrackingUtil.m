@@ -12,10 +12,11 @@
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
+    { "setUserIdWithNSString:", "setUserId", "V", 0x401, NULL },
     { "sendPageViewWithNSString:", "sendPageView", "V", 0x401, NULL },
     { "sendEventWithNSString:withNSString:withNSString:", "sendEvent", "V", 0x401, NULL },
   };
-  static J2ObjcClassInfo _ComSponbergFluidTrackingITrackingUtil = { "ITrackingUtil", "com.sponberg.fluid.tracking", NULL, 0x201, 2, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _ComSponbergFluidTrackingITrackingUtil = { "ITrackingUtil", "com.sponberg.fluid.tracking", NULL, 0x201, 3, methods, 0, NULL, 0, NULL};
   return &_ComSponbergFluidTrackingITrackingUtil;
 }
 
