@@ -163,17 +163,33 @@ J2OBJC_FIELD_SETTER(FFTModalView_ModalViewConfirmation, cancel_, NSString *)
  @public
   NSString *title_;
   NSString *message_;
+  BOOL willDisplayDimissMessage_;
+  NSString *dismissTitle_;
+  NSString *dismissMessage_;
+  float dismissDelay_;
 }
+
+- (void)setDisplayDismissMessageWithNSString:(NSString *)title
+                                withNSString:(NSString *)message
+                                   withFloat:(float)dismissDelay;
 
 - (NSString *)description;
 
 - (NSString *)getTitle;
 
-- (NSString *)getMessage;
-
 - (void)setTitleWithNSString:(NSString *)title;
 
+- (NSString *)getMessage;
+
 - (void)setMessageWithNSString:(NSString *)message;
+
+- (BOOL)isWillDisplayDimissMessage;
+
+- (NSString *)getDismissTitle;
+
+- (NSString *)getDismissMessage;
+
+- (float)getDismissDelay;
 
 - (id)init;
 
@@ -185,5 +201,11 @@ __attribute__((always_inline)) inline void FFTModalView_ModalViewWaitingDialog_i
 
 J2OBJC_FIELD_SETTER(FFTModalView_ModalViewWaitingDialog, title_, NSString *)
 J2OBJC_FIELD_SETTER(FFTModalView_ModalViewWaitingDialog, message_, NSString *)
+J2OBJC_FIELD_SETTER(FFTModalView_ModalViewWaitingDialog, dismissTitle_, NSString *)
+J2OBJC_FIELD_SETTER(FFTModalView_ModalViewWaitingDialog, dismissMessage_, NSString *)
+
+FOUNDATION_EXPORT NSString *FFTModalView_ModalViewWaitingDialog_kDefaultDismissTitle_;
+J2OBJC_STATIC_FIELD_GETTER(FFTModalView_ModalViewWaitingDialog, kDefaultDismissTitle_, NSString *)
+J2OBJC_STATIC_FIELD_SETTER(FFTModalView_ModalViewWaitingDialog, kDefaultDismissTitle_, NSString *)
 
 #endif // _FFTModalView_H_

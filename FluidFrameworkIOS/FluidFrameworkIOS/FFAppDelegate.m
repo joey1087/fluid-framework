@@ -672,42 +672,7 @@
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_WaitingDialog_]) {
         
-         FFTModalView_ModalViewWaitingDialog *userData = [modalView getUserData];
-        
-        // From iOS9 on, we use UIAlertController so that keyboard will not be dismissed after showing alert
-        if (([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[userData getTitle]
-                                                                                     message:[userData getMessage]
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            self.modalView = alertController.view;
-            
-            UIViewController* presentingController = nil;
-            
-            if ([[[UIApplication sharedApplication] windows] count] > 1) {
-                // Seems like we have to use the rootViewController of the second window to present, otherwise, it will dismiss keyboard
-                // Refer to http://stackoverflow.com/questions/28564710/keep-keyboard-on-when-uialertcontroller-is-presented-in-swift
-                presentingController = [[[[UIApplication sharedApplication] windows] objectAtIndex:1] rootViewController];
-            } else {
-                presentingController = [self currentNavigationController];
-            }
-            
-            [presentingController presentViewController:alertController animated:YES completion:nil];
-            
-            [self.modalControllers setObject:alertController forKey:[NSString stringWithFormat:@"%lu", (unsigned long)[modalView hash]]];
-        } else {
-            FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
-                                                            message:[userData getMessage]
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:nil];
-            
-            alert.modalView = modalView;
-            
-            self.modalView = alert;
-            
-            [alert show];
-
-        }
+        [self showWaitingDialog:modalView];
         
     } else if ([[modalView getSystemId] isEqualToString:FFTModalView_ImagePicker_]) {
         
@@ -749,7 +714,7 @@
     
 }
 
-- (void)showConfirmationModalView:(FFTModalView *)modalView  {
+- (void)showConfirmationModalView:(FFTModalView *)modalView {
     
     FFTModalView_ModalViewConfirmation *userData = [modalView getUserData];
     
@@ -765,6 +730,47 @@
     [alert show];
     
     self.modalView = alert;
+}
+
+- (void)showWaitingDialog:(FFTModalView *)modalView {
+    
+    FFTModalView_ModalViewWaitingDialog *userData = [modalView getUserData];
+    
+    // From iOS9 on, we use UIAlertController so that keyboard will not be dismissed after showing alert
+    if (([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[userData getTitle]
+                                                                                 message:[userData getMessage]
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        self.modalView = alertController.view;
+        
+        UIViewController* presentingController = nil;
+        
+        if ([[[UIApplication sharedApplication] windows] count] > 1) {
+            // Seems like we have to use the rootViewController of the second window to present, otherwise, it will dismiss keyboard
+            // Refer to http://stackoverflow.com/questions/28564710/keep-keyboard-on-when-uialertcontroller-is-presented-in-swift
+            presentingController = [[[[UIApplication sharedApplication] windows] objectAtIndex:1] rootViewController];
+        } else {
+            presentingController = [self currentNavigationController];
+        }
+        
+        [presentingController presentViewController:alertController animated:YES completion:nil];
+        
+        [self.modalControllers setObject:alertController forKey:[NSString stringWithFormat:@"%lu", (unsigned long)[modalView hash]]];
+    } else {
+        FFAlertView *alert = [[FFAlertView alloc] initWithTitle:[userData getTitle]
+                                                        message:[userData getMessage]
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:nil];
+        
+        alert.modalView = modalView;
+        
+        self.modalView = alert;
+        
+        [alert show];
+        
+    }
+
 }
 
 - (UIView *)createModalView:(CGRect)bounds screenId:(NSString *)screenId layout:(FFTLayout *)layout modalView:(FFTModalView *)fftModalView {
