@@ -320,50 +320,94 @@ NSString * FFTModalView_Custom_ = @"Custom";
 
 @implementation FFTModalView_ModalViewWaitingDialog
 
+NSString * FFTModalView_ModalViewWaitingDialog_kDefaultDismissTitle_ = @"Ok";
+
+- (void)setDisplayDismissMessageWithNSString:(NSString *)title
+                                withNSString:(NSString *)message
+                                   withFloat:(float)dismissDelay {
+  self->dismissTitle_ = title == nil ? FFTModalView_ModalViewWaitingDialog_kDefaultDismissTitle_ : title;
+  self->dismissMessage_ = message;
+  self->dismissDelay_ = dismissDelay;
+  willDisplayDimissMessage_ = YES;
+}
+
 - (NSString *)description {
-  return [NSString stringWithFormat:@"ModalView.ModalViewWaitingDialog(title=%@, message=%@)", [self getTitle], [self getMessage]];
+  return [NSString stringWithFormat:@"ModalView.ModalViewWaitingDialog(title=%@, message=%@, willDisplayDimissMessage=%@, dismissTitle=%@, dismissMessage=%@, dismissDelay=%f)", [self getTitle], [self getMessage], [JavaLangBoolean toStringWithBoolean:[self isWillDisplayDimissMessage]], [self getDismissTitle], [self getDismissMessage], [self getDismissDelay]];
 }
 
 - (NSString *)getTitle {
   return self->title_;
 }
 
-- (NSString *)getMessage {
-  return self->message_;
-}
-
 - (void)setTitleWithNSString:(NSString *)title {
   self->title_ = title;
+}
+
+- (NSString *)getMessage {
+  return self->message_;
 }
 
 - (void)setMessageWithNSString:(NSString *)message {
   self->message_ = message;
 }
 
+- (BOOL)isWillDisplayDimissMessage {
+  return self->willDisplayDimissMessage_;
+}
+
+- (NSString *)getDismissTitle {
+  return self->dismissTitle_;
+}
+
+- (NSString *)getDismissMessage {
+  return self->dismissMessage_;
+}
+
+- (float)getDismissDelay {
+  return self->dismissDelay_;
+}
+
 - (id)init {
-  return [super init];
+  if (self = [super init]) {
+    willDisplayDimissMessage_ = NO;
+  }
+  return self;
 }
 
 - (void)copyAllFieldsTo:(FFTModalView_ModalViewWaitingDialog *)other {
   [super copyAllFieldsTo:other];
+  other->dismissDelay_ = dismissDelay_;
+  other->dismissMessage_ = dismissMessage_;
+  other->dismissTitle_ = dismissTitle_;
   other->message_ = message_;
   other->title_ = title_;
+  other->willDisplayDimissMessage_ = willDisplayDimissMessage_;
 }
 
 + (J2ObjcClassInfo *)__metadata {
   static J2ObjcMethodInfo methods[] = {
+    { "setDisplayDismissMessageWithNSString:withNSString:withFloat:", "setDisplayDismissMessage", "V", 0x1, NULL },
     { "description", "toString", "Ljava.lang.String;", 0x1, NULL },
     { "getTitle", NULL, "Ljava.lang.String;", 0x1, NULL },
-    { "getMessage", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "setTitleWithNSString:", "setTitle", "V", 0x1, NULL },
+    { "getMessage", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "setMessageWithNSString:", "setMessage", "V", 0x1, NULL },
+    { "isWillDisplayDimissMessage", NULL, "Z", 0x1, NULL },
+    { "getDismissTitle", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getDismissMessage", NULL, "Ljava.lang.String;", 0x1, NULL },
+    { "getDismissDelay", NULL, "F", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
   static J2ObjcFieldInfo fields[] = {
+    { "kDefaultDismissTitle_", NULL, 0xa, "Ljava.lang.String;", &FFTModalView_ModalViewWaitingDialog_kDefaultDismissTitle_,  },
     { "title_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
     { "message_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "willDisplayDimissMessage_", NULL, 0x0, "Z", NULL,  },
+    { "dismissTitle_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "dismissMessage_", NULL, 0x0, "Ljava.lang.String;", NULL,  },
+    { "dismissDelay_", NULL, 0x0, "F", NULL,  },
   };
-  static J2ObjcClassInfo _FFTModalView_ModalViewWaitingDialog = { "ModalViewWaitingDialog", "com.sponberg.fluid.layout", "ModalView", 0x9, 6, methods, 2, fields, 0, NULL};
+  static J2ObjcClassInfo _FFTModalView_ModalViewWaitingDialog = { "ModalViewWaitingDialog", "com.sponberg.fluid.layout", "ModalView", 0x9, 11, methods, 7, fields, 0, NULL};
   return &_FFTModalView_ModalViewWaitingDialog;
 }
 

@@ -89,14 +89,47 @@ public class ModalView {
 	}
 	
 	@ToString
-	@Getter
-	@Setter
 	public static class ModalViewWaitingDialog {
 		
+		private static String kDefaultDismissTitle = "Ok";
+		
+		@Getter
+		@Setter
 		String title;
-
+		
+		@Getter
+		@Setter
 		String message;
 		
+		/**
+		 * 
+		 * @param title
+		 * @param message
+		 * @param dismissDelay how long the dismiss message should be displayed on the screen 
+		 * unit it in second
+		 */
+		public void setDisplayDismissMessage(String title, String message, float dismissDelay) {
+			this.dismissTitle = title == null ? kDefaultDismissTitle : title;
+			this.dismissMessage = message;
+			this.dismissDelay = dismissDelay;
+			willDisplayDimissMessage = true;
+		}
+		
+		@Getter 
+		boolean willDisplayDimissMessage = false;
+		
+		@Getter
+		String dismissTitle;
+		@Getter
+		String dismissMessage;
+		
+		/*
+		 * How long should the dismiss message 
+		 * be displayed on the screen. unit is
+		 * in second
+		 */
+		@Getter
+		float dismissDelay; 
 	}
 	
 }
