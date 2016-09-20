@@ -17,8 +17,9 @@
     { "userCancelled", NULL, "V", 0x401, NULL },
     { "userScrolledToBottomWithFFTActionListener_EventInfo:", "userScrolledToBottom", "V", 0x401, NULL },
     { "userScrolledWithFloat:", "userScrolled", "V", 0x401, NULL },
+    { "userBeginEditingWithFFTActionListener_EventInfo:", "userBeginEditing", "V", 0x401, NULL },
   };
-  static J2ObjcClassInfo _FFTActionListener = { "ActionListener", "com.sponberg.fluid.layout", NULL, 0x201, 5, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTActionListener = { "ActionListener", "com.sponberg.fluid.layout", NULL, 0x201, 6, methods, 0, NULL, 0, NULL};
   return &_FFTActionListener;
 }
 

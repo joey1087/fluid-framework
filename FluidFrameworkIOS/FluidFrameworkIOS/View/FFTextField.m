@@ -10,6 +10,8 @@
 #import "ViewPosition.h"
 #import "GlobalState.h"
 #import "FluidApp.h"
+#import "EventsManager.h"
+#import "ActionListener.h"
 
 @implementation FFTextField
 
@@ -39,6 +41,11 @@ static CGFloat leftMarginInUnits = 1;
     bounds.origin.x += margin;
     
     return bounds;
+}
+
+- (void)editingDidBegin {
+    
+    [[[FFTGlobalState fluidApp] getEventsManager] userBeginEditingWithNSString:self.viewPath withFFTActionListener_EventInfo:nil];
 }
 
 @end

@@ -13,6 +13,8 @@ public interface ActionListener {
 	public void userScrolledToBottom(EventInfo eventInfo);
 	
 	public void userScrolled(float percentage);
+	
+	public void userBeginEditing(EventInfo eventInfo);
 
 	@Data
 	public static class EventInfo {

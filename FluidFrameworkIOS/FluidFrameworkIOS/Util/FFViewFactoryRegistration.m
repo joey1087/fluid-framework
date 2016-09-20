@@ -1314,6 +1314,8 @@
     textfield.viewPath = info.viewPath;
     textfield.viewBehavior = viewBehavior;
     
+    [textfield addTarget:textfield action:@selector(editingDidBegin) forControlEvents:UIControlEventEditingDidBegin];
+    
     NSString* fontName = Nil;
     float fontSizeInUnits = ([viewBehavior getFontSize] && [viewBehavior getFontSize].doubleValue > 0) ? [viewBehavior getFontSize].doubleValue : 12;
     float fontSize = [[FFTGlobalState fluidApp] unitsToFontPointsWithDouble:fontSizeInUnits];

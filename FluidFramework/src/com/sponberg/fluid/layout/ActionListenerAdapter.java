@@ -20,7 +20,9 @@ public class ActionListenerAdapter implements ActionListener {
 
 	@Override
 	public void userScrolled(float percentage) {
-		
 	}
 	
+	@Override
+	public void userBeginEditing(EventInfo eventInfo) {
+	}
 }

@@ -24,6 +24,9 @@
 - (void)userScrolledWithFloat:(float)percentage {
 }
 
+- (void)userBeginEditingWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo {
+}
+
 - (id)init {
   return [super init];
 }
@@ -35,9 +38,10 @@
     { "userCancelled", NULL, "V", 0x1, NULL },
     { "userScrolledToBottomWithFFTActionListener_EventInfo:", "userScrolledToBottom", "V", 0x1, NULL },
     { "userScrolledWithFloat:", "userScrolled", "V", 0x1, NULL },
+    { "userBeginEditingWithFFTActionListener_EventInfo:", "userBeginEditing", "V", 0x1, NULL },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _FFTActionListenerAdapter = { "ActionListenerAdapter", "com.sponberg.fluid.layout", NULL, 0x1, 6, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _FFTActionListenerAdapter = { "ActionListenerAdapter", "com.sponberg.fluid.layout", NULL, 0x1, 7, methods, 0, NULL, 0, NULL};
   return &_FFTActionListenerAdapter;
 }
 

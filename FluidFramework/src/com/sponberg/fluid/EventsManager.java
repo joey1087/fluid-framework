@@ -45,6 +45,16 @@ public class EventsManager {
 		}
 	}
 	
+	public void userBeginEditing(String keyPath, EventInfo eventInfo) {
+		String[] tokens = getTokensFromPath(keyPath);
+		EventListenerGroup group = getEventListenerGroup(rootEventListenerGroup, tokens, 0);
+		if (group != null) {
+			for (ActionListener listener : group.getListener()) {
+				listener.userBeginEditing(eventInfo);
+			}
+		}
+	}
+	
 	public boolean isListeningForTapAt(String viewPath) {
 		
 		String[] tokens = getTokensFromPath(viewPath);

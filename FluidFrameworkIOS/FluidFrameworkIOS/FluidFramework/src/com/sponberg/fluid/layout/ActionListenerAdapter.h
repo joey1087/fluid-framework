@@ -25,6 +25,8 @@
 
 - (void)userScrolledWithFloat:(float)percentage;
 
+- (void)userBeginEditingWithFFTActionListener_EventInfo:(FFTActionListener_EventInfo *)eventInfo;
+
 - (id)init;
 
 @end
